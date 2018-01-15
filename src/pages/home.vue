@@ -5,11 +5,10 @@
     <LeftMenu v-bind="leftMenuData"></LeftMenu>
     <div class="content_right">
       <Crumbs></Crumbs>
-      <div style="margin: 12px">
+      <div class="table-list-group">
         <router-view></router-view>
       </div>
     </div>
-
   </div>
 </template>
 <script>
