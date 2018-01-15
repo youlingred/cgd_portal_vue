@@ -9,7 +9,7 @@
           </a>
           <ul class="list-group">
             <li v-for="val in value.subMenus" class="list-group-item" :class="{tive:val.code==activeItem}">
-              <router-link :to="{nme:'child'}"  class="list-group-item-title" v-on:click.prevent="subMenuClick(val.code)">{{val.name}}</router-link>
+              <router-link :to="{name:'dylyIndex'}"  class="list-group-item-title" v-on:click.prevent.native="subMenuClick(val.code)">{{val.name}}</router-link>
               <i class="abs glyphicon-arrows-right dn"></i>
             </li>
           </ul>

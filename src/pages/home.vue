@@ -5,7 +5,9 @@
     <LeftMenu v-bind="leftMenuData"></LeftMenu>
     <div class="content_right">
       <Crumbs></Crumbs>
-      <router-view></router-view>
+      <div style="margin: 12px">
+        <router-view></router-view>
+      </div>
     </div>
 
   </div>

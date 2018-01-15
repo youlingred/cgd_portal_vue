@@ -1,21 +1,23 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
-import Home from '@/pages/Home'
+import home from '@/pages/home'
+import dylyIndex from '@/pages/dyly/dylyIndex'
 
 Vue.use(Router)
 
 export default new Router({
+  mode:'history',
   routes: [
     {
       path: '/',
       name: 'home',
-      component: Home,
+      component: home,
       children: [
         {
-          path: 'child/',
-          name: 'child',
-          component: Home
+          path: '/dylyIndex',
+          name: 'dylyIndex',
+          component: dylyIndex
         }
       ]
     }
