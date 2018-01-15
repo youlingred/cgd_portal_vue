@@ -1,7 +1,6 @@
 const Mock = require('mockjs');
 import config from './../assets/js/config.js';
 
-
 Mock.mock(config.api('nouser/SelectUserInfoBusiService'), 'post', function () {
   return {
     "respDesc": null,
@@ -1801,5 +1800,55 @@ Mock.mock(config.api('', 'menu'), 'get', function () {
       }]
     }],
     "respCode": "0000"
+  }
+})
+/***********FIXME 单一来源公示异议管理*************/
+//列表
+Mock.mock(config.api('testDylyList'), 'post', function () {
+  return {
+    "respCode": "0000",
+    "respDesc": "查询站内信总未读数量成功",
+    "data": [
+      {
+        planName: '计划1',
+        planName: '团建',
+        publishUser: '老铁',
+        publishDate: 1514192693000,
+        objectionDate: 1514192693000,
+        status: 1
+      },
+      {
+        planName: '计划1',
+        planName: '团建',
+        publishUser: '老铁',
+        publishDate: 1514192693000,
+        objectionDate: 1514192693000,
+        status: 1
+      },
+      {
+        planName: '计划1',
+        planName: '团建',
+        publishUser: '老铁',
+        publishDate: 1514192693000,
+        objectionDate: 1514192693000,
+        status: 1
+      },
+      {
+        planName: '计划1',
+        planName: '团建',
+        publishUser: '老铁',
+        publishDate: 1514192693000,
+        objectionDate: 1514192693000,
+        status: 1
+      },
+      {
+        planName: '计划1',
+        planName: '团建',
+        publishUser: '老铁',
+        publishDate: 1514192693000,
+        objectionDate: 1514192693000,
+        status: 1
+      }
+    ]
   }
 })

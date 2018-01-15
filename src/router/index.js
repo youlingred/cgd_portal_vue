@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import home from '@/pages/home'
 import dylyIndex from '@/pages/dyly/dylyIndex'
 import test from '@/pages/test/test'
+import testFormReset from '@/pages/test/formReset'
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export default new Router({
           path: 'test',
           name: 'test',
           component: test
+        },
+        {
+          path: 'reset',
+          name: 'reset',
+          component: testFormReset
         }
       ]
     }
