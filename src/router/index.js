@@ -3,6 +3,7 @@ import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
 import home from '@/pages/home'
 import dylyIndex from '@/pages/dyly/dylyIndex'
+import test from '@/pages/test/test'
 
 Vue.use(Router)
 
@@ -15,9 +16,14 @@ export default new Router({
       component: home,
       children: [
         {
-          path: '/dylyIndex',
+          path: 'dylyIndex',
           name: 'dylyIndex',
           component: dylyIndex
+        },
+        {
+          path: 'test',
+          name: 'test',
+          component: test
         }
       ]
     }

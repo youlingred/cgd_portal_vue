@@ -23,7 +23,6 @@ textarea {
   font-size: inherit;
   line-height: inherit;
 }
-
 h1,
 h2,
 h3,
@@ -6908,4 +6907,11 @@ li {
   top: -4px;
   cursor: pointer;
   color: #CC0000;
+}
+/*extend*/
+.el-input__inner{
+  height: 30px !important;
+}
+button{
+  padding:8px 20px !important;
 }

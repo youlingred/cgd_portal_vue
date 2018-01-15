@@ -5,6 +5,7 @@ import App from './App'
 import axios from 'axios'
 import appConfig from './assets/js/config'
 import router from './router'
+import moment from 'moment'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/base.css'
@@ -17,6 +18,8 @@ Vue.config.productionTip = false
 axios.defaults.timeout = 1000 * 15
 Vue.prototype.axios = axios
 Vue.prototype.appConfig = appConfig
+Vue.prototype.moment=moment;
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
