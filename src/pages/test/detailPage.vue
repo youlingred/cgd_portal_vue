@@ -1,5 +1,5 @@
 <template>
-  <detail></detail>
+  <detail v-bind="detailData"></detail>
 </template>
 <script>
   import detail from '@/components/Detail.vue'
@@ -10,11 +10,97 @@
     },
     data() {
       return {
-        labelPosition: 'right',
-        formLabelAlign: {
-          name: '',
-          region: '',
-          type: ''
+        detailData:{
+          contents:[
+            {
+              header:'标题',
+              children:[
+                {
+                  type:'label',
+                  label:'label1',
+                  value:'value',
+                },
+                {
+                  type:'label',
+                  label:'label2',
+                  value:'value',
+                },
+                {
+                  type:'label',
+                  label:'label3',
+                  value:'value',
+                },
+                {
+                  type:'file',
+                  label:'file4',
+                  value:'fileName',
+                  url:'fileUrl',
+                },
+                {
+                  type:'file',
+                  label:'file5',
+                  value:'fileName',
+                  url:'fileUrl',
+                },
+                {
+                  type:'file',
+                  label:'file6',
+                  value:'fileName',
+                  url:'fileUrl',
+                },
+                {
+                  type:'file',
+                  label:'file7',
+                  value:'fileName',
+                  url:'fileUrl',
+                }
+              ]
+            },
+            {
+              header:'标题2',
+              children:[
+                {
+                  type:'label',
+                  label:'label1',
+                  value:'value',
+                },
+                {
+                  type:'label',
+                  label:'label2',
+                  value:'value',
+                },
+                {
+                  type:'label',
+                  label:'label3',
+                  value:'value',
+                },
+                {
+                  type:'file',
+                  label:'file4',
+                  value:'fileName',
+                  url:'fileUrl',
+                },
+                {
+                  type:'file',
+                  label:'file5',
+                  value:'fileName',
+                  url:'fileUrl',
+                },
+                {
+                  type:'file',
+                  label:'file6',
+                  value:'fileName',
+                  url:'fileUrl',
+                },
+                {
+                  type:'file',
+                  label:'file7',
+                  value:'fileName',
+                  url:'fileUrl',
+                }
+              ]
+            }
+          ]
         }
       };
     }
