@@ -15,7 +15,7 @@
                          :value="item.value"></el-option>
             </el-select>
           </el-form-item>
-          <div :style="{display:displaySearch}" ref="hideSearch">
+          <div v-show="displaySearch" ref="hideSearch">
             <el-form-item label="计划名称：" prop="name">
               <el-input v-model="form.name"></el-input>
             </el-form-item>
@@ -33,9 +33,9 @@
             <el-button type="primary" @click="search">搜索</el-button>
             <el-button @click="resetForm('form')">重置</el-button>
             <!--第一种展开收齐方式:监听事件-->
-            <ButtonOpenClose @change="toggle"></ButtonOpenClose>
+            <button-open-close @change="toggle" :open="displaySearch"></button-open-close>
             <!--第二种展开收齐方式:传参-->
-            <ButtonOpenClose :hideElement="$refs.hideSearch"></ButtonOpenClose>
+            <button-open-close :el="$refs.hideSearch" :open="displaySearch"></button-open-close>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -52,7 +52,7 @@
     },
     data() {
       return {
-        displaySearch:'none',
+        displaySearch:true,
         activeName: '2',
         //受理状态
         status_options: [
@@ -87,12 +87,8 @@
       handleClick(tab) {
         console.log(tab);
       },
-      toggle(arg){
-        if(arg==='open'){
-          this.displaySearch='block';
-        }else{
-          this.displaySearch='none';
-        }
+      toggle(open){
+        this.displaySearch=open;
       }
     }
   };

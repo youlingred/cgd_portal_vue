@@ -1,0 +1,123 @@
+<template>
+  <div>
+    <el-card v-for="(item,index) in contents" :key="index" v-bind:style="{marginTop:(index>0&&'20px')}">
+      <div class="el-card__header" v-show="item">
+        <span>{{item.header}}</span>
+      </div>
+      <el-form label-position="right'" label-width="200px">
+        <el-form-item v-for="(child,index) in item.children" :key="index" :label="child.label+':'">
+          <detail-item v-bind="child"></detail-item>
+        </el-form-item>
+      </el-form>
+    </el-card>
+  </div>
+</template>
+<script>
+  import detailItem from '@/components/detailItem.vue'
+
+  export default {
+    components:{detailItem},
+    props:{
+      contents:{
+        type:Array,
+        default(){
+          return [
+            {
+              header:'标题',
+              children:[
+                {
+                  type:'label',
+                  label:'label1',
+                  value:'value',
+                },
+                {
+                  type:'label',
+                  label:'label2',
+                  value:'value',
+                },
+                {
+                  type:'label',
+                  label:'label3',
+                  value:'value',
+                },
+                {
+                  type:'file',
+                  label:'file4',
+                  value:'fileName',
+                  url:'fileUrl',
+                },
+                {
+                  type:'file',
+                  label:'file5',
+                  value:'fileName',
+                  url:'fileUrl',
+                },
+                {
+                  type:'file',
+                  label:'file6',
+                  value:'fileName',
+                  url:'fileUrl',
+                },
+                {
+                  type:'file',
+                  label:'file7',
+                  value:'fileName',
+                  url:'fileUrl',
+                }
+              ]
+            },
+            {
+              header:'标题2',
+              children:[
+                {
+                  type:'label',
+                  label:'label1',
+                  value:'value',
+                },
+                {
+                  type:'label',
+                  label:'label2',
+                  value:'value',
+                },
+                {
+                  type:'label',
+                  label:'label3',
+                  value:'value',
+                },
+                {
+                  type:'file',
+                  label:'file4',
+                  value:'fileName',
+                  url:'fileUrl',
+                },
+                {
+                  type:'file',
+                  label:'file5',
+                  value:'fileName',
+                  url:'fileUrl',
+                },
+                {
+                  type:'file',
+                  label:'file6',
+                  value:'fileName',
+                  url:'fileUrl',
+                },
+                {
+                  type:'file',
+                  label:'file7',
+                  value:'fileName',
+                  url:'fileUrl',
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    data(){
+      return{
+
+      }
+    }
+  }
+</script>

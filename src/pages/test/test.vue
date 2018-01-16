@@ -132,8 +132,3 @@
     }
   }
 </script>
-<style>
-  .el-card {
-    box-shadow: none;
-  }
-</style>

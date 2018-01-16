@@ -6,6 +6,7 @@ import dylyIndex from '@/pages/dyly/dylyIndex'
 import test from '@/pages/test/test'
 import reset from '@/pages/test/reset'
 import tabs from '@/pages/test/tabs'
+import detail from '@/pages/test/detailPage'
 
 Vue.use(Router)
 
@@ -36,6 +37,11 @@ export default new Router({
           path: 'tabs',
           name: 'tabs',
           component: tabs
+        },
+        {
+          path: 'detail',
+          name: 'detail',
+          component: detail
         }
       ]
     }

@@ -3,22 +3,22 @@
 </template>
 <script>
   export default {
-    props:['hideElement'],
+    props:['el','open'],
     data(){
       return {
-        open:false
+        openFlag:this.open||false
       }
     },
     computed:{
       label(){
-        if(this.open){
+        if(this.openFlag){
           return '收起'
         }else{
           return '展开'
         }
       },
       iClass(){
-        if(this.open){
+        if(this.openFlag){
           return 'el-icon-caret-top'
         }else{
           return 'el-icon-caret-bottom'
@@ -27,19 +27,12 @@
     },
     methods:{
       toggle(){
-        this.open=!this.open;
-        if(this.open){
-          this.$emit('change','open');
-          if(this.hideElement){
-            this.hideElement.style.display='block';
+        this.openFlag=!this.openFlag;
+        console.log(this.openFlag)
+          this.$emit('change',this.openFlag);
+          if(this.el){
+            this.el.style.display=this.openFlag?'block':'none';
           }
-        }else{
-          this.$emit('change','close');
-          if(this.hideElement) {
-            this.hideElement.style.display = 'none';
-          }
-        }
-
       }
     }
   }

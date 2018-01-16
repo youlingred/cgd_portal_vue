@@ -6915,3 +6915,9 @@ li {
 button{
   padding:8px 20px !important;
 }
+.el-card {
+  box-shadow: none;
+}
+.el-form-item{
+  margin-bottom: 0px;
+}
