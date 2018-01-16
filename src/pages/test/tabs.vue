@@ -15,9 +15,27 @@
                          :value="item.value"></el-option>
             </el-select>
           </el-form-item>
+          <div :style="{display:displaySearch}" ref="hideSearch">
+            <el-form-item label="计划名称：" prop="name">
+              <el-input v-model="form.name"></el-input>
+            </el-form-item>
+            <el-form-item label="项目单位：" prop="project">
+              <el-input v-model="form.project"></el-input>
+            </el-form-item>
+            <el-form-item label="受理状态" prop="status">
+              <el-select v-model="form.status" placeholder="请选择">
+                <el-option v-for="item in status_options" :key="item.value" :label="item.label"
+                           :value="item.value"></el-option>
+              </el-select>
+            </el-form-item>
+          </div>
           <el-form-item>
             <el-button type="primary" @click="search">搜索</el-button>
             <el-button @click="resetForm('form')">重置</el-button>
+            <!--第一种展开收齐方式:监听事件-->
+            <ButtonOpenClose @change="toggle"></ButtonOpenClose>
+            <!--第二种展开收齐方式:传参-->
+            <ButtonOpenClose :hideElement="$refs.hideSearch"></ButtonOpenClose>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -26,9 +44,15 @@
   </el-card>
 </template>
 <script>
+  import ButtonOpenClose from '@/components/ButtonOpenClose.vue'
+
   export default {
+    components:{
+      ButtonOpenClose
+    },
     data() {
       return {
+        displaySearch:'none',
         activeName: '2',
         //受理状态
         status_options: [
@@ -62,6 +86,13 @@
       },
       handleClick(tab) {
         console.log(tab);
+      },
+      toggle(arg){
+        if(arg==='open'){
+          this.displaySearch='block';
+        }else{
+          this.displaySearch='none';
+        }
       }
     }
   };
