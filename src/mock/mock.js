@@ -1904,3 +1904,24 @@ Mock.mock(config.api('testDylyListPage'), 'post', function () {
     }
   }
 })
+/***********公示信息*********/
+Mock.mock(config.api('testcommen'), 'post', function () {
+  return {
+    "respCode": "0000",
+    "respDesc": "查询站内信总未读数量成功",
+    "data":{
+      '1': '询价单名称001',
+      '2': '国电中心',
+      '3': 'XXX供应商',
+      '4': 'XXXX',
+      '5': 'XXXXX',
+      '6': 1514192693000,
+      '7': '国电中心',
+      '8': '张三',
+      '9': '13381217802',
+      '10': '国电中心',
+      '11': '张三',
+      '12': '13381217802',
+    }
+  }
+})
