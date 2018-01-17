@@ -6,8 +6,7 @@ import dylyIndex from '@/pages/dyly/dylyIndex'
 import test from '@/pages/test/test'
 import reset from '@/pages/test/reset'
 import tabs from '@/pages/test/tabs'
-import detail from '@/pages/test/detail'
-import list from '@/pages/test/list'
+import detail from '@/pages/test/detailPage'
 
 Vue.use(Router)
 
@@ -48,6 +47,11 @@ export default new Router({
           path: 'list',
           name: 'list',
           component: list
+        },
+        {
+          path: 'spubliclist',
+          name: 'spubliclist',
+          component: spubliclist
         }
       ]
     }
