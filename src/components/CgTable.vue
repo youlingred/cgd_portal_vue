@@ -1,6 +1,6 @@
 <template>
   <div style="background-color:#f3f3f3">
-    <el-table ref="table" :data="m_data" border>
+    <el-table ref="table" :data="m_data" :height="height" border>
       <el-table-column align="center" v-for="item in columns" :key="item.index" v-bind="item"></el-table-column>
     </el-table>
     <el-pagination v-show="pagination" background class="tr"
@@ -15,6 +15,9 @@
 <script>
   export default {
     props: {
+      height:{
+        type:[Number,String]
+      },
       pagination:{
         type:Boolean,
         default:true
