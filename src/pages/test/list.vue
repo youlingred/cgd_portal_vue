@@ -1,6 +1,6 @@
 <template>
   <div>
-    <cg-table ref="test" :url="url" :columns="columns" :height="height"></cg-table>
+    <cg-table ref="test" v-bind="$data"></cg-table>
     <!--<el-button @click="test">test</el-button>-->
   </div>
 </template>
