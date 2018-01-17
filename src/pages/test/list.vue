@@ -1,19 +1,23 @@
 <template>
   <div>
     <cg-table ref="test" v-bind="$data"></cg-table>
-    <!--<el-button @click="test">test</el-button>-->
+    <el-button @click="test">test</el-button>
   </div>
 </template>
 <script>
   import CgTable from '@/components/CgTable.vue'
 
   export default {
-    components:{CgTable},
-    data:function () {
+    components: {CgTable},
+    data: function () {
       return {
-        data:[],
-        height:400,
+        data: [],
+        height: 400,
         columns: [
+          {
+            type: 'selection',
+            width: 80
+          },
           {
             label: '序号',
             type: 'index',
@@ -59,13 +63,18 @@
             }
           }
         ],
-        url:this.appConfig.api('testDylyListPage')
+        url: this.appConfig.api('testDylyListPage'),
+        pageNo: 1
       };
     },
-    props:{
-    },
-    methods:{
-      test(){
+    props: {},
+    methods: {
+      test() {
+        this.$refs.test.query({url:this.appConfig.api('testDylyListPage')});
+        // this.columns[0].label = '111';
+        // this.pageNo = 2
+        // console.log(this.$refs.test.all)
+        // console.log(this.$refs.test.selection)
         // console.log(this.$refs.test.selection);
       }
     }

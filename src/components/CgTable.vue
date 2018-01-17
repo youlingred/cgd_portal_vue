@@ -1,7 +1,13 @@
 <template>
   <div style="background-color:#f3f3f3">
-    <el-table ref="table" :data="m_data" :height="height" border>
-      <el-table-column align="center" v-for="item in columns" :key="item.index" v-bind="item"></el-table-column>
+    <el-table ref="table" :data="m_data"
+              :height="height"
+              @selection-change="handleSelectionChange"
+              border>
+      <el-table-column align="center" v-for="item in columns"
+                       :key="item.index"
+                       v-bind="item"
+      ></el-table-column>
     </el-table>
     <el-pagination v-show="pagination" background class="tr"
                    @current-change="handleChangePageNo"
@@ -15,12 +21,12 @@
 <script>
   export default {
     props: {
-      height:{
-        type:[Number,String]
+      height: {
+        type: [Number, String]
       },
-      pagination:{
-        type:Boolean,
-        default:true
+      pagination: {
+        type: Boolean,
+        default: true
       },
       pageNo: {
         type: Number,
@@ -38,7 +44,7 @@
       },
       data: {
         type: Array,
-        default(){
+        default() {
           return [];
         }
       },
@@ -54,58 +60,57 @@
     },
     data() {
       return {
-        m_data:this.data,
+        m_data: this.data,
         m_pageNo: this.pageNo,
         m_pageSize: this.pageSize,
         m_total: 0,
-        m_url:this.url,
+        m_url: this.url,
+        m_selection: []
       };
     },
     computed: {
-      _query(){
+      _query() {
         return {
-          pageNo:this.m_pageNo,
-          pageSize: this.m_pageSize,
-          url: this.m_url
+          pageNo: this.m_pageNo,
+          pageSize: this.m_pageSize
+        }
+      },
+      _url: {
+        get() {
+          return this.m_url;
+        },
+        set(val) {
+          this.m_url = val
         }
       },
       selection() {
-        this.$refs.table.selection;
+        return this.m_selection;
       },
-      currentPageData() {
+      all() {
+        return this.m_data;
       }
     },
     methods: {
       getData() {
         this.$refs.table.data;
       },
-      getSelection(){
+      getSelection() {``
         return [];
       },
-      handleChangePageNo(val){
-          let page=parseInt(val);
-          //页数不能为0或者非数字
-          if(isNaN(page)||page===0){
-            return;
-          }
-          let block=this.pageSize*page;
-          this.m_pageNo=page;
-          this.m_data=_.slice(block-this.pageSize,block-1);
-      },
-      requestData() {
-        console.log('run request',this.m_url)
-        if(this.m_url&&this.m_url!='') {
-          let params = this._query;
+      query(arg) {
+        let param = _.assign({url: this._url, params:this._query},arg||{})
+        console.log(param)
+        if (param.url && param.url != '') {
           if (this.queryParam) {
-            params = this.queryParam(this._query);
+            param.params = this.queryParam(param.params);
           }
-          console.log('params:',params)
-          this.axios.post(this.url, params)
+          console.log('params:', param.params);
+          this.axios.post(param.url, param.params)
             .then((response) => {
               console.log();
               if (response.data.respCode === '0000') {
                 let result = response.data.data;
-                console.log(result)
+                console.log(result);
                 if (this.responseHandler) {
                   result = this.responseHandler(result);
                 }
@@ -118,17 +123,22 @@
             });
         }
       },
-    },
-    watch: {
-      _query:{
-        handler(){
-          this.requestData();
-        },
-        deep:true
+      handleChangePageNo(val) {
+        let page = parseInt(val);
+        //页数不能为0或者非数字
+        if (isNaN(page) || page === 0) {
+          return;
+        }
+        let block = this.pageSize * page;
+        this.m_pageNo = page;
+        this.m_data = _.slice(block - this.pageSize, block - 1);
+      },
+      handleSelectionChange(val) {
+        this.m_selection = val;
       }
     },
     created() {
-      this.requestData();
+      this.query();
     }
   }
 </script>
