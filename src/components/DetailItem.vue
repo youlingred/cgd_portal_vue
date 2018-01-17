@@ -1,7 +1,7 @@
 <template>
-  <label v-if="type === 'label'">{{data[prop]}}</label>
+  <label v-if="type === 'label'">{{value}}</label>
   <div v-else-if="type === 'file'">
-    <span style="display:inline-block;min-width:200px">{{data[prop]}}</span>
+    <span style="display:inline-block;min-width:200px">{{value}}</span>
     <a :href="data[prop_url]"
        target="_blank" class="downloadMessage"><span class="">下载</span></a>
   </div>
@@ -17,6 +17,9 @@
       type: {
         default: 'label'
       },
+      formatter:{
+        type:Function
+      },
       prop: {
         default: ''
       },
@@ -26,6 +29,14 @@
     },
     data() {
       return {}
+    },
+    computed:{
+      value(){
+        if(this.formatter){
+          return this.formatter(this.data[this.prop])
+        }
+        return this.data[this.prop]
+      }
     }
   }
 </script>
