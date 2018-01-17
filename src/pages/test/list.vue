@@ -1,6 +1,6 @@
 <template>
   <div>
-    <cg-table ref="test" :url="url" :columns="columns"></cg-table>
+    <cg-table ref="test" :url="url" :columns="columns" :height="height"></cg-table>
     <!--<el-button @click="test">test</el-button>-->
   </div>
 </template>
@@ -12,6 +12,7 @@
     data:function () {
       return {
         data:[],
+        height:400,
         columns: [
           {
             label: '序号',
