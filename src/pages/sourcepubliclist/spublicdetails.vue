@@ -1,8 +1,8 @@
 <template>
   <div>
     <detail v-bind="detailData"></detail>
-    <div>
-      <el-button @click="backFunc">返回</el-button>
+    <div class="footerdiv">
+      <el-button @click="backFunc" class="footerbutton">返回</el-button>
     </div>
   </div>
 </template>
@@ -175,6 +175,12 @@
 </script>
 
 <style lang="css" rel="stylesheet/css">
-
-
+  .footerdiv {
+    height: 45px;
+    line-height:42px;
+    margin:10px 0 30px 0;
+    text-align: center;
+    border-top: 3px solid #acacac;
+    background-color: #e5e5e5;
+  }
 </style>
