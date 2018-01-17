@@ -7,6 +7,7 @@ import test from '@/pages/test/test'
 import reset from '@/pages/test/reset'
 import tabs from '@/pages/test/tabs'
 import detail from '@/pages/test/detailPage'
+import spubliclist from '@/pages/sourcepubliclist/spubliclist'
 
 Vue.use(Router)
 
@@ -42,6 +43,11 @@ export default new Router({
           path: 'detail',
           name: 'detail',
           component: detail
+        },
+        {
+          path: 'spubliclist',
+          name: 'spubliclist',
+          component: spubliclist
         }
       ]
     }
