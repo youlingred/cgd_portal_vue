@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import axios from 'axios'
+import lodash from 'lodash'
 import appConfig from './assets/js/config'
 import router from './router'
 import moment from 'moment'
@@ -19,6 +20,7 @@ axios.defaults.timeout = 1000 * 15
 Vue.prototype.axios = axios
 Vue.prototype.appConfig = appConfig
 Vue.prototype.moment=moment;
+window._=lodash
 
 /* eslint-disable no-new */
 new Vue({

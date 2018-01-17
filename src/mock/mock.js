@@ -1852,3 +1852,55 @@ Mock.mock(config.api('testDylyList'), 'post', function () {
     ]
   }
 })
+//分页列表
+Mock.mock(config.api('testDylyListPage'), 'post', function () {
+  return {
+    "respCode": "0000",
+    "respDesc": "查询站内信总未读数量成功",
+    data:{
+      "rows": [
+        {
+          planName: '计划1',
+          planName: '团建',
+          publishUser: '老铁',
+          publishDate: 1514192693000,
+          objectionDate: 1514192693000,
+          status: 1
+        },
+        {
+          planName: '计划1',
+          planName: '团建',
+          publishUser: '老铁',
+          publishDate: 1514192693000,
+          objectionDate: 1514192693000,
+          status: 1
+        },
+        {
+          planName: '计划1',
+          planName: '团建',
+          publishUser: '老铁',
+          publishDate: 1514192693000,
+          objectionDate: 1514192693000,
+          status: 1
+        },
+        {
+          planName: '计划1',
+          planName: '团建',
+          publishUser: '老铁',
+          publishDate: 1514192693000,
+          objectionDate: 1514192693000,
+          status: 1
+        },
+        {
+          planName: '计划1',
+          planName: '团建',
+          publishUser: '老铁',
+          publishDate: 1514192693000,
+          objectionDate: 1514192693000,
+          status: 1
+        }
+      ],
+      "recordsTotal":50
+    }
+  }
+})

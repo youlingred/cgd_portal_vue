@@ -109,7 +109,7 @@
             this.leftMenuData={
               menus:leftMenus
             }
-            console.log(1111111,this.leftMenuData)
+            console.log('leftMenuData',this.leftMenuData)
           })
           .catch(function (error) {
             console.log(error);
