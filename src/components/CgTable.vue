@@ -11,8 +11,8 @@
     </el-table>
     <el-pagination v-show="pagination" background class="tr"
                    @current-change="handleChangePageNo"
-                   :current-page="m_pageNo"
-                   :page-size="m_pageSize"
+                   :current-page="m_query.pageNo"
+                   :page-size="m_query.pageSize"
                    layout="total, prev, pager, next, jumper"
                    :total="m_total" style="padding:10px 20px">
     </el-pagination>
@@ -20,91 +20,99 @@
 </template>
 <script>
   export default {
+    //组件入参
     props: {
+      //表格高度
       height: {
         type: [Number, String]
       },
+      //是否使用翻页组件
       pagination: {
         type: Boolean,
         default: true
       },
+      //当前页数
       pageNo: {
         type: Number,
         default: 1
       },
+      //每页显示数据条数
       pageSize: {
         type: Number,
         default: 10,
       },
+      //列表头定义数组
       columns: {
         type: Array,
         default() {
           return [];
         }
       },
+      //列表数据，目前只是用url远程获取数据，此参数暂时保留不使用
       data: {
         type: Array,
         default() {
           return [];
         }
       },
+      //请求地址
       url: {
         type: String
       },
+      //查询回到函数,可以在查询操作中插入请求搜索条件
       queryParam: {
         type: Function
       },
+      //数据获取回到函数,可以做数据处理
       responseHandler: {
         type: Function
       }
     },
     data() {
       return {
+        //列表数据
         m_data: this.data,
+        //当前页
         m_pageNo: this.pageNo,
+        //每页数据条数
         m_pageSize: this.pageSize,
+        //数据总数
         m_total: 0,
-        m_url: this.url,
-        m_selection: []
+        //选中数据
+        m_selection: [],
+        //请求地址
+        m_url:this.url,
+        //请求参数
+        m_query: {
+          pageNo: this.pageNo,
+          pageSize: this.pageSize
+        }
       };
     },
     computed: {
-      _query() {
-        return {
-          pageNo: this.m_pageNo,
-          pageSize: this.m_pageSize
-        }
-      },
+      //获取全部选中数据
       selection() {
         return this.m_selection;
       },
+      //获取全部数据
       all() {
         return this.m_data;
       }
     },
     methods: {
-      getData() {
-        this.$refs.table.data;
-      },
-      getSelection() {
-        ``
-        return [];
-      },
+      //请求数据，入参会保存为请求条件
       query(arg) {
         return new Promise((resolve, refect) => {
-          let param = _.assign({url: this.m_url, params: this._query}, arg || {})
+          let param = _.assign(this.m_query, arg||{},{url:this.m_url})
           console.log(param)
           if (param.url && param.url !== '') {
-            if (this.queryParam) {
-              param.params = this.queryParam(param.params);
-            }
-
-            this.m_pageNo = param.params.pageNo;
-            this.m_pageSize = param.params.pageSize;
             this.m_url = param.url;
-
-            console.log('params:', param.params);
-            this.axios.post(param.url, param.params)
+            delete param.url;
+            if (this.queryParam) {
+              param = this.queryParam(param);
+            }
+            console.log('param:', param);
+            this.axios.post(this.m_url, param)
               .then((response) => {
                 console.log();
                 if (response.data.respCode === '0000') {
@@ -124,15 +132,17 @@
           }
         })
       },
+      //翻页处理函数
       handleChangePageNo(val) {
         this.m_pageNo = val;
-        this.query({params: {pageNo: this.m_pageNo}}).then((data) => {
+        this.query({pageNo: this.m_pageNo}).then((data) => {
           this.m_data = data;
         })
         //let allData=[];
         //let block = this.pageSize * val;
         // this.m_data = _.slice(allData,block - this.pageSize, block - 1);
       },
+      //选项数据改变处理函数
       handleSelectionChange(val) {
         this.m_selection = val;
       }
