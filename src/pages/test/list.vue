@@ -1,7 +1,7 @@
 <template>
   <div>
     <cg-table ref="test" v-bind="$data"></cg-table>
-    <el-button @click="test">test</el-button>
+    <el-button @click="search">搜索</el-button>
   </div>
 </template>
 <script>
@@ -13,6 +13,14 @@
       return {
         data: [],
         height: 400,
+        queryParam:function(param){
+          console.log('queryParam:',param)
+          return _.assign({test:1},param);
+        },
+        responseHandler:function(val){
+          console.log('responseHandler:',val)
+          return val;
+        },
         columns: [
           {
             type: 'selection',
@@ -69,8 +77,8 @@
     },
     props: {},
     methods: {
-      test() {
-        this.$refs.test.query({url:this.appConfig.api('testDylyListPage')});
+      search() {
+        this.$refs.test.query({searchInput:'inputConditions'});
         // this.columns[0].label = '111';
         // console.log(this.$refs.test.all)
         // console.log(this.$refs.test.selection)

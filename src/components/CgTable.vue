@@ -111,7 +111,7 @@
             if (this.queryParam) {
               param = this.queryParam(param);
             }
-            console.log('param:', param);
+            console.log('query param:', param);
             this.axios.post(this.m_url, param)
               .then((response) => {
                 console.log();
