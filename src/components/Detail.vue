@@ -1,12 +1,12 @@
 <template>
   <div>
-    <el-card v-for="(item,index) in contents" :key="index" v-bind:style="{marginTop:(index>0&&'20px')}">
-      <div class="el-card__header" v-show="item">
+    <el-card v-for="(item,index) in contents" :key="index" v-bind:style="{marginTop:(index>0&&'20px') }">
+      <div class="el-card__header" v-show="item.header" :style="{marginBottom:'20px'}">
         <span>{{item.header}}</span>
       </div>
-      <el-form label-position="right'" label-width="200px" width="200">
-        <el-form-item v-for="(child,index) in item.children" :key="index" :label="child.label+':'">
-          <detail-item v-bind="child" :data="item.data"></detail-item>
+      <el-form v-bind="item" :model="item.data" :rules="item.rules" label-position="right" label-width="200px">
+        <el-form-item v-for="(child,index) in item.children" :key="index" :prop="child.prop" :label="child.label+':'">
+          <detail-item v-bind="child" :data="item.data"/>
         </el-form-item>
       </el-form>
     </el-card>
@@ -33,3 +33,8 @@
     }
   }
 </script>
+<style scoped>
+  .el-form-item{
+    margin-bottom: 13px;
+  }
+</style>

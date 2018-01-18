@@ -3,13 +3,16 @@
 </template>
 <script>
   export default {
+    //el:要展开和隐藏的对象,open:初始是否打开状态
     props:['el','open'],
     data(){
       return {
+        //打开关闭标志
         openFlag:this.open||false
       }
     },
     computed:{
+      //标签
       label(){
         if(this.openFlag){
           return '收起'
@@ -17,6 +20,7 @@
           return '展开'
         }
       },
+      //箭头class
       iClass(){
         if(this.openFlag){
           return 'el-icon-caret-top'
@@ -26,6 +30,7 @@
       }
     },
     methods:{
+      //切换展开收起
       toggle(){
         this.openFlag=!this.openFlag;
         console.log(this.openFlag)

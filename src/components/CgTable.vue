@@ -137,6 +137,7 @@
         this.m_pageNo = val;
         this.query({pageNo: this.m_pageNo}).then((data) => {
           this.m_data = data;
+          console.log('handleChangePageNo data:',data)
         })
         //let allData=[];
         //let block = this.pageSize * val;
