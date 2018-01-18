@@ -72,7 +72,6 @@
       test() {
         this.$refs.test.query({url:this.appConfig.api('testDylyListPage')});
         // this.columns[0].label = '111';
-        // this.pageNo = 2
         // console.log(this.$refs.test.all)
         // console.log(this.$refs.test.selection)
         // console.log(this.$refs.test.selection);

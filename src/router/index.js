@@ -8,8 +8,9 @@ import reset from '@/pages/test/reset'
 import tabs from '@/pages/test/tabs'
 import detail from '@/pages/test/detail'
 import list from '@/pages/test/list'
-import spublicdetails from  '@/pages/sourcepubliclist/spublicdetails'
-import spubliclist from  '@/pages/sourcepubliclist/spubliclist'
+import edit from '@/pages/test/edit'
+import spublicdetails from '@/pages/sourcepubliclist/spublicdetails'
+import spubliclist from '@/pages/sourcepubliclist/spubliclist'
 
 Vue.use(Router)
 
@@ -60,6 +61,11 @@ export default new Router({
           path: 'spubliclist',
           name: 'spubliclist',
           component: spubliclist
+        },
+        {
+          path: 'edit',
+          name: 'edit',
+          component: edit
         }
       ]
     }

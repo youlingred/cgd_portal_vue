@@ -75,14 +75,6 @@
           pageSize: this.m_pageSize
         }
       },
-      _url: {
-        get() {
-          return this.m_url;
-        },
-        set(val) {
-          this.m_url = val
-        }
-      },
       selection() {
         return this.m_selection;
       },
@@ -94,44 +86,52 @@
       getData() {
         this.$refs.table.data;
       },
-      getSelection() {``
+      getSelection() {
+        ``
         return [];
       },
       query(arg) {
-        let param = _.assign({url: this._url, params:this._query},arg||{})
-        console.log(param)
-        if (param.url && param.url != '') {
-          if (this.queryParam) {
-            param.params = this.queryParam(param.params);
-          }
-          console.log('params:', param.params);
-          this.axios.post(param.url, param.params)
-            .then((response) => {
-              console.log();
-              if (response.data.respCode === '0000') {
-                let result = response.data.data;
-                console.log(result);
-                if (this.responseHandler) {
-                  result = this.responseHandler(result);
+        return new Promise((resolve, refect) => {
+          let param = _.assign({url: this.m_url, params: this._query}, arg || {})
+          console.log(param)
+          if (param.url && param.url !== '') {
+            if (this.queryParam) {
+              param.params = this.queryParam(param.params);
+            }
+
+            this.m_pageNo = param.params.pageNo;
+            this.m_pageSize = param.params.pageSize;
+            this.m_url = param.url;
+
+            console.log('params:', param.params);
+            this.axios.post(param.url, param.params)
+              .then((response) => {
+                console.log();
+                if (response.data.respCode === '0000') {
+                  let result = response.data.data;
+                  console.log(result);
+                  if (this.responseHandler) {
+                    result = this.responseHandler(result);
+                  }
+                  this.m_data = result.rows;
+                  this.m_total = result.recordsTotal;
+                  resolve(result.rows)
                 }
-                this.m_data = result.rows;
-                this.m_total = result.recordsTotal;
-              }
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-        }
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          }
+        })
       },
       handleChangePageNo(val) {
-        let page = parseInt(val);
-        //页数不能为0或者非数字
-        if (isNaN(page) || page === 0) {
-          return;
-        }
-        let block = this.pageSize * page;
-        this.m_pageNo = page;
-        this.m_data = _.slice(block - this.pageSize, block - 1);
+        this.m_pageNo = val;
+        this.query({params: {pageNo: this.m_pageNo}}).then((data) => {
+          this.m_data = data;
+        })
+        //let allData=[];
+        //let block = this.pageSize * val;
+        // this.m_data = _.slice(allData,block - this.pageSize, block - 1);
       },
       handleSelectionChange(val) {
         this.m_selection = val;

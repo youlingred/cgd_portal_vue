@@ -145,7 +145,7 @@
         //获取公示信息
         this.axios.post(this.appConfig.api('testcommen'),{})
           .then((response) => {
-            this.data1=response.data.data;;
+            this.data1=response.data.data;
           })
           .catch(function (error) {
             console.log(error);

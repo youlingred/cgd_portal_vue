@@ -1860,7 +1860,6 @@ Mock.mock(config.api('testDylyListPage'), 'post', function () {
     data:{
       "rows": [
         {
-          planName: '计划1',
           planName: '团建',
           publishUser: '老铁',
           publishDate: 1514192693000,
@@ -1868,7 +1867,6 @@ Mock.mock(config.api('testDylyListPage'), 'post', function () {
           status: 1
         },
         {
-          planName: '计划1',
           planName: '团建',
           publishUser: '老铁',
           publishDate: 1514192693000,
@@ -1876,7 +1874,6 @@ Mock.mock(config.api('testDylyListPage'), 'post', function () {
           status: 1
         },
         {
-          planName: '计划1',
           planName: '团建',
           publishUser: '老铁',
           publishDate: 1514192693000,
@@ -1884,7 +1881,6 @@ Mock.mock(config.api('testDylyListPage'), 'post', function () {
           status: 1
         },
         {
-          planName: '计划1',
           planName: '团建',
           publishUser: '老铁',
           publishDate: 1514192693000,
@@ -1892,7 +1888,6 @@ Mock.mock(config.api('testDylyListPage'), 'post', function () {
           status: 1
         },
         {
-          planName: '计划1',
           planName: '团建',
           publishUser: '老铁',
           publishDate: 1514192693000,

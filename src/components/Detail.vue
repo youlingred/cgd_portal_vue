@@ -4,7 +4,7 @@
       <div class="el-card__header" v-show="item">
         <span>{{item.header}}</span>
       </div>
-      <el-form label-position="right'" label-width="200px">
+      <el-form label-position="right'" label-width="200px" width="200">
         <el-form-item v-for="(child,index) in item.children" :key="index" :label="child.label+':'">
           <detail-item v-bind="child" :data="item.data"></detail-item>
         </el-form-item>
