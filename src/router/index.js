@@ -44,7 +44,7 @@ export default new Router({
           component: tabs
         },
         {
-          path: 'detail/:id',
+          path: 'detail',
           name: 'detail',
           component: detail
         },

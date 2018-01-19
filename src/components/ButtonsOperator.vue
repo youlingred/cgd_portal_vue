@@ -14,17 +14,27 @@
       <el-button v-for="(btn,index) in buttons"
                  :key="index"
                  v-bind="btn">{{btn.label}}</el-button>
+      <button-open-close v-if="switchBtn" v-bind="switchBtn"/>
+
     </div>
   </div>
 </template>
 <script>
+  import ButtonOpenClose from '@/components/ButtonOpenClose.vue'
+
   export default {
+    components:{
+      ButtonOpenClose
+    },
     props: {
       type: {
         default: 'bottom'
       },
       algin: {
         default: 'center'
+      },
+      switchBtn:{
+        type:Object
       },
       buttons:{
         default(){

@@ -53,7 +53,7 @@
     data() {
       return {
         displaySearch:true,
-        activeName: '2',
+        activeName: '1',
         //受理状态
         status_options: [
           {

@@ -22,7 +22,7 @@
           objectionDate: 1514192693000,
           status: 1,
           prop4: '艳照门',
-          fileUrl4: 'http://www.baidu.com'
+          fileList: []
         },
         data2: {
           fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]

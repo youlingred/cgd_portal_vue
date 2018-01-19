@@ -1,6 +1,6 @@
 <template>
   <div>
-    <detail v-bind="detailData"></detail>
+    <detail v-bind="detailData"/>
     <el-button @click="setValue">给第二层数据赋值</el-button>
     <buttons-operator type="bottom"
                       :buttons="[{label:'提交',type:'primary',click:sumbit},{label:'返回',type:'info',click:back}]"/>
@@ -35,6 +35,7 @@
         return {contents:[
           {
             header:'标题',
+            labelWidth:'200px',
             data:this.data1,
             children:[
               {
@@ -77,6 +78,7 @@
           {
             header:'标题2',
             data:this.data2,
+            labelWidth:'200px',
             children:[
               {
                 type:'label',

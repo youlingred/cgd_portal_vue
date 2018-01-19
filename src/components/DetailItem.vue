@@ -32,7 +32,6 @@
   <el-upload v-else-if="type === 'upload'"
              :fileList="data[prop]"
              :on-success="fileUploadSuccess"
-             v-model="data[prop]"
              v-bind="extendParam">
     <el-button size="small" type="primary">点击上传</el-button>
     <div v-show="extendParam.tip" slot="tip" class="el-upload__tip">{{extendParam.tip}}</div>

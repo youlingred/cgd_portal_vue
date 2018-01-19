@@ -4,10 +4,16 @@
 <script>
   export default {
     //el:要展开和隐藏的对象,open:初始是否打开状态
-    props:['el','open'],
+    props:{
+      open:{
+        default:false,
+      },
+      handler:{
+        type:Function
+      }
+    },
     data(){
       return {
-        //打开关闭标志
         openFlag:this.open||false
       }
     },
@@ -33,11 +39,9 @@
       //切换展开收起
       toggle(){
         this.openFlag=!this.openFlag;
-        console.log(this.openFlag)
+          console.log(this.openFlag)
+          this.handler&&this.handler(this.openFlag)
           this.$emit('change',this.openFlag);
-          if(this.el){
-            this.el.style.display=this.openFlag?'block':'none';
-          }
       }
     }
   }

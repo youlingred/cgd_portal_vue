@@ -146,6 +146,7 @@
       //选项数据改变处理函数
       handleSelectionChange(val) {
         this.m_selection = val;
+        this.$emit('selectionChange',this.m_selection)
       }
     },
     created() {

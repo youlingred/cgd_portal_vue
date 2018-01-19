@@ -4,11 +4,15 @@
       <div class="el-card__header" v-show="item.header" :style="{marginBottom:'20px'}">
         <span>{{item.header}}</span>
       </div>
-      <el-form v-bind="item" :model="item.data" :rules="item.rules" label-position="right" label-width="200px">
-        <el-form-item v-for="(child,index) in item.children" :key="index" :prop="child.prop" :label="child.label+':'">
-          <detail-item v-bind="child" :data="item.data"/>
+      <el-form v-bind="item" :model="item.data" :rules="item.rules" label-position="right">
+        <el-form-item v-for="(child,index) in item.children"
+                      :key="index"
+                      :prop="child.prop"
+                      :label="child.label+':'">
+          <detail-item v-bind="child" :data="item.data" :style="{'width':item.inputWidth||'100%'}"/>
         </el-form-item>
       </el-form>
+      <slot></slot>
     </el-card>
   </div>
 </template>
