@@ -12,6 +12,7 @@ import edit from '@/pages/test/edit'
 import spublicdetails from '@/pages/sourcepubliclist/spublicdetails'
 import spubliclist from '@/pages/sourcepubliclist/spubliclist'
 import dealnoticeprocurement from '@/pages/dealnotice/dealnoticeprocurement'
+import details from '@/pages/dealnotice/details'
 
 Vue.use(Router)
 
@@ -73,6 +74,11 @@ export default new Router({
           name: 'dealnoticeprocurement',
           component: dealnoticeprocurement
         },
+        {
+          path: 'details/:id',
+          name: 'details',
+          component: details
+        }
       ]
     }
   ]
