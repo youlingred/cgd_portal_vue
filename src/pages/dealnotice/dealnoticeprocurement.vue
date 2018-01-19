@@ -36,6 +36,8 @@
                 <el-date-picker
                   v-model=" form1.timesegmentstart"
                   :editable="editable"
+                  @change="datepicker('1','start')"
+                  value-format="yyyy-MM-dd HH:mm:ss"
                   type="datetime"
                   placeholder="选择日期时间">
                 </el-date-picker>
@@ -45,6 +47,8 @@
                 <el-date-picker
                   v-model=" form1.timesegmentend"
                   :editable="editable"
+                  @change="datepicker('1','end')"
+                  value-format="yyyy-MM-dd HH:mm:ss"
                   type="datetime"
                   placeholder="选择日期时间">
                 </el-date-picker>
@@ -52,8 +56,8 @@
             </el-form-item  >
           </div>
           <el-form-item  >
-            <el-button type="primary" @click="search">搜索</el-button>
-            <el-button @click="resetform('form11')">重置</el-button>
+            <el-button type="primary" @click="search('1')">搜索</el-button>
+            <el-button @click="resetform('form1')">重置</el-button>
             <!--第二种展开收齐方式:传参-->
             <button-open-close @change="toggle" :open="displaySearch1"></button-open-close>
           </el-form-item  >
@@ -94,7 +98,9 @@
                 <el-date-picker
                   v-model="form2.timesegmentstart"
                   :editable="editable"
+                  value-format="yyyy-MM-dd HH:mm:ss"
                   type="datetime"
+                  @change="datepicker('2','start')"
                   placeholder="选择日期时间">
                 </el-date-picker>
               </el-col>
@@ -103,35 +109,44 @@
                 <el-date-picker
                   v-model="form2.timesegmentend"
                   :editable="editable"
+                  value-format="yyyy-MM-dd HH:mm:ss"
                   type="datetime"
-                  <!--@change=""  moment('2010-10-20').isBefore('2010-10-21'); // true-->
+                  @change="datepicker('2','end')"
                   placeholder="选择日期时间">
                 </el-date-picker>
               </el-col>
             </el-form-item  >
           </div>
           <el-form-item  >
-            <el-button type="primary" @click="search">搜索</el-button>
-            <el-button @click="resetform('form12')">重置</el-button>
+            <el-button type="primary" @click="search('2')">搜索</el-button>
+            <el-button @click="resetform('form2')">重置</el-button>
             <!--第二种展开收齐方式:传参-->
             <button-open-close @change="toggle2" :open="displaySearch2"></button-open-close>
           </el-form-item  >
         </el-form>
       </el-tab-pane>
     </el-tabs>
+    <div style="padding:20px 0px">
+      <el-button type="primary" @click="buttonFunc('confirm')">确认</el-button>
+      <el-button type="primary" @click="buttonFunc('refused')">拒绝成交</el-button>
+      <el-button type="primary" @click="buttonFunc('productiondom')">生产文档</el-button>
+      <el-button type="primary" @click="buttonFunc('export')" style="float: right;">导出</el-button>
+    </div>
+    <cg-table ref="test" v-bind="$data.table"></cg-table>
   </el-card>
 </template>
 <script>
   import ButtonOpenClose from '@/components/ButtonOpenClose.vue'
+  import CgTable from '@/components/CgTable.vue'
 
   export default {
     components:{
-      ButtonOpenClose
+      ButtonOpenClose,
+      CgTable
     },
     data() {
       return {
         editable:false,
-        // from2start: '2018-01-19', //this.moment().subtract(5, "months").format("YYYY-MM-DD HH:mm:ss"),
         displaySearch1:false,
         displaySearch2:false,
         activeName: '1',
@@ -191,7 +206,7 @@
           },
         ],
         //表单数据
-         form1: {
+        form1: {
           status: '',
           numbering: '',
           name: '',
@@ -211,25 +226,101 @@
           timesegmentstart:'',
           timesegmentend:''
         },
+        //列表数据
+        table: {
+          data: [],
+          height: 400,
+          columns: [
+            {
+              type: 'selection',
+              width: 50
+            },
+            {
+              label: '序号',
+              type: 'index',
+              width: 80
+            },
+            {
+              label: '状态',
+              prop: 'status'
+            },
+            {
+              label: '成交通知书名称',
+              prop: 'name'
+            },
+            {
+              label: '供应商',
+              prop: 'supplier'
+            },
+            {
+              label: '采购编号',
+              prop: 'cnumber'
+            },
+            {
+              label: '采购金额',
+              prop: 'money',
+            },
+            {
+              label: '采购类别',
+              prop: 'ctype',
+              formatter: function (row, column, value) {
+                switch (value) {
+                  case 1:
+                    return '物资类';
+                    break;
+                  case 2:
+                    return '施工类';
+                    break;
+                  case 3:
+                    return '服务类';
+                    break;
+                }
+              }
+            },
+          ],
+          url: this.appConfig.api('testDealnoticeprocurement'),
+          pageNo: 1,
+        }
       };
     },
     methods: {
-      search() {
-
+      search(num) {
+        if(this['form'+num]["timesegmentstart"]===''||this['form'+num]["timesegmentend"]===''){
+          this['form'+num]["timesegmentstart"]='';
+          this['form'+num]["timesegmentend"]='';
+        }
+        this.$refs.test.query(this["form"+num]);
+      },
+      buttonFunc (functionname) {
+        console.log(this.$refs.test.m_selection);
+        console.log('方法name---'+functionname);
       },
       //重置
       resetform(form1Name) {
         this.$refs[form1Name].resetFields();
       },
-      handleClick(tab) {
-        console.log(tab);
+      handleClick() {
+        this.search(this.activeName);
       },
       toggle(open){
         this.displaySearch1=open;
       },
       toggle2(open) {
         this.displaySearch2=open;
+      },
+      datepicker(num,type) {
+        if(type==="start"&&this['form'+num]["timesegmentend"]!==''){
+          if(!this.moment(this['form'+num]["timesegment"+type]).isBefore(this['form'+num]["timesegmentend"])){
+            this['form'+num]["timesegmentend"]='';
+          }
+        }else if(type==="end"&&this['form'+num]["timesegmentstart"]!==''){
+          if(!this.moment(this['form'+num]["timesegmentstart"]).isBefore(this['form'+num]["timesegment"+type])){
+            this['form'+num]["timesegmentstart"]='';
+          }
+        }
+
       }
     }
+
   };
 </script>
