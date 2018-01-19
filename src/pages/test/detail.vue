@@ -2,16 +2,18 @@
   <div>
     <detail v-bind="detailData"></detail>
     <el-button @click="setValue">给第二层数据赋值</el-button>
+    <buttons-operator type="bottom"
+                      :buttons="[{label:'提交',type:'primary',click:sumbit},{label:'返回',type:'info',click:back}]"/>
   </div>
-
-
 </template>
 <script>
   import detail from '@/components/Detail.vue'
+  import buttonsOperator from '@/components/ButtonsOperator.vue'
 
   export default {
     components:{
-      detail
+      detail,
+      buttonsOperator
     },
     data() {
       return {
@@ -23,10 +25,7 @@
           prop5:'value5',
           prop6:'value6',
           prop7:'value7',
-          fileUrl4:'fileUrl4',
-          fileUrl5:'fileUrl5',
-          fileUrl6:'fileUrl6',
-          fileUrl7:'fileUrl7',
+          files:[{name:'文件测试',url:'test'}],
         },
         data2:{}
       };
@@ -56,26 +55,22 @@
               {
                 type:'file',
                 label:'file4',
-                prop:'prop4',
-                prop_url:'fileUrl4',
+                prop:'files',
               },
               {
                 type:'file',
                 label:'file5',
-                prop:'prop5',
-                prop_url:'fileUrl5',
+                prop:'files',
               },
               {
                 type:'file',
                 label:'file6',
-                prop:'prop6',
-                prop_url:'fileUrl6',
+                prop:'files',
               },
               {
                 type:'file',
                 label:'file7',
-                prop:'prop7',
-                prop_url:'fileUrl7',
+                prop:'files',
               }
             ]
           },
@@ -101,26 +96,22 @@
               {
                 type:'file',
                 label:'file4',
-                prop:'prop4',
-                prop_url:'fileUrl4',
+                prop:'files',
               },
               {
                 type:'file',
                 label:'file5',
-                prop:'prop5',
-                prop_url:'fileUrl5',
+                prop:'files',
               },
               {
                 type:'file',
                 label:'file6',
-                prop:'prop6',
-                prop_url:'fileUrl6',
+                prop:'files',
               },
               {
                 type:'file',
                 label:'file7',
-                prop:'prop7',
-                prop_url:'fileUrl7',
+                prop:'files',
               }
             ]
           }
@@ -131,7 +122,16 @@
       setValue(){
         this.data2=this.data1
         this.detailData.contents[1].data=this.data1;
+      },
+      sumbit(){
+        console.log('sumbit')
+      },
+      back(){
+        console.log('back')
       }
+    },
+    created(){
+      console.log(this.$route.params.id)
     }
   }
 </script>

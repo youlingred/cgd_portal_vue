@@ -20,7 +20,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'home/',
       component: home,
       children: [
         {
@@ -44,7 +44,7 @@ export default new Router({
           component: tabs
         },
         {
-          path: 'detail',
+          path: 'detail/:id',
           name: 'detail',
           component: detail
         },

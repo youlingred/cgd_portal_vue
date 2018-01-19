@@ -24,7 +24,9 @@
           prop4: '艳照门',
           fileUrl4: 'http://www.baidu.com'
         },
-        data2: {}
+        data2: {
+          fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
+        }
       };
     },
     computed: {
@@ -84,7 +86,8 @@
                   prop: 'prop4',
                   extendParam:{
                     action:'https://jsonplaceholder.typicode.com/posts/',
-                    tip:'只能上传jpg/png文件，且不超过500kb'
+                    tip:'只能上传jpg/png文件，且不超过500kb',
+                    listType:"picture"
                   }
                 }
               ],
@@ -138,7 +141,7 @@
                 {
                   type: 'file',
                   label: 'file4',
-                  prop: 'prop4',
+                  prop: 'fileList',
                 }
               ]
             }

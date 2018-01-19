@@ -2,10 +2,12 @@
   <!--展示组件-->
   <label v-if="type === 'label'">{{value}}</label>
   <div v-else-if="type === 'file'">
-    <span style="display:inline-block;min-width:200px">{{value}}</span>
-    <a :href="data[prop_url]"
-       target="_blank" class="downloadMessage"><span class="">下载</span>
-    </a>
+    <div v-for="(fileItem,index) in value" :key="index">
+      <span style="display:inline-block;min-width:200px">{{fileItem.name}}</span>
+      <a :href="fileItem.url"
+         target="_blank" class="downloadMessage"><span class="">下载</span>
+      </a>
+    </div>
   </div>
   <!--编辑组件-->
   <el-input v-else-if="type === 'input'" v-model="data[prop]" :placeholder="placeholder"></el-input>
