@@ -27,13 +27,13 @@
     <div class="tr" style="padding:20px 10px">
       <el-button type="primary" @click="exportFunc">导出</el-button>
     </div>
-    <el-table ref="multipleTable" :data="table.data" :border="true" max-height="400" @selection-change="handleSelectionChange">
-      <el-table-column align="center" v-for="item in table.columns" :key="item.index" v-bind="item" show-overflow-tooltip></el-table-column>
-    </el-table>
+    <cg-table ref="test" v-bind="$data.table"></cg-table>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import CgTable from '@/components/CgTable.vue'
+
   export default {
     data () {
       return {
@@ -53,13 +53,14 @@
           },
         ],
         formtable: {
-          name:'',
-          project:'',
-          status:''
+          name: '',
+          project: '',
+          status: ''
         },
         //列表数据
         table: {
-          //列元素
+          data: [],
+          height: 400,
           columns: [
             {
               type: 'selection',
@@ -110,38 +111,26 @@
               }
             }
           ],
-          //数据
-          data: []
-        },
-        multipleSelection: [],
+          url: this.appConfig.api('testDylyListPage'),
+          pageNo: 1,
+        }
       }
     },
-    created () {
+    created(){
 
     },
     methods: {
       search () {
-        //获取列表信息
-        this.axios.post(this.appConfig.api('testDylyList'),this.formtable)
-          .then((response) => {
-            this.table.data = response.data.data;
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        this.$refs.test.query(this.formtable);
       },
       resetForm (name) {
         this.$refs[name].resetFields();
       },
       exportFunc () {
-        if (this.multipleSelection.length>0) {
-          console.log(this.multipleSelection);
-        }
-      },
-      handleSelectionChange(val) {
-        this.multipleSelection = val;
+        console.log(this.$refs.test.m_selection);
       }
-    }
+    },
+    components: {CgTable}
   }
 
 </script>

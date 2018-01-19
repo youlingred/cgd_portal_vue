@@ -11,6 +11,7 @@ import list from '@/pages/test/list'
 import edit from '@/pages/test/edit'
 import spublicdetails from '@/pages/sourcepubliclist/spublicdetails'
 import spubliclist from '@/pages/sourcepubliclist/spubliclist'
+import dealnoticeprocurement from '@/pages/dealnotice/dealnoticeprocurement'
 
 Vue.use(Router)
 
@@ -66,7 +67,12 @@ export default new Router({
           path: 'edit',
           name: 'edit',
           component: edit
-        }
+        },
+        {
+          path: 'dealnoticeprocurement',
+          name: 'dealnoticeprocurement',
+          component: dealnoticeprocurement
+        },
       ]
     }
   ]

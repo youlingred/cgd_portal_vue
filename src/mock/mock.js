@@ -1899,6 +1899,66 @@ Mock.mock(config.api('testDylyListPage'), 'post', function () {
     }
   }
 })
+//成交通知书管理-采购
+Mock.mock(config.api('testDealnoticeprocurement'), 'post', function () {
+  return {
+    "respCode": "0000",
+    "respDesc": "查询站内信总未读数量成功",
+    data:{
+      "rows": [
+        {
+          status: '供应商确认中',
+          name: '通知书名',
+          supplier:'JD',
+          cnumber: "SDJK7889",
+          money: "605990.50",
+          ctype: 1
+        },
+        {
+          status: '供应商确认中',
+          name: '通知书名',
+          supplier:'JD',
+          cnumber: "SDJK7889",
+          money: "605990.50",
+          ctype: 1
+        },
+        {
+          status: '供应商确认中',
+          name: '通知书名',
+          supplier:'JD',
+          cnumber: "SDJK7889",
+          money: "605990.50",
+          ctype: 1
+        },
+        {
+          status: '供应商确认中',
+          name: '通知书名',
+          supplier:'JD',
+          cnumber: "SDJK7889",
+          money: "605990.50",
+          ctype: 1
+        },
+        {
+          status: '供应商确认中',
+          name: '通知书名',
+          supplier:'JD',
+          cnumber: "SDJK7889",
+          money: "605990.50",
+          ctype: 1
+        },
+        {
+          status: '供应商确认中',
+          name: '通知书名',
+          supplier:'JD',
+          cnumber: "SDJK7889",
+          money: "605990.50",
+          ctype: 1
+        }
+      ],
+      "recordsTotal":50
+    }
+  }
+})
 /***********公示信息*********/
 Mock.mock(config.api('testcommen'), 'post', function () {
   return {
