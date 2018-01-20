@@ -15,6 +15,7 @@ import dealnoticeprocurement from '@/pages/dealnotice/dealnoticeprocurement'
 import clarifyOfferIndex from '@/pages/clarify/offer/clarifyOfferIndex'
 import clarifyOfferEdit from '@/pages/clarify/offer/clarifyOfferEdit'
 import clarifyOfferDetail from '@/pages/clarify/offer/clarifyOfferDetail'
+import details from '@/pages/dealnotice/details'
 
 Vue.use(Router)
 
@@ -91,6 +92,11 @@ export default new Router({
           name: 'dealnoticeprocurement',
           component: dealnoticeprocurement
         },
+        {
+          path: 'details/:id',
+          name: 'details',
+          component: details
+        }
       ]
     }
   ]
