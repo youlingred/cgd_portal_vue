@@ -1,6 +1,6 @@
 <template>
   <!--展示组件-->
-  <label v-if="type === 'label'">{{value}}</label>
+  <label v-if="type === 'label'" style="display:inline-block;width:100%;line-height:20px;">{{value}}</label>
   <div v-else-if="type === 'file'">
     <div v-for="(fileItem,index) in value" :key="index">
       <span style="display:inline-block;min-width:200px">{{fileItem.name}}</span>
@@ -10,7 +10,15 @@
     </div>
   </div>
   <!--编辑组件-->
-  <el-input v-else-if="type === 'input'" v-model="data[prop]" :placeholder="placeholder"></el-input>
+  <el-input v-else-if="type === 'input'"
+            v-model="data[prop]"
+            :placeholder="placeholder"
+            v-bind="extendParam"></el-input>
+  <el-input v-else-if="type === 'textarea'"
+            type="textarea"
+            v-model="data[prop]"
+            :placeholder="placeholder"
+            v-bind="extendParam"></el-input>
   <el-date-picker v-else-if="type === 'datePicker'"
                   type="date" v-model="data[prop]"
                   :placeholder="placeholder"

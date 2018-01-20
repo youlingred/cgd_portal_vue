@@ -25,6 +25,7 @@
             publishUser: '老铁',
             publishDate: 1514192693000,
             objectionDate: 1514192693000,
+            clarifyContent:'哈哈哈哈哈',
             status: 1,
             prop4: '艳照门',
             fileList: []
@@ -74,10 +75,13 @@
                     prop: 'publishUser',
                   },
                   {
-                    type: 'input',
+                    type: 'textarea',
                     label: '澄清内容',
                     placeholder: '请输入',
                     prop: 'clarifyContent',
+                    extendParam:{
+                      autosize:{ minRows: 2, maxRows: 4}
+                    }
                   },
                   {
                     type: 'upload',

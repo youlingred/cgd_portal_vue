@@ -2,6 +2,7 @@
   <div style="background-color:#f3f3f3">
     <el-table ref="table" :data="m_data"
               :height="height"
+              @cell-click="cellClickHandler"
               @selection-change="handleSelectionChange"
               border>
       <el-table-column align="center" v-for="item in columns"
@@ -90,6 +91,9 @@
       };
     },
     computed: {
+      table(){
+        return this.$refs.table;
+      },
       //获取全部选中数据
       selection() {
         return this.m_selection;
@@ -147,6 +151,9 @@
       handleSelectionChange(val) {
         this.m_selection = val;
         this.$emit('selectionChange',this.m_selection)
+      },
+      cellClickHandler(row, column, cell, event){
+        this.$emit('cell-click',row,column,cell)
       }
     },
     created() {

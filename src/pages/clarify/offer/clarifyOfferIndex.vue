@@ -22,8 +22,8 @@
     </el-card>
     <buttons-operator type="top"
                       algin="right"
-                      :buttons="[{label:'导出',type:'primary',click:search}]"/>
-    <cg-table ref="table" v-bind="table"/>
+                      :buttons="[{label:'新增',type:'primary',click:add},{label:'导出',type:'primary',click:search}]"/>
+    <cg-table ref="table" v-bind="table" @cell-click="cellClickHandler"/>
   </div>
 </template>
 
@@ -214,7 +214,10 @@
             },
             {
               label: '计划名称',
-              prop: 'planName'
+              prop: 'planName',
+              formatter: (row, column, value) => {
+                return value;
+              }
             },
             {
               label: '发布人',
@@ -265,6 +268,14 @@
         //因为detail组件可以包含多个表单,所以返回的的是表单数组forms
         this.$refs[this.activeName].forms[0].resetFields();
       },
+      //新增
+      add() {
+        this.$router.push({name:'clarifyOfferEdit'})
+      },
+      cellClickHandler(row, column, cell, event){
+        console.log(row,column, cell, event)
+        this.$router.push({name:'clarifyOfferDetail'})
+      }
     }
   }
 </script>
