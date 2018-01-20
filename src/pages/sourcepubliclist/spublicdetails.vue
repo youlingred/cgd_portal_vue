@@ -14,7 +14,11 @@
     data () {
       return {
         data1:{},
-        data2:{}
+        data2:{
+          '1': '*****',
+          '2': 'XXXXXXXX',
+          files:[{name:'文件测试',url:'test'}]
+        }
       };
     },
     computed:{
@@ -97,36 +101,32 @@
                 {
                   type:'label',
                   label:'异议理由',
-                  prop:''
+                  prop:'1'
                 },
                 {
                   type:'label',
                   label:'异议提出时间',
-                  prop:''
+                  prop:'2'
                 },
                 {
                   type:'file',
                   label:'书面异议函',
-                  prop:'fileName',
-                  prop_url:'fileUrl'
+                  prop:'files'
                 },
                 {
                   type:'file',
                   label:'相关依据及证明材料',
-                  prop:'fileName',
-                  prop_url:'fileUrl'
+                  prop:'files'
                 },
                 {
                   type:'file',
                   label:'身份证',
-                  prop:'fileName',
-                  prop_url:'fileUrl'
+                  prop:'files'
                 },
                 {
                   type:'file',
                   label:'授权委托书',
-                  prop:'fileName',
-                  prop_url:'fileUrl'
+                  prop:'files'
                 }
               ]
             }
