@@ -47,9 +47,12 @@
         //发出澄清搜索条件表单数据
         form:{
           send:{
-            name: '',
+            planName: '',
+            publishUser:'',
             project: '',
-            status: ''
+            status: '',
+            publishDate1:'',
+            publishDate2:''
           },
           receive:{
             name: '',
