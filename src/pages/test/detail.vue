@@ -34,7 +34,7 @@
       detailData(){
         return {contents:[
           {
-            header:'标题',
+            header:'标题1',
             labelWidth:'200px',
             data:this.data1,
             children:[
@@ -126,7 +126,15 @@
         this.detailData.contents[1].data=this.data1;
       },
       sumbit(){
-        console.log('sumbit')
+        console.log('sumbit');
+        this.axios.post(this.appConfig.api('testDylyList'),this.form)
+          .then((response) => {
+            console.log(response.data.data);
+            this.table.data = response.data.data;
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       },
       back(){
         console.log('back')

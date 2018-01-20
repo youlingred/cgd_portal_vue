@@ -4,8 +4,9 @@
       <div class="el-card__header" v-show="item.header" :style="{marginBottom:'20px'}">
         <span>{{item.header}}</span>
       </div>
-      <el-form v-bind="item" :model="item.data" :rules="item.rules" label-position="right">
+      <el-form ref="form" v-bind="item" :model="item.data" :rules="item.rules" label-position="right">
         <el-form-item v-for="(child,index) in item.children"
+                      v-show="child.switchFlag!==false"
                       :key="index"
                       :prop="child.prop"
                       :label="child.label+':'">
@@ -20,6 +21,7 @@
   import detailItem from '@/components/detailItem.vue'
 
   export default {
+    name:'detail',
     components:{detailItem},
     props:{
       contents:{
@@ -33,6 +35,11 @@
     data(){
       return{
 
+      }
+    },
+    computed:{
+      forms(){
+        return this.$refs.form;
       }
     }
   }

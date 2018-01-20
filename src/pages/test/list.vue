@@ -3,13 +3,15 @@
     <detail v-bind="searchData">
       <buttons-operator type="top"
                         algin="left"
-                        :switchBtn="{handler:switchHandler,open:showHide}"
-                        :buttons="[{label:'搜索',type:'primary',click:search},{label:'重置',type:'info',click:reset}]"/>
+                        :switchFlag.sync="flag"
+                        :buttons="[{label:'搜索',type:'primary',click:search},
+                        {label:'重置',type:'info',click:reset},
+                        {type:'switch'},]"/>
     </detail>
     <buttons-operator type="top"
                       algin="right"
                       :buttons="[{label:'导出',type:'primary',click:search}]"/>
-    <cg-table v-show="showHide" ref="test" v-bind="table"></cg-table>
+    <cg-table ref="test" v-bind="table"></cg-table>
   </div>
 </template>
 <script>
@@ -25,7 +27,7 @@
     },
     data: function () {
       return {
-        showHide:true,
+        flag:true,
         searchForm:{},
         table:{
           url: this.appConfig.api('testDylyListPage'),
@@ -130,6 +132,7 @@
                   label: '处理状态',
                   placeholder: '请选择处理状态',
                   prop: 'status',
+                  switchFlag:this.flag,
                   extendParam:{
                     options: [
                       {
@@ -153,9 +156,6 @@
       }
     },
     methods: {
-      switchHandler(value){
-        this.showHide=value
-      },
       search() {
         this.$refs.test.query({searchInput:'inputConditions'});
         // this.columns[0].label = '111';
@@ -164,6 +164,12 @@
         // console.log(this.$refs.test.selection);
       },
       reset(){
+
+      },
+      exportHandler(){
+
+      },
+      change(val){
 
       }
     }

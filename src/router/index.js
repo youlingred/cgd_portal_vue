@@ -12,6 +12,9 @@ import edit from '@/pages/test/edit'
 import spublicdetails from '@/pages/sourcepubliclist/spublicdetails'
 import spubliclist from '@/pages/sourcepubliclist/spubliclist'
 import dealnoticeprocurement from '@/pages/dealnotice/dealnoticeprocurement'
+import clarifyOfferIndex from '@/pages/clarify/offer/clarifyOfferIndex'
+import clarifyOfferEdit from '@/pages/clarify/offer/clarifyOfferEdit'
+import clarifyOfferDetail from '@/pages/clarify/offer/clarifyOfferDetail'
 
 Vue.use(Router)
 
@@ -27,6 +30,21 @@ export default new Router({
           path: 'dylyIndex',
           name: 'dylyIndex',
           component: dylyIndex
+        },
+        {
+          path: 'clarifyOfferIndex',
+          name: 'clarifyOfferIndex',
+          component: clarifyOfferIndex
+        },
+        {
+          path: 'clarifyOfferEdit',
+          name: 'clarifyOfferEdit',
+          component: clarifyOfferEdit
+        },
+        {
+          path: 'clarifyOfferDetail',
+          name: 'clarifyOfferDetail',
+          component: clarifyOfferDetail
         },
         {
           path: 'test',

@@ -3,8 +3,6 @@
     <detail v-bind="detailData"></detail>
     <el-button @click="setValue">给第二层数据赋值</el-button>
   </div>
-
-
 </template>
 <script>
   import detail from '@/components/Detail.vue'
@@ -36,6 +34,8 @@
             {
               header: '标题1',
               data: this.data2,
+              labelWidth:'150px',
+              inputWidth:'400px',
               children: [
                 {
                   type: 'input',
@@ -101,6 +101,7 @@
             {
               header: '标题2',
               data: this.data2,
+              labelWidth:'150px',
               children: [
                 {
                   type: 'label',

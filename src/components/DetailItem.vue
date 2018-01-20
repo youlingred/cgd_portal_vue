@@ -34,12 +34,14 @@
              :on-success="fileUploadSuccess"
              v-bind="extendParam">
     <el-button size="small" type="primary">点击上传</el-button>
-    <div v-show="extendParam.tip" slot="tip" class="el-upload__tip">{{extendParam.tip}}</div>
+    <div v-show="extendParam.tip" slot="tip" class="el-upload__tip" style="line-height: 20px;
+}">{{extendParam.tip}}</div>
   </el-upload>
 </template>
 <script>
   export default {
     props: {
+      //所有数据项集合
       data: {
         default() {
           return {};
@@ -77,6 +79,7 @@
       return {}
     },
     computed: {
+      //格式化显示数据,用在非编辑状态下
       value: {
         get() {
           if (this.formatter) {
@@ -87,6 +90,7 @@
       }
     },
     methods:{
+      //文件上传成功回调
       fileUploadSuccess(response, file, fileList){
         this.data[this.prop]=[];
         _.forEach(fileList,(val)=>{
