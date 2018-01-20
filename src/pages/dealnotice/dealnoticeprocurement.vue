@@ -29,29 +29,33 @@
               <el-option v-for="item in pstatus_options" :key="item.value" :label="item.label"
                          :value="item.value"></el-option>
             </el-select>
-          </el-form-item  >
+          </el-form-item >
           <div v-show="displaySearch1">
-            <el-form-item   label="制单日期:"  >
+            <el-form-item   label="制单日期:" required >
               <el-col :span="10">
-                <el-date-picker
-                  v-model=" form1.timesegmentstart"
-                  :editable="editable"
-                  @change="datepicker('1','start')"
-                  value-format="yyyy-MM-dd HH:mm:ss"
-                  type="datetime"
-                  placeholder="选择日期时间">
-                </el-date-picker>
+                <el-form-item prop="timesegmentstart">
+                  <el-date-picker
+                    v-model=" form1.timesegmentstart"
+                    :editable="editable"
+                    @change="datepicker('1','start')"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    type="datetime"
+                    placeholder="选择日期时间">
+                  </el-date-picker>
+                </el-form-item>
               </el-col>
               <el-col class="line" :span="2" style="width:40px;margin-left:38px">&oline;</el-col>
               <el-col :span="10">
-                <el-date-picker
-                  v-model=" form1.timesegmentend"
-                  :editable="editable"
-                  @change="datepicker('1','end')"
-                  value-format="yyyy-MM-dd HH:mm:ss"
-                  type="datetime"
-                  placeholder="选择日期时间">
-                </el-date-picker>
+                <el-form-item prop="timesegmentend">
+                  <el-date-picker
+                    v-model=" form1.timesegmentend"
+                    :editable="editable"
+                    @change="datepicker('1','end')"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    type="datetime"
+                    placeholder="选择日期时间">
+                  </el-date-picker>
+                </el-form-item>
               </el-col>
             </el-form-item  >
           </div>
@@ -93,27 +97,31 @@
             </el-select>
           </el-form-item  >
           <div v-show="displaySearch2">
-            <el-form-item   label="制单日期:" >
+            <el-form-item   label="制单日期:" required>
               <el-col :span="10">
-                <el-date-picker
-                  v-model="form2.timesegmentstart"
-                  :editable="editable"
-                  value-format="yyyy-MM-dd HH:mm:ss"
-                  type="datetime"
-                  @change="datepicker('2','start')"
-                  placeholder="选择日期时间">
-                </el-date-picker>
+                <el-form-item prop="timesegmentstart">
+                  <el-date-picker
+                    v-model="form2.timesegmentstart"
+                    :editable="editable"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    type="datetime"
+                    @change="datepicker('2','start')"
+                    placeholder="选择日期时间">
+                  </el-date-picker>
+                </el-form-item>
               </el-col>
               <el-col class="line" :span="2" style="width:40px;margin-left:38px">&oline;</el-col>
               <el-col :span="10">
-                <el-date-picker
-                  v-model="form2.timesegmentend"
-                  :editable="editable"
-                  value-format="yyyy-MM-dd HH:mm:ss"
-                  type="datetime"
-                  @change="datepicker('2','end')"
-                  placeholder="选择日期时间">
-                </el-date-picker>
+                <el-form-item prop="timesegmentend">
+                  <el-date-picker
+                    v-model="form2.timesegmentend"
+                    :editable="editable"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    type="datetime"
+                    @change="datepicker('2','end')"
+                    placeholder="选择日期时间">
+                  </el-date-picker>
+                </el-form-item>
               </el-col>
             </el-form-item  >
           </div>
