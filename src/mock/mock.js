@@ -1899,6 +1899,27 @@ Mock.mock(config.api('testDylyListPage'), 'post', function () {
     }
   }
 })
+//下拉列表数据
+Mock.mock(config.api('testQuerySelect'), 'post', function () {
+  return {
+    "respCode": "0000",
+    "respDesc": "查询站内信总未读数量成功",
+    data:[
+      {
+        value: 1,
+        label: '编号001'
+      },
+      {
+        value: 2,
+        label: '编号002'
+      },
+      {
+        value: 3,
+        label: '编号003'
+      }
+    ]
+  }
+})
 //成交通知书管理-采购
 Mock.mock(config.api('testDealnoticeprocurement'), 'post', function () {
   return {
