@@ -3,15 +3,17 @@
     <detail v-bind="detailData"></detail>
     <div class="tl" style="padding: 10px 20px">明细信息</div>
     <cg-table ref="test" v-bind="$data.table"></cg-table>
-    <div class="footerdiv">
-      <el-button @click="backFunc" class="footerbutton">返回</el-button>
-    </div>
+    <buttons-operator type="bottom"
+                      fix="true"
+                      :buttons="[{label:'返回',type:'info',click:backFunc}]"/>
+
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import detail from '@/components/Detail.vue'
   import CgTable from '@/components/CgTable.vue'
+  import buttonsOperator from '@/components/ButtonsOperator.vue'
 
   export default {
     data () {
@@ -34,6 +36,8 @@
             {
               data:this.data1,
               header:'基本信息',
+              labelWidth:'150px',
+              inputWidth:'400px',
               children:[
                 {
                   type:'label',
@@ -158,7 +162,7 @@
     },
     methods:{
       backFunc () {
-        window.location.href="/dealnoticeprocurement"
+        this.$router.push({name:'dealnoticeprocurement'});
       },
       _initdata() {
         //基本信息
@@ -418,7 +422,8 @@
     },
     components:{
       detail,
-      CgTable
+      CgTable,
+      buttonsOperator
     },
 
   };
