@@ -14,7 +14,7 @@
           <detail ref="receive" v-bind="formInitDataReceive"/>
           <buttons-operator type="top"
                             algin="left"
-                            :switchFlag.sync="flag"
+                            :switchFlag.sync="flagtwo"
                             :buttons="[{label:'确认',type:'primary',click:search},
                           {label:'重置',type:'info',click:resetform},
                           {type:'switch'},]"/>
@@ -286,7 +286,7 @@
                   label: '制单开始日期',
                   placeholder: '请输入开始时间',
                   prop: 'timesegmentstart',
-                  switchFlag: this.flag,
+                  switchFlag: this.flagtwo,
                   extendParam: {
                     editable:false,
                     format: 'yyyy-mm-dd hh:mm:ss'
@@ -297,7 +297,7 @@
                   label: '制单结束日期',
                   placeholder: '请输入结束时间',
                   prop: 'timesegmentend',
-                  switchFlag: this.flag,
+                  switchFlag: this.flagtwo,
                   extendParam: {
                     editable:false,
                     format: 'yyyy-mm-dd hh:mm:ss',
@@ -379,6 +379,8 @@
         activeName: '1',
         //展开收起标志
         flag: false,
+        //展开收起标志
+        flagtwo: false,
         //发出澄清搜索条件表单数据
         //表单数据
         form:{
