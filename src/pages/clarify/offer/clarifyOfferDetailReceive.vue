@@ -1,21 +1,20 @@
 <template>
   <div>
-    <detail-comp v-bind="detailData"></detail-comp>
+    <detail v-bind="detailData"></detail>
     <buttons-operator type="bottom"
                       fix="true"
                       :buttons="[{label:'返回',type:'info',click:back}]"/>
-
   </div>
 </template>
 
 <script>
-  import detailComp from '@/components/Detail.vue'
+  import detail from '@/components/Detail.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
 
   export default {
-    name: "detail",
+    name: "clarify-offer-detail-receive",
     components: {
-      detailComp,
+      detail,
       buttonsOperator
     },
     data() {
@@ -122,7 +121,7 @@
     },
     methods: {
       back(){
-        this.$router.push({name:'list'})
+        this.$router.push({name:'clarifyOfferIndex'})
       }
     }
   }

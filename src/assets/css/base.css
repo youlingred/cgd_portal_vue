@@ -6398,6 +6398,7 @@ li {
 /*底部操作按钮样式*/
 
 .bottom-operation .background {
+  z-index: 1;
   width: 1005px;
   height: 60px;
   line-height: 60px;

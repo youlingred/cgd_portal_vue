@@ -1,19 +1,42 @@
 <template>
   <div>
-    <detail v-bind="searchData">
-      <buttons-operator type="top"
-                        algin="left"
-                        :switchFlag.sync="flag"
-                        :buttons="[{label:'搜索',type:'primary',click:search},
-                        {label:'重置',type:'info',click:reset},
-                        {type:'switch'},]"/>
-    </detail>
-    <buttons-operator type="top"
-                      algin="right"
-                      :buttons="[{label:'导出',type:'primary',click:search}]"/>
-    <cg-table ref="test" v-bind="table"></cg-table>
+    <el-card>
+      <el-tabs v-model="activeName">
+        <el-tab-pane label="发出的澄清" name="send">
+          <detail ref="send" v-bind="formInitDataSend"/>
+          <buttons-operator type="top"
+                            algin="left"
+                            :buttons="[{label:'搜索',type:'primary',click:search},
+                          {label:'重置',type:'info',click:reset}]"/>
+        </el-tab-pane>
+        <el-tab-pane label="收到的澄清" name="receive">
+          <detail ref="receive" v-bind="formInitDataReceive"/>
+          <buttons-operator type="top"
+                            algin="left"
+                            :switchFlag.sync="flag"
+                            :buttons="[{label:'搜索',type:'primary',click:search},
+                          {label:'重置',type:'info',click:reset},
+                          {type:'switch'},]"/>
+        </el-tab-pane>
+      </el-tabs>
+    </el-card>
+    <cg-table ref="table" v-bind="table" @cell-click="cellClickHandler"/>
+    <!--------FIXME 弹出窗口-------->
+    <el-dialog
+      title="弹出窗口"
+      :visible.sync="dialogShow"
+      width="80%"
+      height="20%"
+      center>
+      <cg-table v-bind="table"/>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogShow = false">确 定</el-button>
+        <el-button @click="dialogShow = false">取 消</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
+
 <script>
   import CgTable from '@/components/CgTable.vue'
   import detail from '@/components/Detail.vue'
@@ -25,20 +48,173 @@
       detail,
       buttonsOperator
     },
-    data: function () {
+    data() {
       return {
-        flag:true,
-        searchForm:{},
-        table:{
+        //弹出框显示标志
+        dialogShow: false,
+        //当前激活的tab名称
+        activeName: 'send',
+        //展开收起标志
+        flag: false,
+        //发出澄清搜索条件表单数据
+        form: {
+          send: {
+            planName: '',
+            publishUser: '',
+            project: '',
+            status: '',
+            publishDate1: '',
+            publishDate2: ''
+          },
+          receive: {
+            name: '',
+            project: '',
+            status: ''
+          }
+        }
+      }
+    },
+    computed: {
+      //发出澄清表单初始化数据
+      formInitDataSend() {
+        return {
+          contents: [
+            {
+              data: this.form.send,
+              labelWidth: '100px',
+              inputWidth: '200px',
+              inline: true,
+              children: [
+                {
+                  type: 'input',
+                  label: '询价单名称',
+                  placeholder: '模糊查询,可用个逗号隔开',
+                  prop: 'planName',
+                },
+                {
+                  type: 'input',
+                  label: '澄清内容',
+                  placeholder: '模糊查询,可用个逗号隔开',
+                  prop: 'publishUser',
+                },
+                {
+                  type: 'dateTimePicker',
+                  label: '澄清开始日期',
+                  placeholder: '请输入开始时间',
+                  prop: 'publishDate1',
+                  extendParam: {
+                    editable: false,
+                    format: 'yyyy-mm-dd hh:mm:ss'
+                  }
+                },
+                {
+                  type: 'dateTimePicker',
+                  label: '澄清结束日期',
+                  placeholder: '请输入结束时间',
+                  prop: 'publishDate2',
+                  extendParam: {
+                    editable: false,
+                    format: 'yyyy-mm-dd hh:mm:ss'
+                  }
+                },
+              ]
+            }
+          ]
+        }
+      },
+      //收到澄清表单初始化数据
+      formInitDataReceive() {
+        return {
+          contents: [
+            {
+              data: this.form.receive,
+              labelWidth: '100px',
+              inputWidth: '200px',
+              inline: true,
+              children: [
+                {
+                  type: 'input',
+                  label: '询价单名称',
+                  placeholder: '模糊查询,可用个逗号隔开',
+                  prop: 'planName',
+                },
+                {
+                  type: 'input',
+                  label: '澄清内容',
+                  placeholder: '模糊查询,可用个逗号隔开',
+                  prop: 'publishUser',
+                },
+                {
+                  type: 'input',
+                  label: '回复内容',
+                  placeholder: '模糊查询,可用个逗号隔开',
+                  prop: 'publishUser',
+                },
+                {
+                  type: 'input',
+                  label: '回复人',
+                  placeholder: '模糊查询,可用个逗号隔开',
+                  prop: 'publishUser'
+                },
+                {
+                  type: 'dateTimePicker',
+                  label: '澄清开始日期',
+                  placeholder: '请输入开始时间',
+                  prop: 'publishDate1',
+                  extendParam: {
+                    editable: false,
+                    format: 'yyyy-mm-dd hh:mm:ss'
+                  }
+                },
+                {
+                  type: 'dateTimePicker',
+                  label: '澄清结束日期',
+                  placeholder: '请输入结束时间',
+                  prop: 'publishDate2',
+                  extendParam: {
+                    editable: false,
+                    format: 'yyyy-mm-dd hh:mm:ss'
+                  }
+                },
+                {
+                  type: 'dateTimePicker',
+                  label: '回复开始日期',
+                  placeholder: '请输入开始时间',
+                  prop: 'publishDate1',
+                  switchFlag: this.flag,
+                  extendParam: {
+                    editable: false,
+                    format: 'yyyy-mm-dd hh:mm:ss'
+                  }
+                },
+                {
+                  type: 'dateTimePicker',
+                  label: '回复结束日期',
+                  placeholder: '请输入结束时间',
+                  prop: 'publishDate2',
+                  switchFlag: this.flag,
+                  extendParam: {
+                    editable: false,
+                    format: 'yyyy-mm-dd hh:mm:ss'
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      //table初始化数据
+      table() {
+        return {
           url: this.appConfig.api('testDylyListPage'),
           pageNo: 1,
           height: 400,
-          queryParam:function(param){
-            console.log('queryParam:',param)
-            return _.assign({test:1},param);
+          queryParam: function (param) {
+            console.log('queryParam:', param)
+            return _.assign({test: 1}, param);
           },
-          responseHandler:function(val){
-            console.log('responseHandler:',val)
+          responseHandler: function (val) {
+            console.log('responseHandler:', val)
             return val;
           },
           columns: [
@@ -53,7 +229,10 @@
             },
             {
               label: '计划名称',
-              prop: 'planName'
+              prop: 'planName',
+              formatter: (row, column, value) => {
+                return value;
+              }
             },
             {
               label: '发布人',
@@ -92,86 +271,35 @@
             }
           ],
         }
-
-      };
-    },
-    props: {},
-    computed:{
-      searchData(){
-        return {
-          contents:[
-            {
-              data:this.searchForm,
-              labelWidth:'100px',
-              inputWidth:'200px',
-              inline:true,
-              children:[
-                {
-                  type: 'input',
-                  label: '计划名称',
-                  placeholder: '请输入计划名称',
-                  prop: 'planName',
-                },
-                {
-                  type: 'input',
-                  label: '发布人',
-                  placeholder: '请输入发布人',
-                  prop: 'publishUser',
-                },
-                {
-                  type: 'dateTimePicker',
-                  label: '发布时间',
-                  placeholder: '请输入发布时间',
-                  prop: 'publishDate',
-                  extendParam:{
-                    format: 'yyyy-mm-dd hh:mm:ss'
-                  }
-                },
-                {
-                  type: 'select',
-                  label: '处理状态',
-                  placeholder: '请选择处理状态',
-                  prop: 'status',
-                  switchFlag:this.flag,
-                  extendParam:{
-                    options: [
-                      {
-                        value: 1,
-                        label: '处理中'
-                      },
-                      {
-                        value: 2,
-                        label: '已受理'
-                      },
-                      {
-                        value: 3,
-                        label: '驳回'
-                      }
-                    ]
-                  }
-                },
-              ]
-            }
-          ]}
       }
     },
     methods: {
+      //搜索
       search() {
-        this.$refs.test.query({searchInput:'inputConditions'});
-        // this.columns[0].label = '111';
-        // console.log(this.$refs.test.all)
-        // console.log(this.$refs.test.selection)
-        // console.log(this.$refs.test.selection);
+        this.$refs.table.query(this.form[this.activeName])
       },
-      reset(){
-
+      //重置
+      reset() {
+        //因为detail组件可以包含多个表单,所以返回的的是表单数组forms
+        this.$refs[this.activeName].forms[0].resetFields();
       },
-      exportHandler(){
-
+      //新增
+      add() {
+        this.$router.push({name: 'edit'})
       },
-      change(val){
-
+      cellClickHandler(row, column, cell) {
+        console.log(row, column, cell)
+        console.log(column.property)
+        if (column.property === 'planName') {
+          this.dialogShow = true
+        } else {
+          this.$router.push({name: 'detail'})
+        }
       }
     }
   }
 </script>
+
+<style scoped>
+
+</style>
