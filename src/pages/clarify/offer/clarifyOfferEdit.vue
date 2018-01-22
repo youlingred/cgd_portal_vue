@@ -20,7 +20,7 @@
     },
     data() {
       return {
-        detail: {
+        form: {
           planName: '团建',
           publishUser: '老铁',
           publishDate: 1514192693000,
@@ -38,7 +38,7 @@
         return {
           contents: [
             {
-              data: this.detail,
+              data: this.form,
               labelWidth: '150px',
               inputWidth: '400px',
               children: [
@@ -125,13 +125,13 @@
     methods: {
       //FIXME 远程请求select数据
       query(query) {
-        if(!query){
-          query=''
+        if (!query) {
+          query = ''
         }
-        this.axios.post(this.appConfig.api('testQuerySelect'),this.form)
+        this.axios.post(this.appConfig.api('testQuerySelect'), this.form)
           .then((response) => {
             console.log(response.data.data);
-            let list=response.data.data;
+            let list = response.data.data;
 
             this.options = list.filter(item => {
               return item.label.toLowerCase()
@@ -144,6 +144,7 @@
       },
       //FIXME 提交
       sumbit() {
+        console.log(this.form)
         this.axios.post(this.appConfig.api('testDylyList'), this.form)
           .then((response) => {
             console.log(response.data.data);
