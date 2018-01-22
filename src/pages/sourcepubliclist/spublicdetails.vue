@@ -1,14 +1,18 @@
 <template>
   <div>
     <detail v-bind="detailData"></detail>
-    <div class="footerdiv">
+<!--    <div class="footerdiv">
       <el-button @click="backFunc" class="footerbutton">返回</el-button>
-    </div>
+    </div>-->
+    <buttons-operator type="bottom"
+                      fix="true"
+                      :buttons="[{label:'返回',type:'info',click:backFunc}]"/>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import detail from '@/components/Detail.vue'
+  import buttonsOperator from '@/components/ButtonsOperator.vue'
 
   export default {
     data () {
@@ -28,6 +32,8 @@
             {
               data:this.data1,
               header:'公示信息',
+              labelWidth:'150px',
+              inputWidth:'400px',
               children:[
                 {
                   type:'label',
@@ -96,6 +102,8 @@
             },
             {
               data:this.data2,
+              labelWidth:'150px',
+              inputWidth:'400px',
               header:'异常信息',
               children:[
                 {
@@ -139,7 +147,7 @@
     },
     methods:{
       backFunc () {
-
+        this.$router.push({name:'spubliclist'})
       },
       _initdata() {
         //获取公示信息
@@ -153,7 +161,8 @@
       }
     },
     components:{
-      detail
+      detail,
+      buttonsOperator
     },
 
   };
