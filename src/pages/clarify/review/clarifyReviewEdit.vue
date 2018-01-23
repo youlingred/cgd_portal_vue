@@ -13,7 +13,7 @@
   import buttonsOperator from '@/components/ButtonsOperator.vue'
 
   export default {
-    name: "clarify-priceManage-edit",
+    name: "clarify-review-edit",
     components: {
       detail,
       buttonsOperator

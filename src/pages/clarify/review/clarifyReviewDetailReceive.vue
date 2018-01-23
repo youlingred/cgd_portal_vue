@@ -3,18 +3,21 @@
     <detail v-bind="detailData"></detail>
     <buttons-operator type="bottom"
                       fix="true"
-                      :buttons="[{label:'返回',type:'info',click:back}]"/>
+                      :buttons="[{label:'回复采购企业澄清',type:'primary',click:reply},{label:'返回',type:'info',click:back}]"/>
 
+      <cg-table v-show="table" ref="table" v-bind="table"/>
   </div>
 </template>
 
 <script>
   import detail from '@/components/Detail.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
+  import CgTable from '@/components/CgTable.vue'
 
   export default {
-    name: "clarify-offer-detail",
+    name: "clarify-review-detail-receive",
     components: {
+      CgTable,
       detail,
       buttonsOperator
     },
@@ -29,6 +32,9 @@
           clarifyContent:'哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈',
           prop4: '艳照门',
           fileList:[{name:'文件测试',url:'test'},{name:'文件测试',url:'test'}],
+        },
+        table:{
+          header:'澄清短信'
         }
       };
     },
@@ -43,50 +49,28 @@
               children: [
                 {
                   type: 'label',
+                  label: '询价单名称',
+                  prop: 'planName',
+                },
+                {
+                  type: 'label',
+                  label: '采购单编号',
+                  prop: 'planName',
+                },
+                {
+                  type: 'label',
                   label: '发送澄清单位',
                   prop: 'planName',
                 },
                 {
                   type: 'label',
-                  label: '询价单名称',
-                  prop: 'status',
-                  formatter: (value) => {
-                    switch(value){
-                      case 1:
-                        return '处理中'
-                      case 2:
-                        return '已受理'
-                      case 3:
-                        return '驳回'
-                      default:
-                        return ''
-                    }
-                  }
-                },
-                {
-                  type: 'label',
-                  label: '询价单编号',
-                  placeholder: '请输入发布人',
-                  prop: 'publishUser',
-                },
-                {
-                  type: 'label',
                   label: '澄清内容',
-                  placeholder: '请输入',
                   prop: 'clarifyContent',
-                  extendParam:{
-                    autosize:{ minRows: 2, maxRows: 4}
-                  }
                 },
                 {
                   type: 'file',
                   label: '澄清附件',
                   prop: 'fileList'
-                },
-                {
-                  type: 'label',
-                  label: '接受澄清单位',
-                  prop: 'publishUser',
                 },
                 {
                   type: 'label',
@@ -103,26 +87,33 @@
                 },
                 {
                   type: 'label',
-                  label: '制单人',
-                  prop: 'publishUser',
+                  label: '回复状态',
+                  prop: 'status',
+                  formatter(value){
+                    switch(value){
+                      case 1:
+                        return '状态1';
+                      case 2:
+                        return '状态2';
+                      default:
+                        return ''
+                    }
+                  }
                 }
-              ],
-              rules:{
-                planName:[
-                  { required: true, message: '请选择询价单名称', trigger: 'blur' },
-                ],
-                clarifyContent:[
-                  { required: true, message: '请输入澄清内容', trigger: 'blur' },
-                ]
-              }
-            },
+              ]
+            }
           ]
         }
       }
     },
     methods: {
+      //回复
+      reply(){
+
+      },
+      //返回上一页
       back(){
-        this.$router.push({name:'clarifyOfferIndex'})
+        this.$router.push({name:'clarifyReviewIndex'})
       }
     }
   }

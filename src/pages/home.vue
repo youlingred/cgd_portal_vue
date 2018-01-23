@@ -4,7 +4,7 @@
     <Nav v-bind="navData"></Nav>
     <LeftMenu v-bind="leftMenuData"></LeftMenu>
     <div class="content_right">
-      <Crumbs></Crumbs>
+      <Crumbs :name="cName"></Crumbs>
       <div class="table-list-group">
         <router-view></router-view>
       </div>
@@ -35,6 +35,13 @@
       Nav,
       LeftMenu,
       Crumbs
+    },
+    computed:{
+      //面包屑名称
+      cName(){
+        console.log(this.$route.path)
+        return this.$router.currentRoute.path;
+      }
     },
     methods: {
       getHeaderData() {

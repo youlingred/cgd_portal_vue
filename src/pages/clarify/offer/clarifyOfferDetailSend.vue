@@ -4,6 +4,7 @@
     <buttons-operator type="bottom"
                       fix="true"
                       :buttons="[{label:'返回',type:'info',click:back}]"/>
+
   </div>
 </template>
 
@@ -12,7 +13,7 @@
   import buttonsOperator from '@/components/ButtonsOperator.vue'
 
   export default {
-    name: "clarify-priceManage-detail-receive",
+    name: "clarify-priceManage-detail",
     components: {
       detail,
       buttonsOperator
@@ -92,7 +93,7 @@
                   prop: 'publishUser',
                 }
               ]
-            }
+            },
           ]
         }
       }

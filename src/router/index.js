@@ -14,7 +14,13 @@ import spubliclist from '@/pages/sourcepubliclist/spubliclist'
 import dealnoticeprocurement from '@/pages/dealnotice/dealnoticeprocurement'
 import clarifyOfferIndex from '@/pages/clarify/offer/clarifyOfferIndex'
 import clarifyOfferEdit from '@/pages/clarify/offer/clarifyOfferEdit'
-import clarifyOfferDetail from '@/pages/clarify/offer/clarifyOfferDetail'
+import clarifyOfferDetailSend from '@/pages/clarify/offer/clarifyOfferDetailSend'
+import clarifyOfferDetailReceive from '@/pages/clarify/offer/clarifyOfferDetailReceive'
+import clarifyReviewIndex from '@/pages/clarify/review/clarifyReviewIndex'
+import clarifyReviewEdit from '@/pages/clarify/review/clarifyReviewEdit'
+import clarifyReviewDetailReply from '@/pages/clarify/review/clarifyReviewDetailReply'
+import clarifyReviewDetailReceive from '@/pages/clarify/review/clarifyReviewDetailReceive'
+import priceOfferIndex from '@/pages/priceManage/bid/pBidIndex'
 import details from '@/pages/dealnotice/details'
 
 Vue.use(Router)
@@ -27,25 +33,11 @@ export default new Router({
       name: 'home/',
       component: home,
       children: [
+        //测试
         {
           path: 'dylyIndex',
           name: 'dylyIndex',
           component: dylyIndex
-        },
-        {
-          path: 'clarifyOfferIndex',
-          name: 'clarifyOfferIndex',
-          component: clarifyOfferIndex
-        },
-        {
-          path: 'clarifyOfferEdit',
-          name: 'clarifyOfferEdit',
-          component: clarifyOfferEdit
-        },
-        {
-          path: 'clarifyOfferDetail',
-          name: 'clarifyOfferDetail',
-          component: clarifyOfferDetail
         },
         {
           path: 'test',
@@ -72,6 +64,48 @@ export default new Router({
           name: 'list',
           component: list
         },
+        //FIXME 澄清管理
+        {
+          path: 'clarifyOfferIndex',
+          name: 'clarifyOfferIndex',
+          component: clarifyOfferIndex
+        },
+        {
+          path: 'clarifyOfferEdit',
+          name: 'clarifyOfferEdit',
+          component: clarifyOfferEdit
+        },
+        {
+          path: 'clarifyOfferDetailSend',
+          name: 'clarifyOfferDetailSend',
+          component: clarifyOfferDetailSend
+        },
+        {
+          path: 'clarifyOfferDetailReceive',
+          name: 'clarifyOfferDetailReceive',
+          component: clarifyOfferDetailReceive
+        },
+        {
+          path: 'clarifyReviewIndex',
+          name: 'clarifyReviewIndex',
+          component: clarifyReviewIndex
+        },
+        {
+          path: 'clarifyReviewEdit',
+          name: 'clarifyReviewEdit',
+          component: clarifyReviewEdit
+        },
+        {
+          path: 'clarifyReviewDetailReply',
+          name: 'clarifyReviewDetailReply',
+          component: clarifyReviewDetailReply
+        },
+        {
+          path: 'clarifyReviewDetailReceive',
+          name: 'clarifyReviewDetailReceive',
+          component: clarifyReviewDetailReceive
+        },
+        //FIXME 单一来源公示采购公告
         {
           path: 'spublicdetails',
           name: 'spublicdetails',
@@ -87,6 +121,7 @@ export default new Router({
           name: 'edit',
           component: edit
         },
+        //FIXME 成交通知书管理
         {
           path: 'dealnoticeprocurement',
           name: 'dealnoticeprocurement',
@@ -96,6 +131,12 @@ export default new Router({
           path: 'details/:id',
           name: 'details',
           component: details
+        },
+        //FIXME 报价管理
+        {
+          path:'priceOfferIndex',
+          name: 'priceOfferIndex',
+          component: priceOfferIndex
         }
       ]
     }

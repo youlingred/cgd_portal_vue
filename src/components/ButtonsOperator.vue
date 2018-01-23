@@ -1,9 +1,9 @@
 <template>
   <!--底部操作按钮模板-->
   <div>
-    <div v-if="type==='bottom'" class="bottom-operation">
-      <div class="background mt10 "
-           :class="[{'fixed-bottom':_fix},_algin]">
+    <div v-if="type==='bottom'" :class="{'bottom-operation':!_fix,'bottom-operation-fixed':_fix}">
+      <div class="background "
+           :class="_algin">
         <el-button v-for="(btn,index) in buttons"
                    :key="index"
                    @click="btn.click"

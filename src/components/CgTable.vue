@@ -1,5 +1,8 @@
 <template>
   <div style="background-color:#f3f3f3">
+    <div v-show="header" class="table-header">
+      <span>{{header}}</span>
+    </div>
     <el-table ref="table" :data="m_data"
               :height="height"
               @cell-click="cellClickHandler"
@@ -23,6 +26,13 @@
   export default {
     //组件入参
     props: {
+      autoLoad:{
+        type:Boolean,
+        default:true
+      },
+      //表格标题
+      header:{
+      },
       //表格高度
       height: {
         type: [Number, String]
@@ -157,7 +167,15 @@
       }
     },
     created() {
-      this.query();
+      if(this.autoLoad){
+        this.query();
+      }
     }
   }
 </script>
+<style scoped>
+  .table-header{
+   font-size: 16px;
+    margin: 10px;
+  }
+</style>

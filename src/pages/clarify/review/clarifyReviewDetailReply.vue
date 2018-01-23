@@ -4,6 +4,7 @@
     <buttons-operator type="bottom"
                       fix="true"
                       :buttons="[{label:'返回',type:'info',click:back}]"/>
+
   </div>
 </template>
 
@@ -12,7 +13,7 @@
   import buttonsOperator from '@/components/ButtonsOperator.vue'
 
   export default {
-    name: "clarify-priceManage-detail-receive",
+    name: "clarify-review-detail",
     components: {
       detail,
       buttonsOperator
@@ -42,36 +43,23 @@
               children: [
                 {
                   type: 'label',
-                  label: '发送澄清单位',
-                  prop: 'planName',
-                },
-                {
-                  type: 'label',
                   label: '询价单名称',
                   prop: 'planName',
                 },
                 {
                   type: 'label',
-                  label: '询价单编号',
-                  prop: 'publishUser',
+                  label: '采购单编号',
+                  prop: 'planName',
                 },
                 {
                   type: 'label',
                   label: '澄清内容',
                   prop: 'clarifyContent',
-                  extendParam:{
-                    autosize:{ minRows: 2, maxRows: 4}
-                  }
                 },
                 {
                   type: 'file',
                   label: '澄清附件',
                   prop: 'fileList'
-                },
-                {
-                  type: 'label',
-                  label: '接受澄清单位',
-                  prop: 'publishUser',
                 },
                 {
                   type: 'label',
@@ -85,11 +73,52 @@
                   type: 'label',
                   label: '澄清属性',
                   prop: 'publishUser',
+                }
+              ]
+            },
+            {
+              data: this.form,
+              header:'回复情况',
+              labelWidth:'150px',
+              inputWidth:'400px',
+              children: [
+                {
+                  type: 'label',
+                  label: '询价单名称',
+                  prop: 'planName',
                 },
                 {
                   type: 'label',
-                  label: '制单人',
+                  label: '采购单编号',
+                  prop: 'planName',
+                },
+                {
+                  type: 'label',
+                  label: '回复内容',
+                  prop: 'clarifyContent',
+                },
+                {
+                  type: 'file',
+                  label: '澄清附件',
+                  prop: 'fileList'
+                },
+                {
+                  type: 'label',
+                  label: '回复询价单位',
                   prop: 'publishUser',
+                },
+                {
+                  type: 'label',
+                  label: '回复人',
+                  prop: 'publishUser',
+                },
+                {
+                  type: 'label',
+                  label: '回复时间',
+                  prop: 'publishDate',
+                  formatter: (value) => {
+                    return this.moment(value).format('YYYY-MM-DD HH:mm:ss');
+                  }
                 }
               ]
             }
@@ -99,7 +128,7 @@
     },
     methods: {
       back(){
-        this.$router.push({name:'clarifyOfferIndex'})
+        this.$router.push({name:'clarifyReviewIndex'})
       }
     }
   }
