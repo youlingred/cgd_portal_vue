@@ -153,7 +153,7 @@
         //获取公示信息
         this.axios.post(this.appConfig.api('testcommenNotice'),{})
           .then((response) => {
-            this.data1=response.data.data;
+            this.data1=response;
           })
           .catch(function (error) {
             console.log(error);

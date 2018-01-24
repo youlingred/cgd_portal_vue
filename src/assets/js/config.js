@@ -13,6 +13,6 @@ const config = {
       default:
         return this.apiBaseurl() + 'rest/service/routing/' + serverId
     }
-  }
+  },
 }
 export default config

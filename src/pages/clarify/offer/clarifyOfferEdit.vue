@@ -130,8 +130,8 @@
         }
         this.axios.post(this.appConfig.api('testQuerySelect'), this.form)
           .then((response) => {
-            console.log(response.data.data);
-            let list = response.data.data;
+            console.log(response);
+            let list = response;
 
             this.options = list.filter(item => {
               return item.label.toLowerCase()
@@ -147,7 +147,7 @@
         console.log(this.form)
         this.axios.post(this.appConfig.api('testDylyList'), this.form)
           .then((response) => {
-            console.log(response.data.data);
+            console.log(response);
           })
           .catch(function (error) {
             console.log(error);

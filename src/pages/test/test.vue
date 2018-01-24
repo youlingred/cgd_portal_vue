@@ -114,8 +114,8 @@
         //获取列表信息
         this.axios.post(this.appConfig.api('testDylyList'),this.form)
           .then((response) => {
-            console.log(response.data.data);
-            this.table.data = response.data.data;
+            console.log(response);
+            this.table.data = response;
           })
           .catch(function (error) {
             console.log(error);

@@ -171,11 +171,8 @@
         //基本信息
         this.axios.post(this.appConfig.api('testcommen'), {})
           .then((response) => {
-            this.form = response.data.data;
+            this.form = response;
           })
-          .catch(function (error) {
-            console.log(error);
-          });
       },
       initTable() {
         let id = this.$route.params.id;

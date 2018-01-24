@@ -1,4 +1,4 @@
-const Mock = require('mockjs');
+import Mock from 'mockjs'
 import config from './../assets/js/config.js';
 
 Mock.mock(config.api('nouser/SelectUserInfoBusiService'), 'post', function () {
@@ -2304,3 +2304,4 @@ Mock.mock(config.api('serviceclass'), 'post', function () {
     }
   }
 })
+export default  Mock

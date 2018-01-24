@@ -26,13 +26,12 @@
   export default {
     //组件入参
     props: {
-      autoLoad:{
-        type:Boolean,
-        default:true
+      autoLoad: {
+        type: Boolean,
+        default: true
       },
       //表格标题
-      header:{
-      },
+      header: {},
       //表格高度
       height: {
         type: [Number, String]
@@ -92,7 +91,7 @@
         //选中数据
         m_selection: [],
         //请求地址
-        m_url:this.url,
+        m_url: this.url,
         //请求参数
         m_query: {
           pageNo: this.pageNo,
@@ -101,15 +100,15 @@
       };
     },
     computed: {
-      _url:{
-        get(){
+      _url: {
+        get() {
 
         },
-        set(val){
+        set(val) {
 
         }
       },
-      table(){
+      table() {
         return this.$refs.table;
       },
       //获取全部选中数据
@@ -125,7 +124,7 @@
       //请求数据，入参会保存为请求条件
       query(arg) {
         return new Promise((resolve, refect) => {
-          let param = _.assign(this.m_query,{url:this.m_url},arg||{})
+          let param = _.assign(this.m_query, {url: this.m_url}, arg || {})
           console.log(param)
           if (param.url && param.url !== '') {
             this.m_url = param.url;
@@ -136,20 +135,16 @@
             console.log('query param:', param);
             this.axios.post(this.m_url, param)
               .then((response) => {
-                console.log();
-                if (response.data.respCode === '0000') {
-                  let result = response.data.data;
-                  console.log(result);
-                  if (this.responseHandler) {
-                    result = this.responseHandler(result);
-                  }
-                  this.m_data = result.rows;
-                  this.m_total = result.recordsTotal;
-                  resolve(result.rows)
+                console.log(response);
+                if (this.responseHandler) {
+                  response = this.responseHandler(response);
                 }
+                this.m_data = response.rows;
+                this.m_total = response.recordsTotal;
+                resolve(response.rows)
               })
               .catch(function (error) {
-                console.log(error);
+                refect(error)
               });
           }
         })
@@ -159,7 +154,7 @@
         this.m_pageNo = val;
         this.query({pageNo: this.m_pageNo}).then((data) => {
           this.m_data = data;
-          console.log('handleChangePageNo data:',data)
+          console.log('handleChangePageNo data:', data)
         })
         //let allData=[];
         //let block = this.pageSize * val;
@@ -168,22 +163,22 @@
       //选项数据改变处理函数
       handleSelectionChange(val) {
         this.m_selection = val;
-        this.$emit('selectionChange',this.m_selection)
+        this.$emit('selectionChange', this.m_selection)
       },
-      cellClickHandler(row, column, cell, event){
-        this.$emit('cell-click',row,column,cell)
+      cellClickHandler(row, column, cell, event) {
+        this.$emit('cell-click', row, column, cell)
       }
     },
     created() {
-      if(this.autoLoad){
+      if (this.autoLoad) {
         this.query();
       }
     }
   }
 </script>
 <style scoped>
-  .table-header{
-   font-size: 16px;
+  .table-header {
+    font-size: 16px;
     margin: 10px;
   }
 </style>

@@ -48,8 +48,8 @@
         //获取用户信息
         this.axios.post(this.appConfig.api('nouser/SelectUserInfoBusiService'))
           .then((response) => {
-            console.log(response.data.data);
-            var data = response.data.data;
+            console.log(response);
+            var data = response;
             this.headerData.isLogin = data.login;
             this.headerData.userName = data.userName;
           })
@@ -59,8 +59,8 @@
         //获取购物车商品数量
         this.axios.post(this.appConfig.api('nouser/SelectTypeByUserIdBusiService'))
           .then((response) => {
-            console.log(response.data.data);
-            var data = response.data.data;
+            console.log(response);
+            var data = response;
             this.headerData.goodsNum = data.count;
           })
           .catch(function (error) {
@@ -69,8 +69,8 @@
         //获取站内消息数量
         this.axios.post(this.appConfig.api('nouser/SelectUnReadCountBusiService'))
           .then((response) => {
-            console.log(response.data.data);
-            var data = response.data.data;
+            console.log(response);
+            var data = response;
             this.headerData.msgNum = data;
           })
           .catch(function (error) {
@@ -80,8 +80,8 @@
         console.log(this.appConfig.api('', 'menu'))
         this.axios.get(this.appConfig.api('', 'menu'))
           .then((response) => {
-            console.log(response.data.data);
-            let data = response.data.data;
+            console.log(response);
+            let data = response;
             let activeMenu;
             let navMenus = [];
             let leftMenus = [];
