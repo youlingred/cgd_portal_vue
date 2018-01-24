@@ -20,7 +20,15 @@ import clarifyReviewIndex from '@/pages/clarify/review/clarifyReviewIndex'
 import clarifyReviewEdit from '@/pages/clarify/review/clarifyReviewEdit'
 import clarifyReviewDetailReply from '@/pages/clarify/review/clarifyReviewDetailReply'
 import clarifyReviewDetailReceive from '@/pages/clarify/review/clarifyReviewDetailReceive'
-import priceOfferIndex from '@/pages/priceManage/bid/pBidIndex'
+import priceBindIndex from '@/pages/priceManage/bid/pBidIndex'
+import priceOfferIndex from '@/pages/priceManage/offer/pOfferIndex'
+import priceOfferEdit from '@/pages/priceManage/offer/pOfferEdit'
+import purchaserNoticeIndex from '@/pages/purchaserNotice/pnIndex'
+import purchaserNoticeDetail from '@/pages/purchaserNotice/pnDetail'
+import idleMaterialsIndex from '@/pages/idleMaterials/imIndex'
+import idleMaterialsDetail from '@/pages/idleMaterials/imDetail'
+import saleNoticeIndex from '@/pages/saleNotice/snIndex'
+import saleNoticeDetail from '@/pages/saleNotice/snDetail'
 import details from '@/pages/dealnotice/details'
 
 Vue.use(Router)
@@ -64,6 +72,82 @@ export default new Router({
           name: 'list',
           component: list
         },
+        //FIXME 单一来源公示采购公告
+        {
+          path: 'spublicdetails',
+          name: 'spublicdetails',
+          component: spublicdetails
+        },
+        {
+          path: 'spubliclist',
+          name: 'spubliclist',
+          component: spubliclist
+        },
+        {
+          path: 'edit',
+          name: 'edit',
+          component: edit
+        },
+        //FIXME 成交通知书管理
+        {
+          path: 'dealnoticeprocurement',
+          name: 'dealnoticeprocurement',
+          component: dealnoticeprocurement
+        },
+        {
+          path: 'details/:type/:id',
+          name: 'details',
+          component: details
+        },
+        //FIXME 报价管理
+        {
+          path:'priceBindIndex',
+          name: 'priceBindIndex',
+          component: priceBindIndex
+        },
+        {
+          path:'priceOfferIndex',
+          name: 'priceOfferIndex',
+          component: priceOfferIndex
+        },
+        {
+          path:'priceOfferEdit',
+          name: 'priceOfferEdit',
+          component: priceOfferEdit
+        },
+        //FIXME 采购公告管理
+        {
+          path:'purchaserNoticeDetail/:type/:id',
+          name: 'purchaserNoticeDetail',
+          component: purchaserNoticeDetail
+        },
+        {
+          path:'purchaserNoticeIndex',
+          name: 'purchaserNoticeIndex',
+          component: purchaserNoticeIndex
+        },
+        //FIXME 闲置物资管理
+        {
+          path:'idleMaterialsDetail/:type/:id',
+          name: 'idleMaterialsDetail',
+          component: idleMaterialsDetail
+        },
+        {
+          path:'idleMaterialsIndex',
+          name: 'idleMaterialsIndex',
+          component: idleMaterialsIndex
+        },
+        //FIXME 销售公告管理
+        {
+          path:'saleNoticeDetail/:id',
+          name: 'saleNoticeDetail',
+          component: saleNoticeDetail
+        },
+        {
+          path:'saleNoticeIndex',
+          name: 'saleNoticeIndex',
+          component: saleNoticeIndex
+        },
         //FIXME 澄清管理
         {
           path: 'clarifyOfferIndex',
@@ -105,39 +189,6 @@ export default new Router({
           name: 'clarifyReviewDetailReceive',
           component: clarifyReviewDetailReceive
         },
-        //FIXME 单一来源公示采购公告
-        {
-          path: 'spublicdetails',
-          name: 'spublicdetails',
-          component: spublicdetails
-        },
-        {
-          path: 'spubliclist',
-          name: 'spubliclist',
-          component: spubliclist
-        },
-        {
-          path: 'edit',
-          name: 'edit',
-          component: edit
-        },
-        //FIXME 成交通知书管理
-        {
-          path: 'dealnoticeprocurement',
-          name: 'dealnoticeprocurement',
-          component: dealnoticeprocurement
-        },
-        {
-          path: 'details/:id',
-          name: 'details',
-          component: details
-        },
-        //FIXME 报价管理
-        {
-          path:'priceOfferIndex',
-          name: 'priceOfferIndex',
-          component: priceOfferIndex
-        }
       ]
     }
   ]

@@ -6411,6 +6411,7 @@ li {
 }
 .bottom-operation-fixed .background {
   position: fixed;
+  z-index:10;
   bottom: 0;
   width: 1005px;
   height: 60px;

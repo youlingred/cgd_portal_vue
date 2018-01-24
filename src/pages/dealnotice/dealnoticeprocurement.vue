@@ -423,7 +423,7 @@
       },
       cellClickHandler(row, column, cell, event){
         console.log(row,column, cell, event)
-        this.$router.push({path:'details/1'})
+        this.$router.push({name:'details',params:{type:1,id:1}})
       },
 
     }

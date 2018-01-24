@@ -1,25 +1,17 @@
 <template>
   <div>
-    <el-card>
-      <el-tabs v-model="activeName">
-        <el-tab-pane label="待报价" name="offering">
-        </el-tab-pane>
-        <el-tab-pane label="已报价" name="offeried">
-
-        </el-tab-pane>
-      </el-tabs>
-      <detail ref="form" v-bind="formInit" noborder>
-        <buttons-operator type="top"
-                          algin="left"
-                          :buttons="[{label:'查询',type:'primary',click:search},
-                          {label:'重置',type:'info',click:reset},]"/>
-      </detail>
-
-
-    </el-card>
+    <detail ref="form" v-bind="formInit">
+      <buttons-operator type="top"
+                        algin="left"
+                        :switchFlag.sync="flag"
+                        :buttons="[{label:'搜索',type:'primary',click:search},
+                      {label:'重置',type:'info',click:reset},
+                      {type:'switch'}]"/>
+    </detail>
     <buttons-operator type="top"
                       algin="right"
-                      :buttons="[{label:'通过',type:'primary',click:pass},{label:'驳回',type:'primary',click:reject}]"/>
+                      :buttons="[{label:'我要参与',type:'primary',click:join},
+                      {label:'导出',type:'primary',click:exports}]"/>
     <cg-table ref="table" v-bind="table" @cell-click="cellClickHandler"/>
   </div>
 </template>
@@ -37,8 +29,7 @@
     },
     data() {
       return {
-        //当前激活的tab名称
-        activeName: 'offering',
+        flag:false,
         options: [],
         //搜索条件表单数据
         form: {
@@ -73,14 +64,20 @@
             {
               label: '询价单名称',
               prop: 'planName',
-              width: '100',
-              formatter: (row, column, value) => {
-                return value;
-              }
+              width: 150,
             },
             {
               label: '销售编号',
-              prop: 'publishUser'
+              prop: 'publishUser',
+              width: 150,
+            },
+            {
+              label: '要求到货日期',
+              prop: 'publishDate',
+              width: 180,
+              formatter: (row, column, value) => {
+                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+              }
             },
             {
               label: '发布日期',
@@ -91,7 +88,7 @@
               }
             },
             {
-              label: '报价截止',
+              label: '报价截止日期',
               prop: 'publishDate',
               width: 180,
               formatter: (row, column, value) => {
@@ -112,8 +109,12 @@
                   default:
                     return ''
                 }
-              }
+              },
             },
+            {
+              label: '采购员',
+              prop: 'publishUser'
+            }
           ]
         },
       }
@@ -130,8 +131,14 @@
               children: [
                 {
                   type: 'input',
-                  label: '销售编号',
-                  placeholder: '请输入销售编号',
+                  label: '询比单名称',
+                  placeholder: '请输入采购单名称',
+                  prop: 'planName',
+                },
+                {
+                  type: 'input',
+                  label: '销售单编号',
+                  placeholder: '请输入采购单编号',
                   prop: 'planName',
                 },
                 {
@@ -155,12 +162,6 @@
                   extendParam: {
                     options: this.options
                   }
-                },
-                {
-                  type: 'input',
-                  label: '澄清内容',
-                  placeholder: '模糊查询,可用个逗号隔开',
-                  prop: 'publishUser',
                 },
                 {
                   type: 'dateTimePicker',
@@ -187,6 +188,7 @@
                   label: '发布开始日期',
                   placeholder: '请输入开始时间',
                   prop: 'publishDate1',
+                  switchFlag: this.flag,
                   extendParam: {
                     editable: false,
                     format: 'yyyy-mm-dd hh:mm:ss'
@@ -197,6 +199,7 @@
                   label: '发布结束日期',
                   placeholder: '请输入结束时间',
                   prop: 'publishDate2',
+                  switchFlag: this.flag,
                   extendParam: {
                     editable: false,
                     format: 'yyyy-mm-dd hh:mm:ss'
@@ -243,20 +246,17 @@
             console.log(error);
           });
       },
-      //通过
-      pass() {
-        this.$router.push({name: 'clarifyOfferEdit'})
+      //参与
+      join() {
+
       },
-      //驳回
-      reject(){
+      //导出
+      exports(){
 
       },
       cellClickHandler(row, column, cell, event) {
         console.log(row, column, cell, event);
-        console.log(this.activeName);
-        if (this.activeName === 'offeried') {
-          this.$router.push({name: 'priceOfferDetail'});
-        }
+        this.$router.push({name: 'saleNoticeDetail',params:{id:11}});
       }
     },
   }

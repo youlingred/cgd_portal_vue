@@ -1,8 +1,8 @@
 <template>
   <div>
-    <detail v-bind="detailData"></detail>
+    <detail v-bind="detailData"/>
     <div class="tl" style="padding: 10px 20px">明细信息</div>
-    <cg-table ref="table" v-bind="table"></cg-table>
+    <cg-table ref="table" v-bind="table"/>
     <buttons-operator type="bottom"
                       fix="true"
                       :buttons="[{label:'返回',type:'info',click:backFunc}]"/>
@@ -46,28 +46,13 @@
               children:[
                 {
                   type:'label',
-                  label:'成交通知书编号',
+                  label:'采购单编号',
                   prop:'1'
                 },
                 {
                   type:'label',
-                  label:'成交通知书名称',
+                  label:'采购单名称',
                   prop:'2'
-                },
-                {
-                  type:'label',
-                  label:'供应商',
-                  prop:'3'
-                },
-                {
-                  type:'label',
-                  label:'供应商联系人',
-                  prop:'4'
-                },
-                {
-                  type:'label',
-                  label:'供应商联系电话',
-                  prop:'5'
                 },
                 {
                   type:'label',
@@ -76,13 +61,34 @@
                 },
                 {
                   type:'label',
-                  label:'配送中心联系人',
+                  label:'配送中心-联系人',
                   prop:'7'
                 },
                 {
                   type:'label',
-                  label:'配送中心联系方式',
+                  label:'配送中心-联系方式',
                   prop:'8'
+                },
+                {
+                  type:'label',
+                  label:'交货日期',
+                  prop:'18',
+                  formatter(value){
+                    return this.moment(value).format("YYYY-MM-DD HH:mm:ss")
+                  }
+                },
+                {
+                  type:'label',
+                  label:'报价截止日期',
+                  prop:'18',
+                  formatter(value){
+                    return this.moment(value).format("YYYY-MM-DD HH:mm:ss")
+                  }
+                },
+                {
+                  type:'label',
+                  label:'报价方式',
+                  prop:'10'
                 },
                 {
                   type:'label',
@@ -111,42 +117,25 @@
                 },
                 {
                   type:'label',
-                  label:'是否生成合同',
+                  label:'成交服务费率',
+                  prop:'13',
+                },
+                {
+                  type:'label',
+                  label:'物流配送方式',
                   prop:'14'
                 },
                 {
                   type:'label',
-                  label:'是否配送',
+                  label:'采购类型',
                   prop:'15'
                 },
                 {
                   type:'label',
-                  label:'订单类型',
+                  label:'供应商分类',
                   prop:'16'
                 },
-                {
-                  type:'label',
-                  label:'采购订单金额',
-                  prop:'17'
-                },
-                {
-                  type:'label',
-                  label:'制单时间',
-                  prop:'18',
-                  formatter(value){
-                    return this.moment(value).format("YYYY-MM-DD HH:mm:ss")
-                  }
-                },
-                {
-                  type:'label',
-                  label:'制单人',
-                  prop:'19'
-                },
-                {
-                  type:'label',
-                  label:'合同签订单位',
-                  prop:'20'
-                },
+
                 {
                   type:'label',
                   label:'备注',
@@ -160,7 +149,7 @@
     },
     methods:{
       backFunc () {
-        this.$router.push({name:'dealnoticeprocurement'});
+        this.$router.push({name:'purchaserNoticeIndex'});
       },
       initForm() {
         //基本信息
@@ -189,24 +178,16 @@
               width: 180
             },
             {
-              label: '物资类别',
-              prop: '2'
-            },
-            {
-              label: '物料编码',
-              prop: '3',
-            },
-            {
               label: '物料名称',
               prop: '4',
             },
             {
-              label: '承诺交货日期',
-              prop: '5',
-              width: 180,
-              formatter: (row, column, value) => {
-                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
-              }
+              label: '物资编码',
+              prop: '3',
+            },
+            {
+              label: '物资类别',
+              prop: '2'
             },
             {
               label: '型号',
@@ -218,22 +199,6 @@
               prop: '7'
             },
             {
-              label: '图号',
-              prop: '8',
-            },
-            {
-              label: '材质',
-              prop: '9',
-            },
-            {
-              label: '推荐品牌',
-              prop: '10'
-            },
-            {
-              label: '生产厂家',
-              prop: '11'
-            },
-            {
               label: '采购数量',
               prop: '12',
             },
@@ -243,48 +208,12 @@
               width: 120,
             },
             {
-              label: '预算单价（元）',
-              prop: '14',
-              width: 120,
-            },
-            {
-              label: '询价总价（元）',
-              prop: '15',
-              width: 120,
-            },
-            {
-              label: '采购总价（元）',
-              prop: '16',
-              width: 120,
-            },
-            {
               label: '要求到货日期',
-              prop: '17',
-              width: 120,
-            },
-            {
-              label: '项目单位联系人',
-              prop: '18',
-              width: 120,
-            },
-            {
-              label: '项目单位联系电话',
-              prop: '19',
+              prop: '5',
               width: 180,
-            },
-            {
-              label: '项目单位联系地址',
-              prop: '20',
-              width: 180,
-            },
-            {
-              label: '业务流程状态',
-              prop: '21',
-              width: 120,
-            },
-            {
-              label: '节点状态',
-              prop: '22',
+              formatter: (row, column, value) => {
+                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+              }
             }
           ];
         }else if(type==2){//施工类详情
@@ -313,44 +242,16 @@
               prop: '4',
             },
             {
-              label: '需求数量（预估）',
+              label: '数量',
               prop: '5',
             },
             {
-              label: '预算单价（元）',
-              prop: '6'
-            },
-            {
-              label: '询价单价（元）',
-              prop: '7'
-            },
-            {
-              label: '采购总价（元）',
-              prop: '8',
-            },
-            {
-              label: '项目完成日期',
-              prop: '9',
-            },
-            {
-              label: '项目单位联系人',
-              prop: '10'
-            },
-            {
-              label: '项目单位联系电话',
-              prop: '11'
-            },
-            {
-              label: '项目单位联系地址',
-              prop: '12',
-            },
-            {
-              label: '业务流程状态',
-              prop: '13',
-            },
-            {
-              label: '节点状态',
-              prop: '14'
+              label: '要求到货日期',
+              prop: '5',
+              width: 180,
+              formatter: (row, column, value) => {
+                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+              }
             }
           ];
         }else if(type==3){//服务类详情
@@ -379,44 +280,16 @@
               prop: '4',
             },
             {
-              label: '需求数量（预估）',
+              label: '数量',
               prop: '5',
             },
             {
-              label: '预算单价（元）',
-              prop: '6'
-            },
-            {
-              label: '询价单价（元）',
-              prop: '7'
-            },
-            {
-              label: '采购总价（元）',
-              prop: '8',
-            },
-            {
-              label: '项目完成日期',
-              prop: '9',
-            },
-            {
-              label: '项目单位联系人',
-              prop: '10'
-            },
-            {
-              label: '项目单位联系电话',
-              prop: '11'
-            },
-            {
-              label: '项目单位联系地址',
-              prop: '12',
-            },
-            {
-              label: '业务流程状态',
-              prop: '13',
-            },
-            {
-              label: '节点状态',
-              prop: '14'
+              label: '要求到货日期',
+              prop: '5',
+              width: 180,
+              formatter: (row, column, value) => {
+                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+              }
             }
           ];
         }

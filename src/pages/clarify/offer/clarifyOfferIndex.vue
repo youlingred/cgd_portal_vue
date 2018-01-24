@@ -3,20 +3,22 @@
     <el-card>
       <el-tabs v-model="activeName">
         <el-tab-pane label="发出的澄清" name="send">
-          <detail ref="form_send" v-bind="formInit.send"/>
+          <detail ref="form_send" v-bind="formInit.send" noborder>
           <buttons-operator type="top"
                             algin="left"
                             :buttons="[{label:'搜索',type:'primary',click:search},
                           {label:'重置',type:'info',click:reset}]"/>
+          </detail>
         </el-tab-pane>
         <el-tab-pane label="收到的澄清" name="receive">
-          <detail ref="form_receive" v-bind="formInit.receive"/>
+          <detail ref="form_receive" v-bind="formInit.receive" noborder>
           <buttons-operator type="top"
                             algin="left"
                             :switchFlag.sync="flag"
                             :buttons="[{label:'搜索',type:'primary',click:search},
                           {label:'重置',type:'info',click:reset},
                           {type:'switch'},]"/>
+          </detail>
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -118,7 +120,7 @@
                 label: '澄清时间',
                 prop: 'publishDate',
                 formatter: (row, column, value) => {
-                  return this.moment(value).format("YY-MM-DD HH:mm:ss");
+                  return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
                 }
               },
               {
@@ -164,7 +166,7 @@
                 label: '澄清时间',
                 prop: 'publishDate',
                 formatter: (row, column, value) => {
-                  return this.moment(value).format("YY-MM-DD HH:mm:ss");
+                  return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
                 }
               },
               {

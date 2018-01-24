@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card v-for="(item,index) in contents" :key="index" v-bind:style="{marginTop:(index>0&&'20px') }">
+    <el-card v-for="(item,index) in contents" :key="index" v-bind:class="{noborder:noborder}" v-bind:style="{marginTop:(index>0&&'20px') }">
       <div class="el-card__header" v-show="item.header" :style="{marginBottom:'20px'}">
         <span>{{item.header}}</span>
       </div>
@@ -24,12 +24,16 @@
     name:'detail',
     components:{detailItem},
     props:{
+      noborder:{
+        type:Boolean,
+        default:false
+      },
       contents:{
         type:Array,
         default(){
           return [
           ]
-        }
+        },
       }
     },
     data(){
@@ -45,6 +49,9 @@
   }
 </script>
 <style scoped>
+  .noborder{
+    border:none;
+  }
   .el-form-item{
     margin-bottom: 13px;
   }

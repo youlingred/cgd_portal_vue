@@ -1,13 +1,15 @@
 <template>
   <div>
-    <detail ref="send" v-bind="formInitDataSend"/>
-    <buttons-operator type="top"
-                      algin="left"
-                      :buttons="[{label:'搜索',type:'primary',click:search},
+    <detail ref="send" v-bind="formInitDataSend">
+      <buttons-operator type="top"
+                        algin="left"
+                        :buttons="[{label:'搜索',type:'primary',click:search},
                           {label:'重置',type:'info',click:resetForm}]"/>
-    <buttons-operator type="top"
-                      algin="right"
-                      :buttons="[{label:'导出',type:'primary',click:exportFunc}]"/>
+      <buttons-operator type="top"
+                        algin="right"
+                        :buttons="[{label:'导出',type:'primary',click:exportFunc}]"/>
+    </detail>
+
 <!--    <el-card>
       <el-form ref="formel" :inline="true" :model="formtable">
         <el-form-item label="计划名称" prop="name">
@@ -39,7 +41,7 @@
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
   import detail from '@/components/Detail.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
   import CgTable from '@/components/CgTable.vue'
@@ -78,7 +80,7 @@
               label: '公告发布时间',
               prop: 'publishDate',
               formatter: (row, column, value) => {
-                return this.moment(value).format("YY-MM-DD HH:mm:ss");
+                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
               }
             },
             {
@@ -200,7 +202,7 @@
               label: '公告发布时间',
               prop: 'publishDate',
               formatter: (row, column, value) => {
-                return this.moment(value).format("YY-MM-DD HH:mm:ss");
+                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
               }
             },
             {
@@ -256,7 +258,7 @@
 
 </script>
 
-<style lang="css" rel="stylesheet/css">
+<style>
 
 
 </style>

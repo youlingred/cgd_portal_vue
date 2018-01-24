@@ -8,7 +8,7 @@
               @cell-click="cellClickHandler"
               @selection-change="handleSelectionChange"
               border>
-      <el-table-column align="center" v-for="item in columns"
+      <el-table-column :align="item.align||'center'" v-for="item in columns"
                        :key="item.index"
                        v-bind="item"
       ></el-table-column>
@@ -101,6 +101,14 @@
       };
     },
     computed: {
+      _url:{
+        get(){
+
+        },
+        set(val){
+
+        }
+      },
       table(){
         return this.$refs.table;
       },
@@ -117,7 +125,7 @@
       //请求数据，入参会保存为请求条件
       query(arg) {
         return new Promise((resolve, refect) => {
-          let param = _.assign(this.m_query, arg||{},{url:this.m_url})
+          let param = _.assign(this.m_query,{url:this.m_url},arg||{})
           console.log(param)
           if (param.url && param.url !== '') {
             this.m_url = param.url;

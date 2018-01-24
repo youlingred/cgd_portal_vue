@@ -3,7 +3,7 @@
     <el-card>
       <el-tabs v-model="activeName">
         <el-tab-pane label="发出的澄清" name="send">
-          <detail ref="send" v-bind="formInitDataSend"/>
+          <detail ref="send" v-bind="formInitDataSend" noborder/>
           <buttons-operator type="top"
                             algin="left"
                             :buttons="[{label:'搜索',type:'primary',click:search},
@@ -242,7 +242,7 @@
               label: '公告发布时间',
               prop: 'publishDate',
               formatter: (row, column, value) => {
-                return this.moment(value).format("YY-MM-DD HH:mm:ss");
+                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
               }
             },
             {

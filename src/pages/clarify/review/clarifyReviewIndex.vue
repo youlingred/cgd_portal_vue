@@ -3,20 +3,16 @@
     <el-card>
       <el-tabs v-model="activeName">
         <el-tab-pane label="收到的澄清" name="receive">
-          <detail ref="form_receive" v-bind="formInit.receive"/>
-          <buttons-operator type="top"
-                            algin="left"
-                            :buttons="[{label:'搜索',type:'primary',click:search},
+          <detail ref="form_receive" v-bind="formInit.receive" noborder>
+            <buttons-operator type="top"
+                              algin="left"
+                              :buttons="[{label:'搜索',type:'primary',click:search},
                           {label:'重置',type:'info',click:reset}]"/>
+          </detail>
         </el-tab-pane>
         <el-tab-pane label="已回复采购企业的澄清" name="reply">
-          <detail ref="form_reply" v-bind="formInit.reply"/>
-          <buttons-operator type="top"
-                            algin="left"
-                            :switchFlag.sync="flag"
-                            :buttons="[{label:'搜索',type:'primary',click:search},
-                          {label:'重置',type:'info',click:reset},
-                          {type:'switch'},]"/>
+          <detail ref="form_reply" v-bind="formInit.reply"></detail>
+
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -122,7 +118,7 @@
                 prop: 'publishDate',
                 width: 180,
                 formatter: (row, column, value) => {
-                  return this.moment(value).format("YY-MM-DD HH:mm:ss");
+                  return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
                 }
               },
               {
@@ -169,7 +165,7 @@
                 prop: 'publishDate',
                 width: 180,
                 formatter: (row, column, value) => {
-                  return this.moment(value).format("YY-MM-DD HH:mm:ss");
+                  return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
                 }
               },
               {
@@ -186,7 +182,7 @@
                 prop: 'publishDate',
                 width: 150,
                 formatter: (row, column, value) => {
-                  return this.moment(value).format("YY-MM-DD HH:mm:ss");
+                  return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
                 }
               },
               {

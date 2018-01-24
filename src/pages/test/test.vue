@@ -76,7 +76,7 @@
               label: '公告发布时间',
               prop: 'publishDate',
               formatter: (row, column, value) => {
-                return this.moment(value).format("YY-MM-DD HH:mm:ss");
+                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
               }
             },
             {

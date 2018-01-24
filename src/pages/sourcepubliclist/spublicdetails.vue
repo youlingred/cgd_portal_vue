@@ -1,6 +1,6 @@
 <template>
   <div>
-    <detail v-bind="detailData"></detail>
+    <detail v-bind="detailData"/>
 <!--    <div class="footerdiv">
       <el-button @click="backFunc" class="footerbutton">返回</el-button>
     </div>-->
@@ -10,7 +10,7 @@
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
   import detail from '@/components/Detail.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
 
@@ -65,7 +65,7 @@
                   label:'公示起止时间',
                   prop:'6',
                   formatter(value){
-                    return this.moment(value).format("YY-MM-DD HH:mm:ss")
+                    return this.moment(value).format("YYYY-MM-DD HH:mm:ss")
                   }
                 },
                 {
@@ -151,7 +151,7 @@
       },
       _initdata() {
         //获取公示信息
-        this.axios.post(this.appConfig.api('testcommen'),{})
+        this.axios.post(this.appConfig.api('testcommenNotice'),{})
           .then((response) => {
             this.data1=response.data.data;
           })
@@ -168,7 +168,7 @@
   };
 </script>
 
-<style lang="css" rel="stylesheet/css">
+<style scoped>
   .footerdiv {
     height: 45px;
     line-height:42px;
