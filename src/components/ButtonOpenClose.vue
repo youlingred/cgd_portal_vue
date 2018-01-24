@@ -9,6 +9,14 @@
       flag:{
         default:false,
       },
+      openLabel:{
+        type:String,
+        default:'展开'
+      },
+      closeLabel:{
+        type:String,
+        default:'收起'
+      },
       //状态变化回调函数,入参是flag值
       change:{
         type:Function,
@@ -31,9 +39,9 @@
       //标签
       label(){
         if(this._flag){
-          return '收起'
+          return this.closeLabel
         }else{
-          return '展开'
+          return this.openLabel
         }
       },
       //箭头class

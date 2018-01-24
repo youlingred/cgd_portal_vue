@@ -4,7 +4,7 @@
     <buttons-operator type="top"
                       algin="center"
                       :switchFlag.sync="flag"
-                      :buttons="[{type:'switch'}]"/>
+                      :buttons="[{type:'switch',openLabel:'查看全部'}]"/>
     <div class="tl" style="padding: 10px 20px">明细信息</div>
     <cg-table ref="table" v-bind="table"/>
     <buttons-operator type="bottom"
