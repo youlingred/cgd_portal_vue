@@ -125,7 +125,7 @@
       query(arg) {
         return new Promise((resolve, refect) => {
           let param = _.assign(this.m_query, {url: this.m_url}, arg || {})
-          console.log(param)
+          console.log(param);
           if (param.url && param.url !== '') {
             this.m_url = param.url;
             delete param.url;
@@ -165,7 +165,7 @@
         this.m_selection = val;
         this.$emit('selectionChange', this.m_selection)
       },
-      cellClickHandler(row, column, cell, event) {
+      cellClickHandler(row, column, cell) {
         this.$emit('cell-click', row, column, cell)
       }
     },

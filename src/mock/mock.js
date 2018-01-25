@@ -34,7 +34,8 @@ Mock.mock(config.api('nouser/SelectUnReadCountBusiService'), 'post', function ()
 Mock.mock(config.api('', 'menu'), 'get', function () {
   return {
     "respDesc": "success",
-    "data": [{
+    "data": [
+      {
       "autoId": 8,
       "parentId": 1,
       "deep": 2,
@@ -202,7 +203,8 @@ Mock.mock(config.api('', 'menu'), 'get', function () {
           "subMenus": []
         }]
       }]
-    }, {
+    },
+      {
       "autoId": 5,
       "parentId": 1,
       "deep": 2,
@@ -482,7 +484,8 @@ Mock.mock(config.api('', 'menu'), 'get', function () {
           "subMenus": []
         }]
       }]
-    }, {
+    },
+      {
       "autoId": 7,
       "parentId": 1,
       "deep": 2,
@@ -1070,7 +1073,8 @@ Mock.mock(config.api('', 'menu'), 'get', function () {
           "subMenus": []
         }]
       }]
-    }, {
+    },
+      {
       "autoId": 9,
       "parentId": 1,
       "deep": 2,
@@ -1518,7 +1522,8 @@ Mock.mock(config.api('', 'menu'), 'get', function () {
           "subMenus": []
         }]
       }]
-    }, {
+    },
+      {
       "autoId": 24,
       "parentId": 1,
       "deep": 2,
@@ -1560,7 +1565,8 @@ Mock.mock(config.api('', 'menu'), 'get', function () {
           "subMenus": []
         }]
       }]
-    }, {
+    },
+      {
       "autoId": 26,
       "parentId": 1,
       "deep": 2,

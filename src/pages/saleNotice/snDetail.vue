@@ -229,7 +229,6 @@
             prop: '12',
             width: 150,
             formatter:(row,column,value)=>{
-              console.log(value)
              return this.accounting.formatMoney(value,'￥',2);
             }
           },

@@ -1,8 +1,15 @@
 import axios from 'axios'
+import {Loading} from 'element-ui';
+
+let loading;
 //添加一个请求拦截器
 axios.interceptors.request.use(
   function (config) {
     //在请求发出之前进行一些操作
+    loading=Loading.service({
+      lock:true,
+      text:'数据加载中'
+    });
     return config;
   },
   function (error) {
@@ -12,6 +19,7 @@ axios.interceptors.request.use(
 //添加一个响应拦截器
 axios.interceptors.response.use(
   function (res) {
+    loading.close();
     let result;
     switch (res.status) {
       case 404:
@@ -30,7 +38,7 @@ axios.interceptors.response.use(
     return result;
   },
   function (error) {
-
+    loading.close();
     return Promise.reject(error);
   })
 export default axios
