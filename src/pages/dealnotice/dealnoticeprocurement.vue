@@ -3,7 +3,7 @@
     <el-card>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="待处理" name="1">
-          <detail ref="send" v-bind="formInitDataSend"/>
+          <detail ref="send" v-bind="formInitDataSend" noborder/>
           <buttons-operator type="top"
                             algin="left"
                             :switchFlag.sync="flag"

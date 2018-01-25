@@ -12,19 +12,19 @@
     </div>
     <div v-else-if="type==='top'" if="type==='top'" class="top-operation" :class="_algin">
       <template v-for="(btn) in buttons">
-        <button-open-close v-if="btn.type==='switch'" :flag.sync="_switchFlag" @change="btn.change||null" v-bind="btn"/>
+        <button-switch v-if="btn.type==='switch'" :flag.sync="_switchFlag" @change="btn.change||null" v-bind="btn"/>
         <el-button v-else @click="btn.click" v-bind="btn">{{btn.label}}</el-button>
       </template>
     </div>
   </div>
 </template>
 <script>
-  import ButtonOpenClose from '@/components/ButtonOpenClose.vue'
+  import ButtonSwitch from '@/components/ButtonSwitch.vue'
 
   export default {
     name:'buttons-operator',
     components:{
-      ButtonOpenClose
+      ButtonSwitch
     },
     props: {
       //类型,top为中上部,table列表上面的操作按钮组,

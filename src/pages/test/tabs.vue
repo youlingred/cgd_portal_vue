@@ -33,9 +33,9 @@
             <el-button type="primary" @click="search">搜索</el-button>
             <el-button @click="resetForm('form')">重置</el-button>
             <!--第一种展开收齐方式:监听事件-->
-            <button-open-close @change="toggle" :open="displaySearch"></button-open-close>
+            <button-switch @change="toggle" :open="displaySearch"></button-switch>
             <!--第二种展开收齐方式:传参-->
-            <button-open-close :el="$refs.hideSearch" :open="displaySearch"></button-open-close>
+            <button-switch :el="$refs.hideSearch" :open="displaySearch"></button-switch>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -44,11 +44,11 @@
   </el-card>
 </template>
 <script>
-  import ButtonOpenClose from '@/components/ButtonOpenClose.vue'
+  import ButtonSwitch from '@/components/ButtonSwitch.vue'
 
   export default {
     components:{
-      ButtonOpenClose
+      ButtonSwitch
     },
     data() {
       return {

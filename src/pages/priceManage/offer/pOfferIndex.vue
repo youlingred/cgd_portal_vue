@@ -11,8 +11,9 @@
       <detail ref="form" v-bind="formInit" noborder>
         <buttons-operator type="top"
                           algin="left"
+                          :switchFlag.sync="flag"
                           :buttons="[{label:'查询',type:'primary',click:search},
-                          {label:'重置',type:'info',click:reset},]"/>
+                          {label:'重置',type:'info',click:reset},{type:'switch'}]"/>
       </detail>
 
 
@@ -37,6 +38,7 @@
     },
     data() {
       return {
+        flag:false,
         //当前激活的tab名称
         activeName: 'offering',
         options: [],
@@ -187,6 +189,7 @@
                   label: '发布开始日期',
                   placeholder: '请输入开始时间',
                   prop: 'publishDate1',
+                  switchFlag: this.flag,
                   extendParam: {
                     editable: false,
                     format: 'yyyy-mm-dd hh:mm:ss'
@@ -197,6 +200,7 @@
                   label: '发布结束日期',
                   placeholder: '请输入结束时间',
                   prop: 'publishDate2',
+                  switchFlag: this.flag,
                   extendParam: {
                     editable: false,
                     format: 'yyyy-mm-dd hh:mm:ss'
