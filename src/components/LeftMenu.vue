@@ -8,8 +8,8 @@
             <i class="abs glyphicon-add-left"></i>
           </a>
           <ul class="list-group">
-            <li v-for="val in value.subMenus" class="list-group-item" :class="{tive:val.code==activeItem}">
-              <router-link :to="{name:'dylyIndex'}"  class="list-group-item-title" v-on:click.prevent.native="subMenuClick(val.code)">{{val.name}}</router-link>
+            <li v-for="val in value.subMenus" class="list-group-item" :class="{tive:val.code===_active.code}">
+              <router-link :to="{name:val.url}"  class="list-group-item-title" v-on:click.prevent.native="subMenuClick(val)">{{val.name}}</router-link>
               <i class="abs glyphicon-arrows-right dn"></i>
             </li>
           </ul>
@@ -21,6 +21,7 @@
 <script>
   export default {
     props:{
+      active:{},
       menus:{
         default:function (){
           return [
@@ -28,15 +29,18 @@
               isShow: true,
               code:'',
               name: 'test',
+              url:'',
               subMenus: [{
                 name: 'test1-1',
-                code: 'test'
+                code: 'test',
+                url:''
               }]
             },
             {
               isShow: true,
               code:'',
-              name: 'test1'
+              name: 'test1',
+              url:''
             }
           ]
         }
@@ -44,27 +48,25 @@
     },
     data() {
       return {
-        activeMenuId:0
+        _active:{}
       }
     },
-    computed:{
-      activeItem:{
-        get:function (){
-          return this.activeMenuId
-        },
-        set:function(active){
-          this.activeMenuId=active
-        }
+    watch:{
+      active(newVal){
+        this._active=newVal;
+        this.$emit('change',newVal);
       }
     },
     methods: {
       menuClick(item) {
         item.isShow=!item.isShow
       },
-      subMenuClick(active) {
-        console.log(active,this.activeItem)
-        if(this.activeItem!=active){
-          this.activeItem=active;
+      subMenuClick(menu) {
+        console.log(menu.url)
+        if(this._active.code!=menu.code){
+          this._active=menu;
+          this.$emit('change',menu);
+          this.$router.push({name:menu.url})
         }
       },
     }

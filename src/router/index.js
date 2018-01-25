@@ -137,7 +137,7 @@ export default new Router({
           name: 'idleMaterialsIndex',
           component: idleMaterialsIndex
         },
-        //FIXME 销售公告管理
+        //FIXME 销售公告查询
         {
           path:'saleNoticeDetail/:id',
           name: 'saleNoticeDetail',

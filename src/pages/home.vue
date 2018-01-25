@@ -2,9 +2,9 @@
   <div>
     <Header v-bind="headerData"></Header>
     <Nav v-bind="navData"></Nav>
-    <LeftMenu v-bind="leftMenuData"></LeftMenu>
+    <LeftMenu ref="lmenu" @change="menuChange" v-bind="leftMenuData"></LeftMenu>
     <div class="content_right">
-      <Crumbs :name="cName"></Crumbs>
+      <crumbs :name="cname"/>
       <div class="table-list-group">
         <router-view></router-view>
       </div>
@@ -20,6 +20,7 @@
   export default {
     data() {
       return {
+        cname:'',
         headerData: {
           isLogin: false,
           userName: '',
@@ -27,7 +28,10 @@
           goodsNum: 2
         },
         navData: {},
-        leftMenuData:{}
+        leftMenuData:{
+          active:{},
+          menus:[]
+        }
       }
     },
     components: {
@@ -36,14 +40,10 @@
       LeftMenu,
       Crumbs
     },
-    computed:{
-      //面包屑名称
-      cName(){
-        console.log(this.$route.path)
-        return this.$router.currentRoute.path;
-      }
-    },
     methods: {
+      menuChange(menu){
+        this.cname=menu.name;
+      },
       getHeaderData() {
         //获取用户信息
         this.axios.post(this.appConfig.api('nouser/SelectUserInfoBusiService'))
@@ -100,22 +100,25 @@
                 isShow: true,
                 code: item.menuCode,
                 name: item.menuName,
+                url:item.menuUrl,
                 subMenus: []
               };
               if (item.subMenus) {
                 item.subMenus.forEach((child) => {
-                  let subMenus = {
+                  let subMenu = {
                     code: child.menuCode,
-                    name: child.menuName
+                    name: child.menuName,
+                    url:child.menuUrl
                   };
-                  menu.subMenus.push(subMenus)
+                  if(this.$route.name===subMenu.url){
+                    this.leftMenuData.active=subMenu;
+                  }
+                  menu.subMenus.push(subMenu)
                 })
               }
               leftMenus.push(menu)
             });
-            this.leftMenuData={
-              menus:leftMenus
-            }
+            this.leftMenuData.menus=leftMenus
             console.log('leftMenuData',this.leftMenuData)
           })
           .catch(function (error) {

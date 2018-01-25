@@ -5,11 +5,10 @@
                         algin="left"
                         :buttons="[{label:'搜索',type:'primary',click:search},
                           {label:'重置',type:'info',click:resetForm}]"/>
-      <buttons-operator type="top"
-                        algin="right"
-                        :buttons="[{label:'导出',type:'primary',click:exportFunc}]"/>
     </detail>
-
+    <buttons-operator type="top"
+                      algin="right"
+                      :buttons="[{label:'导出',type:'primary',click:exportFunc}]"/>
 <!--    <el-card>
       <el-form ref="formel" :inline="true" :model="formtable">
         <el-form-item label="计划名称" prop="name">

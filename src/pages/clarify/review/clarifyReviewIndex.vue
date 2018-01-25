@@ -11,7 +11,7 @@
           </detail>
         </el-tab-pane>
         <el-tab-pane label="已回复采购企业的澄清" name="reply">
-          <detail ref="form_reply" v-bind="formInit.reply"></detail>
+          <detail ref="form_reply" v-bind="formInit.reply" noborder/>
 
         </el-tab-pane>
       </el-tabs>

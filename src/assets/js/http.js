@@ -7,7 +7,7 @@ axios.interceptors.request.use(
   function (config) {
     //在请求发出之前进行一些操作
     loading=Loading.service({
-      lock:true,
+      // lock:true,
       text:'数据加载中'
     });
     return config;

@@ -6928,6 +6928,9 @@ button{
 .el-card {
   box-shadow: none;
 }
+.el-card__body{
+  padding: 10px;
+}
 .top-operation{
   padding: 10px;
 }

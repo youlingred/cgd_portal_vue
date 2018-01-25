@@ -197,7 +197,7 @@
             contents: [
               {
                 data: this.form.send,
-                labelWidth: '100px',
+                labelWidth: '150px',
                 inputWidth: '200px',
                 inline: true,
                 children: [
