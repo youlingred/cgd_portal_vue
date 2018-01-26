@@ -1,7 +1,9 @@
 const state = {
-  apiUrl:'',
-  isLogin: false,
-  userInfo: {},
+  activeLeftMenu:{
+    url:'',
+    code:'',
+    name:''
+  }
 }
 
 export default state

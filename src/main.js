@@ -6,6 +6,7 @@ import axios from './assets/js/http'
 import lodash from 'lodash'
 import appConfig from './assets/js/config'
 import router from './router'
+import store from './vuex/store'
 import moment from 'moment'
 import accounting from 'accounting'
 import ElementUI from 'element-ui'
@@ -27,6 +28,7 @@ window._=lodash
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: {App}
 }).$mount('#app')

@@ -8,7 +8,7 @@
             <i class="abs glyphicon-add-left"></i>
           </a>
           <ul class="list-group">
-            <li v-for="val in value.subMenus" class="list-group-item" :class="{tive:val.code===_active.code}">
+            <li v-for="val in value.subMenus" class="list-group-item" :class="{tive:val.code===active.code}">
               <router-link :to="{name:val.url}"  class="list-group-item-title" v-on:click.prevent.native="subMenuClick(val)">{{val.name}}</router-link>
               <i class="abs glyphicon-arrows-right dn"></i>
             </li>
@@ -21,7 +21,6 @@
 <script>
   export default {
     props:{
-      active:{},
       menus:{
         default:function (){
           return [
@@ -48,13 +47,17 @@
     },
     data() {
       return {
-        _active:{}
+
       }
     },
-    watch:{
-      active(newVal){
-        this._active=newVal;
-        this.$emit('change',newVal);
+    computed:{
+      active:{
+        get(){
+          return this.$store.state.activeLeftMenu;
+        },
+        set(val){
+          this.$store.dispatch('setActiveLeftMenu',val);
+        }
       }
     },
     methods: {
@@ -63,13 +66,13 @@
       },
       subMenuClick(menu) {
         console.log(menu.url)
-        if(this._active.code!=menu.code){
-          this._active=menu;
+        if(this.active.code!=menu.code){
+          this.active=menu;
           this.$emit('change',menu);
           this.$router.push({name:menu.url})
         }
       },
-    }
+    },
   }
 </script>
 

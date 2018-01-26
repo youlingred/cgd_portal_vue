@@ -2,9 +2,9 @@
   <div>
     <Header v-bind="headerData"></Header>
     <Nav v-bind="navData"></Nav>
-    <LeftMenu ref="lmenu" @change="menuChange" v-bind="leftMenuData"></LeftMenu>
+    <LeftMenu v-bind="leftMenuData"></LeftMenu>
     <div class="content_right">
-      <crumbs :name="cname"/>
+      <crumbs/>
       <div class="table-list-group">
         <router-view></router-view>
       </div>
@@ -18,9 +18,14 @@
   import Crumbs from '@/components/Crumbs.vue'
 
   export default {
+    components: {
+      Header,
+      Nav,
+      LeftMenu,
+      Crumbs
+    },
     data() {
       return {
-        cname:'',
         headerData: {
           isLogin: false,
           userName: '',
@@ -29,21 +34,11 @@
         },
         navData: {},
         leftMenuData:{
-          active:{},
           menus:[]
         }
       }
     },
-    components: {
-      Header,
-      Nav,
-      LeftMenu,
-      Crumbs
-    },
     methods: {
-      menuChange(menu){
-        this.cname=menu.name;
-      },
       getHeaderData() {
         //获取用户信息
         this.axios.post(this.appConfig.api('nouser/SelectUserInfoBusiService'))
@@ -110,9 +105,9 @@
                     name: child.menuName,
                     url:child.menuUrl
                   };
-                  if(this.$route.name===subMenu.url){
-                    this.leftMenuData.active=subMenu;
-                  }
+                  if(this.$route.name===subMenu.url)(
+                    this.$store.dispatch('setActiveLeftMenu',subMenu)
+                  )
                   menu.subMenus.push(subMenu)
                 })
               }
@@ -126,8 +121,8 @@
           });
       }
     },
-    created() {
-      this.getHeaderData()
+    created(){
+      this.getHeaderData();
     }
   }
 </script>
