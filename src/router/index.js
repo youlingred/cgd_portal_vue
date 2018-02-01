@@ -1,195 +1,26 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import HelloWorld from '@/components/HelloWorld'
+import _ from 'lodash'
 import home from '@/pages/home'
-import dylyIndex from '@/pages/dyly/dylyIndex'
-import test from '@/pages/test/test'
-import reset from '@/pages/test/reset'
-import tabs from '@/pages/test/tabs'
-import detail from '@/pages/test/detail'
-import list from '@/pages/test/list'
-import edit from '@/pages/test/edit'
-import spublicdetails from '@/pages/sourcepubliclist/spublicdetails'
-import spubliclist from '@/pages/sourcepubliclist/spubliclist'
-import dealnoticeprocurement from '@/pages/dealnotice/dealnoticeprocurement'
-import clarifyOfferIndex from '@/pages/clarify/offer/clarifyOfferIndex'
-import clarifyOfferEdit from '@/pages/clarify/offer/clarifyOfferEdit'
-import clarifyOfferDetailSend from '@/pages/clarify/offer/clarifyOfferDetailSend'
-import clarifyOfferDetailReceive from '@/pages/clarify/offer/clarifyOfferDetailReceive'
-import clarifyReviewIndex from '@/pages/clarify/review/clarifyReviewIndex'
-import clarifyReviewEdit from '@/pages/clarify/review/clarifyReviewEdit'
-import clarifyReviewDetailReply from '@/pages/clarify/review/clarifyReviewDetailReply'
-import clarifyReviewDetailReceive from '@/pages/clarify/review/clarifyReviewDetailReceive'
-import priceBindIndex from '@/pages/priceManage/bid/pBidIndex'
-import priceOfferIndex from '@/pages/priceManage/offer/pOfferIndex'
-import priceOfferEdit from '@/pages/priceManage/offer/pOfferEdit'
-import purchaserNoticeIndex from '@/pages/purchaserNotice/pnIndex'
-import purchaserNoticeDetail from '@/pages/purchaserNotice/pnDetail'
-import idleMaterialsIndex from '@/pages/idleMaterials/imIndex'
-import idleMaterialsDetail from '@/pages/idleMaterials/imDetail'
-import saleNoticeIndex from '@/pages/saleNotice/snIndex'
-import saleNoticeDetail from '@/pages/saleNotice/snDetail'
-import details from '@/pages/dealnotice/details'
 
 Vue.use(Router)
 
+function importRoutes(r) {
+  return _.flatten(r.keys().map(key => r(key).default));
+}
+
 export default new Router({
-  mode:'history',
+  mode: 'history',
   routes: [
+    {
+      path: '*',
+      redirect: '/'
+    },
     {
       path: '/',
       name: 'home/',
       component: home,
-      children: [
-        //测试
-        {
-          path: 'dylyIndex',
-          name: 'dylyIndex',
-          component: dylyIndex
-        },
-        {
-          path: 'test',
-          name: 'test',
-          component: test
-        },
-        {
-          path: 'reset',
-          name: 'reset',
-          component: reset
-        },
-        {
-          path: 'tabs',
-          name: 'tabs',
-          component: tabs
-        },
-        {
-          path: 'detail',
-          name: 'detail',
-          component: detail
-        },
-        {
-          path: 'list',
-          name: 'list',
-          component: list
-        },
-        //FIXME 单一来源公示采购公告
-        {
-          path: 'spublicdetails',
-          name: 'spublicdetails',
-          component: spublicdetails
-        },
-        {
-          path: 'spubliclist',
-          name: 'spubliclist',
-          component: spubliclist
-        },
-        {
-          path: 'edit',
-          name: 'edit',
-          component: edit
-        },
-        //FIXME 成交通知书管理
-        {
-          path: 'dealnoticeprocurement',
-          name: 'dealnoticeprocurement',
-          component: dealnoticeprocurement
-        },
-        {
-          path: 'details/:type/:id',
-          name: 'details',
-          component: details
-        },
-        //FIXME 报价管理
-        {
-          path:'priceBindIndex',
-          name: 'priceBindIndex',
-          component: priceBindIndex
-        },
-        {
-          path:'priceOfferIndex',
-          name: 'priceOfferIndex',
-          component: priceOfferIndex
-        },
-        {
-          path:'priceOfferEdit',
-          name: 'priceOfferEdit',
-          component: priceOfferEdit
-        },
-        //FIXME 采购公告管理
-        {
-          path:'purchaserNoticeDetail/:type/:id',
-          name: 'purchaserNoticeDetail',
-          component: purchaserNoticeDetail
-        },
-        {
-          path:'purchaserNoticeIndex',
-          name: 'purchaserNoticeIndex',
-          component: purchaserNoticeIndex
-        },
-        //FIXME 闲置物资管理
-        {
-          path:'idleMaterialsDetail/:type/:id',
-          name: 'idleMaterialsDetail',
-          component: idleMaterialsDetail
-        },
-        {
-          path:'idleMaterialsIndex',
-          name: 'idleMaterialsIndex',
-          component: idleMaterialsIndex
-        },
-        //FIXME 销售公告查询
-        {
-          path:'saleNoticeDetail/:id',
-          name: 'saleNoticeDetail',
-          component: saleNoticeDetail
-        },
-        {
-          path:'saleNoticeIndex',
-          name: 'saleNoticeIndex',
-          component: saleNoticeIndex
-        },
-        //FIXME 澄清管理
-        {
-          path: 'clarifyOfferIndex',
-          name: 'clarifyOfferIndex',
-          component: clarifyOfferIndex
-        },
-        {
-          path: 'clarifyOfferEdit',
-          name: 'clarifyOfferEdit',
-          component: clarifyOfferEdit
-        },
-        {
-          path: 'clarifyOfferDetailSend',
-          name: 'clarifyOfferDetailSend',
-          component: clarifyOfferDetailSend
-        },
-        {
-          path: 'clarifyOfferDetailReceive',
-          name: 'clarifyOfferDetailReceive',
-          component: clarifyOfferDetailReceive
-        },
-        {
-          path: 'clarifyReviewIndex',
-          name: 'clarifyReviewIndex',
-          component: clarifyReviewIndex
-        },
-        {
-          path: 'clarifyReviewEdit',
-          name: 'clarifyReviewEdit',
-          component: clarifyReviewEdit
-        },
-        {
-          path: 'clarifyReviewDetailReply',
-          name: 'clarifyReviewDetailReply',
-          component: clarifyReviewDetailReply
-        },
-        {
-          path: 'clarifyReviewDetailReceive',
-          name: 'clarifyReviewDetailReceive',
-          component: clarifyReviewDetailReceive
-        },
-      ]
+      children: importRoutes(require.context('@/', true, /^\.\/pages\/((?!\/)[\s\S])+\/route\.js$/)),
     }
   ]
 })
