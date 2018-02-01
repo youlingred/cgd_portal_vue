@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import _ from 'lodash'
-import home from '@/pages/home'
 
 Vue.use(Router)
 
 function importRoutes(r) {
-  return _.flatten(r.keys().map(key => r(key).default));
+  console.log('r-------',r.keys());
+  let routes=r.keys().map(key => r(key).default);
+  return _.flatten(routes);
 }
 
 export default new Router({
@@ -19,7 +20,7 @@ export default new Router({
     {
       path: '/',
       name: 'home/',
-      component: home,
+      component: require('@/pages/home').default,
       children: importRoutes(require.context('@/', true, /^\.\/pages\/((?!\/)[\s\S])+\/route\.js$/)),
     }
   ]
