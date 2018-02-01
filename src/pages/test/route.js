@@ -1,10 +1,10 @@
-import dylyIndex from './dylyIndex';
-import test from './test'
-import reset from './reset'
-import tabs from './tabs'
-import detail from './detail'
-import list from './list'
-import edit from './edit'
+const dylyIndex = () => import( './dylyIndex')
+const test = () => import( './test')
+const reset = () => import( './reset')
+const tabs = () => import( './tabs')
+const detail = () => import( './detail')
+const list = () => import( './list')
+const edit = () => import( './edit')
 
 export default [
   //FIXME 测试

@@ -1,5 +1,5 @@
-import details from './details'
-import dealnoticeprocurement from './dealnoticeprocurement'
+const details =()=>import( './details')
+const dealnoticeprocurement =()=>import( './dealnoticeprocurement')
 
 export default [
     //FIXME 成交通知书管理

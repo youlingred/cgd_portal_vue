@@ -1,5 +1,5 @@
-import saleNoticeIndex from './snIndex'
-import saleNoticeDetail from './snDetail'
+const saleNoticeIndex =()=>import( './snIndex')
+const saleNoticeDetail =()=>import( './snDetail')
 
 export default [
   //FIXME 销售公告查询

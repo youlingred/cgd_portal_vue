@@ -1,14 +1,14 @@
-import clarifyOfferIndex from './/offer/clarifyOfferIndex'
-import clarifyOfferEdit from './/offer/clarifyOfferEdit'
-import clarifyOfferDetailSend from './/offer/clarifyOfferDetailSend'
-import clarifyOfferDetailReceive from './/offer/clarifyOfferDetailReceive'
-import clarifyReviewIndex from './/review/clarifyReviewIndex'
-import clarifyReviewEdit from './/review/clarifyReviewEdit'
-import clarifyReviewDetailReply from './/review/clarifyReviewDetailReply'
-import clarifyReviewDetailReceive from './/review/clarifyReviewDetailReceive'
+const clarifyOfferIndex =()=>import( './offer/clarifyOfferIndex')
+const clarifyOfferEdit =()=>import( './offer/clarifyOfferEdit')
+const clarifyOfferDetailSend =()=>import( './offer/clarifyOfferDetailSend')
+const clarifyOfferDetailReceive =()=>import( './offer/clarifyOfferDetailReceive')
+const clarifyReviewIndex =()=>import( './review/clarifyReviewIndex')
+const clarifyReviewEdit =()=>import( './review/clarifyReviewEdit')
+const clarifyReviewDetailReply =()=>import( './review/clarifyReviewDetailReply')
+const clarifyReviewDetailReceive =()=>import( './review/clarifyReviewDetailReceive')
 
 export default [
-    //FIXME 澄清管理
+   //FIXME 澄清管理
     {
       path: 'clarifyOfferIndex',
       name: 'clarifyOfferIndex',

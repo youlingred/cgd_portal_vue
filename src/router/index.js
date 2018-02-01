@@ -20,6 +20,7 @@ export default new Router({
     {
       path: '/',
       name: 'home/',
+
       component: require('@/pages/home').default,
       children: importRoutes(require.context('@/', true, /^\.\/pages\/((?!\/)[\s\S])+\/route\.js$/)),
     }

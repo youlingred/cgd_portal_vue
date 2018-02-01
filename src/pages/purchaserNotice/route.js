@@ -1,5 +1,5 @@
-import purchaserNoticeIndex from '@/pages/purchaserNotice/pnIndex'
-import purchaserNoticeDetail from '@/pages/purchaserNotice/pnDetail'
+const purchaserNoticeIndex =()=>import( '@/pages/purchaserNotice/pnIndex')
+const purchaserNoticeDetail =()=>import( '@/pages/purchaserNotice/pnDetail')
 
 export default [
     //FIXME 采购公告管理

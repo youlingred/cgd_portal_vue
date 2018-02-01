@@ -1,5 +1,5 @@
-import idleMaterialsIndex from '@/pages/idleMaterials/imIndex'
-import idleMaterialsDetail from '@/pages/idleMaterials/imDetail'
+const idleMaterialsIndex =()=>import('./imIndex')
+const idleMaterialsDetail =()=>import('./imDetail')
 
 export default [
     //FIXME 闲置物资管理

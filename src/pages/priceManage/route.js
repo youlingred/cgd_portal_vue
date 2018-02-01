@@ -1,6 +1,6 @@
-import priceBindIndex from './bid/pBidIndex'
-import priceOfferIndex from './offer/pOfferIndex'
-import priceOfferEdit from './offer/pOfferEdit'
+const priceBindIndex =()=>import( './bid/pBidIndex')
+const priceOfferIndex =()=>import( './offer/pOfferIndex')
+const priceOfferEdit =()=>import( './offer/pOfferEdit')
 
 export default [
   //FIXME 报价管理
