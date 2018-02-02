@@ -18,7 +18,7 @@
   </div>
 </template>
 <script>
-  import detailItem from '@/components/detailItem.vue'
+  import detailItem from '@/components/DetailItem.vue'
 
   export default {
     name:'detail',
