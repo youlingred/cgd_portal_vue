@@ -4,7 +4,7 @@
   <div v-else-if="type === 'file'">
     <div v-for="(fileItem,index) in value" :key="index">
       <span style="display:inline-block;min-width:200px">{{fileItem.name}}</span>
-      <a :href="fileItem.url"
+      <a :href="fileItem.path"
          target="_blank" class="downloadMessage"><span class="">下载</span>
       </a>
     </div>
@@ -102,7 +102,7 @@
       fileUploadSuccess(response, file, fileList){
         this.data[this.prop]=[];
         _.forEach(fileList,(val)=>{
-          this.data[this.prop].push(_.pick(val,['name','url']));
+          this.data[this.prop].push(_.pick(val,['name','path']));
         })
       }
     }

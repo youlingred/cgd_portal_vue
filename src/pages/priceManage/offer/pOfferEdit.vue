@@ -32,7 +32,7 @@
           clarifyContent: '哈哈哈哈哈',
           status: '',
           prop4: '艳照门',
-          fileList:[{name:'文件测试',url:'test'},{name:'文件测试',url:'test'}],
+          fileList:[{name:'文件测试',path:'test'},{name:'文件测试',path:'test'}],
         },
         options: [],
         table:{

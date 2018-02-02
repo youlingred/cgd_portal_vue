@@ -4,18 +4,18 @@
       <el-tabs v-model="activeName">
         <el-tab-pane label="发出的澄清" name="send">
           <detail ref="form_send" v-bind="formInit.send" noborder>
-          <buttons-operator type="top"
-                            algin="left"
-                            :buttons="[{label:'搜索',type:'primary',click:search},
+            <buttons-operator type="top"
+                              algin="left"
+                              :buttons="[{label:'搜索',type:'primary',click:search},
                           {label:'重置',type:'info',click:reset}]"/>
           </detail>
         </el-tab-pane>
         <el-tab-pane label="收到的澄清" name="receive">
           <detail ref="form_receive" v-bind="formInit.receive" noborder>
-          <buttons-operator type="top"
-                            algin="left"
-                            :switchFlag.sync="flag"
-                            :buttons="[{label:'搜索',type:'primary',click:search},
+            <buttons-operator type="top"
+                              algin="left"
+                              :switchFlag.sync="flag"
+                              :buttons="[{label:'搜索',type:'primary',click:search},
                           {label:'重置',type:'info',click:reset},
                           {type:'switch'},]"/>
           </detail>
@@ -25,8 +25,8 @@
     <buttons-operator type="top"
                       algin="right"
                       :buttons="[{label:'新增',type:'primary',click:add},{label:'导出',type:'primary',click:search}]"/>
-    <IvTable v-show="activeName==='send'" ref="table_send" v-bind="table.send" @on-row-click="cellClickHandler"/>
-    <IvTable v-show="activeName==='receive'" ref="table_receive" v-bind="table.receive" @on-row-click="cellClickHandler"/>
+    <IvTable v-show="activeName==='send'" ref="table_send" v-bind="table.send"/>
+    <IvTable v-show="activeName==='receive'" ref="table_receive" v-bind="table.receive"/>
   </div>
 </template>
 
@@ -66,12 +66,11 @@
         //table初始化数据
         table: {
           send: {
-            url: this.appConfig.api('testDylyListPage'),
+            url: this.appConfig.api('inquiry/others/clarification/searchSupPublishPurQuestionList'),
             pageNo: 1,
-            // height: 400,
             queryParam: function (param) {
               console.log('queryParam:', param)
-              return _.assign({test: 1}, param);
+              return _.assign({}, param);
             },
             responseHandler: function (val) {
               console.log('responseHandler:', val)
@@ -85,26 +84,40 @@
               {
                 title: '序号',
                 type: 'index',
+                align: 'center',
                 width: 80
               },
               {
                 title: '询价单名称',
-                key: 'planName',
-                render: (h, { row, column }) => {
-                  return row.planName;
+                key: 'inquiryName',
+                align: 'center',
+                width: 120,
+                render: (h, {row, column}) => {
+                  return h('a', {
+                      on: {
+                        click: ()=>{
+                          this.gotoDetail(row.questionId)
+                        }
+                      }
+                    },
+                    row.inquiryName);
                 }
               },
               {
                 title: '澄清内容',
-                key: 'publishUser',
-                render: (h, { row, column }) => {
-                  return row.publishUser;
+                align: 'center',
+                width: 160,
+                key: 'questionContent',
+                render: (h, {row, column}) => {
+                  return row.questionContent;
                 }
               },
               {
                 title: '澄清状态',
                 key: 'status',
-                render: (h, { row, column }) => {
+                align: 'center',
+                width: 100,
+                render: (h, {row, column}) => {
                   switch (row.status) {
                     case 1:
                       return '处理中';
@@ -119,42 +132,36 @@
                 }
               },
               {
-                align:'center',
-                width:200,
+                align: 'center',
+                width: 200,
                 title: '澄清时间',
-                key: 'publishDate',
-                render: (h, { row, column }) => {
-                  return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
+                key: 'questionTime',
+                render: (h, {row, column}) => {
+                  return this.moment(row.questionTime).format("YYYY-MM-DD HH:mm:ss");
                 }
               },
               {
                 title: '澄清附件数量',
-                key: 'publishUser',
-                render: (h, { row, column }) => {
-                  return  h('Input', {
-                    props: {
-                      size: 'small',
-                      value:row.publishUser,
-                    },
-                    on: {
-
-                    }
-                  });
-                }
+                align: 'center',
+                width: 120,
+                key: 'questionAttachmentNum'
               },
               {
                 title: '接受澄清单位',
+                align: 'center',
+                width: 120,
                 key: 'publishUser'
               },
             ],
           },
           receive: {
-            url: this.appConfig.api('testDylyListPage'),
+            url: this.appConfig.api('inquiry/others/clarification/searchSupReceiverPurClarificationBeforeQuoteList'),
+            height: 400,
             pageNo: 1,
             // height: 400,
             queryParam: function (param) {
               console.log('queryParam:', param)
-              return _.assign({test: 1}, param);
+              return _.assign({}, param);
             },
             responseHandler: function (val) {
               console.log('responseHandler:', val)
@@ -175,35 +182,52 @@
                 align: 'center',
                 title: '发起澄清的采购企业',
                 key: 'planName',
-                render: (h, { row, column }) => {
+                render: (h, {row, column}) => {
                   return row.planName;
                 }
               },
               {
                 align: 'center',
                 title: '澄清时间',
-                key: 'publishDate',
-                render: (h, { row, column }) => {
+                key: 'clarificationTime',
+                render: (h, {row, column}) => {
                   return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
                 }
               },
               {
                 align: 'center',
                 title: '询价单名称',
-                key: 'planName',
-                render: (h, { row, column }) => {
-                  return row.planName;
+                key: 'inquiryName',
+                render: (h, {row, column}) => {
+                  return h('a', {
+                      on: {
+                        click: ()=>{
+                          this.gotoDetail(row.clarificationId)
+                        }
+                      }
+                    },
+                    row.inquiryName);
                 }
               },
               {
                 align: 'center',
                 title: '澄清主题',
-                key: 'publishUser'
+                key: 'clarificationContent',
+                render: (h, {row, column}) => {
+                  return h('a', {
+                      on: {
+                        click: ()=>{
+                          this.gotoDetail(row.clarificationId)
+                        }
+                      }
+                    },
+                    row.clarificationContent);
+                }
               },
               {
                 align: 'center',
                 title: '澄清附件数量',
-                key: 'publishUser'
+                key: 'clarificationAttachNum'
               }
             ],
           }
@@ -226,32 +250,34 @@
                     type: 'input',
                     label: '询价单名称',
                     placeholder: '模糊查询,可用个逗号隔开',
-                    prop: 'planName',
+                    prop: 'inquiryName',
                   },
                   {
                     type: 'input',
                     label: '澄清内容',
                     placeholder: '模糊查询,可用个逗号隔开',
-                    prop: 'publishUser',
+                    prop: 'clarificationContent',
                   },
                   {
-                    type: 'dateTimePicker',
+                    type: 'datePicker',
                     label: '澄清开始日期',
                     placeholder: '请输入开始时间',
-                    prop: 'publishDate1',
+                    prop: 'clarificationDateStart',
                     extendParam: {
                       editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss'
+                      format: 'yyyy-MM-dd',
+                      valueFormat: "yyyy-MM-dd"
                     }
                   },
                   {
-                    type: 'dateTimePicker',
+                    type: 'datePicker',
                     label: '澄清结束日期',
                     placeholder: '请输入结束时间',
-                    prop: 'publishDate2',
+                    prop: 'clarificationDateEnd',
                     extendParam: {
                       editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss'
+                      format: 'yyyy-MM-dd',
+                      valueFormat: "yyyy-MM-dd"
                     }
                   },
                 ]
@@ -271,13 +297,13 @@
                     type: 'input',
                     label: '询价单名称',
                     placeholder: '模糊查询,可用个逗号隔开',
-                    prop: 'planName',
+                    prop: 'inquiryName',
                   },
                   {
                     type: 'input',
                     label: '澄清内容',
                     placeholder: '模糊查询,可用个逗号隔开',
-                    prop: 'publishUser',
+                    prop: 'clarificationContent',
                   },
                   {
                     type: 'input',
@@ -292,45 +318,49 @@
                     prop: 'publishUser'
                   },
                   {
-                    type: 'dateTimePicker',
+                    type: 'datePicker',
                     label: '澄清开始日期',
                     placeholder: '请输入开始时间',
-                    prop: 'publishDate1',
+                    prop: 'clarificationDateStart',
                     extendParam: {
                       editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss'
+                      format: 'yyyy-MM-dd',
+                      valueFormat: "yyyy-MM-dd"
                     }
                   },
                   {
-                    type: 'dateTimePicker',
+                    type: 'datePicker',
                     label: '澄清结束日期',
                     placeholder: '请输入结束时间',
-                    prop: 'publishDate2',
+                    prop: 'clarificationDateEnd',
                     extendParam: {
                       editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss'
+                      format: 'yyyy-MM-dd',
+                      valueFormat: "yyyy-MM-dd"
                     }
                   },
                   {
-                    type: 'dateTimePicker',
+                    type: 'datePicker',
                     label: '回复开始日期',
                     placeholder: '请输入开始时间',
                     prop: 'publishDate1',
                     switchFlag: this.flag,
                     extendParam: {
                       editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss'
+                      format: 'yyyy-MM-dd',
+                      valueFormat: "yyyy-MM-dd"
                     }
                   },
                   {
-                    type: 'dateTimePicker',
+                    type: 'datePicker',
                     label: '回复结束日期',
                     placeholder: '请输入结束时间',
                     prop: 'publishDate2',
                     switchFlag: this.flag,
                     extendParam: {
                       editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss'
+                      format: 'yyyy-MM-dd',
+                      valueFormat: "yyyy-MM-dd"
                     }
                   }
                 ]
@@ -340,10 +370,17 @@
         }
       }
     },
+    watch: {
+      activeName() {
+        this.search()
+      }
+    },
     methods: {
       //搜索
       search() {
-        this.$refs['table_' + this.activeName].query(this.form[this.activeName])
+        let searchData=this.form[this.activeName];
+        searchData.pageNo=1;
+        this.$refs['table_' + this.activeName].query(searchData)
       },
       //重置
       reset() {
@@ -354,13 +391,11 @@
       add() {
         this.$router.push({name: 'clarifyOfferEdit'})
       },
-      cellClickHandler(row, index, event) {
-        console.log(row, event);
-        console.log(this.activeName);
+      gotoDetail(id) {
         if (this.activeName === 'send') {
-          this.$router.push({name: 'clarifyOfferDetailSend'});
+          this.$router.push({name: 'clarifyOfferDetailSend', params: {id: id}});
         } else {
-          this.$router.push({name: 'clarifyOfferDetailReceive'});
+          this.$router.push({name: 'clarifyOfferDetailReceive', params: {id: id}});
         }
       }
     }

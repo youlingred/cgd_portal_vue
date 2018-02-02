@@ -20,12 +20,12 @@ export default [
       component: clarifyOfferEdit
     },
     {
-      path: 'clarifyOfferDetailSend',
+      path: 'clarifyOfferDetailSend/:id',
       name: 'clarifyOfferDetailSend',
       component: clarifyOfferDetailSend
     },
     {
-      path: 'clarifyOfferDetailReceive',
+      path: 'clarifyOfferDetailReceive/:id',
       name: 'clarifyOfferDetailReceive',
       component: clarifyOfferDetailReceive
     },
@@ -40,12 +40,12 @@ export default [
       component: clarifyReviewEdit
     },
     {
-      path: 'clarifyReviewDetailReply',
+      path: 'clarifyReviewDetailReply/:id',
       name: 'clarifyReviewDetailReply',
       component: clarifyReviewDetailReply
     },
     {
-      path: 'clarifyReviewDetailReceive',
+      path: 'clarifyReviewDetailReceive/:id',
       name: 'clarifyReviewDetailReceive',
       component: clarifyReviewDetailReceive
     },

@@ -2144,9 +2144,9 @@ Mock.mock(config.api('testcommen'), 'post', function () {
       '20':'国电物流有限公司',
       '21':'-',
       'fileList':[
-        {name:'测试文件',url:'testurl'},
-        {name:'测试文件',url:'testurl'},
-        {name:'测试文件',url:'testurl'}
+        {name:'测试文件',path:'testurl'},
+        {name:'测试文件',path:'testurl'},
+        {name:'测试文件',path:'testurl'}
       ]
     }
   }

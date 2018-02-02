@@ -3,12 +3,10 @@
     <el-card>
       <el-tabs v-model="activeName">
         <el-tab-pane label="收到的澄清" name="receive">
-          <detail ref="form_receive" v-bind="formInit.receive" noborder>
-          </detail>
+          <detail ref="form_receive" v-bind="formInit.receive" noborder/>
         </el-tab-pane>
         <el-tab-pane label="已回复采购企业的澄清" name="reply">
           <detail ref="form_reply" v-bind="formInit.reply" noborder/>
-
         </el-tab-pane>
         <buttons-operator type="top"
                           algin="left"

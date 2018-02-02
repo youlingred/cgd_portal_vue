@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {Loading} from 'element-ui';
+import qs from 'qs'
 
 let loading;
 //添加一个请求拦截器
@@ -10,6 +11,10 @@ axios.interceptors.request.use(
       // lock:true,
       text:'数据加载中'
     });
+    if (config.method=="post"){
+      config.data = qs.stringify(config.data);
+      config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    }
     return config;
   },
   function (error) {

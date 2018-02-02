@@ -28,7 +28,7 @@
           status: 1,
           clarifyContent:'哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈',
           prop4: '艳照门',
-          fileList:[{name:'文件测试',url:'test'},{name:'文件测试',url:'test'}],
+          fileList:[{name:'文件测试',path:'test'},{name:'文件测试',path:'test'}],
         }
       };
     },

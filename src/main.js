@@ -17,6 +17,7 @@ import './assets/css/purchaser.css'
 import './mock/mock'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
+import util from './assets/js/util'
 
 Vue.use(ElementUI)
 Vue.use(iView)
@@ -27,6 +28,7 @@ Vue.prototype.appConfig = appConfig
 Vue.prototype.moment=moment;
 Vue.prototype.accounting=accounting
 Vue.prototype.lockr=lockr;
+Vue.prototype.util=util;
 window._=lodash
 
 /* eslint-disable no-new */

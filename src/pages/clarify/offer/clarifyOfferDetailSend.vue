@@ -21,14 +21,6 @@
     data() {
       return {
         form: {
-          planName: '团建',
-          publishUser: '老铁',
-          publishDate: 1514192693000,
-          objectionDate: 1514192693000,
-          status: 1,
-          clarifyContent:'哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈',
-          prop4: '艳照门',
-          fileList:[{name:'文件测试',url:'test'},{name:'文件测试',url:'test'}],
         }
       };
     },
@@ -38,46 +30,46 @@
           contents: [
             {
               data: this.form,
-              labelWidth:'150px',
-              inputWidth:'400px',
+              labelWidth: '150px',
+              inputWidth: '400px',
               children: [
                 {
                   type: 'label',
                   label: '发送澄清单位',
-                  prop: 'planName',
+                  prop: 'questionSubmitOrgName',
                 },
                 {
                   type: 'label',
                   label: '询价单名称',
-                  prop: 'planName',
+                  prop: 'inquiryName',
                 },
                 {
                   type: 'label',
                   label: '询价单编号',
-                  prop: 'publishUser',
+                  prop: 'inquiryCode',
                 },
                 {
                   type: 'label',
                   label: '澄清内容',
-                  prop: 'clarifyContent',
-                  extendParam:{
-                    autosize:{ minRows: 2, maxRows: 4}
+                  prop: 'relReplyContent',
+                  extendParam: {
+                    autosize: {minRows: 2, maxRows: 4}
                   }
                 },
                 {
                   type: 'file',
                   label: '澄清附件',
-                  prop: 'fileList'
+                  prop: 'attachments'
                 },
                 {
                   type: 'label',
                   label: '接受澄清单位',
-                  prop: 'publishUser',
+                  prop: 'questionReceiverName',
                 },
                 {
                   type: 'label',
                   label: '澄清时间',
-                  prop: 'publishDate',
+                  prop: '',
                   formatter: (value) => {
                     return this.moment(value).format('YYYY-MM-DD HH:mm:ss');
                   }
@@ -85,12 +77,12 @@
                 {
                   type: 'label',
                   label: '澄清属性',
-                  prop: 'publishUser',
+                  prop: '',
                 },
                 {
                   type: 'label',
                   label: '制单人',
-                  prop: 'publishUser',
+                  prop: 'createUser',
                 }
               ]
             },
@@ -99,9 +91,16 @@
       }
     },
     methods: {
-      back(){
-        this.$router.push({name:'clarifyOfferIndex'})
+      back() {
+        this.$router.push({name: 'clarifyOfferIndex'})
       }
+    },
+    created() {
+      this.axios.post(this.appConfig.api('inquiry/others/clarification/searchMyPublishQuestionInfo'),{questionId:this.$route.params.id})
+        .then((data) => {
+          this.util.dataAdapter(data,['attachmentName','attachmentUrl'],['name','path'],false)
+        this.form=data;
+      })
     }
   }
 </script>
