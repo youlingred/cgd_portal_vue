@@ -6,7 +6,7 @@
                       :switchFlag.sync="flag"
                       :buttons="[{type:'switch',openLabel:'查看全部'}]"/>
     <div class="tl" style="padding: 10px 20px">明细信息</div>
-    <cg-table ref="table" v-bind="table"/>
+    <IvTable ref="table" v-bind="table"/>
     <buttons-operator type="bottom"
                       fix="true"
                       :buttons="[{label:'返回',type:'info',click:backFunc}]"/>
@@ -16,13 +16,13 @@
 
 <script>
   import detail from '@/components/Detail.vue'
-  import CgTable from '@/components/CgTable.vue'
+  import IvTable from '@/components/IvTable.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
 
   export default {
     components: {
       detail,
-      CgTable,
+      IvTable,
       buttonsOperator
     },
     data() {
@@ -180,82 +180,82 @@
         this.table.columns = [
           {
             fixed: 'left',
-            label: '序号',
+            title: '序号',
             type: 'index',
             width: 80
           },
           {
-            label: '项目单位',
-            prop: '1',
+            title: '项目单位',
+            key: '1',
             width: 180
           },
           {
-            label: '物料名称',
-            prop: '4',
+            title: '物料名称',
+            key: '4',
           },
           {
-            label: '规格',
-            prop: '7'
+            title: '规格',
+            key: '7'
           },
           {
-            label: '型号',
-            prop: '6',
+            title: '型号',
+            key: '6',
             width: 180,
           },
           {
-            label: '计划名称',
-            prop: '3',
+            title: '计划名称',
+            key: '3',
           },
           {
-            label: '计划编号',
-            prop: '2'
+            title: '计划编号',
+            key: '2'
           },
           {
-            label: '计量单位',
-            prop: '13',
+            title: '计量单位',
+            key: '13',
             width: 120,
           },
           {
-            label: '需求数量',
-            prop: '12',
+            title: '需求数量',
+            key: '12',
           },
           {
-            label: '预算单价（元）',
-            prop: '12',
+            title: '预算单价（元）',
+            key: '12',
             width: 150,
           },
           {
-            label: '预算金额（元）',
-            prop: '12',
+            title: '预算金额（元）',
+            key: '12',
             width: 150,
-            formatter:(row,column,value)=>{
-             return this.accounting.formatMoney(value,'￥',2);
+            render: (h, { row, column }) => {
+             return this.accounting.formatMoney(row['12'],'￥',2);
             }
           },
           {
-            label: '提货日期',
-            prop: '5',
+            title: '提货日期',
+            key: '5',
             width: 180,
-            formatter: (row, column, value) => {
-              return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+            render: (h, { row, column }) => {
+              return this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss");
             }
           },
           {
-            label: '周期',
-            prop: '12',
+            title: '周期',
+            key: '12',
           },
           {
-            label: '材质',
-            prop: '12',
+            title: '材质',
+            key: '12',
           },
           {
-            label: '物资联系人',
-            prop: '12',
+            title: '物资联系人',
+            key: '12',
             width: 150,
           },
           {
-            label: '固定电话',
-            prop: '12',
+            title: '固定电话',
+            key: '12',
           },
         ];
         this.$refs.table.query({url: this.table.url});

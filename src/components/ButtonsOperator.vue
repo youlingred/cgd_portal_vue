@@ -10,7 +10,7 @@
                    v-bind="btn" >{{btn.label}}</el-button>
       </div>
     </div>
-    <div v-else-if="type==='top'" if="type==='top'" class="top-operation" :class="_algin">
+    <div v-else-if="type==='top'" class="top-operation" :class="_algin">
       <template v-for="(btn) in buttons">
         <button-switch v-if="btn.type==='switch'" :flag.sync="_switchFlag" @change="btn.change||null" v-bind="btn"/>
         <el-button v-else @click="btn.click" v-bind="btn">{{btn.label}}</el-button>
@@ -81,7 +81,7 @@
           case 'left':
             return 'tl';
             break;
-          case 'left':
+          case 'right':
             return 'tr';
             break;
           default:

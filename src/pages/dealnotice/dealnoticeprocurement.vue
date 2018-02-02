@@ -27,19 +27,19 @@
                       {label:'拒绝成交',type:'primary',click:buttonFunc},
                       {label:'生产文档',type:'primary',click:buttonFunc},
                       {label:'导出',type:'primary',click:buttonFunc}]"/>
-    <cg-table ref="table" v-bind="table" @cell-click="cellClickHandler"/>
+    <IvTable ref="table" v-bind="table" @on-row-click="cellClickHandler"/>
   </div>
 </template>
 <script>
   import detail from '@/components/Detail.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
-  import CgTable from '@/components/CgTable.vue'
+  import IvTable from '@/components/IvTable.vue'
 
   export default {
     components:{
       detail,
       buttonsOperator,
-      CgTable,
+      IvTable,
     },
     computed: {
       //发出澄清表单初始化数据
@@ -325,38 +325,44 @@
           columns: [
             {
               type: 'selection',
-              width: 50
+              width: 60
             },
             {
-              label: '序号',
+              title: '序号',
               type: 'index',
               width: 80
             },
             {
-              label: '状态',
-              prop: 'status'
+              title: '状态',
+              key: 'status',
+              align:'center'
             },
             {
-              label: '成交通知书名称',
-              prop: 'name'
+              title: '成交通知书名称',
+              key: 'name',
+              align:'center'
             },
             {
-              label: '供应商',
-              prop: 'supplier'
+              title: '供应商',
+              key: 'supplier',
+              align:'center'
             },
             {
-              label: '采购编号',
-              prop: 'cnumber'
+              title: '采购编号',
+              key: 'cnumber',
+              align:'center'
             },
             {
-              label: '采购金额',
-              prop: 'money',
+              title: '采购金额',
+              key: 'money',
+              align:'center',
             },
             {
-              label: '采购类别',
-              prop: 'ctype',
-              formatter: function (row, column, value) {
-                switch (value) {
+              title: '采购类别',
+              key: 'ctype',
+              align:'center',
+              render: (h, { row, column }) => {
+                switch (row.ctype) {
                   case 1:
                     return '物资类';
                     break;
@@ -421,8 +427,7 @@
       buttonFunc(type){
 
       },
-      cellClickHandler(row, column, cell, event){
-        console.log(row,column, cell, event)
+      cellClickHandler(row){
         this.$router.push({name:'details',params:{type:1,id:1}})
       },
 

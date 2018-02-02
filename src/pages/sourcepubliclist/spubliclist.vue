@@ -9,41 +9,14 @@
     <buttons-operator type="top"
                       algin="right"
                       :buttons="[{label:'导出',type:'primary',click:exportFunc}]"/>
-<!--    <el-card>
-      <el-form ref="formel" :inline="true" :model="formtable">
-        <el-form-item label="计划名称" prop="name">
-          <el-input v-model="formtable.name" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="项目单位" prop="project">
-          <el-input v-model="formtable.project" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="受理状态" prop="status">
-          <el-select v-model="formtable.status" prop="status" placeholder="请选择">
-            <el-option
-              v-for="item in status_options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="search">搜索</el-button>
-          <el-button @click="resetForm('formel')">重置</el-button>
-        </el-form-item>
-      </el-form>
-    </el-card>
-    <div class="tr" style="padding:20px 10px">
-      <el-button type="primary" @click="exportFunc">导出</el-button>
-    </div>-->
-    <cg-table ref="test" v-bind="table" @cell-click="cellClickHandler"></cg-table>
+    <IvTable ref="test" v-bind="table" @on-row-click="cellClickHandler"></IvTable>
   </div>
 </template>
 
 <script>
   import detail from '@/components/Detail.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
-  import CgTable from '@/components/CgTable.vue'
+  import IvTable from '@/components/IvTable.vue'
 
   export default {
     data () {
@@ -78,14 +51,14 @@
             {
               label: '公告发布时间',
               prop: 'publishDate',
-              formatter: (row, column, value) => {
+              render: (h, { row, column }) => {
                 return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
               }
             },
             {
               label: '异议提出时间',
               prop: 'objectionDate',
-              formatter: (row, column, value) => {
+              render: (h, { row, column }) => {
                 return this.moment(value).format('YY-MM-DD HH:mm:ss');
               }
             },
@@ -182,38 +155,38 @@
           columns: [
             {
               type: 'selection',
-              width: 50
+              width: 60
             },
             {
-              label: '序号',
+              title: '序号',
               type: 'index',
               width: 80
             },
             {
-              label: '计划名称',
-              prop: 'planName'
+              title: '计划名称',
+              key: 'planName'
             },
             {
-              label: '发布人',
-              prop: 'publishUser'
+              title: '发布人',
+              key: 'publishUser'
             },
             {
-              label: '公告发布时间',
-              prop: 'publishDate',
-              formatter: (row, column, value) => {
-                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+              title: '公告发布时间',
+              key: 'publishDate',
+              render: (h, { row, column }) => {
+                return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
               }
             },
             {
-              label: '异议提出时间',
-              prop: 'objectionDate',
-              formatter: (row, column, value) => {
-                return this.moment(value).format('YY-MM-DD HH:mm:ss');
+              title: '异议提出时间',
+              key: 'objectionDate',
+              render: (h, { row, column }) => {
+                return this.moment(row.objectionDate).format('YY-MM-DD HH:mm:ss');
               }
             },
             {
-              label: '受理状态',
-              prop: 'status',
+              title: '受理状态',
+              key: 'status',
               formatter: function (row, column, value) {
                 switch (value) {
                   case 1:
@@ -234,8 +207,8 @@
     },
 
     methods: {
-      cellClickHandler(row, column, cell, event){
-        console.log(row,column, cell, event)
+      cellClickHandler(row){
+        console.log(row)
         this.$router.push({name:'spublicdetails'})
       },
       search () {
@@ -249,7 +222,7 @@
       }
     },
     components: {
-      CgTable,
+      IvTable,
       detail,
       buttonsOperator
     }

@@ -12,18 +12,18 @@
                       algin="right"
                       :buttons="[{label:'我要参与',type:'primary',click:join},
                       {label:'导出',type:'primary',click:exports}]"/>
-    <cg-table ref="table" v-bind="table" @cell-click="cellClickHandler"/>
+    <IvTable ref="table" v-bind="table" @on-row-click="cellClickHandler"/>
   </div>
 </template>
 
 <script>
-  import CgTable from '@/components/CgTable.vue'
+  import IvTable from '@/components/IvTable.vue'
   import detail from '@/components/Detail.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
 
   export default {
     components: {
-      CgTable,
+      IvTable,
       detail,
       buttonsOperator
     },
@@ -55,55 +55,58 @@
           columns: [
             {
               type: 'selection',
+              width:60,
             },
             {
-              label: '序号',
+              title: '序号',
               type: 'index',
               width: 60
             },
             {
-              label: '询价单名称',
-              prop: 'planName',
+              title: '询价单名称',
+              key: 'planName',
               width: 150,
             },
             {
-              label: '销售编号',
-              prop: 'publishUser',
+              title: '销售编号',
+              key: 'publishUser',
               width: 150,
             },
             {
-              label: '要求到货日期',
-              prop: 'publishDate',
+              title: '要求到货日期',
+              key: 'publishDate',
               width: 180,
-              formatter: (row, column, value) => {
-                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+               render: (h, { row, column }) => {
+                return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
               }
             },
             {
-              label: '发布日期',
-              prop: 'publishDate',
+              title: '发布日期',
+              key: 'publishDate',
               width: 180,
-              formatter: (row, column, value) => {
-                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+               render: (h, { row, column }) => {
+                return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
               }
             },
             {
-              label: '报价截止日期',
-              prop: 'publishDate',
+              title: '报价截止日期',
+              key: 'publishDate',
               width: 180,
-              formatter: (row, column, value) => {
-                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+               render: (h, { row, column }) => {
+                return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
               }
             },
             {
-              label: '采购机构',
-              prop: 'publishUser'
+              title: '采购机构',
+              key: 'publishUser',
+              width: 180,
             },
             {
-              label: '采购类别',
-              prop: 'publishUser',
-              formatter: (row, column, value) => {
-                switch(value){
+              title: '采购类别',
+              key: 'publishUser',
+              width: 180,
+               render: (h, { row, column }) => {
+                switch(row.publishUser){
                   case 1:
                     return '';
                   default:
@@ -112,8 +115,9 @@
               },
             },
             {
-              label: '采购员',
-              prop: 'publishUser'
+              title: '采购员',
+              key: 'publishUser',
+              width: 180,
             }
           ]
         },
@@ -254,8 +258,8 @@
       exports(){
 
       },
-      cellClickHandler(row, column, cell, event) {
-        console.log(row, column, cell, event);
+      cellClickHandler(row) {
+        console.log(row);
         this.$router.push({name: 'saleNoticeDetail',params:{id:11}});
       }
     },

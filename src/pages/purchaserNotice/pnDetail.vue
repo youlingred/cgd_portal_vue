@@ -2,7 +2,7 @@
   <div>
     <detail v-bind="detailData"/>
     <div class="tl" style="padding: 10px 20px">明细信息</div>
-    <cg-table ref="table" v-bind="table"/>
+    <IvTable ref="table" v-bind="table"/>
     <buttons-operator type="bottom"
                       fix="true"
                       :buttons="[{label:'返回',type:'info',click:backFunc}]"/>
@@ -12,13 +12,13 @@
 
 <script>
   import detail from '@/components/Detail.vue'
-  import CgTable from '@/components/CgTable.vue'
+  import IvTable from '@/components/IvTable.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
 
   export default {
     components:{
       detail,
-      CgTable,
+      IvTable,
       buttonsOperator
     },
     data () {
@@ -168,51 +168,66 @@
           this.table.columns = [
             {
               fixed: 'left',
-              label: '序号',
+              title: '序号',
               type: 'index',
-              width: 80
+              align:'center',
+              width: 80,
             },
             {
-              label: '项目单位',
-              prop: '1',
-              width: 180
-            },
-            {
-              label: '物料名称',
-              prop: '4',
-            },
-            {
-              label: '物资编码',
-              prop: '3',
-            },
-            {
-              label: '物资类别',
-              prop: '2'
-            },
-            {
-              label: '型号',
-              prop: '6',
+              title: '项目单位',
+              key: '1',
+              align:'center',
               width: 180,
             },
             {
-              label: '规格',
-              prop: '7'
-            },
-            {
-              label: '采购数量',
-              prop: '12',
-            },
-            {
-              label: '计量单位',
-              prop: '13',
+              title: '物料名称',
+              key: '4',
+              align:'center',
               width: 120,
             },
             {
-              label: '要求到货日期',
-              prop: '5',
+              title: '物资编码',
+              key: '3',
+              align:'center',
+              width: 120,
+            },
+            {
+              title: '物资类别',
+              key: '2',
+              align:'center',
+              width: 120,
+            },
+            {
+              title: '型号',
+              key: '6',
+              align:'center',
               width: 180,
-              formatter: (row, column, value) => {
-                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+            },
+            {
+              title: '规格',
+              key: '7',
+              align:'center',
+              width: 120,
+            },
+            {
+              title: '采购数量',
+              key: '12',
+              align:'center',
+              width: 120,
+            },
+            {
+              title: '计量单位',
+              key: '13',
+              align:'center',
+              width: 120,
+            },
+            {
+              title: '要求到货日期',
+              key: '5',
+              align:'center',
+              width: 180,
+              render: (h, { row, column }) => {
+                return this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss");
               }
             }
           ];
@@ -221,36 +236,48 @@
           this.table.columns = [
             {
               fixed: 'left',
-              label: '序号',
+              title: '序号',
               type: 'index',
+              align:'center',
               width: 80
             },
             {
-              label: '项目单位',
-              prop: '1'
+              title: '项目单位',
+              key: '1',
+              align:'center',
+              width: 120
             },
             {
-              label: '项目名称',
-              prop: '2'
+              title: '项目名称',
+              key: '2',
+              align:'center',
+              width: 120
             },
             {
-              label: '内容描述',
-              prop: '3',
+              title: '内容描述',
+              key: '3',
+              align:'center',
+              width: 120
             },
             {
-              label: '计量单位',
-              prop: '4',
+              title: '计量单位',
+              key: '4',
+              align:'center',
+              width: 80
             },
             {
-              label: '数量',
-              prop: '5',
+              title: '数量',
+              key: '5',
+              align:'center',
+              width: 80
             },
             {
-              label: '要求到货日期',
-              prop: '5',
+              title: '要求到货日期',
+              key: '5',
+              align:'center',
               width: 180,
-              formatter: (row, column, value) => {
-                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+              render: (h, { row, column }) => {
+                return this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss");
               }
             }
           ];
@@ -259,36 +286,48 @@
           this.table.columns = [
             {
               fixed: 'left',
-              label: '序号',
+              title: '序号',
               type: 'index',
+              align:'center',
               width: 80
             },
             {
-              label: '项目单位',
-              prop: '1'
+              title: '项目单位',
+              key: '1',
+              align:'center',
+              width: 120,
             },
             {
-              label: '项目名称',
-              prop: '2'
+              title: '项目名称',
+              key: '2',
+              align:'center',
+              width: 120,
             },
             {
-              label: '内容描述',
-              prop: '3',
+              title: '内容描述',
+              key: '3',
+              align:'center',
+              width: 120,
             },
             {
-              label: '计量单位',
-              prop: '4',
+              title: '计量单位',
+              key: '4',
+              align:'center',
+              width: 80,
             },
             {
-              label: '数量',
-              prop: '5',
+              title: '数量',
+              key: '5',
+              align:'center',
+              width: 80,
             },
             {
-              label: '要求到货日期',
-              prop: '5',
+              title: '要求到货日期',
+              key: '5',
+              align:'center',
               width: 180,
-              formatter: (row, column, value) => {
-                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+              render: (h, { row, column }) => {
+                return this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss");
               }
             }
           ];

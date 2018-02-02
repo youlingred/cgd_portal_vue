@@ -25,20 +25,19 @@
     <buttons-operator type="top"
                       algin="right"
                       :buttons="[{label:'新增',type:'primary',click:add},{label:'导出',type:'primary',click:search}]"/>
-    <cg-table v-show="activeName==='send'" ref="table_send" v-bind="table.send" @cell-click="cellClickHandler"/>
-    <cg-table v-show="activeName==='receive'" ref="table_receive" v-bind="table.receive"
-              @cell-click="cellClickHandler"/>
+    <IvTable v-show="activeName==='send'" ref="table_send" v-bind="table.send" @on-row-click="cellClickHandler"/>
+    <IvTable v-show="activeName==='receive'" ref="table_receive" v-bind="table.receive" @on-row-click="cellClickHandler"/>
   </div>
 </template>
 
 <script>
-  import CgTable from '@/components/CgTable.vue'
+  import IvTable from '@/components/IvTable.vue'
   import detail from '@/components/Detail.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
 
   export default {
     components: {
-      CgTable,
+      IvTable,
       detail,
       buttonsOperator
     },
@@ -69,7 +68,7 @@
           send: {
             url: this.appConfig.api('testDylyListPage'),
             pageNo: 1,
-            height: 400,
+            // height: 400,
             queryParam: function (param) {
               console.log('queryParam:', param)
               return _.assign({test: 1}, param);
@@ -84,26 +83,29 @@
                 width: 80
               },
               {
-                label: '序号',
+                title: '序号',
                 type: 'index',
                 width: 80
               },
               {
-                label: '询价单名称',
-                prop: 'planName',
-                formatter: (row, column, value) => {
-                  return value;
+                title: '询价单名称',
+                key: 'planName',
+                render: (h, { row, column }) => {
+                  return row.planName;
                 }
               },
               {
-                label: '澄清内容',
-                prop: 'publishUser'
+                title: '澄清内容',
+                key: 'publishUser',
+                render: (h, { row, column }) => {
+                  return row.publishUser;
+                }
               },
               {
-                label: '澄清状态',
-                prop: 'status',
-                formatter: function (row, column, value) {
-                  switch (value) {
+                title: '澄清状态',
+                key: 'status',
+                render: (h, { row, column }) => {
+                  switch (row.status) {
                     case 1:
                       return '处理中';
                       break;
@@ -117,26 +119,39 @@
                 }
               },
               {
-                label: '澄清时间',
-                prop: 'publishDate',
-                formatter: (row, column, value) => {
-                  return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+                align:'center',
+                width:200,
+                title: '澄清时间',
+                key: 'publishDate',
+                render: (h, { row, column }) => {
+                  return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
                 }
               },
               {
-                label: '澄清附件数量',
-                prop: 'publishUser'
+                title: '澄清附件数量',
+                key: 'publishUser',
+                render: (h, { row, column }) => {
+                  return  h('Input', {
+                    props: {
+                      size: 'small',
+                      value:row.publishUser,
+                    },
+                    on: {
+
+                    }
+                  });
+                }
               },
               {
-                label: '接受澄清单位',
-                prop: 'publishUser'
+                title: '接受澄清单位',
+                key: 'publishUser'
               },
             ],
           },
           receive: {
             url: this.appConfig.api('testDylyListPage'),
             pageNo: 1,
-            height: 400,
+            // height: 400,
             queryParam: function (param) {
               console.log('queryParam:', param)
               return _.assign({test: 1}, param);
@@ -151,38 +166,44 @@
                 width: 80
               },
               {
-                label: '序号',
+                align: 'center',
+                title: '序号',
                 type: 'index',
                 width: 80
               },
               {
-                label: '发起澄清的采购企业',
-                prop: 'planName',
-                formatter: (row, column, value) => {
-                  return value;
+                align: 'center',
+                title: '发起澄清的采购企业',
+                key: 'planName',
+                render: (h, { row, column }) => {
+                  return row.planName;
                 }
               },
               {
-                label: '澄清时间',
-                prop: 'publishDate',
-                formatter: (row, column, value) => {
-                  return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+                align: 'center',
+                title: '澄清时间',
+                key: 'publishDate',
+                render: (h, { row, column }) => {
+                  return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
                 }
               },
               {
-                label: '询价单名称',
-                prop: 'planName',
-                formatter: (row, column, value) => {
-                  return value;
+                align: 'center',
+                title: '询价单名称',
+                key: 'planName',
+                render: (h, { row, column }) => {
+                  return row.planName;
                 }
               },
               {
-                label: '澄清主题',
-                prop: 'publishUser'
+                align: 'center',
+                title: '澄清主题',
+                key: 'publishUser'
               },
               {
-                label: '澄清附件数量',
-                prop: 'publishUser'
+                align: 'center',
+                title: '澄清附件数量',
+                key: 'publishUser'
               }
             ],
           }
@@ -333,8 +354,8 @@
       add() {
         this.$router.push({name: 'clarifyOfferEdit'})
       },
-      cellClickHandler(row, column, cell, event) {
-        console.log(row, column, cell, event);
+      cellClickHandler(row, index, event) {
+        console.log(row, event);
         console.log(this.activeName);
         if (this.activeName === 'send') {
           this.$router.push({name: 'clarifyOfferDetailSend'});

@@ -20,19 +20,19 @@
     <buttons-operator type="top"
                       algin="right"
                       :buttons="[{label:'回复澄清',type:'primary',click:reply},{label:'导出',type:'primary',click:search}]"/>
-    <cg-table v-show="activeName==='receive'" ref="table_receive" v-bind="table.receive" @cell-click="cellClickHandler"/>
-    <cg-table v-show="activeName==='reply'" ref="table_reply" v-bind="table.reply" @cell-click="cellClickHandler"/>
+    <IvTable v-show="activeName==='receive'" ref="table_receive" v-bind="table.receive" @on-row-click="cellClickHandler"/>
+    <IvTable v-show="activeName==='reply'" ref="table_reply" v-bind="table.reply" @on-row-click="cellClickHandler"/>
   </div>
 </template>
 
 <script>
-  import CgTable from '@/components/CgTable.vue'
+  import IvTable from '@/components/IvTable.vue'
   import detail from '@/components/Detail.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
 
   export default {
     components: {
-      CgTable,
+      IvTable,
       detail,
       buttonsOperator
     },
@@ -75,55 +75,65 @@
             columns: [
               {
                 type: 'selection',
-              },
-              {
-                label: '序号',
-                type: 'index',
+                align:'center',
                 width: 60
+
               },
               {
-                label: '询价单名称',
-                prop: 'planName',
+                align:'center',
+                title: '序号',
+                type: 'index',
+                width: 80
+              },
+              {
+                title: '询价单名称',
+                key: 'planName',
+                align:'center',
+                width:100,
                 width: '100',
-                formatter: (row, column, value) => {
-                  return value;
+                render: (h, { row, column }) => {
+                  return row.planName;
                 }
               },
               {
-                label: '澄清内容',
-                prop: 'publishUser'
+                title: '澄清内容',
+                key: 'publishUser'
               },
               {
-                label: '澄清附件数量',
-                prop: 'publishUser'
+                title: '澄清附件数量',
+                key: 'publishUser',
+                align:'center',
+                width:120,
               },
               {
-                label: '询价单节点状态',
-                prop: 'publishUser',
-                formatter: (row, column, value) => {
-                  switch(value){
+                title: '询价单节点状态',
+                key: 'status',
+                align:'center',
+                width:140,
+                render: (h, { row, column }) => {
+                  switch(row.status){
                     case 1:
-                      return '';
+                      return '已取消';
                     default:
                       return ''
                   }
                 }
               },
               {
-                label: '回复内容',
-                prop: 'publishUser'
+                title: '回复内容',
+                key: 'publishUser'
               },
               {
-                label: '回复时间',
-                prop: 'publishDate',
+                title: '回复时间',
+                key: 'publishDate',
                 width: 180,
-                formatter: (row, column, value) => {
-                  return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+                render: (h, { row, column }) => {
+                  return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
                 }
               },
               {
-                label: '回复人',
-                prop: 'publishUser'
+                title: '回复人',
+                key: 'publishUser'
               }
             ]
           },
@@ -142,52 +152,60 @@
             columns: [
               {
                 type: 'selection',
+                align:'center',
+                width: 80
               },
               {
-                label: '序号',
+                align:'center',
+                title: '序号',
                 type: 'index',
-                width: 60
+                width: 80
               },
               {
-                label: '询价单名称',
-                prop: 'planName',
-                formatter: (row, column, value) => {
-                  return value;
+                title: '询价单名称',
+                key: 'planName',
+                align:'center',
+                width:100,
+                render: (h, { row, column }) => {
+                  return row.planName;
                 }
               },
               {
-                label: '澄清内容',
-                prop: 'publishUser'
+                title: '澄清内容',
+                key: 'publishUser'
               },
               {
 
-                label: '澄清时间',
-                prop: 'publishDate',
+                title: '澄清时间',
+                key: 'publishDate',
+                align:'center',
                 width: 180,
-                formatter: (row, column, value) => {
-                  return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+                render: (h, { row, column }) => {
+                  return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
                 }
               },
               {
-                label: '澄清附件数量',
-                prop: 'publishUser',
+                title: '澄清附件数量',
+                key: 'publishUser',
+                align:'center',
                 width: 120
               },
               {
-                label: '回复内容',
-                prop: 'publishUser'
+                title: '回复内容',
+                key: 'publishUser'
               },
               {
-                label: '回复时间',
-                prop: 'publishDate',
+                title: '回复时间',
+                key: 'publishDate',
+                align:'center',
                 width: 150,
-                formatter: (row, column, value) => {
-                  return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+                render: (h, { row, column }) => {
+                  return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
                 }
               },
               {
-                label: '回复人',
-                prop: 'publishUser'
+                title: '回复人',
+                key: 'publishUser'
               },
             ],
           }
@@ -247,7 +265,7 @@
             contents: [
               {
                 data: this.form.reply,
-                labelWidth: '100px',
+                titleWidth: '100px',
                 inputWidth: '200px',
                 inline: true,
                 children: [
@@ -338,8 +356,8 @@
       reply() {
         this.$router.push({name: 'clarifyOfferEdit'})
       },
-      cellClickHandler(row, column, cell, event) {
-        console.log(row, column, cell, event);
+      cellClickHandler(row,index, event) {
+        console.log(row,index, event);
         console.log(this.activeName);
         if (this.activeName === 'receive') {
           this.$router.push({name: 'clarifyReviewDetailReceive'});

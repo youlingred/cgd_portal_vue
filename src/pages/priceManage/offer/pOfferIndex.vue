@@ -21,18 +21,18 @@
     <buttons-operator type="top"
                       algin="right"
                       :buttons="[{label:'通过',type:'primary',click:pass},{label:'驳回',type:'primary',click:reject}]"/>
-    <cg-table ref="table" v-bind="table" @cell-click="cellClickHandler"/>
+    <IvTable ref="table" v-bind="table" @on-row-click="cellClickHandler"/>
   </div>
 </template>
 
 <script>
-  import CgTable from '@/components/CgTable.vue'
+  import IvTable from '@/components/IvTable.vue'
   import detail from '@/components/Detail.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
 
   export default {
     components: {
-      CgTable,
+      IvTable,
       detail,
       buttonsOperator
     },
@@ -66,51 +66,58 @@
           columns: [
             {
               type: 'selection',
-            },
-            {
-              label: '序号',
-              type: 'index',
               width: 60
             },
             {
-              label: '询价单名称',
-              prop: 'planName',
-              width: '100',
-              formatter: (row, column, value) => {
-                return value;
+              title: '序号',
+              type: 'index',
+              align:'center',
+              width: 80
+            },
+            {
+              title: '询价单名称',
+              key: 'planName',
+              align:'center',
+              width: 100,
+              render: (h, { row, column }) => {
+                return row.planName;
               }
             },
             {
-              label: '销售编号',
-              prop: 'publishUser'
+              title: '销售编号',
+              key: 'publishUser',
+              align:'center',
             },
             {
-              label: '发布日期',
-              prop: 'publishDate',
+              title: '发布日期',
+              key: 'publishDate',
+              align:'center',
               width: 180,
-              formatter: (row, column, value) => {
-                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+              render: (h, { row, column }) => {
+                return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
               }
             },
             {
-              label: '报价截止',
-              prop: 'publishDate',
+              title: '报价截止',
+              key: 'publishDate',
+              align:'center',
               width: 180,
-              formatter: (row, column, value) => {
-                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+              render: (h, { row, column }) => {
+                return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
               }
             },
             {
-              label: '采购机构',
-              prop: 'publishUser'
+              title: '采购机构',
+              key: 'publishUser',
+              align:'center',
             },
             {
-              label: '采购类别',
-              prop: 'publishUser',
-              formatter: (row, column, value) => {
-                switch(value){
+              title: '采购类别',
+              key: 'status',
+              render: (h, { row, column }) => {
+                switch(row.status){
                   case 1:
-                    return '';
+                    return '已完成';
                   default:
                     return ''
                 }
@@ -255,11 +262,11 @@
       reject(){
 
       },
-      cellClickHandler(row, column, cell, event) {
-        console.log(row, column, cell, event);
+      cellClickHandler(row) {
+        console.log(row);
         console.log(this.activeName);
-        if (this.activeName === 'offeried') {
-          this.$router.push({name: 'priceOfferDetail'});
+        if (this.activeName === 'offering') {
+          this.$router.push({name: 'priceOfferEdit'});
         }
       }
     },

@@ -5,7 +5,6 @@ import _ from 'lodash'
 Vue.use(Router)
 
 function importRoutes(r) {
-  console.log('r-------',r.keys());
   let routes=r.keys().map(key => r(key).default);
   return _.flatten(routes);
 }

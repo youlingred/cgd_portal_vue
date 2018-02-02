@@ -2,7 +2,7 @@
   <div>
     <detail v-bind="detailData"/>
     <div class="tl" style="padding: 10px 20px">明细信息</div>
-    <cg-table ref="table" v-bind="table"/>
+    <IvTable ref="table" v-bind="table"/>
     <buttons-operator type="bottom"
                       fix="true"
                       :buttons="[{label:'返回',type:'info',click:backFunc}]"/>
@@ -12,13 +12,13 @@
 
 <script>
   import detail from '@/components/Detail.vue'
-  import CgTable from '@/components/CgTable.vue'
+  import IvTable from '@/components/IvTable.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
 
   export default {
     components:{
       detail,
-      CgTable,
+      IvTable,
       buttonsOperator
     },
     data () {
@@ -157,74 +157,74 @@
           this.table.columns = [
             {
               fixed: 'left',
-              label: '序号',
+              title: '序号',
               type: 'index',
               width: 80
             },
             {
-              label: '物料编码',
-              prop: '1',
+              title: '物料编码',
+              key: '1',
               width: 150,
             },
             {
-              label: '物料名称',
-              prop: '2',
+              title: '物料名称',
+              key: '2',
               width: 150,
             },
             {
-              label: '物资分类',
-              prop: '3',
+              title: '物资分类',
+              key: '3',
               width: 100,
             },
             {
-              label: '规格',
-              prop: '4',
+              title: '规格',
+              key: '4',
               width: 100,
             },
             {
-              label: '型号',
-              prop: '5',
+              title: '型号',
+              key: '5',
               width: 100,
             },
             {
-              label: '图号',
-              prop: '6',
+              title: '图号',
+              key: '6',
               width: 100,
             },
             {
-              label: '材质',
-              prop: '7',
+              title: '材质',
+              key: '7',
               width: 100,
             },
             {
-              label: '品牌',
-              prop: '8',
+              title: '品牌',
+              key: '8',
               width: 100,
             },
             {
-              label: '生产厂家',
-              prop: '9',
+              title: '生产厂家',
+              key: '9',
               width: 150,
             },
             {
-              label: '计量单位',
-              prop: '10',
+              title: '计量单位',
+              key: '10',
               width: 100,
             },
             {
-              label: '处置数量',
+              title: '处置数量',
               align:'right',
-              prop: '14',
+              key: '14',
               width: 150,
             },
             {
-              label: '销售单价（元）',
-              prop: '1',
+              title: '销售单价（元）',
+              key: '1',
               width: 180
             },
             {
-              label: '采购意向数量',
-              prop: '4',
+              title: '采购意向数量',
+              key: '4',
               width: 150
             }
           ];

@@ -9,19 +9,24 @@ import router from './router'
 import store from './vuex/'
 import moment from 'moment'
 import accounting from 'accounting'
+import lockr from 'lockr'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/base.css'
 import './assets/css/purchaser.css'
 import './mock/mock'
+import iView from 'iview';
+import 'iview/dist/styles/iview.css';
 
 Vue.use(ElementUI)
+Vue.use(iView)
 Vue.config.productionTip = false
 axios.defaults.timeout = 1000 * 15
 Vue.prototype.axios = axios
 Vue.prototype.appConfig = appConfig
 Vue.prototype.moment=moment;
 Vue.prototype.accounting=accounting
+Vue.prototype.lockr=lockr;
 window._=lodash
 
 /* eslint-disable no-new */

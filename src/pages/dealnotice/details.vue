@@ -2,7 +2,7 @@
   <div>
     <detail v-bind="detailData"></detail>
     <div class="tl" style="padding: 10px 20px">明细信息</div>
-    <cg-table ref="table" v-bind="table"></cg-table>
+    <IvTable ref="table" v-bind="table"/>
     <buttons-operator type="bottom"
                       fix="true"
                       :buttons="[{label:'返回',type:'info',click:backFunc}]"/>
@@ -12,13 +12,13 @@
 
 <script>
   import detail from '@/components/Detail.vue'
-  import CgTable from '@/components/CgTable.vue'
+  import IvTable from '@/components/IvTable.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
 
   export default {
     components:{
       detail,
-      CgTable,
+      IvTable,
       buttonsOperator
     },
     data () {
@@ -179,112 +179,113 @@
           this.table.columns = [
             {
               fixed: 'left',
-              label: '序号',
+              title: '序号',
               type: 'index',
+              algin:'center',
               width: 80
             },
             {
-              label: '项目单位',
-              prop: '1',
+              title: '项目单位',
+              key: '1',
               width: 180
             },
             {
-              label: '物资类别',
-              prop: '2'
+              title: '物资类别',
+              key: '2'
             },
             {
-              label: '物料编码',
-              prop: '3',
+              title: '物料编码',
+              key: '3',
             },
             {
-              label: '物料名称',
-              prop: '4',
+              title: '物料名称',
+              key: '4',
             },
             {
-              label: '承诺交货日期',
-              prop: '5',
+              title: '承诺交货日期',
+              key: '5',
               width: 180,
-              formatter: (row, column, value) => {
-                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+              render: (h, { row, column }) => {
+                return this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss");
               }
             },
             {
-              label: '型号',
-              prop: '6',
+              title: '型号',
+              key: '6',
               width: 180,
             },
             {
-              label: '规格',
-              prop: '7'
+              title: '规格',
+              key: '7'
             },
             {
-              label: '图号',
-              prop: '8',
+              title: '图号',
+              key: '8',
             },
             {
-              label: '材质',
-              prop: '9',
+              title: '材质',
+              key: '9',
             },
             {
-              label: '推荐品牌',
-              prop: '10'
+              title: '推荐品牌',
+              key: '10'
             },
             {
-              label: '生产厂家',
-              prop: '11'
+              title: '生产厂家',
+              key: '11'
             },
             {
-              label: '采购数量',
-              prop: '12',
+              title: '采购数量',
+              key: '12',
             },
             {
-              label: '计量单位',
-              prop: '13',
+              title: '计量单位',
+              key: '13',
               width: 120,
             },
             {
-              label: '预算单价（元）',
-              prop: '14',
+              title: '预算单价（元）',
+              key: '14',
               width: 120,
             },
             {
-              label: '询价总价（元）',
-              prop: '15',
+              title: '询价总价（元）',
+              key: '15',
               width: 120,
             },
             {
-              label: '采购总价（元）',
-              prop: '16',
+              title: '采购总价（元）',
+              key: '16',
               width: 120,
             },
             {
-              label: '要求到货日期',
-              prop: '17',
+              title: '要求到货日期',
+              key: '17',
               width: 120,
             },
             {
-              label: '项目单位联系人',
-              prop: '18',
+              title: '项目单位联系人',
+              key: '18',
               width: 120,
             },
             {
-              label: '项目单位联系电话',
-              prop: '19',
+              title: '项目单位联系电话',
+              key: '19',
               width: 180,
             },
             {
-              label: '项目单位联系地址',
-              prop: '20',
+              title: '项目单位联系地址',
+              key: '20',
               width: 180,
             },
             {
-              label: '业务流程状态',
-              prop: '21',
+              title: '业务流程状态',
+              key: '21',
               width: 120,
             },
             {
-              label: '节点状态',
-              prop: '22',
+              title: '节点状态',
+              key: '22',
             }
           ];
         }else if(type==2){//施工类详情
@@ -292,65 +293,65 @@
           this.table.columns = [
             {
               fixed: 'left',
-              label: '序号',
+              title: '序号',
               type: 'index',
               width: 80
             },
             {
-              label: '项目单位',
-              prop: '1'
+              title: '项目单位',
+              key: '1'
             },
             {
-              label: '项目名称',
-              prop: '2'
+              title: '项目名称',
+              key: '2'
             },
             {
-              label: '内容描述',
-              prop: '3',
+              title: '内容描述',
+              key: '3',
             },
             {
-              label: '计量单位',
-              prop: '4',
+              title: '计量单位',
+              key: '4',
             },
             {
-              label: '需求数量（预估）',
-              prop: '5',
+              title: '需求数量（预估）',
+              key: '5',
             },
             {
-              label: '预算单价（元）',
-              prop: '6'
+              title: '预算单价（元）',
+              key: '6'
             },
             {
-              label: '询价单价（元）',
-              prop: '7'
+              title: '询价单价（元）',
+              key: '7'
             },
             {
-              label: '采购总价（元）',
-              prop: '8',
+              title: '采购总价（元）',
+              key: '8',
             },
             {
-              label: '项目完成日期',
-              prop: '9',
+              title: '项目完成日期',
+              key: '9',
             },
             {
-              label: '项目单位联系人',
-              prop: '10'
+              title: '项目单位联系人',
+              key: '10'
             },
             {
-              label: '项目单位联系电话',
-              prop: '11'
+              title: '项目单位联系电话',
+              key: '11'
             },
             {
-              label: '项目单位联系地址',
-              prop: '12',
+              title: '项目单位联系地址',
+              key: '12',
             },
             {
-              label: '业务流程状态',
-              prop: '13',
+              title: '业务流程状态',
+              key: '13',
             },
             {
-              label: '节点状态',
-              prop: '14'
+              title: '节点状态',
+              key: '14'
             }
           ];
         }else if(type==3){//服务类详情
@@ -358,65 +359,65 @@
           this.table.columns = [
             {
               fixed: 'left',
-              label: '序号',
+              title: '序号',
               type: 'index',
               width: 80
             },
             {
-              label: '项目单位',
-              prop: '1'
+              title: '项目单位',
+              key: '1'
             },
             {
-              label: '项目名称',
-              prop: '2'
+              title: '项目名称',
+              key: '2'
             },
             {
-              label: '内容描述',
-              prop: '3',
+              title: '内容描述',
+              key: '3',
             },
             {
-              label: '计量单位',
-              prop: '4',
+              title: '计量单位',
+              key: '4',
             },
             {
-              label: '需求数量（预估）',
-              prop: '5',
+              title: '需求数量（预估）',
+              key: '5',
             },
             {
-              label: '预算单价（元）',
-              prop: '6'
+              title: '预算单价（元）',
+              key: '6'
             },
             {
-              label: '询价单价（元）',
-              prop: '7'
+              title: '询价单价（元）',
+              key: '7'
             },
             {
-              label: '采购总价（元）',
-              prop: '8',
+              title: '采购总价（元）',
+              key: '8',
             },
             {
-              label: '项目完成日期',
-              prop: '9',
+              title: '项目完成日期',
+              key: '9',
             },
             {
-              label: '项目单位联系人',
-              prop: '10'
+              title: '项目单位联系人',
+              key: '10'
             },
             {
-              label: '项目单位联系电话',
-              prop: '11'
+              title: '项目单位联系电话',
+              key: '11'
             },
             {
-              label: '项目单位联系地址',
-              prop: '12',
+              title: '项目单位联系地址',
+              key: '12',
             },
             {
-              label: '业务流程状态',
-              prop: '13',
+              title: '业务流程状态',
+              key: '13',
             },
             {
-              label: '节点状态',
-              prop: '14'
+              title: '节点状态',
+              key: '14'
             }
           ];
         }

@@ -56,7 +56,7 @@ module.exports = {
         loader: "style-loader!css-loader!less-loader",
       },
       {
-        test: /\.(png|jpe?g|gif)(\?.*)?$/,
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
           limit: 10000,
@@ -65,6 +65,9 @@ module.exports = {
       },
       {
         test: /\.svg$/,
+        include: [
+          path.resolve(__dirname, '../src/assets'),
+        ],
         loader: 'svg-sprite-loader',
         options: {
           limit: 10000,

@@ -9,18 +9,18 @@
     <buttons-operator type="top"
                       algin="right"
                       :buttons="[{label:'导出',type:'primary',click:exports}]"/>
-    <cg-table ref="table" v-bind="table" @cell-click="cellClickHandler"/>
+    <IvTable ref="table" v-bind="table" @on-row-click="cellClickHandler"/>
   </div>
 </template>
 
 <script>
-  import CgTable from '@/components/CgTable.vue'
+  import IvTable from '@/components/IvTable.vue'
   import detail from '@/components/Detail.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
 
   export default {
     components: {
-      CgTable,
+      IvTable,
       detail,
       buttonsOperator
     },
@@ -51,58 +51,60 @@
           columns: [
             {
               type: 'selection',
+              width:60,
             },
             {
-              label: '序号',
+              title: '序号',
               type: 'index',
-              width: 60
+              width: 80
             },
             {
-              label: '标的物名称',
-              prop: 'planName',
+              title: '标的物名称',
+              key: 'planName',
               width: 150,
             },
             {
-              label: '处置单位',
-              prop: 'publishUser',
+              title: '处置单位',
+              key: 'publishUser',
               width: 150,
             },
             {
-              label: '处置单位联系人',
-              prop: 'publishUser',
+              title: '处置单位联系人',
+              key: 'publishUser',
               width: 150,
             },
             {
-              label: '处置单位联系电话',
-              prop: 'publishUser',
+              title: '处置单位联系电话',
+              key: 'publishUser',
               width: 150,
             },
             {
-              label: '提货地点',
-              prop: 'publishUser',
+              title: '提货地点',
+              key: 'publishUser',
               width: 150,
             },
             {
-              label: '采购方联系人',
-              prop: 'publishUser',
+              title: '采购方联系人',
+              key: 'publishUser',
               width: 150,
             },
             {
-              label: '采购方联系电话',
-              prop: 'publishUser',
+              title: '采购方联系电话',
+              key: 'publishUser',
               width: 150,
             },
             {
-              label: '下达意向时间',
-              prop: 'publishDate',
+              title: '下达意向时间',
+              key: 'publishDate',
               width: 180,
-              formatter: (row, column, value) => {
-                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+              render: (h, { row, column }) => {
+                return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
               }
             },
             {
-              label: '公告名称',
-              prop: 'publishUser'
+              title: '公告名称',
+              key: 'publishUser',
+              width: 120,
             }
           ]
         },
@@ -195,8 +197,8 @@
       exports(){
 
       },
-      cellClickHandler(row, column, cell, event) {
-        console.log(row, column, cell, event);
+      cellClickHandler(row) {
+        console.log(row);
         this.$router.push({name: 'idleMaterialsDetail',params:{type:1,id:11}});
       }
     },

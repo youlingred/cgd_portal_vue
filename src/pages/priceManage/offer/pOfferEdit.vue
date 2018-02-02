@@ -1,7 +1,7 @@
 <template>
   <div>
     <detail v-bind="detailData"></detail>
-    <cg-table ref="table" v-bind="table"/>
+    <IvTable ref="table" v-bind="table"/>
     <buttons-operator type="bottom"
                       fix="true"
                       :buttons="[{label:'提交',type:'primary',click:sumbit},{label:'发起澄清',type:'primary',click:fire},{label:'返回',type:'info',click:back}]"/>
@@ -13,12 +13,12 @@
 <script>
   import detail from '@/components/Detail.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
-  import CgTable from '@/components/CgTable.vue'
+  import IvTable from '@/components/IvTable.vue'
 
   export default {
     name: "clarify-review-edit",
     components: {
-      CgTable,
+      IvTable,
       detail,
       buttonsOperator
     },

@@ -18,18 +18,18 @@
     <buttons-operator type="top"
                       algin="right"
                       :buttons="[{label:'通过',type:'primary',click:pass},{label:'驳回',type:'primary',click:reject}]"/>
-    <cg-table ref="table" v-bind="table"/>
+    <IvTable ref="table" v-bind="table"/>
   </div>
 </template>
 
 <script>
-  import CgTable from '@/components/CgTable.vue'
+  import IvTable from '@/components/IvTable.vue'
   import detail from '@/components/Detail.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
 
   export default {
     components: {
-      CgTable,
+      IvTable,
       detail,
       buttonsOperator
     },
@@ -64,47 +64,47 @@
               type: 'selection',
             },
             {
-              label: '序号',
+              title: '序号',
               type: 'index',
-              width: 60
+              width: 80
             },
             {
-              label: '询价单名称',
-              prop: 'planName',
+              title: '询价单名称',
+              key: 'planName',
               width: '100',
-              formatter: (row, column, value) => {
-                return value;
+              render: (h, { row, column }) => {
+                return row.planName;
               }
             },
             {
-              label: '销售编号',
-              prop: 'publishUser'
+              title: '销售编号',
+              key: 'publishUser'
             },
             {
-              label: '发布日期',
-              prop: 'publishDate',
+              title: '发布日期',
+              key: 'publishDate',
               width: 180,
-              formatter: (row, column, value) => {
-                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+              render: (h, { row, column }) => {
+                return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
               }
             },
             {
-              label: '报价截止',
-              prop: 'publishDate',
+              title: '报价截止',
+              key: 'publishDate',
               width: 180,
-              formatter: (row, column, value) => {
-                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+              render: (h, { row, column }) => {
+                return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
               }
             },
             {
-              label: '采购机构',
-              prop: 'publishUser'
+              title: '采购机构',
+              key: 'publishUser'
             },
             {
-              label: '采购类别',
-              prop: 'publishUser',
-              formatter: (row, column, value) => {
-                switch(value){
+              title: '采购类别',
+              key: 'publishUser',
+              render: (h, { row, column }) => {
+                switch(row.publishUser){
                   case 1:
                     return '';
                   default:
