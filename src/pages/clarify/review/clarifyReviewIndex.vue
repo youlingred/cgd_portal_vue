@@ -4,16 +4,16 @@
       <el-tabs v-model="activeName">
         <el-tab-pane label="收到的澄清" name="receive">
           <detail ref="form_receive" v-bind="formInit.receive" noborder>
-            <buttons-operator type="top"
-                              algin="left"
-                              :buttons="[{label:'搜索',type:'primary',click:search},
-                          {label:'重置',type:'info',click:reset}]"/>
           </detail>
         </el-tab-pane>
         <el-tab-pane label="已回复采购企业的澄清" name="reply">
           <detail ref="form_reply" v-bind="formInit.reply" noborder/>
 
         </el-tab-pane>
+        <buttons-operator type="top"
+                          algin="left"
+                          :buttons="[{label:'搜索',type:'primary',click:search},
+                          {label:'重置',type:'info',click:reset}]"/>
       </el-tabs>
     </el-card>
     <buttons-operator type="top"
@@ -264,7 +264,7 @@
             contents: [
               {
                 data: this.form.reply,
-                titleWidth: '100px',
+                labelWidth: '100px',                titleWidth: '100px',
                 inputWidth: '200px',
                 inline: true,
                 children: [
