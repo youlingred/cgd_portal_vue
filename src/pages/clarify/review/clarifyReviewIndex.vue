@@ -16,7 +16,6 @@
         </el-tab-pane>
       </el-tabs>
     </el-card>
-    <el-header ></el-header>
     <buttons-operator type="top"
                       algin="right"
                       :buttons="[{label:'回复澄清',type:'primary',click:reply},{label:'导出',type:'primary',click:search}]"/>
