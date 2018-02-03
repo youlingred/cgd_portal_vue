@@ -3,22 +3,28 @@
     <el-card>
       <el-tabs v-model="activeName">
         <el-tab-pane label="收到的澄清" name="receive">
-          <detail ref="form_receive" v-bind="formInit.receive" noborder/>
+          <detail ref="form_receive" v-bind="formInit.receive" noborder>
+            <buttons-operator type="top"
+                              algin="left"
+                              :buttons="[{label:'搜索',type:'primary',click:search},
+                          {label:'重置',type:'info',click:reset}]"/>
+          </detail>
         </el-tab-pane>
         <el-tab-pane label="已回复采购企业的澄清" name="reply">
-          <detail ref="form_reply" v-bind="formInit.reply" noborder/>
-        </el-tab-pane>
-        <buttons-operator type="top"
-                          algin="left"
-                          :buttons="[{label:'搜索',type:'primary',click:search},
+          <detail ref="form_reply" v-bind="formInit.reply" noborder>
+            <buttons-operator type="top"
+                              algin="left"
+                              :buttons="[{label:'搜索',type:'primary',click:search},
                           {label:'重置',type:'info',click:reset}]"/>
+          </detail>
+        </el-tab-pane>
       </el-tabs>
     </el-card>
     <buttons-operator type="top"
                       algin="right"
                       :buttons="[{label:'回复澄清',type:'primary',click:reply},{label:'导出',type:'primary',click:search}]"/>
-    <IvTable v-show="activeName==='receive'" ref="table_receive" v-bind="table.receive" @on-row-click="cellClickHandler"/>
-    <IvTable v-show="activeName==='reply'" ref="table_reply" v-bind="table.reply" @on-row-click="cellClickHandler"/>
+    <IvTable v-show="activeName==='receive'" ref="table_receive" v-bind="table.receive"/>
+    <IvTable v-show="activeName==='reply'" ref="table_reply" v-bind="table.reply"/>
   </div>
 </template>
 
@@ -42,28 +48,30 @@
         //发出澄清搜索条件表单数据
         form: {
           receive: {
-            planName: '',
-            publishUser: '',
-            project: '',
-            status: '',
-            publishDate1: '',
-            publishDate2: ''
+            inquiryName: '',
+            clarificationContent: '',
+            clarificationDateStart: '',
+            clarificationDateEnd: ''
           },
           reply: {
-            name: '',
-            project: '',
-            status: ''
+            inquiryName: '',
+            clarificationContent: '',
+            replyContents: '',
+            repliers: '',
+            clarificationDateStart: '',
+            clarificationDateEnd: ''
+
           }
         },
         //table初始化数据
-        table:{
-          receive:{
-            url: this.appConfig.api('testDylyListPage'),
+        table: {
+          receive: {
+            url: this.appConfig.api('inquiry/others/clarification/searchSupReceiverPurClarificationReviewList'),
             pageNo: 1,
             height: 400,
             queryParam: function (param) {
               console.log('queryParam:', param)
-              return _.assign({test: 1}, param);
+              return _.assign({}, param);
             },
             responseHandler: function (val) {
               console.log('responseHandler:', val)
@@ -72,75 +80,65 @@
             columns: [
               {
                 type: 'selection',
-                align:'center',
+                align: 'center',
                 width: 60
 
               },
               {
-                align:'center',
+                align: 'center',
                 title: '序号',
                 type: 'index',
                 width: 80
               },
               {
                 title: '询价单名称',
-                key: 'planName',
-                align:'center',
-                width:100,
-                width: '100',
-                render: (h, { row, column }) => {
-                  return row.planName;
+                key: 'inquiryName',
+                align: 'center',
+                width: 120,
+                render: (h, {row, column}) => {
+                  return h('a', {
+                      on: {
+                        click: () => {
+                          this.gotoDetail(row.clarificationId)
+                        }
+                      }
+                    },
+                    row.inquiryName);
                 }
               },
               {
                 title: '澄清内容',
-                key: 'publishUser'
+                key: 'clarificationContent'
+              },
+              {
+                title: '澄清时间',
+                key: 'clarificationTime',
+                align: 'center',
+                width: 200,
+                render: (h, {row, column}) => {
+                  return this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss");
+                }
               },
               {
                 title: '澄清附件数量',
-                key: 'publishUser',
-                align:'center',
-                width:120,
+                key: 'clarificationAttachNum',
+                align: 'center',
+                width: 140
               },
               {
                 title: '询价单节点状态',
-                key: 'status',
-                align:'center',
-                width:140,
-                render: (h, { row, column }) => {
-                  switch(row.status){
-                    case 1:
-                      return '已取消';
-                    default:
-                      return ''
-                  }
-                }
-              },
-              {
-                title: '回复内容',
-                key: 'publishUser'
-              },
-              {
-                title: '回复时间',
-                key: 'publishDate',
-                width: 180,
-                render: (h, { row, column }) => {
-                  return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
-                }
-              },
-              {
-                title: '回复人',
-                key: 'publishUser'
+                align: 'center',
+                width: 120
               }
             ]
           },
-          reply:{
-            url: this.appConfig.api('testDylyListPage'),
+          reply: {
+            url: this.appConfig.api('inquiry/others/clarification/searchSupReceiverPurClarificationReplyList'),
             pageNo: 1,
             height: 400,
             queryParam: function (param) {
               console.log('queryParam:', param)
-              return _.assign({test: 1}, param);
+              return _.assign({}, param);
             },
             responseHandler: function (val) {
               console.log('responseHandler:', val)
@@ -149,71 +147,71 @@
             columns: [
               {
                 type: 'selection',
-                align:'center',
-                width: 80
+                align: 'center',
+                width: 60
               },
               {
-                align:'center',
+                align: 'center',
                 title: '序号',
                 type: 'index',
                 width: 80
               },
               {
                 title: '询价单名称',
-                key: 'planName',
-                align:'center',
-                width:100,
-                render: (h, { row, column }) => {
-                  return row.planName;
+                key: 'inquiryName',
+                align: 'center',
+                width: 100,
+                render: (h, {row, column}) => {
+                  return row.inquiryName;
                 }
               },
               {
                 title: '澄清内容',
-                key: 'publishUser'
+                key: 'clarificationContent'
               },
               {
 
                 title: '澄清时间',
-                key: 'publishDate',
-                align:'center',
-                width: 180,
-                render: (h, { row, column }) => {
-                  return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
+                key: 'clarificationTime',
+                align: 'center',
+                width: 160,
+                render: (h, {row, column}) => {
+                  return this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss");
                 }
               },
               {
                 title: '澄清附件数量',
-                key: 'publishUser',
-                align:'center',
+                key: 'clarificationAttachNum',
+                align: 'center',
                 width: 120
               },
               {
                 title: '回复内容',
-                key: 'publishUser'
+                key: 'replyContent'
               },
               {
                 title: '回复时间',
-                key: 'publishDate',
-                align:'center',
-                width: 150,
-                render: (h, { row, column }) => {
-                  return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
+                key: 'replyTime',
+                align: 'center',
+                width: 160,
+                render: (h, {row, column}) => {
+                  return this.moment(row.replyTime).format("YYYY-MM-DD HH:mm:ss");
                 }
               },
               {
                 title: '回复人',
-                key: 'publishUser'
+                key: 'replier'
               },
             ],
           }
         }
       }
     },
-    computed:{
-      formInit(){
+    computed: {
+      formInit() {
         return {
           //发出澄清表单初始化数据
-          receive:{
+          receive: {
             contents: [
               {
                 data: this.form.receive,
@@ -225,19 +223,19 @@
                     type: 'input',
                     label: '询价单名称',
                     placeholder: '模糊查询,可用个逗号隔开',
-                    prop: 'planName',
+                    prop: 'inquiryName',
                   },
                   {
                     type: 'input',
                     label: '澄清内容',
                     placeholder: '模糊查询,可用个逗号隔开',
-                    prop: 'publishUser',
+                    prop: 'clarificationContent',
                   },
                   {
                     type: 'dateTimePicker',
                     label: '澄清开始日期',
                     placeholder: '请输入开始时间',
-                    prop: 'publishDate1',
+                    prop: 'clarificationDateStart',
                     extendParam: {
                       editable: false,
                       format: 'yyyy-mm-dd hh:mm:ss'
@@ -247,7 +245,7 @@
                     type: 'dateTimePicker',
                     label: '澄清结束日期',
                     placeholder: '请输入结束时间',
-                    prop: 'publishDate2',
+                    prop: 'clarificationDateEnd',
                     extendParam: {
                       editable: false,
                       format: 'yyyy-mm-dd hh:mm:ss'
@@ -258,11 +256,12 @@
             ]
           },
           //收到澄清表单初始化数据
-          reply:{
+          reply: {
             contents: [
               {
                 data: this.form.reply,
-                labelWidth: '100px',                titleWidth: '100px',
+                labelWidth: '100px',
+                titleWidth: '100px',
                 inputWidth: '200px',
                 inline: true,
                 children: [
@@ -270,31 +269,31 @@
                     type: 'input',
                     label: '询价单名称',
                     placeholder: '模糊查询,可用个逗号隔开',
-                    prop: 'planName',
+                    prop: 'inquiryName',
                   },
                   {
                     type: 'input',
                     label: '澄清内容',
                     placeholder: '模糊查询,可用个逗号隔开',
-                    prop: 'publishUser',
+                    prop: 'clarificationContent',
                   },
                   {
                     type: 'input',
                     label: '回复内容',
                     placeholder: '模糊查询,可用个逗号隔开',
-                    prop: 'publishUser',
+                    prop: 'replyContents',
                   },
                   {
                     type: 'input',
                     label: '回复人',
                     placeholder: '模糊查询,可用个逗号隔开',
-                    prop: 'publishUser'
+                    prop: 'repliers'
                   },
                   {
                     type: 'dateTimePicker',
                     label: '澄清开始日期',
                     placeholder: '请输入开始时间',
-                    prop: 'publishDate1',
+                    prop: 'clarificationDateStart',
                     extendParam: {
                       editable: false,
                       format: 'yyyy-mm-dd hh:mm:ss'
@@ -304,29 +303,7 @@
                     type: 'dateTimePicker',
                     label: '澄清结束日期',
                     placeholder: '请输入结束时间',
-                    prop: 'publishDate2',
-                    extendParam: {
-                      editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss'
-                    }
-                  },
-                  {
-                    type: 'dateTimePicker',
-                    label: '回复开始日期',
-                    placeholder: '请输入开始时间',
-                    prop: 'publishDate1',
-                    switchFlag: this.flag,
-                    extendParam: {
-                      editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss'
-                    }
-                  },
-                  {
-                    type: 'dateTimePicker',
-                    label: '回复结束日期',
-                    placeholder: '请输入结束时间',
-                    prop: 'publishDate2',
-                    switchFlag: this.flag,
+                    prop: 'clarificationDateEnd',
                     extendParam: {
                       editable: false,
                       format: 'yyyy-mm-dd hh:mm:ss'
@@ -342,24 +319,24 @@
     methods: {
       //搜索
       search() {
-        this.$refs['table_'+this.activeName].query(this.form[this.activeName])
+        let searchData = this.form[this.activeName];
+        searchData.pageNo = 1;
+        this.$refs['table_' + this.activeName].query(searchData);
       },
       //重置
       reset() {
         //因为detail组件可以包含多个表单,所以返回的的是表单数组forms
-        this.$refs['form_'+this.activeName].forms[0].resetFields();
+        this.$refs['form_' + this.activeName].forms[0].resetFields();
       },
       //回复
       reply() {
         this.$router.push({name: 'clarifyOfferEdit'})
       },
-      cellClickHandler(row,index, event) {
-        console.log(row,index, event);
-        console.log(this.activeName);
+      gotoDetail(id) {
         if (this.activeName === 'receive') {
-          this.$router.push({name: 'clarifyReviewDetailReceive'});
+          this.$router.push({name: 'clarifyReviewDetailReceive', params: {id: id}});
         } else {
-          this.$router.push({name: 'clarifyReviewDetailreply'});
+
         }
       }
     }
@@ -367,8 +344,8 @@
 </script>
 
 <style scoped>
-  el-card{
-    border:none;
+  el-card {
+    border: none;
   }
 </style>
 
