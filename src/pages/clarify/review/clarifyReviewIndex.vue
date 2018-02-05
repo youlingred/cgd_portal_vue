@@ -4,27 +4,23 @@
       <el-tabs v-model="activeName">
         <el-tab-pane label="收到的澄清" name="receive">
           <detail ref="form_receive" v-bind="formInit.receive" noborder>
-            <buttons-operator type="top"
-                              algin="left"
-                              :buttons="[{label:'搜索',type:'primary',click:search},
-                          {label:'重置',type:'info',click:reset}]"/>
           </detail>
         </el-tab-pane>
         <el-tab-pane label="已回复采购企业的澄清" name="reply">
           <detail ref="form_reply" v-bind="formInit.reply" noborder>
-            <buttons-operator type="top"
-                              algin="left"
-                              :buttons="[{label:'搜索',type:'primary',click:search},
-                          {label:'重置',type:'info',click:reset}]"/>
           </detail>
         </el-tab-pane>
+        <buttons-operator type="top"
+                          algin="left"
+                          :buttons="[{label:'搜索',type:'primary',click:search},
+                          {label:'重置',type:'info',click:reset}]"/>
       </el-tabs>
     </el-card>
     <buttons-operator type="top"
                       algin="right"
                       :buttons="[{label:'回复澄清',type:'primary',click:reply},{label:'导出',type:'primary',click:search}]"/>
-    <IvTable v-show="activeName==='receive'" ref="table_receive" v-bind="table.receive"/>
-    <IvTable v-show="activeName==='reply'" ref="table_reply" v-bind="table.reply"/>
+    <IvTable v-if="activeName==='receive'" ref="table_receive" v-bind="table.receive"/>
+    <IvTable v-if="activeName==='reply'" ref="table_reply" v-bind="table.reply"/>
   </div>
 </template>
 
@@ -85,16 +81,21 @@
 
               },
               {
-                align: 'center',
                 title: '序号',
                 type: 'index',
+                align: 'center',
                 width: 80
               },
               {
                 title: '询价单名称',
                 key: 'inquiryName',
                 align: 'center',
-                width: 120,
+                width: 120
+              },
+              {
+                title: '澄清内容',
+                key: 'clarificationContent',
+                align: 'center',
                 render: (h, {row, column}) => {
                   return h('a', {
                       on: {
@@ -103,12 +104,8 @@
                         }
                       }
                     },
-                    row.inquiryName);
+                    row.clarificationContent);
                 }
-              },
-              {
-                title: '澄清内容',
-                key: 'clarificationContent'
               },
               {
                 title: '澄清时间',
@@ -160,14 +157,16 @@
                 title: '询价单名称',
                 key: 'inquiryName',
                 align: 'center',
-                width: 100,
+                width: 120,
                 render: (h, {row, column}) => {
                   return row.inquiryName;
                 }
               },
               {
                 title: '澄清内容',
-                key: 'clarificationContent'
+                key: 'clarificationContent',
+                align: 'center',
+                width: 220
               },
               {
 
@@ -187,7 +186,9 @@
               },
               {
                 title: '回复内容',
-                key: 'replyContent'
+                key: 'replyContent',
+                align: 'center',
+                width: 120
               },
               {
                 title: '回复时间',
@@ -200,7 +201,9 @@
               },
               {
                 title: '回复人',
-                key: 'replier'
+                key: 'replier',
+                align: 'center',
+                width: 80,
               },
             ],
           }
