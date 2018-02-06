@@ -92,7 +92,7 @@
     },
     methods: {
       back() {
-        this.$router.push({name: 'clarifyOfferIndex'})
+        this.$router.back();
       }
     },
     created() {
