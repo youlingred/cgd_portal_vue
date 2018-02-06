@@ -142,6 +142,7 @@
       },
       loginOrOutName: function () {
         if (this.isLogin) {
+          alert(this.isLogin)
           return '退出'
         } else {
           return '登录'

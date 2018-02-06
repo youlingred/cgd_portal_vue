@@ -153,7 +153,6 @@
                   extendParam: {
                     remote: true,
                     filterable: true,
-                    remote: true,
                     remoteMethod: this.query,
                     options: this.options
                   }

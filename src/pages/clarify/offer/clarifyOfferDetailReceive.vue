@@ -20,14 +20,6 @@
     data() {
       return {
         form: {
-          planName: '团建',
-          publishUser: '老铁',
-          publishDate: 1514192693000,
-          objectionDate: 1514192693000,
-          status: 1,
-          clarifyContent:'哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈',
-          prop4: '艳照门',
-          fileList:[{name:'文件测试',path:'test'},{name:'文件测试',path:'test'}],
         }
       };
     },
@@ -91,6 +83,13 @@
       back(){
         this.$router.push({name:'clarifyOfferIndex'})
       }
+    },
+    created() {
+      this.axios.post(this.appConfig.api('inquiry/others/clarification/searchMyReceiverBeforeQuoteClarificationInfo'),{clarificationId:this.$route.params.id})
+        .then((data) => {
+          this.util.dataAdapter(data,['attachmentName','attachmentUrl'],['name','path'],false)
+          this.form=data;
+        })
     }
   }
 </script>

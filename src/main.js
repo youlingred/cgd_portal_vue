@@ -22,7 +22,6 @@ import util from './assets/js/util'
 Vue.use(ElementUI)
 Vue.use(iView)
 Vue.config.productionTip = false
-axios.defaults.timeout = 1000 * 15
 Vue.prototype.axios = axios
 Vue.prototype.appConfig = appConfig
 Vue.prototype.moment=moment;

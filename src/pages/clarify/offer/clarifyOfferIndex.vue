@@ -25,8 +25,8 @@
     <buttons-operator type="top"
                       algin="right"
                       :buttons="[{label:'新增',type:'primary',click:add},{label:'导出',type:'primary',click:search}]"/>
-    <IvTable v-show="activeName==='send'" ref="table_send" v-bind="table.send"/>
-    <IvTable v-show="activeName==='receive'" ref="table_receive" v-bind="table.receive"/>
+    <IvTable v-if="activeName==='send'" ref="table_send" v-bind="table.send"/>
+    <IvTable v-if="activeName==='receive'" ref="table_receive" v-bind="table.receive"/>
   </div>
 </template>
 
@@ -66,6 +66,7 @@
         //table初始化数据
         table: {
           send: {
+            height:400,
             url: this.appConfig.api('inquiry/others/clarification/searchSupPublishPurQuestionList'),
             pageNo: 1,
             queryParam: function (param) {
@@ -109,26 +110,14 @@
                 width: 160,
                 key: 'questionContent',
                 render: (h, {row, column}) => {
-                  return row.questionContent;
-                }
-              },
-              {
-                title: '澄清状态',
-                key: 'status',
-                align: 'center',
-                width: 100,
-                render: (h, {row, column}) => {
-                  switch (row.status) {
-                    case 1:
-                      return '处理中';
-                      break;
-                    case 2:
-                      return '已受理';
-                      break;
-                    case 3:
-                      return '驳回';
-                      break;
-                  }
+                  return h('a', {
+                      on: {
+                        click: ()=>{
+                          this.gotoDetail(row.questionId)
+                        }
+                      }
+                    },
+                    row.questionContent);
                 }
               },
               {
@@ -149,7 +138,6 @@
               {
                 title: '接受澄清单位',
                 align: 'center',
-                width: 120,
                 key: 'publishUser'
               },
             ],
@@ -158,7 +146,6 @@
             url: this.appConfig.api('inquiry/others/clarification/searchSupReceiverPurClarificationBeforeQuoteList'),
             height: 400,
             pageNo: 1,
-            // height: 400,
             queryParam: function (param) {
               console.log('queryParam:', param)
               return _.assign({}, param);
@@ -182,6 +169,7 @@
                 align: 'center',
                 title: '发起澄清的采购企业',
                 key: 'planName',
+                width: 180,
                 render: (h, {row, column}) => {
                   return row.planName;
                 }
@@ -190,6 +178,7 @@
                 align: 'center',
                 title: '澄清时间',
                 key: 'clarificationTime',
+                width: 180,
                 render: (h, {row, column}) => {
                   return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
                 }
@@ -198,6 +187,7 @@
                 align: 'center',
                 title: '询价单名称',
                 key: 'inquiryName',
+                width: 180,
                 render: (h, {row, column}) => {
                   return h('a', {
                       on: {
@@ -212,6 +202,7 @@
               {
                 align: 'center',
                 title: '澄清主题',
+                width: 120,
                 key: 'clarificationContent',
                 render: (h, {row, column}) => {
                   return h('a', {
@@ -227,7 +218,7 @@
               {
                 align: 'center',
                 title: '澄清附件数量',
-                key: 'clarificationAttachNum'
+                key: 'clarificationAttachNum',
               }
             ],
           }

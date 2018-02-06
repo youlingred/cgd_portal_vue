@@ -26,17 +26,21 @@
     },
     data() {
       return {
-        headerData: {
-          isLogin: false,
-          userName: '',
-          msgNum: 1,
-          goodsNum: 2
-        },
         navData: {},
         leftMenuData:{
           menus:[]
         }
       }
+    },
+    computed:{
+      headerData(){
+        return{
+          isLogin: this.$store.state.userInfo.login,
+          userName: this.$store.state.userInfo.userName,
+          msgNum: 1,
+          goodsNum: 2
+        }
+      },
     },
     methods: {
       getHeaderData() {
@@ -45,8 +49,7 @@
           .then((response) => {
             console.log(response);
             var data = response;
-            this.headerData.isLogin = data.login;
-            this.headerData.userName = data.userName;
+            this.$store.dispatch('setUserInfo',data)
           })
           .catch(function (error) {
             console.log(error);

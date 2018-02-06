@@ -3,6 +3,7 @@ import {Loading} from 'element-ui';
 import qs from 'qs'
 
 let loading;
+axios.defaults.timeout = 1000 * 15
 //添加一个请求拦截器
 axios.interceptors.request.use(
   function (config) {

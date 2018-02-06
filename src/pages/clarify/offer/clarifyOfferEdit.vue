@@ -1,6 +1,6 @@
 <template>
   <div>
-    <detail v-bind="detailData"></detail>
+    <detail v-bind="detailData"/>
     <buttons-operator type="bottom"
                       fix="true"
                       :buttons="[{label:'提交',type:'primary',click:sumbit},{label:'返回',type:'info',click:back}]"/>
@@ -21,17 +21,40 @@
     data() {
       return {
         form: {
-          planName: '团建',
-          publishUser: '老铁',
-          publishDate: 1514192693000,
-          objectionDate: 1514192693000,
-          clarifyContent: '哈哈哈哈哈',
-          status: '',
-          prop4: '艳照门',
-          fileList: []
+          companyName:this.$store.getters.companyName,
+          receiveUser:'',
+          crateUser:this.$store.getters.userName,
+          clarifyType:'报价前澄清',
+
+          questionContent:'',
+          inquiry:{},
+          inquiryId:'',
+          iqrSeq:'',
+          purchaseCategory:'',
+          attachments:[],
         },
         options: [],
+        fileList:[],
       };
+    },
+    watch:{
+      'form.inquiry':{
+        handler(val){
+          this.form.inquiryId=val.inquiryId;
+          this.form.iqrSeq=val.iqrSeq;
+          this.form.purchaseCategory=val.purchaseCategory;
+        }
+      },
+      '$store.getters.userName':{
+        handler(val){
+         this.form.crateUser=val;
+        }
+      },
+      '$store.getters.companyName':{
+        handler(val){
+          this.form.companyName=val;
+        }
+      }
     },
     computed: {
       detailData() {
@@ -40,37 +63,36 @@
             {
               data: this.form,
               labelWidth: '150px',
-              inputWidth: '400px',
+              inputWidth: '300px',
               children: [
                 {
                   type: 'label',
                   label: '发送澄清单位',
-                  prop: 'planName',
+                  prop: 'companyName',
                 },
                 {
                   type: 'select',
                   label: '询价单名称',
                   placeholder: '输入关键字查询',
-                  prop: 'status',
+                  prop: 'inquiry',
                   extendParam: {
-                    remote: true,
+                    valueKey:'inquiryId',
+                    // remote: true,
                     filterable: true,
-                    remote: true,
-                    remoteMethod: this.query,
+                    // remoteMethod: this.query,
                     options: this.options
                   }
                 },
                 {
                   type: 'label',
                   label: '询价单编号',
-                  placeholder: '请输入发布人',
-                  prop: 'publishUser',
+                  prop: 'inquiryId',
                 },
                 {
                   type: 'textarea',
                   label: '澄清内容',
                   placeholder: '请输入',
-                  prop: 'clarifyContent',
+                  prop: 'questionContent',
                   extendParam: {
                     autosize: {minRows: 2, maxRows: 4}
                   }
@@ -78,9 +100,13 @@
                 {
                   type: 'upload',
                   label: '澄清附件',
-                  prop: 'fileList',
+                  prop:'fileList',
                   extendParam: {
-                    action: 'https://jsonplaceholder.typicode.com/posts/',
+                    beforeRemove:this.beforeRemove,
+                    onSuccess:this.onSuccess,
+                    onRemove:this.onRemove,
+                    onError:this.onError,
+                    action: this.appConfig.api('','upload'),
                     tip: '支持类型为常用办公类型（txt,doc,xls,docx,xlsx,ppt,pptx,pdf,zip,rar,wps,dps,et,jpg,jpeg等）文件格式，大小不超过60MB',
                     // listType:"picture"
                   }
@@ -88,12 +114,11 @@
                 {
                   type: 'label',
                   label: '接受澄清单位',
-                  prop: 'publishUser',
+                  prop: 'receiveUser',
                 },
                 {
                   type: 'label',
                   label: '澄清时间',
-                  prop: 'publishDate',
                   formatter: (value) => {
                     return this.moment(value).format('YYYY-MM-DD HH:mm:ss');
                   }
@@ -101,19 +126,19 @@
                 {
                   type: 'label',
                   label: '澄清属性',
-                  prop: 'publishUser',
+                  prop: 'clarifyType',
                 },
                 {
                   type: 'label',
                   label: '制单人',
-                  prop: 'publishUser',
+                  prop: 'crateUser',
                 }
               ],
               rules: {
-                planName: [
+                inquiry: [
                   {required: true, message: '请选择询价单名称', trigger: 'blur'},
                 ],
-                clarifyContent: [
+                questionContent: [
                   {required: true, message: '请输入澄清内容', trigger: 'blur'},
                 ]
               }
@@ -132,20 +157,36 @@
           .then((response) => {
             console.log(response);
             let list = response;
-
-            this.options = list.filter(item => {
-              return item.label.toLowerCase()
-                .indexOf(query.toLowerCase()) > -1;
+            list.map(item=>{
+              let val=_.assign({},item);
+              item.label=val.inquiryName;
+              item.value=val;
             });
+            this.options=list;
           })
           .catch(function (error) {
             console.log(error);
           });
       },
+      onSuccess(file){
+        this.$message.success('文件上传成功');
+        this.fileList.push({attachmentName:file.filePath,attachmentUrl:file.newFileName});
+      },
+      onRemove(file){
+        this.fileList=_.filter(this.fileList, function(item) { return item.attachmentUrl!=file.response.newFileName });;
+      },
+      onError(){
+        this.$message.error('文件上传失败');
+      },
+      beforeRemove(file){
+        return this.$confirm(`确定移除 ${ file.name }？`);
+      },
       //FIXME 提交
       sumbit() {
-        console.log(this.form)
-        this.axios.post(this.appConfig.api('testDylyList'), this.form)
+        console.log(this.form);
+        this.util.dataAdapter(this.fileList,['name','url'],['attachmentName','attachmentUrl'])
+        this.form.attachments=JSON.stringify(this.fileList);
+        this.axios.post(this.appConfig.api('inquiry/others/clarification/addMyQuestionInfo'), this.form)
           .then((response) => {
             console.log(response);
           })
