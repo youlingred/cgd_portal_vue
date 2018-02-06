@@ -299,21 +299,6 @@ Mock.mock(config.api('', 'menu'), 'get', function () {
               "parentId": 100,
               "deep": 4,
               "orderId": 2,
-              "menuName": "报价",
-              "menuCode": "clarifyOfferIndex",
-              "menuIcon": "",
-              "menuCss": "",
-              "menuUrl": "clarifyOfferIndex",
-              "updateUid": null,
-              "updateTm": 1511159457000,
-              "disFlag": null,
-              "subMenus": []
-            },
-            {
-              "autoId": 10001,
-              "parentId": 100,
-              "deep": 4,
-              "orderId": 2,
               "menuName": "评审",
               "menuCode": "clarifyReviewIndex",
               "menuIcon": "",
@@ -2042,16 +2027,16 @@ Mock.mock(config.api('testQuerySelect'), 'post', function () {
         purchaseCategory:1,
       },
       {
-        inquiryName:'询价单0002',
+        inquiryName:'询价单0001',
         inquiryId:10002,
         iqrSeq:1,
-        purchaseCategory:2,
+        purchaseCategory:1,
       },
       {
-        inquiryName:'询价单0003',
+        inquiryName:'询价单0001',
         inquiryId:10003,
         iqrSeq:1,
-        purchaseCategory:3,
+        purchaseCategory:1,
       }
     ]
   }
