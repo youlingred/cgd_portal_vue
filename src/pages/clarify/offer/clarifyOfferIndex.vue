@@ -25,12 +25,12 @@
     <buttons-operator v-if="activeName==='send'" type="top"
                       algin="right"
                       :buttons="[{label:'新增',type:'primary',click:add},{label:'导出',type:'primary',click:exportHandle}]"/>
-    <IvTable v-if="activeName==='send'" ref="table_send" v-bind="table.send"/>
+    <IvTable v-if="activeName==='send'" :key="1" ref="table_send" v-bind="table.send"/>
 
     <buttons-operator v-if="activeName==='receive'" type="top"
                       algin="right"
                       :buttons="[{label:'导出',type:'primary',click:exportHandle}]"/>
-    <IvTable v-if="activeName==='receive'" ref="table_receive" v-bind="table.receive"/>
+    <IvTable v-if="activeName==='receive'" :key="2" ref="table_receive" v-bind="table.receive"/>
   </div>
 </template>
 
@@ -222,6 +222,7 @@
               {
                 align: 'center',
                 title: '澄清附件数量',
+                width:120,
                 key: 'clarificationAttachNum',
               }
             ],
@@ -366,8 +367,8 @@
       }
     },
     watch: {
-      activeName() {
-        this.search()
+      activeName(val,oldVal) {
+        this.form[oldVal]={}
       }
     },
     methods: {
@@ -375,11 +376,7 @@
       search() {
         let searchData=this.form[this.activeName];
         searchData.pageNo=1;
-        this.$nextTick()
-          .then(()=>{
-            // DOM 更新了
-            this.$refs['table_' + this.activeName].query(searchData)
-          })
+        this.$refs['table_' + this.activeName].query(searchData)
       },
       //重置
       reset() {
