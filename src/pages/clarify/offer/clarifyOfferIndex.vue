@@ -375,7 +375,11 @@
       search() {
         let searchData=this.form[this.activeName];
         searchData.pageNo=1;
-        // this.$refs['table_' + this.activeName].query(searchData)
+        this.$nextTick()
+          .then(()=>{
+            // DOM 更新了
+            this.$refs['table_' + this.activeName].query(searchData)
+          })
       },
       //重置
       reset() {
