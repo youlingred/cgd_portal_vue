@@ -22,10 +22,14 @@
         </el-tab-pane>
       </el-tabs>
     </el-card>
-    <buttons-operator type="top"
+    <buttons-operator v-if="activeName==='send'" type="top"
                       algin="right"
-                      :buttons="[{label:'新增',type:'primary',click:add},{label:'导出',type:'primary',click:search}]"/>
+                      :buttons="[{label:'新增',type:'primary',click:add},{label:'导出',type:'primary',click:exportHandle}]"/>
     <IvTable v-if="activeName==='send'" ref="table_send" v-bind="table.send"/>
+
+    <buttons-operator v-if="activeName==='receive'" type="top"
+                      algin="right"
+                      :buttons="[{label:'导出',type:'primary',click:exportHandle}]"/>
     <IvTable v-if="activeName==='receive'" ref="table_receive" v-bind="table.receive"/>
   </div>
 </template>
@@ -371,7 +375,11 @@
       search() {
         let searchData=this.form[this.activeName];
         searchData.pageNo=1;
-        // this.$refs['table_' + this.activeName].query(searchData)
+        this.$nextTick()
+          .then(()=>{
+            // DOM 更新了
+            this.$refs['table_' + this.activeName].query(searchData)
+          })
       },
       //重置
       reset() {
@@ -381,6 +389,9 @@
       //新增
       add() {
         this.$router.push({name: 'clarifyOfferEdit'})
+      },
+      exportHandle(){
+        let selection=this.$refs['table_' + this.activeName].selection;
       },
       gotoDetail(id) {
         if (this.activeName === 'send') {
