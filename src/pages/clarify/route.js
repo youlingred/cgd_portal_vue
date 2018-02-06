@@ -35,7 +35,7 @@ export default [
       component: clarifyReviewIndex
     },
     {
-      path: 'clarifyReviewEdit',
+      path: 'clarifyReviewEdit/:id',
       name: 'clarifyReviewEdit',
       component: clarifyReviewEdit
     },
