@@ -76,6 +76,7 @@
     },
     data() {
       return {
+        fullData:this.data,
         //列表数据
         m_data: this.data,
         //当前页
@@ -108,12 +109,24 @@
         return this.m_data;
       }
     },
-    watch:{
-      m_data(oldVal,newVal){
-
-      }
-    },
     methods: {
+      refreshData(data){
+        this.fullData=data;
+        if(this.pagination){
+          if(this.sidePagination==='client'){
+            alert(1)
+            this.m_total=this.fullData.length;
+            let iStart,iEnd;
+            iStart=(this.pageNo-1)*this.pageSize;
+            iEnd=this.pageNo*this.pageSize-1;
+            this.m_data=this.fullData.slice(iStart,iEnd);
+          }else{
+            this.m_data=this.fullData;
+          }
+        }else{
+          this.m_data=this.fullData;
+        }
+      },
       //请求数据，入参会保存为请求条件
       query(arg) {
         return new Promise((resolve, refect) => {
@@ -132,23 +145,30 @@
                 if (this.responseHandler) {
                   response = this.responseHandler(response);
                 }
-                this.m_data = response.rows;
+                // this.m_data = response.rows;
+                this.refreshData(response.rows);
                 this.m_total = response.recordsTotal;
                 resolve(response.rows)
               })
               .catch(function (error) {
                 refect(error)
               });
+          }else{
+            alert('查询列表数据url不能为空!')
           }
         })
       },
       //翻页处理函数
       handleChangePageNo(val) {
         this.m_pageNo = val;
-        this.query({pageNo: this.m_pageNo}).then((data) => {
-          this.m_data = data;
-          console.log('handleChangePageNo data:', data)
-        })
+        if(this.sidePagination==='server'){
+          this.query({pageNo: this.m_pageNo}).then((data) => {
+            this.m_data = data;
+            console.log('handleChangePageNo data:', data)
+          })
+        }else{
+          refreshData(this.data)
+        }
         //let allData=[];
         //let block = this.pageSize * val;
         // this.m_data = _.slice(allData,block - this.pageSize, block - 1);
@@ -164,8 +184,12 @@
       }
     },
     created() {
-      if (this.autoLoad) {
-        this.query();
+      if((this.data instanceof  Array)&&this.data.length!=0){
+        this.refreshData(this.data);
+      }else{
+        if (this.autoLoad) {
+          this.query();
+        }
       }
     }
   }

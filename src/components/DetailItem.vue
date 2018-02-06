@@ -3,8 +3,8 @@
   <label v-if="type === 'label'" style="display:inline-block;width:100%;line-height:20px;">{{value}}</label>
   <div v-else-if="type === 'file'">
     <div v-for="(fileItem,index) in value" :key="index">
-      <span style="display:inline-block;min-width:200px">{{fileItem.name}}</span>
-      <a :href="fileItem.path"
+      <span style="display:inline-block;min-width:200px">{{fileItem.name||file.attachmentName}}</span>
+      <a :href="fileItem.url||fileItem.path||file.attachmentUrl"
          target="_blank" class="downloadMessage"><span class="">下载</span>
       </a>
     </div>
@@ -32,8 +32,8 @@
              v-model="data[prop]"
              :placeholder="placeholder"
              v-bind="extendParam">
-    <el-option v-for="opt in extendParam.options"
-               :key="opt.key"
+    <el-option v-for="(opt,index) in extendParam.options"
+               :key="index"
                :label="opt.label"
                :value="opt.value"></el-option>
   </el-select>
@@ -65,10 +65,6 @@
       },
       //参数名定义
       prop: {
-        default: ''
-      },
-      //当类型为文件时作为下载地址参数的参数名定义
-      prop_url: {
         default: ''
       },
       //格式化显示函数
