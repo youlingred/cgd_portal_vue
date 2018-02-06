@@ -19,8 +19,8 @@
     <buttons-operator type="top"
                       algin="right"
                       :buttons="[{label:'回复澄清',type:'primary',click:reply},{label:'导出',type:'primary',click:search}]"/>
-    <IvTable v-if="activeName==='receive'" ref="table_receive" v-bind="table.receive"/>
-    <IvTable v-if="activeName==='reply'" ref="table_reply" v-bind="table.reply"/>
+    <IvTable v-if="activeName==='receive'" :key="1" ref="table_receive" v-bind="table.receive"/>
+    <IvTable v-if="activeName==='reply'" :key="2" ref="table_reply" v-bind="table.reply"/>
   </div>
 </template>
 
@@ -317,6 +317,11 @@
             ]
           }
         }
+      }
+    },
+    watch: {
+      activeName(val, oldVal) {
+        this.form[oldVal] = {}
       }
     },
     methods: {
