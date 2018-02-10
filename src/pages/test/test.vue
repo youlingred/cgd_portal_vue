@@ -28,12 +28,19 @@
         <el-table-column align="center" v-for="item in table.columns" :key="item.index" v-bind="item"></el-table-column>
       </el-table>
     </el-card>
+    <div class="hello">
+      <vPagination :total="total" :current-page='current' :pagegroup="pagegroup" @pagechange="pagechange" v-if="isShowPagination"></vPagination>
+    </div>
   </div>
 </template>
 <script>
   export default {
     data() {
       return {
+        total: 100,
+        current: 1,
+        pagegroup: 10,
+        isShowPagination: true,
         //受理状态
         status_options: [
           {
@@ -110,6 +117,9 @@
       }
     },
     methods: {
+      pagechange(currentPage) {
+        console.log('currentPage=',currentPage);
+      },
       search() {
         //获取列表信息
         this.axios.post(this.appConfig.api('testDylyList'),this.form)
