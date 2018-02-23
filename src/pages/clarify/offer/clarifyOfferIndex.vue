@@ -142,7 +142,7 @@
               {
                 title: '接受澄清单位',
                 align: 'center',
-                key: 'publishUser'
+                key: 'questionReceiverName'
               },
             ],
           },
@@ -172,11 +172,8 @@
               {
                 align: 'center',
                 title: '发起澄清的采购企业',
-                key: 'planName',
+                key: 'clarificationOrgName',
                 width: 180,
-                render: (h, {row, column}) => {
-                  return row.planName;
-                }
               },
               {
                 align: 'center',
@@ -222,7 +219,6 @@
               {
                 align: 'center',
                 title: '澄清附件数量',
-                width:120,
                 key: 'clarificationAttachNum',
               }
             ],
