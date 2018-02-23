@@ -51,7 +51,7 @@
                   type: 'label',
                   label: '澄清内容',
                   prop: 'clarificationContent',
-                  extendParam:{œ
+                  extendParam:{
                     autosize:{ minRows: 2, maxRows: 4}
                   }
                 },
