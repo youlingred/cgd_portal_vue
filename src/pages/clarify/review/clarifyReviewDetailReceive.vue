@@ -1,14 +1,14 @@
 <template>
   <div>
     <detail v-bind="detailData"></detail>
-    <buttons-operator type="bottom"
+    <buttons-operator v-if="showButton==='show'" type="bottom"
                       fix="true"
                       :buttons="[{label:'回复采购企业澄清',type:'primary',click:reply},{label:'返回',type:'info',click:back}]"/>
-
-      <cg-table v-show="table" ref="table" v-bind="table"/>
+    <buttons-operator v-if="showButton==='disabled'" type="bottom"
+                      fix="true"
+                      :buttons="[{label:'回复采购企业澄清',type:'primary',click:'',disabled: true},{label:'返回',type:'info',click:back}]"/>
   </div>
 </template>
-
 <script>
   import detail from '@/components/Detail.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
@@ -17,25 +17,14 @@
   export default {
     name: "clarify-review-detail-receive",
     components: {
-      CgTable,
       detail,
       buttonsOperator
     },
     data() {
       return {
-        form: {
-          planName: '团建',
-          publishUser: '老铁',
-          publishDate: 1514192693000,
-          objectionDate: 1514192693000,
-          status: 1,
-          clarifyContent:'哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈',
-          prop4: '艳照门',
-          fileList:[{name:'文件测试',path:'test'},{name:'文件测试',path:'test'}],
-        },
-        table:{
-          header:'澄清短信'
-        }
+        form: {},
+        showButton: 'disabled',
+        clarificationId: ''
       };
     },
     computed: {
@@ -44,28 +33,28 @@
           contents: [
             {
               data: this.form,
-              labelWidth:'150px',
-              inputWidth:'400px',
+              labelWidth: '150px',
+              inputWidth: '400px',
               children: [
                 {
                   type: 'label',
                   label: '询价单名称',
-                  prop: 'planName',
+                  prop: 'inquiryName',
                 },
                 {
                   type: 'label',
                   label: '采购单编号',
-                  prop: 'planName',
+                  prop: 'inquiryCode',
                 },
                 {
                   type: 'label',
                   label: '发送澄清单位',
-                  prop: 'planName',
+                  prop: 'receiverOrgName',
                 },
                 {
                   type: 'label',
                   label: '澄清内容',
-                  prop: 'clarifyContent',
+                  prop: 'clarificationContent',
                 },
                 {
                   type: 'file',
@@ -75,30 +64,28 @@
                 {
                   type: 'label',
                   label: '澄清时间',
-                  prop: 'publishDate',
-                  formatter: (value) => {
-                    return this.moment(value).format('YYYY-MM-DD HH:mm:ss');
+                  prop: 'clarificationTime',
+                  formatter: (clarificationTime) => {
+                    return this.moment(clarificationTime).format('YYYY-MM-DD HH:mm:ss');
                   }
                 },
                 {
                   type: 'label',
                   label: '澄清属性',
-                  prop: 'publishUser',
+                  prop: 'clarificationStage',
+                  formatter(value) {
+                    switch (value) {
+                      case 1:
+                        return '报价前澄清';
+                      case 2:
+                        return '评审中澄清';
+                    }
+                  }
                 },
                 {
                   type: 'label',
                   label: '回复状态',
-                  prop: 'status',
-                  formatter(value){
-                    switch(value){
-                      case 1:
-                        return '状态1';
-                      case 2:
-                        return '状态2';
-                      default:
-                        return ''
-                    }
-                  }
+                  prop: 'status'
                 }
               ]
             }
@@ -107,14 +94,43 @@
       }
     },
     methods: {
-      //回复
-      reply(){
+      query(query) {
+        if (!query) {
+          query = ''
+        }
+        //澄清详情
+        this.axios.post(this.appConfig.api('inquiry/others/clarification/searchMyReceiverReviewClarificationInfo'), {clarificationId: this.$route.params.id})
+          .then((data) => {
+            this.clarificationId = data.clarificationId;
 
+            //评审中发布澄清时校验询价单状态
+            this.axios.post(this.appConfig.api('inquiry/others/clarification/beforeReviewCheckInquiry'), {
+              inquiryId: data.inquiryId,
+              iqrSeq: data.iqrSeq,
+              purchaseCatagory: data.purchaseCategory
+            })
+              .then((data) => {
+                console.log("--------------------------return--data-----" + JSON.stringify(data.isReview));
+                if (data.isReview == 1) {
+                  this.showButton = 'show';
+                }
+              });
+
+            var test = this.util.dataAdapter(data, ['attachmentName', 'attachmentUrl'], ['name', 'path'], false)
+            this.form = data;
+          });
+      },
+      //回复
+      reply() {
+        this.$router.push({name: 'clarifyReviewEdit', params: {id: this.clarificationId}});
       },
       //返回上一页
-      back(){
-        this.$router.push({name:'clarifyReviewIndex'})
+      back() {
+        this.$router.push({name: 'clarifyReviewIndex'})
       }
+    },
+    created() {
+      this.query();
     }
   }
 </script>
