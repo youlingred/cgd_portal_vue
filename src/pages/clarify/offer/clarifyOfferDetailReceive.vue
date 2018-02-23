@@ -45,20 +45,20 @@
                 {
                   type: 'label',
                   label: '发送澄清单位',
-                  prop: '',
+                  prop: 'clarificationOrgName',
                 },
                 {
                   type: 'label',
                   label: '澄清内容',
                   prop: 'clarificationContent',
-                  extendParam:{
+                  extendParam:{œ
                     autosize:{ minRows: 2, maxRows: 4}
                   }
                 },
                 {
                   type: 'file',
                   label: '澄清附件',
-                  prop: ''
+                  prop: 'iqrAttachmentBOS'
                 },
                 {
                   type: 'label',
@@ -71,7 +71,17 @@
                 {
                   type: 'label',
                   label: '澄清属性',
-                  prop: '',
+                  prop: 'clarificationStage',
+                  formatter: (value) => {
+                    switch (value){
+                      case 1:
+                        return '报价前澄清';
+                      case 2:
+                        return '评审中澄清';
+                      default:
+                        return '';
+                    }
+                  }
                 }
               ]
             }
