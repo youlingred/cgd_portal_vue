@@ -59,7 +59,7 @@
                 {
                   type: 'file',
                   label: '澄清附件',
-                  prop: 'attachments'
+                  prop: 'iqrAttachmentBOS'
                 },
                 {
                   type: 'label',

@@ -27,7 +27,7 @@
           clarifyType:'报价前澄清',
 
           questionContent:'',
-          inquiry:{},
+          inquiry:'',
           inquiryId:'',
           iqrSeq:'',
           purchaseCategory:'',
@@ -153,7 +153,8 @@
         if (!query) {
           query = ''
         }
-        this.axios.post(this.appConfig.api('testQuerySelect'), this.form)
+        this.axios.post(this.appConfig.api('inquiry/others/clarification/selectWaitingInquiryList'))
+        // this.axios.post(this.appConfig.api('testQuerySelect'))
           .then((response) => {
             console.log(response);
             let list = response;
