@@ -166,7 +166,17 @@
                 title: '澄清内容',
                 key: 'clarificationContent',
                 align: 'center',
-                width: 220
+                width: 220,
+                render: (h, {row, column}) => {
+                  return h('a', {
+                      on: {
+                        click: () => {
+                          this.gotoDetail(row.clarificationId)
+                        }
+                      }
+                    },
+                    row.clarificationContent);
+                }
               },
               {
 
@@ -344,7 +354,7 @@
         if (this.activeName === 'receive') {
           this.$router.push({name: 'clarifyReviewDetailReceive', params: {id: id}});
         } else {
-
+          this.$router.push({name: 'clarifyReviewDetailReply', params: {id: id}});
         }
       }
     }
