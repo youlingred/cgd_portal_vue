@@ -20,16 +20,7 @@
     },
     data() {
       return {
-        form: {
-          planName: '团建',
-          publishUser: '老铁',
-          publishDate: 1514192693000,
-          objectionDate: 1514192693000,
-          status: 1,
-          clarifyContent:'哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈',
-          prop4: '艳照门',
-          fileList:[{name:'文件测试',path:'test'},{name:'文件测试',path:'test'}],
-        }
+        form: {}
       };
     },
     computed: {
@@ -38,23 +29,23 @@
           contents: [
             {
               data: this.form,
-              labelWidth:'150px',
-              inputWidth:'400px',
+              labelWidth: '150px',
+              inputWidth: '400px',
               children: [
                 {
                   type: 'label',
                   label: '询价单名称',
-                  prop: 'planName',
+                  prop: 'inquiryName',
                 },
                 {
                   type: 'label',
                   label: '采购单编号',
-                  prop: 'planName',
+                  prop: 'inquiryCode',
                 },
                 {
                   type: 'label',
                   label: '澄清内容',
-                  prop: 'clarifyContent',
+                  prop: 'clarificationContent',
                 },
                 {
                   type: 'file',
@@ -64,7 +55,7 @@
                 {
                   type: 'label',
                   label: '澄清时间',
-                  prop: 'publishDate',
+                  prop: 'clarificationTime',
                   formatter: (value) => {
                     return this.moment(value).format('YYYY-MM-DD HH:mm:ss');
                   }
@@ -72,30 +63,38 @@
                 {
                   type: 'label',
                   label: '澄清属性',
-                  prop: 'publishUser',
+                  prop: 'clarificationStage',
+                  formatter(value) {
+                    switch (value) {
+                      case 1:
+                        return '报价前澄清';
+                      case 2:
+                        return '评审中澄清';
+                    }
+                  }
                 }
               ]
             },
             {
               data: this.form,
-              header:'回复情况',
-              labelWidth:'150px',
-              inputWidth:'400px',
+              header: '回复情况',
+              labelWidth: '150px',
+              inputWidth: '400px',
               children: [
                 {
                   type: 'label',
                   label: '询价单名称',
-                  prop: 'planName',
+                  prop: 'inquiryName',
                 },
                 {
                   type: 'label',
                   label: '采购单编号',
-                  prop: 'planName',
+                  prop: 'inquiryCode',
                 },
                 {
                   type: 'label',
                   label: '回复内容',
-                  prop: 'clarifyContent',
+                  prop: 'replyContent',
                 },
                 {
                   type: 'file',
@@ -105,17 +104,17 @@
                 {
                   type: 'label',
                   label: '回复询价单位',
-                  prop: 'publishUser',
+                  prop: '',
                 },
                 {
                   type: 'label',
                   label: '回复人',
-                  prop: 'publishUser',
+                  prop: 'replier',
                 },
                 {
                   type: 'label',
                   label: '回复时间',
-                  prop: 'publishDate',
+                  prop: 'replyTime',
                   formatter: (value) => {
                     return this.moment(value).format('YYYY-MM-DD HH:mm:ss');
                   }
@@ -127,9 +126,22 @@
       }
     },
     methods: {
-      back(){
-        this.$router.push({name:'clarifyReviewIndex'})
+      query(query) {
+        if (!query) {
+          query = ''
+        }
+        //澄清详情
+        this.axios.post(this.appConfig.api('inquiry/others/clarification/searchMyReceiverReviewClarificationInfo'), {clarificationId: this.$route.params.id})
+          .then((data) => {
+            this.form = data;
+          });
+      },
+      back() {
+        this.$router.push({name: 'clarifyReviewIndex'})
       }
+    },
+    created() {
+      this.query();
     }
   }
 </script>
