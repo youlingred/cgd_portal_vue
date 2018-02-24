@@ -23,7 +23,7 @@
     data() {
       return {
         form: {},
-        showButton: 'disabled',
+        showButton: '',
         clarificationId: ''
       };
     },
