@@ -83,16 +83,6 @@
               children: [
                 {
                   type: 'label',
-                  label: '询价单名称',
-                  prop: 'inquiryName',
-                },
-                {
-                  type: 'label',
-                  label: '采购单编号',
-                  prop: 'inquiryCode',
-                },
-                {
-                  type: 'label',
                   label: '回复内容',
                   prop: 'replyContent',
                 },
@@ -104,7 +94,7 @@
                 {
                   type: 'label',
                   label: '回复询价单位',
-                  prop: '',
+                  prop: 'receiverOrgName',
                 },
                 {
                   type: 'label',

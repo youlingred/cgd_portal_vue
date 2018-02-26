@@ -85,7 +85,15 @@
                 {
                   type: 'label',
                   label: '回复状态',
-                  prop: 'status'
+                  prop: 'isReplay',
+                  formatter(value) {
+                    switch (value) {
+                      case 1:
+                        return '已回复';
+                      case 0:
+                        return '未回复';
+                    }
+                  }
                 }
               ]
             }
