@@ -215,13 +215,13 @@
         // console.log("-------------------------" + JSON.stringify(this.form));
         console.log("-------------------------" + JSON.stringify(this.fileList));
         // this.util.dataAdapter(this.fileList, ['name', 'url'], ['attachmentName', 'attachmentUrl'])
-        // this.form.attachments = JSON.stringify(this.fileList);
+        this.form.attachments = JSON.stringify(this.fileList);
         this.axios.post(this.appConfig.api('inquiry/others/clarification/replyMyReceiverClarificationInfo'), this.form)
           .then((response) => {
-            console.log("--------------sucess" + response);
+            console.log("--------------sucess-------" + response);
           })
           .catch(function (error) {
-            console.log("--------------error" + error);
+            console.log("--------------error---------" + error);
           });
       },
       back() {
