@@ -18,8 +18,6 @@ import './mock/mock'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 import util from './assets/js/util'
-import vPagination from 'vue-test-zzh'
-Vue.use(vPagination)
 
 Vue.use(ElementUI)
 Vue.use(iView)
