@@ -48,11 +48,6 @@
                   prop: 'clarificationContent',
                 },
                 {
-                  type: 'file',
-                  label: '澄清附件',
-                  prop: 'fileList'
-                },
-                {
                   type: 'label',
                   label: '澄清时间',
                   prop: 'clarificationTime',
@@ -89,7 +84,7 @@
                 {
                   type: 'file',
                   label: '澄清附件',
-                  prop: 'fileList'
+                  prop: 'replyAttachmentBOs'
                 },
                 {
                   type: 'label',
@@ -123,7 +118,7 @@
         //澄清详情
         this.axios.post(this.appConfig.api('inquiry/others/clarification/searchMyReceiverReviewClarificationInfo'), {clarificationId: this.$route.params.id})
           .then((data) => {
-            this.form = data;
+            this.form = this.util.dataAdapter(data, ['attachmentName', 'attachmentUrl'], ['name', 'path'], false);
           });
       },
       back() {

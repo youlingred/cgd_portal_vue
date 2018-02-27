@@ -59,7 +59,7 @@
                 {
                   type: 'file',
                   label: '澄清附件',
-                  prop: 'fileList'
+                  prop: 'replyAttachmentBOs'
                 },
                 {
                   type: 'label',
@@ -123,9 +123,7 @@
                   this.showButton = 'show';
                 }
               });
-
-            var test = this.util.dataAdapter(data, ['attachmentName', 'attachmentUrl'], ['name', 'path'], false)
-            this.form = data;
+            this.form = this.util.dataAdapter(data, ['attachmentName', 'attachmentUrl'], ['name', 'path'], false);
           });
       },
       //回复

@@ -21,20 +21,7 @@
     },
     data() {
       return {
-        // fileList: [{name: '文件测试', path: 'test'}, {name: '文件测试', path: 'test'}],
         fileList: [],
-        // fileList: [
-        //   {
-        //     attachmentName: '文件测试1',
-        //     attachmentUrl: 'test1',
-        //     ossPath: 'oss1'
-        //   },
-        //   {
-        //     attachmentName: '文件测试2',
-        //     attachmentUrl: 'test2',
-        //     ossPath: 'oss2'
-        //   }],
-
         confirmForm: {},
         form: {
           attachments: {},
@@ -70,16 +57,6 @@
                   type: 'label',
                   label: '澄清内容',
                   prop: 'clarificationContent',
-                },
-                {
-                  type: 'file',
-                  label: '澄清附件',
-                  prop: '',
-                  extendParam: {
-                    action: 'https://jsonplaceholder.typicode.com/posts/',
-                    tip: '支持类型为常用办公类型（txt,doc,xls,docx,xlsx,ppt,pptx,pdf,zip,rar,wps,dps,et,jpg,jpeg等）文件格式，大小不超过60MB',
-                    // listType:"picture"
-                  }
                 },
                 {
                   type: 'label',
@@ -186,13 +163,6 @@
             var test = this.util.dataAdapter(data, ['attachmentName', 'attachmentUrl'], ['name', 'path'], false)
             this.confirmForm = data;
           });
-
-        // this.confirmForm = {
-        //   inquiryName: '测试询价单001',
-        //   inquiryCode: 1234,
-        //   clarificationContent: '由于技术升级，询价的规格为老规格，若部分单位已不生产。则各供方供给等同或高于此规格的产品即可具体技术参数，详见附件',
-        //   fileList: [{name: '文件测试', path: 'test'}, {name: '文件测试', path: 'test'}],
-        // };
       },
       onSuccess(file) {
         this.$message.success('文件上传成功');
@@ -212,13 +182,12 @@
       },
       //FIXME 提交
       sumbit() {
-        // console.log("-------------------------" + JSON.stringify(this.form));
         console.log("-------------------------" + JSON.stringify(this.fileList));
-        // this.util.dataAdapter(this.fileList, ['name', 'url'], ['attachmentName', 'attachmentUrl'])
         this.form.attachments = JSON.stringify(this.fileList);
         this.axios.post(this.appConfig.api('inquiry/others/clarification/replyMyReceiverClarificationInfo'), this.form)
           .then((response) => {
             console.log("--------------sucess-------" + response);
+            this.$router.push({name: 'clarifyReviewIndex'});
           })
           .catch(function (error) {
             console.log("--------------error---------" + error);

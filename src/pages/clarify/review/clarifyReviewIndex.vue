@@ -16,9 +16,14 @@
                           {label:'重置',type:'info',click:reset}]"/>
       </el-tabs>
     </el-card>
-    <buttons-operator type="top"
+    <buttons-operator v-if="activeName==='receive'"
+                      type="top"
                       algin="right"
                       :buttons="[{label:'回复澄清',type:'primary',click:reply},{label:'导出',type:'primary',click:search}]"/>
+    <buttons-operator v-if="activeName==='reply'"
+                      type="top"
+                      algin="right"
+                      :buttons="[{label:'导出',type:'primary',click:search}]"/>
     <IvTable v-if="activeName==='receive'" :key="1" ref="table_receive" v-bind="table.receive"
              @selectionChange="checkSelectionChange"/>
     <IvTable v-if="activeName==='reply'" :key="2" ref="table_reply" v-bind="table.reply"
@@ -356,9 +361,24 @@
       //回复
       reply() {
         if (this.selectDatas.length == 1) {
-          this.$router.push({name: 'clarifyReviewEdit', params: {id: this.selectDatas[0].clarificationId}});
+          console.log("-----------------selectDatas------" + JSON.stringify(this.selectDatas));
+          console.log("-----------------selectDatas.inquiryId------" + JSON.stringify(this.selectDatas[0].inquiryId));
+          ///评审中发布澄清时校验询价单状态
+          this.axios.post(this.appConfig.api('inquiry/others/clarification/beforeReviewCheckInquiry'), {
+            inquiryId: this.selectDatas[0].inquiryId,
+            iqrSeq: this.selectDatas[0].iqrSeq,
+            purchaseCatagory: this.selectDatas[0].purchaseCategory
+          })
+            .then((data) => {
+              console.log("--------------------------return--data-----" + JSON.stringify(data));
+              if (data.isReview == 1) {
+                this.$router.push({name: 'clarifyReviewEdit', params: {id: this.selectDatas[0].clarificationId}});
+              } else {
+                this.$message.error("该条澄清详情不是评审中");
+              }
+            });
         } else {
-          this.$message.error("只能选择一个");
+          this.$message.error("请选择一条澄清详情");
         }
       },
       gotoDetail(id) {
