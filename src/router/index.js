@@ -10,7 +10,6 @@ function importRoutes(r) {
 }
 
 export default new Router({
-  mode: 'history',
   base:'/dist/',
   routes: [
     {
