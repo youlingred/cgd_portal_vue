@@ -132,6 +132,7 @@
               },
               {
                 title: '询价单节点状态',
+                key: 'nodeStatusName',
                 align: 'center',
                 width: 120
               }
