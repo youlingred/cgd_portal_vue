@@ -19,8 +19,10 @@
     <buttons-operator type="top"
                       algin="right"
                       :buttons="[{label:'回复澄清',type:'primary',click:reply},{label:'导出',type:'primary',click:search}]"/>
-    <IvTable v-if="activeName==='receive'" :key="1" ref="table_receive" v-bind="table.receive"/>
-    <IvTable v-if="activeName==='reply'" :key="2" ref="table_reply" v-bind="table.reply"/>
+    <IvTable v-if="activeName==='receive'" :key="1" ref="table_receive" v-bind="table.receive"
+             @selectionChange="checkSelectionChange"/>
+    <IvTable v-if="activeName==='reply'" :key="2" ref="table_reply" v-bind="table.reply"
+             @selectionChange="checkSelectionChange"/>
   </div>
 </template>
 
@@ -37,6 +39,8 @@
     },
     data() {
       return {
+        //复选框选中的值
+        selectDatas: [],
         //当前激活的tab名称
         activeName: 'receive',
         //展开收起标志
@@ -78,7 +82,6 @@
                 type: 'selection',
                 align: 'center',
                 width: 60
-
               },
               {
                 title: '序号',
@@ -245,23 +248,25 @@
                     prop: 'clarificationContent',
                   },
                   {
-                    type: 'dateTimePicker',
+                    type: 'datePicker',
                     label: '澄清开始日期',
                     placeholder: '请输入开始时间',
                     prop: 'clarificationDateStart',
                     extendParam: {
                       editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss'
+                      format: 'yyyy-MM-dd',
+                      valueFormat: "yyyy-MM-dd"
                     }
                   },
                   {
-                    type: 'dateTimePicker',
+                    type: 'datePicker',
                     label: '澄清结束日期',
                     placeholder: '请输入结束时间',
                     prop: 'clarificationDateEnd',
                     extendParam: {
                       editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss'
+                      format: 'yyyy-MM-dd',
+                      valueFormat: "yyyy-MM-dd"
                     }
                   },
                 ]
@@ -294,7 +299,7 @@
                     type: 'input',
                     label: '回复内容',
                     placeholder: '模糊查询,可用个逗号隔开',
-                    prop: 'replyContents',
+                    prop: 'replyContent',
                   },
                   {
                     type: 'input',
@@ -303,23 +308,25 @@
                     prop: 'repliers'
                   },
                   {
-                    type: 'dateTimePicker',
+                    type: 'datePicker',
                     label: '澄清开始日期',
                     placeholder: '请输入开始时间',
                     prop: 'clarificationDateStart',
                     extendParam: {
                       editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss'
+                      format: 'yyyy-MM-dd',
+                      valueFormat: "yyyy-MM-dd"
                     }
                   },
                   {
-                    type: 'dateTimePicker',
+                    type: 'datePicker',
                     label: '澄清结束日期',
                     placeholder: '请输入结束时间',
                     prop: 'clarificationDateEnd',
                     extendParam: {
                       editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss'
+                      format: 'yyyy-MM-dd',
+                      valueFormat: "yyyy-MM-dd"
                     }
                   }
                 ]
@@ -348,7 +355,11 @@
       },
       //回复
       reply() {
-        this.$router.push({name: 'clarifyOfferEdit'})
+        if (this.selectDatas.length == 1) {
+          this.$router.push({name: 'clarifyReviewEdit', params: {id: this.selectDatas[0].clarificationId}});
+        } else {
+          this.$message.error("只能选择一个");
+        }
       },
       gotoDetail(id) {
         if (this.activeName === 'receive') {
@@ -356,6 +367,9 @@
         } else {
           this.$router.push({name: 'clarifyReviewDetailReply', params: {id: id}});
         }
+      },
+      checkSelectionChange(val) {
+        this.selectDatas = val;
       }
     }
   }
