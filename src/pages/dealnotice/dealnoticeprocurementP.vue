@@ -381,6 +381,8 @@
     },
     data() {
       return {
+        //1采购,2销售
+        type:0,
         //当前激活的tab名称
         activeName: '1',
         //展开收起标志

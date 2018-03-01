@@ -1,12 +1,24 @@
 const details =()=>import( './details')
-const dealnoticeprocurement =()=>import( './dealnoticeprocurement')
+const dealnoticeprocurementP =()=>import( './dealnoticeprocurementP')
+const dealnoticeprocurementS =()=>import( './dealnoticeprocurementS')
 
 export default [
     //FIXME 成交通知书管理
     {
-      path: 'dealnoticeprocurement',
-      name: 'dealnoticeprocurement',
-      component: dealnoticeprocurement
+      path: 'dealnoticeprocurementP',
+      name: 'dealnoticeprocurement1',
+      meta:{
+        type:1
+      },
+      component: dealnoticeprocurementP
+    },
+    {
+      path: 'dealnoticeprocurementS',
+      name: 'dealnoticeprocurement2',
+      meta:{
+        type:2
+      },
+      component: dealnoticeprocurementS
     },
     {
       path: 'details/:type/:id',
