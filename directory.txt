@@ -1,8 +1,0 @@
-pages
-
-  sourcepubliclist
-    --spubliclist.vue     //单一来源公示列表页
-    --spublicdetails.vue  //单一来源公示详情页
-  dealnotice
-    --dealnoticeprocurement.vue  //成交通知书管理-采购
-    --details.vue                 //三种详情   details/'1'物资类详情    details/'2'施工类详情    details/'3'服务类详情
