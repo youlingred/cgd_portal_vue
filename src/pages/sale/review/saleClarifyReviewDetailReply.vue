@@ -1,0 +1,135 @@
+<template>
+  <div>
+    <detail v-bind="detailData"></detail>
+    <buttons-operator type="bottom"
+                      fix="true"
+                      :buttons="[{label:'返回',type:'info',click:back}]"/>
+
+  </div>
+</template>
+
+<script>
+  import detail from '@/components/Detail.vue'
+  import buttonsOperator from '@/components/ButtonsOperator.vue'
+
+  export default {
+    name: "clarify-review-detail",
+    components: {
+      detail,
+      buttonsOperator
+    },
+    data() {
+      return {
+        form: {}
+      };
+    },
+    computed: {
+      detailData() {
+        return {
+          contents: [
+            {
+              data: this.form,
+              labelWidth: '150px',
+              inputWidth: '400px',
+              children: [
+                {
+                  type: 'label',
+                  label: '询价单名称',
+                  prop: 'inquiryName',
+                },
+                {
+                  type: 'label',
+                  label: '采购单编号',
+                  prop: 'inquiryCode',
+                },
+                {
+                  type: 'label',
+                  label: '澄清内容',
+                  prop: 'clarificationContent',
+                },
+                {
+                  type: 'label',
+                  label: '澄清时间',
+                  prop: 'clarificationTime',
+                  formatter: (value) => {
+                    return this.moment(value).format('YYYY-MM-DD HH:mm:ss');
+                  }
+                },
+                {
+                  type: 'label',
+                  label: '澄清属性',
+                  prop: 'clarificationStage',
+                  formatter(value) {
+                    switch (value) {
+                      case 1:
+                        return '报价前澄清';
+                      case 2:
+                        return '评审中澄清';
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              data: this.form,
+              header: '回复情况',
+              labelWidth: '150px',
+              inputWidth: '400px',
+              children: [
+                {
+                  type: 'label',
+                  label: '回复内容',
+                  prop: 'replyContent',
+                },
+                {
+                  type: 'file',
+                  label: '澄清附件',
+                  prop: 'replyAttachmentBOs'
+                },
+                {
+                  type: 'label',
+                  label: '回复询价单位',
+                  prop: 'receiverOrgName',
+                },
+                {
+                  type: 'label',
+                  label: '回复人',
+                  prop: 'replier',
+                },
+                {
+                  type: 'label',
+                  label: '回复时间',
+                  prop: 'replyTime',
+                  formatter: (value) => {
+                    return this.moment(value).format('YYYY-MM-DD HH:mm:ss');
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    methods: {
+      query(query) {
+        if (!query) {
+          query = ''
+        }
+        //澄清详情
+        this.axios.post(this.appConfig.api('inquiry/others/clarification/searchMyReceiverReviewClarificationInfo'), {clarificationId: this.$route.params.id})
+          .then((data) => {
+            this.form = this.util.dataAdapter(data, ['attachmentName', 'attachmentUrl'], ['name', 'path'], false);
+          });
+      },
+      back() {
+        this.$router.push({name: 'saleClarifyReviewIndex'})
+      }
+    },
+    created() {
+      this.query();
+    }
+  }
+</script>
+<style scoped>
+
+</style>
