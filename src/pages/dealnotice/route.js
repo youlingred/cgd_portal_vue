@@ -7,17 +7,11 @@ export default [
     {
       path: 'dealnoticeprocurementP',
       name: 'dealnoticeprocurement1',
-      meta:{
-        type:1
-      },
       component: dealnoticeprocurementP
     },
     {
       path: 'dealnoticeprocurementS',
       name: 'dealnoticeprocurement2',
-      meta:{
-        type:2
-      },
       component: dealnoticeprocurementS
     },
     {
