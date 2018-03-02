@@ -182,11 +182,9 @@
       },
       //FIXME 提交
       sumbit() {
-        console.log("-------------------------" + JSON.stringify(this.fileList));
         this.form.attachments = JSON.stringify(this.fileList);
         this.axios.post(this.appConfig.api('inquiry/others/clarification/replyMyReceiverClarificationInfo'), this.form)
           .then((response) => {
-            console.log("--------------sucess-------" + response);
             this.$router.push({name: 'clarifyReviewIndex'});
           })
           .catch(function (error) {
