@@ -23,11 +23,10 @@
     </el-card>
     <buttons-operator type="top"
                       algin="right"
-                      :buttons="[
-                      {label:'编辑',type:'primary',click:buttonFunc},
-                      {label:'成交通知书发送',type:'primary',click:buttonFunc},
-                      {label:'缴费通知书发送',type:'primary',click:buttonFunc},
-                      {label:'生产文档',type:'primary',click:buttonFunc}]"/>
+                      :buttons="[{label:'确认',type:'primary',click:buttonFunc},
+                      {label:'拒绝成交',type:'primary',click:buttonFunc},
+                      {label:'生产文档',type:'primary',click:buttonFunc},
+                      {label:'导出',type:'primary',click:buttonFunc}]"/>
     <IvTable ref="table" v-bind="table" @on-row-click="cellClickHandler"/>
   </div>
 </template>
