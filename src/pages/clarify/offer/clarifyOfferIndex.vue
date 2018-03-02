@@ -14,10 +14,8 @@
           <detail ref="form_receive" v-bind="formInit.receive" noborder>
             <buttons-operator type="top"
                               algin="left"
-                              :switchFlag.sync="flag"
                               :buttons="[{label:'搜索',type:'primary',click:search},
-                          {label:'重置',type:'info',click:reset},
-                          {type:'switch'},]"/>
+                          {label:'重置',type:'info',click:reset}]"/>
           </detail>
         </el-tab-pane>
       </el-tabs>
@@ -54,17 +52,16 @@
         //发出澄清搜索条件表单数据
         form: {
           send: {
-            planName: '',
-            publishUser: '',
-            project: '',
-            status: '',
-            publishDate1: '',
-            publishDate2: ''
+            inquiryName:"",
+            clarificationContent:"",
+            clarificationDateStart:"",
+            clarificationDateEnd:""
           },
           receive: {
-            name: '',
-            project: '',
-            status: ''
+            inquiryName: "",
+            clarificationContent: "",
+            clarificationDateStart:"",
+            clarificationDateEnd:""
           }
         },
         //table初始化数据
@@ -281,7 +278,7 @@
             contents: [
               {
                 data: this.form.receive,
-                labelWidth: '100px',
+                labelWidth: '150px',
                 inputWidth: '200px',
                 inline: true,
                 children: [
@@ -296,18 +293,6 @@
                     label: '澄清内容',
                     placeholder: '模糊查询,可用个逗号隔开',
                     prop: 'clarificationContent',
-                  },
-                  {
-                    type: 'input',
-                    label: '回复内容',
-                    placeholder: '模糊查询,可用个逗号隔开',
-                    prop: 'publishUser',
-                  },
-                  {
-                    type: 'input',
-                    label: '回复人',
-                    placeholder: '模糊查询,可用个逗号隔开',
-                    prop: 'publishUser'
                   },
                   {
                     type: 'datePicker',
@@ -325,30 +310,6 @@
                     label: '澄清结束日期',
                     placeholder: '请输入结束时间',
                     prop: 'clarificationDateEnd',
-                    extendParam: {
-                      editable: false,
-                      format: 'yyyy-MM-dd',
-                      valueFormat: "yyyy-MM-dd"
-                    }
-                  },
-                  {
-                    type: 'datePicker',
-                    label: '回复开始日期',
-                    placeholder: '请输入开始时间',
-                    prop: 'publishDate1',
-                    switchFlag: this.flag,
-                    extendParam: {
-                      editable: false,
-                      format: 'yyyy-MM-dd',
-                      valueFormat: "yyyy-MM-dd"
-                    }
-                  },
-                  {
-                    type: 'datePicker',
-                    label: '回复结束日期',
-                    placeholder: '请输入结束时间',
-                    prop: 'publishDate2',
-                    switchFlag: this.flag,
                     extendParam: {
                       editable: false,
                       format: 'yyyy-MM-dd',
