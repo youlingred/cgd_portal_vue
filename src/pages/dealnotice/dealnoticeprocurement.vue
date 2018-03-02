@@ -36,7 +36,7 @@
   import IvTable from '@/components/IvTable.vue'
 
   export default {
-    components:{
+    components: {
       detail,
       buttonsOperator,
       IvTable,
@@ -58,7 +58,7 @@
                   placeholder: '请选择',
                   prop: 'status',
                   extendParam: {
-                    options : [
+                    options: [
                       {
                         label: '全部',
                         value: 1
@@ -100,7 +100,7 @@
                   placeholder: '请选择',
                   prop: 'ctype',
                   extendParam: {
-                    options : [
+                    options: [
                       {
                         label: '全部',
                         value: 1
@@ -132,7 +132,7 @@
                   placeholder: '请选择',
                   prop: 'pstatus',
                   extendParam: {
-                    options : [
+                    options: [
                       {
                         label: '全部',
                         value: 1
@@ -155,7 +155,7 @@
                   prop: 'timesegmentstart',
                   switchFlag: this.flag,
                   extendParam: {
-                    editable:false,
+                    editable: false,
                     format: 'yyyy-mm-dd hh:mm:ss'
                   }
                 },
@@ -166,7 +166,7 @@
                   prop: 'timesegmentend',
                   switchFlag: this.flag,
                   extendParam: {
-                    editable:false,
+                    editable: false,
                     format: 'yyyy-mm-dd hh:mm:ss',
                   }
                 },
@@ -191,7 +191,7 @@
                   placeholder: '请选择',
                   prop: 'status',
                   extendParam: {
-                    options : [
+                    options: [
                       {
                         label: '全部',
                         value: 1
@@ -233,7 +233,7 @@
                   placeholder: '请选择',
                   prop: 'ctype',
                   extendParam: {
-                    options : [
+                    options: [
                       {
                         label: '全部',
                         value: 1
@@ -265,7 +265,7 @@
                   placeholder: '请选择',
                   prop: 'pstatus',
                   extendParam: {
-                    options : [
+                    options: [
                       {
                         label: '全部',
                         value: 1
@@ -288,7 +288,7 @@
                   prop: 'timesegmentstart',
                   switchFlag: this.flagtwo,
                   extendParam: {
-                    editable:false,
+                    editable: false,
                     format: 'yyyy-mm-dd hh:mm:ss'
                   }
                 },
@@ -299,7 +299,7 @@
                   prop: 'timesegmentend',
                   switchFlag: this.flagtwo,
                   extendParam: {
-                    editable:false,
+                    editable: false,
                     format: 'yyyy-mm-dd hh:mm:ss',
                   }
                 },
@@ -311,12 +311,12 @@
       //table初始化数据
       table() {
         return {
-          url: this.appConfig.api('testDealnoticeprocurement'),
+          url: this.appConfig.api('inquiry/exe/dealnote/querydealnoticelistforsupplier'),
           pageNo: 1,
           height: 400,
           queryParam: function (param) {
             console.log('queryParam:', param)
-            return _.assign({test: 1}, param);
+            return _.assign({tabId: 1, isSale: 0}, param);
           },
           responseHandler: function (val) {
             console.log('responseHandler:', val)
@@ -325,64 +325,57 @@
           columns: [
             {
               type: 'selection',
-              width: 60
+              width: 80
             },
             {
               title: '序号',
               type: 'index',
+              align: 'center',
               width: 80
             },
             {
               title: '状态',
-              key: 'status',
-              align:'center'
+              align: 'center',
+              width: 150,
+              key: 'statusName'
             },
             {
               title: '成交通知书名称',
-              key: 'name',
-              align:'center'
+              align: 'center',
+              width: 150,
+              key: 'dealNoticeName'
             },
             {
               title: '供应商',
-              key: 'supplier',
-              align:'center'
+              align: 'center',
+              width: 150,
+              key: 'supplierName'
             },
             {
               title: '采购编号',
-              key: 'cnumber',
-              align:'center'
+              align: 'center',
+              width: 130,
+              key: 'inquiryCode'
             },
             {
               title: '采购金额',
-              key: 'money',
-              align:'center',
+              align: 'center',
+              width: 120,
+              key: 'purchaseAmount'
             },
             {
               title: '采购类别',
-              key: 'ctype',
-              align:'center',
-              render: (h, { row, column }) => {
-                switch (row.ctype) {
-                  case 1:
-                    return '物资类';
-                    break;
-                  case 2:
-                    return '施工类';
-                    break;
-                  case 3:
-                    return '服务类';
-                    break;
-                }
-              }
-            },
-          ],
+              align: 'center',
+              key: 'purchaseCategoryName'
+            }
+          ]
         }
       }
     },
     data() {
       return {
         //1采购,2销售
-        type:0,
+        type: 0,
         //当前激活的tab名称
         activeName: '1',
         //展开收起标志
@@ -391,26 +384,26 @@
         flagtwo: false,
         //发出澄清搜索条件表单数据
         //表单数据
-        form:{
-          '1':{
+        form: {
+          '1': {
             status: '',
             numbering: '',
             name: '',
-            ctype:'',
-            supplier:'',
-            pstatus:'',
-            timesegmentstart:'',
-            timesegmentend:''
+            ctype: '',
+            supplier: '',
+            pstatus: '',
+            timesegmentstart: '',
+            timesegmentend: ''
           },
-          '2':{
+          '2': {
             status: '',
             numbering: '',
             name: '',
-            ctype:'',
-            supplier:'',
-            pstatus:'',
-            timesegmentstart:'',
-            timesegmentend:''
+            ctype: '',
+            supplier: '',
+            pstatus: '',
+            timesegmentstart: '',
+            timesegmentend: ''
           },
         }
       };
@@ -424,13 +417,14 @@
         this.$refs[this.activeName].forms[0].resetFields();
       },
       handleClick() {
+        console.log("---------------4444--------------");
         this.search(this.activeName);
       },
-      buttonFunc(type){
+      buttonFunc(type) {
 
       },
-      cellClickHandler(row){
-        this.$router.push({name:'details',params:{type:1,id:1}})
+      cellClickHandler(row) {
+        this.$router.push({name: 'details', params: {type: 1, id: 1}})
       },
 
     }
