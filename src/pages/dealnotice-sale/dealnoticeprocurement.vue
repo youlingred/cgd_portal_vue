@@ -1,23 +1,25 @@
 <template>
   <div>
     <el-card>
-      <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="待处理" name="1">
-          <detail ref="send" v-bind="formInitDataSend" noborder/>
-          <buttons-operator type="top"
-                            algin="left"
-                            :switchFlag.sync="flag"
-                            :buttons="[{label:'搜索',type:'primary',click:search},
-                          {label:'重置',type:'info',click:resetform},{type:'switch'},]"/>
+      <el-tabs v-model="activeName">
+        <el-tab-pane label="待处理" name="doing">
+          <detail ref="form_doing" v-bind="formInit.doing" noborder>
+            <buttons-operator type="top"
+                              algin="left"
+                              :switchFlag.sync="flag"
+                              :buttons="[{label:'搜索',type:'primary',click:search},
+                          {label:'重置',type:'info',click:reset},{type:'switch'},]"/>
+          </detail>
         </el-tab-pane>
-        <el-tab-pane label="已处理" name="2">
-          <detail ref="receive" v-bind="formInitDataReceive"/>
-          <buttons-operator type="top"
-                            algin="left"
-                            :switchFlag.sync="flagtwo"
-                            :buttons="[{label:'确认',type:'primary',click:search},
-                          {label:'重置',type:'info',click:resetform},
+        <el-tab-pane label="已处理" name="done">
+          <detail ref="form_done" v-bind="formInit.done">
+            <buttons-operator type="top"
+                              algin="left"
+                              :switchFlag.sync="flagtwo"
+                              :buttons="[{label:'确认',type:'primary',click:search},
+                          {label:'重置',type:'info',click:reset},
                           {type:'switch'},]"/>
+          </detail>
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -27,7 +29,9 @@
                       {label:'拒绝成交',type:'primary',click:buttonFunc},
                       {label:'生产文档',type:'primary',click:buttonFunc},
                       {label:'导出',type:'primary',click:buttonFunc}]"/>
-    <IvTable ref="table" v-bind="table" @on-row-click="cellClickHandler"/>
+    <IvTable v-if="activeName==='doing'" key="1" ref="table_doing" v-bind="table.doing"
+             @on-row-click="cellClickHandler"/>
+    <IvTable v-if="activeName==='done'" key="2" ref="table_done" v-bind="table.done" @on-row-click="cellClickHandler"/>
   </div>
 </template>
 <script>
@@ -36,401 +40,466 @@
   import IvTable from '@/components/IvTable.vue'
 
   export default {
-    components:{
+    components: {
       detail,
       buttonsOperator,
       IvTable,
     },
-    computed: {
-      //发出澄清表单初始化数据
-      formInitDataSend() {
-        return {
-          contents: [
-            {
-              data: this.form['1'],
-              labelWidth: '150px',
-              inputWidth: '200px',
-              inline: true,
-              children: [
-                {
-                  type: 'select',
-                  label: '状态',
-                  placeholder: '请选择',
-                  prop: 'status',
-                  extendParam: {
-                    options : [
-                      {
-                        label: '全部',
-                        value: 1
-                      },
-                      {
-                        label: '待发送',
-                        value: 2
-                      },
-                      {
-                        label: '供应商确认中',
-                        value: 3
-                      },
-                      {
-                        label: '已确认',
-                        value: 4
-                      },
-                      {
-                        label: '拒绝成交',
-                        value: 5
-                      },
-                    ]
-                  }
-                },
-                {
-                  type: 'input',
-                  label: '成交通知书编号',
-                  placeholder: '请输入',
-                  prop: 'numbering',
-                },
-                {
-                  type: 'input',
-                  label: '成交通知书名称',
-                  placeholder: '请输入',
-                  prop: 'name',
-                },
-                {
-                  type: 'select',
-                  label: '采购类别',
-                  placeholder: '请选择',
-                  prop: 'ctype',
-                  extendParam: {
-                    options : [
-                      {
-                        label: '全部',
-                        value: 1
-                      },
-                      {
-                        label: '物资类',
-                        value: 2
-                      },
-                      {
-                        label: '施工类',
-                        value: 3
-                      },
-                      {
-                        label: '服务类',
-                        value: 4
-                      }
-                    ]
-                  }
-                },
-                {
-                  type: 'input',
-                  label: '供应商',
-                  placeholder: '请输入',
-                  prop: 'supplier',
-                },
-                {
-                  type: 'select',
-                  label: '缴费通知发送状态',
-                  placeholder: '请选择',
-                  prop: 'pstatus',
-                  extendParam: {
-                    options : [
-                      {
-                        label: '全部',
-                        value: 1
-                      },
-                      {
-                        label: '未发送',
-                        value: 2
-                      },
-                      {
-                        label: '已发送',
-                        value: 3
-                      },
-                    ]
-                  }
-                },
-                {
-                  type: 'dateTimePicker',
-                  label: '制单开始日期',
-                  placeholder: '请输入开始时间',
-                  prop: 'timesegmentstart',
-                  switchFlag: this.flag,
-                  extendParam: {
-                    editable:false,
-                    format: 'yyyy-mm-dd hh:mm:ss'
-                  }
-                },
-                {
-                  type: 'dateTimePicker',
-                  label: '制单结束日期',
-                  placeholder: '请输入结束时间',
-                  prop: 'timesegmentend',
-                  switchFlag: this.flag,
-                  extendParam: {
-                    editable:false,
-                    format: 'yyyy-mm-dd hh:mm:ss',
-                  }
-                },
-              ]
-            }
-          ]
-        }
-      },
-      //收到澄清表单初始化数据
-      formInitDataReceive() {
-        return {
-          contents: [
-            {
-              data: this.form['2'],
-              labelWidth: '150px',
-              inputWidth: '200px',
-              inline: true,
-              children: [
-                {
-                  type: 'select',
-                  label: '状态',
-                  placeholder: '请选择',
-                  prop: 'status',
-                  extendParam: {
-                    options : [
-                      {
-                        label: '全部',
-                        value: 1
-                      },
-                      {
-                        label: '待发送',
-                        value: 2
-                      },
-                      {
-                        label: '供应商确认中',
-                        value: 3
-                      },
-                      {
-                        label: '已确认',
-                        value: 4
-                      },
-                      {
-                        label: '拒绝成交',
-                        value: 5
-                      },
-                    ]
-                  }
-                },
-                {
-                  type: 'input',
-                  label: '成交通知书编号',
-                  placeholder: '请输入',
-                  prop: 'numbering',
-                },
-                {
-                  type: 'input',
-                  label: '成交通知书名称',
-                  placeholder: '请输入',
-                  prop: 'name',
-                },
-                {
-                  type: 'select',
-                  label: '采购类别',
-                  placeholder: '请选择',
-                  prop: 'ctype',
-                  extendParam: {
-                    options : [
-                      {
-                        label: '全部',
-                        value: 1
-                      },
-                      {
-                        label: '物资类',
-                        value: 2
-                      },
-                      {
-                        label: '施工类',
-                        value: 3
-                      },
-                      {
-                        label: '服务类',
-                        value: 4
-                      }
-                    ]
-                  }
-                },
-                {
-                  type: 'input',
-                  label: '供应商',
-                  placeholder: '请输入',
-                  prop: 'supplier',
-                },
-                {
-                  type: 'select',
-                  label: '缴费通知发送状态',
-                  placeholder: '请选择',
-                  prop: 'pstatus',
-                  extendParam: {
-                    options : [
-                      {
-                        label: '全部',
-                        value: 1
-                      },
-                      {
-                        label: '未发送',
-                        value: 2
-                      },
-                      {
-                        label: '已发送',
-                        value: 3
-                      },
-                    ]
-                  }
-                },
-                {
-                  type: 'dateTimePicker',
-                  label: '制单开始日期',
-                  placeholder: '请输入开始时间',
-                  prop: 'timesegmentstart',
-                  switchFlag: this.flagtwo,
-                  extendParam: {
-                    editable:false,
-                    format: 'yyyy-mm-dd hh:mm:ss'
-                  }
-                },
-                {
-                  type: 'dateTimePicker',
-                  label: '制单结束日期',
-                  placeholder: '请输入结束时间',
-                  prop: 'timesegmentend',
-                  switchFlag: this.flagtwo,
-                  extendParam: {
-                    editable:false,
-                    format: 'yyyy-mm-dd hh:mm:ss',
-                  }
-                },
-              ]
-            }
-          ]
-        }
-      },
-      //table初始化数据
-      table() {
-        return {
-          url: this.appConfig.api('testDealnoticeprocurement'),
-          pageNo: 1,
-          height: 400,
-          queryParam: function (param) {
-            console.log('queryParam:', param)
-            return _.assign({test: 1}, param);
-          },
-          responseHandler: function (val) {
-            console.log('responseHandler:', val)
-            return val;
-          },
-          columns: [
-            {
-              type: 'selection',
-              width: 60
-            },
-            {
-              title: '序号',
-              type: 'index',
-              width: 80
-            },
-            {
-              title: '状态',
-              key: 'status',
-              align:'center'
-            },
-            {
-              title: '成交通知书名称',
-              key: 'name',
-              align:'center'
-            },
-            {
-              title: '供应商',
-              key: 'supplier',
-              align:'center'
-            },
-            {
-              title: '采购编号',
-              key: 'cnumber',
-              align:'center'
-            },
-            {
-              title: '采购金额',
-              key: 'money',
-              align:'center',
-            },
-            {
-              title: '采购类别',
-              key: 'ctype',
-              align:'center',
-              render: (h, { row, column }) => {
-                switch (row.ctype) {
-                  case 1:
-                    return '物资类';
-                    break;
-                  case 2:
-                    return '施工类';
-                    break;
-                  case 3:
-                    return '服务类';
-                    break;
-                }
-              }
-            },
-          ],
-        }
-      }
-    },
     data() {
       return {
         //1采购,2销售
-        type:0,
+        type: 0,
         //当前激活的tab名称
-        activeName: '1',
+        activeName: 'doing',
         //展开收起标志
         flag: false,
         //展开收起标志
         flagtwo: false,
         //发出澄清搜索条件表单数据
         //表单数据
-        form:{
-          '1':{
+        form: {
+          doing: {
             status: '',
-            numbering: '',
-            name: '',
-            ctype:'',
-            supplier:'',
-            pstatus:'',
-            timesegmentstart:'',
-            timesegmentend:''
+            dealNoticeCode: '',
+            dealNoticeName: '',
+            purchaseCategory: '',
+            paymentNoticeStatus: '',
+            billCreateTimeStart: '',
+            billCreateTimeEnd: ''
           },
-          '2':{
+          done: {
             status: '',
-            numbering: '',
-            name: '',
-            ctype:'',
-            supplier:'',
-            pstatus:'',
-            timesegmentstart:'',
-            timesegmentend:''
+            dealNoticeCode: '',
+            dealNoticeName: '',
+            purchaseCategory: '',
+            supplierName: '',
+            paymentNoticeStatus: '',
+            billCreateTimeStart: '',
+            billCreateTimeEnd: ''
           },
+        },
+        table: {
+          doing: {
+            height: 400,
+            url: this.appConfig.api('inquiry/exe/dealnote/querydealnoticelistforsupplier'),
+            pageNo: 1,
+            queryParam: function (param) {
+              console.log('queryParam:', param)
+              return _.assign({tabId: 1, isSale: 1}, param);
+            },
+            responseHandler: function (val) {
+              console.log('responseHandler:', val)
+              return val;
+            },
+            columns: [
+              {
+                type: 'selection',
+                width: 80
+              },
+              {
+                title: '序号',
+                type: 'index',
+                align: 'center',
+                width: 80
+              },
+              {
+                title: '状态',
+                align: 'center',
+                width: 150,
+                key: 'statusName'
+              },
+              {
+                title: '成交通知书名称',
+                align: 'center',
+                width: 150,
+                key: 'dealNoticeName'
+              },
+              {
+                title: '供应商',
+                align: 'center',
+                width: 150,
+                key: 'supplierName'
+              },
+              {
+                title: '采购编号',
+                align: 'center',
+                width: 130,
+                key: 'inquiryCode'
+              },
+              {
+                title: '采购金额',
+                align: 'center',
+                width: 120,
+                key: 'purchaseAmount'
+              },
+              {
+                title: '采购类别',
+                align: 'center',
+                key: 'purchaseCategoryName'
+              }
+            ]
+          },
+          done: {
+            height: 400,
+            url: this.appConfig.api('inquiry/exe/dealnote/querydealnoticelistforsupplier'),
+            pageNo: 1,
+            queryParam: function (param) {
+              console.log('queryParam:', param)
+              return _.assign({tabId: 2, isSale: 1}, param);
+            },
+            responseHandler: function (val) {
+              console.log('responseHandler:', val)
+              return val;
+            },
+            columns: [
+              {
+                type: 'selection',
+                width: 80
+              },
+              {
+                title: '序号',
+                type: 'index',
+                align: 'center',
+                width: 80
+              },
+              {
+                title: '状态',
+                align: 'center',
+                width: 150,
+                key: 'statusName'
+              },
+              {
+                title: '成交通知书名称',
+                align: 'center',
+                width: 150,
+                key: 'dealNoticeName'
+              },
+              {
+                title: '供应商',
+                align: 'center',
+                width: 150,
+                key: 'supplierName'
+              },
+              {
+                title: '采购编号',
+                align: 'center',
+                width: 130,
+                key: 'inquiryCode'
+              },
+              {
+                title: '采购金额',
+                align: 'center',
+                width: 120,
+                key: 'purchaseAmount'
+              },
+              {
+                title: '采购类别',
+                align: 'center',
+                key: 'purchaseCategoryName'
+              }
+            ]
+          }
         }
       };
     },
+    computed: {
+      formInit() {
+        return {
+          //发出澄清表单初始化数据
+          doing: {
+            contents: [
+              {
+                data: this.form.doing,
+                labelWidth: '150px',
+                inputWidth: '200px',
+                inline: true,
+                children: [
+                  {
+                    type: 'select',
+                    label: '状态',
+                    placeholder: '请选择',
+                    prop: 'status',
+                    extendParam: {
+                      options: [
+                        {
+                          label: '全部',
+                          value: ''
+                        },
+                        {
+                          label: '待发放成交通知',
+                          value: 1
+                        },
+                        {
+                          label: '供应商确认中',
+                          value: 2
+                        },
+                        {
+                          label: '拒绝成交',
+                          value: 3
+                        },
+                        {
+                          label: '采购完成',
+                          value: 4
+                        },
+                      ]
+                    }
+                  },
+                  {
+                    type: 'input',
+                    label: '成交通知书编号',
+                    placeholder: '请输入',
+                    prop: 'dealNoticeCode',
+                  },
+                  {
+                    type: 'input',
+                    label: '成交通知书名称',
+                    placeholder: '请输入',
+                    prop: 'dealNoticeName',
+                  },
+                  {
+                    type: 'select',
+                    label: '采购类别',
+                    placeholder: '请选择',
+                    prop: 'purchaseCategory',
+                    extendParam: {
+                      options: [
+                        {
+                          label: '全部',
+                          value: 1
+                        },
+                        {
+                          label: '物资类',
+                          value: 2
+                        },
+                        {
+                          label: '施工类',
+                          value: 3
+                        },
+                        {
+                          label: '服务类',
+                          value: 4
+                        }
+                      ]
+                    }
+                  },
+                  // {
+                  //   type: 'input',
+                  //   label: '供应商',
+                  //   placeholder: '请输入',
+                  //   prop: 'supplierName',
+                  // },
+                  {
+                    type: 'select',
+                    label: '缴费通知发送状态',
+                    placeholder: '请选择',
+                    prop: 'paymentNoticeStatus',
+                    extendParam: {
+                      options: [
+                        {
+                          label: '全部',
+                          value: ''
+                        },
+                        {
+                          label: '未发送',
+                          value: 1
+                        },
+                        {
+                          label: '已发送',
+                          value: 2
+                        },
+                        {
+                          label: '已缴费',
+                          value: 3
+                        },
+                        {
+                          label: '已作废',
+                          value: 4
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    type: 'dateTimePicker',
+                    label: '制单开始日期',
+                    placeholder: '请输入开始时间',
+                    prop: 'billCreateTimeStart',
+                    switchFlag: this.flag,
+                    extendParam: {
+                      editable: false,
+                      format: 'yyyy-mm-dd hh:mm:ss'
+                    }
+                  },
+                  {
+                    type: 'dateTimePicker',
+                    label: '制单结束日期',
+                    placeholder: '请输入结束时间',
+                    prop: 'billCreateTimeEnd',
+                    switchFlag: this.flag,
+                    extendParam: {
+                      editable: false,
+                      format: 'yyyy-mm-dd hh:mm:ss',
+                    }
+                  },
+                ]
+              }
+            ]
+          },
+          //收到澄清表单初始化数据
+          done: {
+            contents: [
+              {
+                data: this.form.done,
+                labelWidth: '150px',
+                inputWidth: '200px',
+                inline: true,
+                children: [
+                  {
+                    type: 'select',
+                    label: '状态',
+                    placeholder: '请选择',
+                    prop: 'status',
+                    extendParam: {
+                      options: [
+                        {
+                          label: '全部',
+                          value: ''
+                        },
+                        {
+                          label: '待发放成交通知',
+                          value: 1
+                        },
+                        {
+                          label: '供应商确认中',
+                          value: 2
+                        },
+                        {
+                          label: '拒绝成交',
+                          value: 3
+                        },
+                        {
+                          label: '采购完成',
+                          value: 4
+                        },
+                      ]
+                    }
+                  },
+                  {
+                    type: 'input',
+                    label: '成交通知书编号',
+                    placeholder: '请输入',
+                    prop: 'dealNoticeCode',
+                  },
+                  {
+                    type: 'input',
+                    label: '成交通知书名称',
+                    placeholder: '请输入',
+                    prop: 'dealNoticeName',
+                  },
+                  {
+                    type: 'select',
+                    label: '采购类别',
+                    placeholder: '请选择',
+                    prop: 'purchaseCategory',
+                    extendParam: {
+                      options: [
+                        {
+                          label: '全部',
+                          value: 1
+                        },
+                        {
+                          label: '物资类',
+                          value: 2
+                        },
+                        {
+                          label: '施工类',
+                          value: 3
+                        },
+                        {
+                          label: '服务类',
+                          value: 4
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    type: 'input',
+                    label: '供应商',
+                    placeholder: '请输入',
+                    prop: 'supplierName',
+                  },
+                  {
+                    type: 'select',
+                    label: '缴费通知发送状态',
+                    placeholder: '请选择',
+                    prop: 'paymentNoticeStatus',
+                    extendParam: {
+                      options: [
+                        {
+                          label: '全部',
+                          value: ''
+                        },
+                        {
+                          label: '未发送',
+                          value: 1
+                        },
+                        {
+                          label: '已发送',
+                          value: 2
+                        },
+                        {
+                          label: '已缴费',
+                          value: 3
+                        },
+                        {
+                          label: '已作废',
+                          value: 4
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    type: 'dateTimePicker',
+                    label: '制单开始日期',
+                    placeholder: '请输入开始时间',
+                    prop: 'billCreateTimeStart',
+                    switchFlag: this.flagtwo,
+                    extendParam: {
+                      editable: false,
+                      format: 'yyyy-mm-dd hh:mm:ss'
+                    }
+                  },
+                  {
+                    type: 'dateTimePicker',
+                    label: '制单结束日期',
+                    placeholder: '请输入结束时间',
+                    prop: 'billCreateTimeEnd',
+                    switchFlag: this.flagtwo,
+                    extendParam: {
+                      editable: false,
+                      format: 'yyyy-mm-dd hh:mm:ss',
+                    }
+                  },
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
     methods: {
-      search(num) {
-        this.$refs.table.query(this.form[this.activeName])
+      search() {
+        console.log("---------------------formdata-----" + JSON.stringify(this.form[this.activeName]));
+        this.$refs['table_' + this.activeName].query(this.form[this.activeName]);
       },
       //重置
-      resetform(form1Name) {
-        this.$refs[this.activeName].forms[0].resetFields();
+      reset() {
+        this.$refs['form_' + this.activeName].forms[0].resetFields();
       },
-      handleClick() {
-        this.search(this.activeName);
-      },
-      buttonFunc(type){
+      buttonFunc(type) {
 
       },
-      cellClickHandler(row){
-        this.$router.push({name:'details',params:{type:1,id:1}})
+      cellClickHandler(row) {
+        this.$router.push({name: 'details', params: {type: 1, id: 1}})
       },
 
     }

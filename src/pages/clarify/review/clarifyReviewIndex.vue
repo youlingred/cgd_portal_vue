@@ -362,8 +362,6 @@
       //回复
       reply() {
         if (this.selectDatas.length == 1) {
-          console.log("-----------------selectDatas------" + JSON.stringify(this.selectDatas));
-          console.log("-----------------selectDatas.inquiryId------" + JSON.stringify(this.selectDatas[0].inquiryId));
           ///评审中发布澄清时校验询价单状态
           this.axios.post(this.appConfig.api('inquiry/others/clarification/beforeReviewCheckInquiry'), {
             inquiryId: this.selectDatas[0].inquiryId,
@@ -371,7 +369,6 @@
             purchaseCatagory: this.selectDatas[0].purchaseCategory
           })
             .then((data) => {
-              console.log("--------------------------return--data-----" + JSON.stringify(data));
               if (data.isReview == 1) {
                 this.$router.push({name: 'clarifyReviewEdit', params: {id: this.selectDatas[0].clarificationId}});
               } else {

@@ -118,7 +118,6 @@
               purchaseCatagory: data.purchaseCategory
             })
               .then((data) => {
-                console.log("--------------------------return--data-----" + JSON.stringify(data.isReview));
                 if (data.isReview == 1) {
                   this.showButton = 'show';
                 }
