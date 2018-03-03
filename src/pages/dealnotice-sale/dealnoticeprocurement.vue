@@ -12,11 +12,11 @@
           </detail>
         </el-tab-pane>
         <el-tab-pane label="已处理" name="done">
-          <detail ref="form_done" v-bind="formInit.done">
+          <detail ref="form_done" v-bind="formInit.done" noborder>
             <buttons-operator type="top"
                               algin="left"
                               :switchFlag.sync="flagtwo"
-                              :buttons="[{label:'确认',type:'primary',click:search},
+                              :buttons="[{label:'搜索',type:'primary',click:search},
                           {label:'重置',type:'info',click:reset},
                           {type:'switch'},]"/>
           </detail>
@@ -25,13 +25,13 @@
     </el-card>
     <buttons-operator type="top"
                       algin="right"
-                      :buttons="[{label:'确认',type:'primary',click:buttonFunc},
-                      {label:'拒绝成交',type:'primary',click:buttonFunc},
-                      {label:'生产文档',type:'primary',click:buttonFunc},
-                      {label:'导出',type:'primary',click:buttonFunc}]"/>
+                      :buttons="[{label:'确认',type:'primary',click:confirm},
+                      {label:'拒绝成交',type:'primary',click:refuse},
+                      {label:'生产文档',type:'primary',click:buttonFunc}]"/>
     <IvTable v-if="activeName==='doing'" key="1" ref="table_doing" v-bind="table.doing"
-             @on-row-click="cellClickHandler"/>
-    <IvTable v-if="activeName==='done'" key="2" ref="table_done" v-bind="table.done" @on-row-click="cellClickHandler"/>
+             @selectionChange="checkSelectionChange"/>
+    <IvTable v-if="activeName==='done'" key="2" ref="table_done" v-bind="table.done"
+             @selectionChange="checkSelectionChange"/>
   </div>
 </template>
 <script>
@@ -47,6 +47,8 @@
     },
     data() {
       return {
+        //复选框选中的值
+        selectDatas: [],
         //1采购,2销售
         type: 0,
         //当前激活的tab名称
@@ -63,6 +65,7 @@
             dealNoticeCode: '',
             dealNoticeName: '',
             purchaseCategory: '',
+            supplierName: '',
             paymentNoticeStatus: '',
             billCreateTimeStart: '',
             billCreateTimeEnd: ''
@@ -94,6 +97,7 @@
             columns: [
               {
                 type: 'selection',
+                align: 'center',
                 width: 80
               },
               {
@@ -112,7 +116,18 @@
                 title: '成交通知书名称',
                 align: 'center',
                 width: 150,
-                key: 'dealNoticeName'
+                key: 'dealNoticeName',
+                render: (h, {row, column}) => {
+                  return h('a', {
+                      on: {
+                        click: () => {
+                          this.gotoDetail(row.dealNoticeId)
+                        }
+                      }
+                    },
+                    row.dealNoticeName);
+                }
+
               },
               {
                 title: '供应商',
@@ -140,8 +155,8 @@
             ]
           },
           done: {
-            height: 400,
             url: this.appConfig.api('inquiry/exe/dealnote/querydealnoticelistforsupplier'),
+            height: 400,
             pageNo: 1,
             queryParam: function (param) {
               console.log('queryParam:', param)
@@ -172,7 +187,17 @@
                 title: '成交通知书名称',
                 align: 'center',
                 width: 150,
-                key: 'dealNoticeName'
+                key: 'dealNoticeName',
+                render: (h, {row, column}) => {
+                  return h('a', {
+                      on: {
+                        click: () => {
+                          this.gotoDetail(row.dealNoticeId)
+                        }
+                      }
+                    },
+                    row.dealNoticeName);
+                }
               },
               {
                 title: '供应商',
@@ -205,7 +230,6 @@
     computed: {
       formInit() {
         return {
-          //发出澄清表单初始化数据
           doing: {
             contents: [
               {
@@ -265,29 +289,29 @@
                       options: [
                         {
                           label: '全部',
-                          value: 1
+                          value: ''
                         },
                         {
                           label: '物资类',
-                          value: 2
+                          value: 1
                         },
                         {
                           label: '施工类',
-                          value: 3
+                          value: 2
                         },
                         {
                           label: '服务类',
-                          value: 4
+                          value: 3
                         }
                       ]
                     }
                   },
-                  // {
-                  //   type: 'input',
-                  //   label: '供应商',
-                  //   placeholder: '请输入',
-                  //   prop: 'supplierName',
-                  // },
+                  {
+                    type: 'input',
+                    label: '供应商',
+                    placeholder: '请输入',
+                    prop: 'supplierName',
+                  },
                   {
                     type: 'select',
                     label: '缴费通知发送状态',
@@ -344,7 +368,6 @@
               }
             ]
           },
-          //收到澄清表单初始化数据
           done: {
             contents: [
               {
@@ -404,19 +427,19 @@
                       options: [
                         {
                           label: '全部',
-                          value: 1
+                          value: ''
                         },
                         {
                           label: '物资类',
-                          value: 2
+                          value: 1
                         },
                         {
                           label: '施工类',
-                          value: 3
+                          value: 2
                         },
                         {
                           label: '服务类',
-                          value: 4
+                          value: 3
                         }
                       ]
                     }
@@ -488,21 +511,58 @@
     },
     methods: {
       search() {
-        console.log("---------------------formdata-----" + JSON.stringify(this.form[this.activeName]));
         this.$refs['table_' + this.activeName].query(this.form[this.activeName]);
       },
-      //重置
       reset() {
         this.$refs['form_' + this.activeName].forms[0].resetFields();
       },
       buttonFunc(type) {
 
       },
-      cellClickHandler(row) {
-        this.$router.push({name: 'details', params: {type: 1, id: 1}})
+      confirm() {
+        if (this.selectDatas.length == 1) {
+          this.axios.post(this.appConfig.api('inquiry/exe/dealnote/confirmDealNoticeListForSupplier'), {dealNoticeId: this.selectDatas[0].dealNoticeId})
+            .then((data) => {
+              this.$message.success("成交通知书确认成功！");
+              this.search();
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        } else {
+          this.$message.error("请选择一条成交通知书");
+        }
       },
-
+      refuse() {
+        if (this.selectDatas.length == 1) {
+          this.$confirm('请确认是否拒绝成交？', '提示', {
+            confirmButtonText: '确认',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.axios.post(this.appConfig.api('inquiry/exe/dealnote/refuseDealNoticeListForSupplier'), {dealNoticeId: this.selectDatas[0].dealNoticeId})
+              .then((data) => {
+                this.search();
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消'
+            });
+          });
+        } else {
+          this.$message.error("请选择一条成交通知书");
+        }
+      },
+      gotoDetail(id) {
+        this.$router.push({name: 'details2', params: {id: id}});
+      },
+      checkSelectionChange(val) {
+        this.selectDatas = val;
+      }
     }
-
   };
 </script>

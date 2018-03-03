@@ -9,8 +9,8 @@ export default [
       component: dealnoticeprocurement
     },
     {
-      path: 'details/:type/:id',
-      name: 'details',
+      path: 'details/:id',
+      name: 'details2',
       component: details
     },
 ];
