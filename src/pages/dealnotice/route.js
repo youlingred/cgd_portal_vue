@@ -10,7 +10,7 @@ export default [
     },
     {
       path: 'details/:type/:id',
-      name: 'details',
+      name: 'details1',
       component: details
     },
 ];
