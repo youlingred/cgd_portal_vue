@@ -87,7 +87,7 @@
       value: {
         get() {
           if (this.formatter) {
-            return this.formatter(this.data[this.prop])
+            return this.formatter(this.data[this.prop],this.data)
           }
           return this.data[this.prop]
         }
