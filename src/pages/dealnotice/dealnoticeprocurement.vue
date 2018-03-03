@@ -12,7 +12,7 @@
           </detail>
         </el-tab-pane>
         <el-tab-pane label="已处理" name="done">
-          <detail ref="form_done" v-bind="formInit.done">
+          <detail ref="form_done" v-bind="formInit.done" noborder>
             <buttons-operator type="top"
                               algin="left"
                               :switchFlag.sync="flagtwo"
@@ -75,7 +75,6 @@
             dealNoticeCode: '',
             dealNoticeName: '',
             purchaseCategory: '',
-            supplierName: '',
             paymentNoticeStatus: '',
             billCreateTimeStart: '',
             billCreateTimeEnd: ''
@@ -436,12 +435,6 @@
                         }
                       ]
                     }
-                  },
-                  {
-                    type: 'input',
-                    label: '供应商',
-                    placeholder: '请输入',
-                    prop: 'supplierName',
                   },
                   {
                     type: 'select',
