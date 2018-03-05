@@ -29,7 +29,7 @@ export default [
     component: tabs
   },
   {
-    path: 'detail',
+    path: 'detail/:type/:id',
     name: 'detail',
     component: detail
   },

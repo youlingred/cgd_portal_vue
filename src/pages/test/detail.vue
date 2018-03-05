@@ -1,132 +1,355 @@
 <template>
   <div>
-    <detail-comp v-bind="detailData"></detail-comp>
+    <detail v-bind="detailData"/>
+    <div class="tl" style="padding: 10px 20px">明细信息</div>
+    <IvTable ref="table" v-bind="table"/>
     <buttons-operator type="bottom"
                       fix="true"
-                      :buttons="[{label:'返回',type:'info',click:back}]"/>
+                      :buttons="[{label:'返回',type:'info',click:backFunc}]"/>
 
   </div>
 </template>
 
 <script>
-  import detailComp from '@/components/Detail.vue'
+  import detail from '@/components/Detail.vue'
+  import IvTable from '@/components/IvTable.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
 
   export default {
-    name: "detail",
-    components: {
-      detailComp,
+    components:{
+      detail,
+      IvTable,
       buttonsOperator
     },
-    data() {
+    data () {
       return {
-        form: {
-          planName: '团建',
-          publishUser: '老铁',
-          publishDate: 1514192693000,
-          objectionDate: 1514192693000,
-          status: 1,
-          clarifyContent:'哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈',
-          prop4: '艳照门',
-          fileList:[{name:'文件测试',path:'test'},{name:'文件测试',path:'test'}],
+        form:{},
+        //列表数据
+        table: {
+          autoLoad:false,
         }
       };
     },
-    computed: {
-      detailData() {
+    computed:{
+      detailData(){
         return {
-          contents: [
+          contents:[
             {
-              data: this.form,
+              data:this.form,
+              header:'基本信息',
               labelWidth:'150px',
               inputWidth:'400px',
-              children: [
+              children:[
                 {
-                  type: 'label',
-                  label: '发送澄清单位',
-                  prop: 'planName',
+                  type:'label',
+                  label:'采购单编号',
+                  prop:'1'
                 },
                 {
-                  type: 'label',
-                  label: '询价单名称',
-                  prop: 'status',
-                  formatter: (value) => {
-                    switch(value){
-                      case 1:
-                        return '处理中'
-                      case 2:
-                        return '已受理'
-                      case 3:
-                        return '驳回'
-                      default:
-                        return ''
-                    }
+                  type:'label',
+                  label:'采购单名称',
+                  prop:'2'
+                },
+                {
+                  type:'label',
+                  label:'配送中心',
+                  prop:'6',
+                },
+                {
+                  type:'label',
+                  label:'配送中心-联系人',
+                  prop:'7'
+                },
+                {
+                  type:'label',
+                  label:'配送中心-联系方式',
+                  prop:'8'
+                },
+                {
+                  type:'label',
+                  label:'交货日期',
+                  prop:'18',
+                  formatter(value){
+                    return this.moment(value).format("YYYY-MM-DD HH:mm:ss")
                   }
                 },
                 {
-                  type: 'label',
-                  label: '询价单编号',
-                  placeholder: '请输入发布人',
-                  prop: 'publishUser',
-                },
-                {
-                  type: 'label',
-                  label: '澄清内容',
-                  placeholder: '请输入',
-                  prop: 'clarifyContent',
-                  extendParam:{
-                    autosize:{ minRows: 2, maxRows: 4}
+                  type:'label',
+                  label:'报价截止日期',
+                  prop:'18',
+                  formatter(value){
+                    return this.moment(value).format("YYYY-MM-DD HH:mm:ss")
                   }
                 },
                 {
-                  type: 'file',
-                  label: '澄清附件',
-                  prop: 'fileList'
+                  type:'label',
+                  label:'报价方式',
+                  prop:'10'
                 },
                 {
-                  type: 'label',
-                  label: '接受澄清单位',
-                  prop: 'publishUser',
+                  type:'label',
+                  label:'质保期（月）',
+                  prop:'9'
                 },
                 {
-                  type: 'label',
-                  label: '澄清时间',
-                  prop: 'publishDate',
-                  formatter: (value) => {
-                    return this.moment(value).format('YYYY-MM-DD HH:mm:ss');
-                  }
+                  type:'label',
+                  label:'支付方式',
+                  prop:'10'
                 },
                 {
-                  type: 'label',
-                  label: '澄清属性',
-                  prop: 'publishUser',
+                  type:'label',
+                  label:'币种',
+                  prop:'11'
                 },
                 {
-                  type: 'label',
-                  label: '制单人',
-                  prop: 'publishUser',
-                }
-              ],
-              rules:{
-                planName:[
-                  { required: true, message: '请选择询价单名称', trigger: 'blur' },
-                ],
-                clarifyContent:[
-                  { required: true, message: '请输入澄清内容', trigger: 'blur' },
-                ]
-              }
-            },
+                  type:'label',
+                  label:'付款方式',
+                  prop:'12'
+                },
+                {
+                  type:'label',
+                  label:'税率（%）',
+                  prop:'13',
+                },
+                {
+                  type:'label',
+                  label:'成交服务费率',
+                  prop:'13',
+                },
+                {
+                  type:'label',
+                  label:'物流配送方式',
+                  prop:'14'
+                },
+                {
+                  type:'label',
+                  label:'采购类型',
+                  prop:'15'
+                },
+                {
+                  type:'label',
+                  label:'供应商分类',
+                  prop:'16'
+                },
+
+                {
+                  type:'label',
+                  label:'备注',
+                  prop:'21'
+                },
+              ]
+            }
           ]
         }
       }
     },
-    methods: {
-      back(){
-        this.$router.push({name:'list'})
-      }
-    }
-  }
-</script>
-<style scoped>
+    methods:{
+      backFunc () {
+        this.$router.push({name:'purchaserNoticeIndex'});
+      },
+      initForm() {
+        //基本信息
+        this.axios.post(this.appConfig.api('testcommen'),{})
+          .then((response) => {
+            this.form=response;
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      },
+      initTable() {
+        let {type,id}=this.$route.params;
+        if(type==1){//物资类详情
+          this.table.url = this.appConfig.api('Materials');
+          this.table.columns = [
+            {
+              fixed: 'left',
+              title: '序号',
+              type: 'index',
+              align:'center',
+              width: 80,
+            },
+            {
+              title: '项目单位',
+              key: '1',
+              align:'center',
+              width: 180,
+            },
+            {
+              title: '物料名称',
+              key: '4',
+              align:'center',
+              width: 120,
+            },
+            {
+              title: '物资编码',
+              key: '3',
+              align:'center',
+              width: 120,
+            },
+            {
+              title: '物资类别',
+              key: '2',
+              align:'center',
+              width: 120,
+            },
+            {
+              title: '型号',
+              key: '6',
+              align:'center',
+              width: 180,
+            },
+            {
+              title: '规格',
+              key: '7',
+              align:'center',
+              width: 120,
+            },
+            {
+              title: '采购数量',
+              key: '12',
+              align:'center',
+              width: 120,
+            },
+            {
+              title: '计量单位',
+              key: '13',
+              align:'center',
+              width: 120,
+            },
+            {
+              title: '要求到货日期',
+              key: '5',
+              align:'center',
+              width: 180,
+              render: (h, { row, column }) => {
+                return this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss");
+              }
+            }
+          ];
+        }else if(type==2){//施工类详情
+          this.table.url = this.appConfig.api('construction');
+          this.table.columns = [
+            {
+              fixed: 'left',
+              title: '序号',
+              type: 'index',
+              align:'center',
+              width: 80
+            },
+            {
+              title: '项目单位',
+              key: '1',
+              align:'center',
+              width: 120
+            },
+            {
+              title: '项目名称',
+              key: '2',
+              align:'center',
+              width: 120
+            },
+            {
+              title: '内容描述',
+              key: '3',
+              align:'center',
+              width: 120
+            },
+            {
+              title: '计量单位',
+              key: '4',
+              align:'center',
+              width: 80
+            },
+            {
+              title: '数量',
+              key: '5',
+              align:'center',
+              width: 80
+            },
+            {
+              title: '要求到货日期',
+              key: '5',
+              align:'center',
+              width: 180,
+              render: (h, { row, column }) => {
+                return this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss");
+              }
+            }
+          ];
+        }else if(type==3){//服务类详情
+          this.table.url = this.appConfig.api('serviceclass')
+          this.table.columns = [
+            {
+              fixed: 'left',
+              title: '序号',
+              type: 'index',
+              align:'center',
+              width: 80
+            },
+            {
+              title: '项目单位',
+              key: '1',
+              align:'center',
+              width: 120,
+            },
+            {
+              title: '项目名称',
+              key: '2',
+              align:'center',
+              width: 120,
+            },
+            {
+              title: '内容描述',
+              key: '3',
+              align:'center',
+              width: 120,
+            },
+            {
+              title: '计量单位',
+              key: '4',
+              align:'center',
+              width: 80,
+            },
+            {
+              title: '数量',
+              key: '5',
+              align:'center',
+              width: 80,
+            },
+            {
+              title: '要求到货日期',
+              key: '5',
+              align:'center',
+              width: 180,
+              render: (h, { row, column }) => {
+                return this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss");
+              }
+            }
+          ];
+        }
+        this.$refs.table.query({
+          url:this.table.url,
+          id:id
+        });
+      },
 
+    },
+    mounted () {
+      this.initForm();
+      this.initTable();
+    }
+
+  };
+</script>
+
+<style scoped>
+  .footerdiv {
+    height: 45px;
+    line-height:42px;
+    margin:10px 0 30px 0;
+    text-align: center;
+    border-top: 3px solid #acacac;
+    background-color: #e5e5e5;
+  }
 </style>
