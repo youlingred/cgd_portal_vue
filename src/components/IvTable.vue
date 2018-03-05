@@ -3,7 +3,7 @@
     <div v-show="header" class="table-header">
       <span>{{header}}</span>
     </div>
-    <Table ref="table" border v-bind="$props" :columns="columns" :data="m_data" @on-row-click="rowClickHandler" @on-selection-change="handleSelectionChange"></Table>
+    <Table ref="table" border v-bind="$props" :data="m_data" @on-row-click="rowClickHandler" @on-selection-change="handleSelectionChange"></Table>
     <el-pagination v-show="pagination" background class="tr"
                    @current-change="handleChangePageNo"
                    :current-page="m_query.pageNo"
@@ -18,7 +18,7 @@
     //组件入参
     props: {
       autoLoad: {
-        type: Boolean,
+        type: [Boolean,String],
         default: true
       },
       //表格标题
@@ -63,7 +63,7 @@
       },
       //请求地址
       url: {
-        type: String
+        type: String,
       },
       //查询回到函数,可以在查询操作中插入请求搜索条件
       queryParam: {
@@ -131,7 +131,6 @@
       query(arg) {
         return new Promise((resolve, refect) => {
           let param = _.assign(this.m_query, {url: this.m_url}, arg || {})
-          console.log(param);
           if (param.url && param.url !== '') {
             this.m_url = param.url;
             delete param.url;
@@ -183,11 +182,11 @@
         this.$emit('on-row-click', row, index)
       }
     },
-    created() {
+    mounted() {
       if((this.data instanceof  Array)&&this.data.length!=0){
         this.refreshData(this.data);
       }else{
-        if (this.autoLoad) {
+        if (this.autoLoad === 'true'|| this.autoLoad === true) {
           this.query();
         }
       }
