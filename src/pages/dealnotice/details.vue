@@ -56,7 +56,7 @@
                 width: 120
               },
               {
-                title: '物资类别',
+                title: '物资分类',
                 key: 'materialClassName',
                 align: 'center',
                 width: 120
@@ -136,7 +136,7 @@
                 width: 120
               },
               {
-                title: '询价总价（元）',
+                title: '询价单价（元）',
                 key: 'inquiryAmount',
                 align: 'center',
                 width: 120
