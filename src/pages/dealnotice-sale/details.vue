@@ -144,12 +144,6 @@
                 width: 120
               },
               {
-                title: '要求到货日期',
-                key: 'no',
-                align: 'center',
-                width: 120
-              },
-              {
                 title: '项目单位联系人',
                 key: 'purchaseAccountContactName',
                 align: 'center',
@@ -174,7 +168,7 @@
                 width: 120
               },
               {
-                title: '节点状态',
+                title: '状态',
                 key: 'nodeStatusName',
                 align: 'center',
                 width: 120
@@ -221,21 +215,6 @@
                 },
                 {
                   type: 'label',
-                  label: '配送中心',
-                  prop: 'professionalOrgName',
-                },
-                {
-                  type: 'label',
-                  label: '配送中心联系人',
-                  prop: 'billCreateUserName'
-                },
-                {
-                  type: 'label',
-                  label: '配送中心联系方式',
-                  prop: 'userContactTele'
-                },
-                {
-                  type: 'label',
                   label: '质保期（月）',
                   prop: 'guaranteePeriod'
                 },
@@ -251,33 +230,13 @@
                 },
                 {
                   type: 'label',
-                  label: '付款方式',
+                  label: '收款方式',
                   prop: 'payTypeName'
                 },
                 {
                   type: 'label',
                   label: '税率（%）',
                   prop: 'taxRate',
-                },
-                {
-                  type: 'label',
-                  label: '是否生成合同',
-                  prop: 'no'
-                },
-                {
-                  type: 'label',
-                  label: '是否配送',
-                  prop: 'isDispatch'
-                },
-                {
-                  type: 'label',
-                  label: '订单类型',
-                  prop: 'orderTypeName'
-                },
-                {
-                  type: 'label',
-                  label: '采购订单金额',
-                  prop: 'purchaseAmount'
                 },
                 {
                   type: 'label',
@@ -291,11 +250,6 @@
                   type: 'label',
                   label: '制单人',
                   prop: 'billCreateUserName'
-                },
-                {
-                  type: 'label',
-                  label: '合同签订单位',
-                  prop: 'signUnit'
                 },
                 {
                   type: 'label',

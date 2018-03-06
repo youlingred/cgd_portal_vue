@@ -148,12 +148,6 @@
                 width: 120
               },
               {
-                title: '要求到货日期',
-                key: 'no',
-                align: 'center',
-                width: 120
-              },
-              {
                 title: '项目单位联系人',
                 key: 'purchaseAccountContactName',
                 align: 'center',
@@ -178,7 +172,7 @@
                 width: 120
               },
               {
-                title: '节点状态',
+                title: '状态',
                 key: 'nodeStatusName',
                 align: 'center',
                 width: 120
@@ -254,9 +248,11 @@
               },
               {
                 title: '项目完成日期',
-                key: 'no',
-                align: 'center',
-                width: 120
+                key: 'deliveryDatePromise',
+                width: 180,
+                render: (h, {row, column}) => {
+                  return this.moment(row['deliveryDatePromise']).format("YYYY-MM-DD HH:mm:ss");
+                }
               },
               {
                 title: '项目单位联系人',
@@ -283,7 +279,7 @@
                 width: 120
               },
               {
-                title: '节点状态',
+                title: '状态',
                 key: 'nodeStatusName',
                 align: 'center',
                 width: 120
@@ -359,9 +355,11 @@
               },
               {
                 title: '项目完成日期',
-                key: 'no',
-                align: 'center',
-                width: 120
+                key: 'deliveryDatePromise',
+                width: 180,
+                render: (h, {row, column}) => {
+                  return this.moment(row['deliveryDatePromise']).format("YYYY-MM-DD HH:mm:ss");
+                }
               },
               {
                 title: '项目单位联系人',
@@ -388,7 +386,7 @@
                 width: 120
               },
               {
-                title: '节点状态',
+                title: '状态',
                 key: 'nodeStatusName',
                 align: 'center',
                 width: 120
@@ -476,7 +474,14 @@
                 {
                   type: 'label',
                   label: '是否生成合同',
-                  prop: 'no'
+                  prop: 'isContract',
+                  formatter(value) {
+                    if (value == 1) {
+                      return '是';
+                    } else {
+                      return '否';
+                    }
+                  }
                 },
                 {
                   type: 'label',

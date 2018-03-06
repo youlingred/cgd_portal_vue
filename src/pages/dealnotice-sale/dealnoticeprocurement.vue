@@ -115,31 +115,24 @@
               {
                 title: '成交通知书名称',
                 align: 'center',
-                width: 150,
+                width: 160,
                 key: 'dealNoticeName',
                 render: (h, {row, column}) => {
                   return h('a', {
                       on: {
                         click: () => {
-                          this.gotoDetail(row.dealNoticeId)
+                          this.gotoDetail(row.dealNoticeId, row.purchaseCategory)
                         }
                       }
                     },
                     row.dealNoticeName);
                 }
-
               },
               {
-                title: '供应商',
+                title: '成交通知书编号',
                 align: 'center',
                 width: 150,
-                key: 'supplierName'
-              },
-              {
-                title: '采购编号',
-                align: 'center',
-                width: 130,
-                key: 'inquiryCode'
+                key: 'dealNoticeCode'
               },
               {
                 title: '采购金额',
@@ -148,9 +141,31 @@
                 key: 'purchaseAmount'
               },
               {
-                title: '采购类别',
+                title: '缴费通知发送状态',
                 align: 'center',
-                key: 'purchaseCategoryName'
+                width: 150,
+                key: 'paymentNoticeSendStatusName'
+              },
+              {
+                title: '供应商',
+                align: 'center',
+                width: 150,
+                key: 'supplierName'
+              },
+              {
+                title: '制单日期',
+                align: 'center',
+                width: 130,
+                key: 'billCreateTime',
+                render: (h, {row, column}) => {
+                  return this.moment(row.billCreateTime).format("YYYY-MM-DD");
+                }
+              },
+              {
+                title: '制单人',
+                align: 'center',
+                width: 130,
+                key: 'billCreateUserName'
               }
             ]
           },
@@ -169,6 +184,7 @@
             columns: [
               {
                 type: 'selection',
+                align: 'center',
                 width: 80
               },
               {
@@ -186,13 +202,13 @@
               {
                 title: '成交通知书名称',
                 align: 'center',
-                width: 150,
+                width: 160,
                 key: 'dealNoticeName',
                 render: (h, {row, column}) => {
                   return h('a', {
                       on: {
                         click: () => {
-                          this.gotoDetail(row.dealNoticeId)
+                          this.gotoDetail(row.dealNoticeId, row.purchaseCategory)
                         }
                       }
                     },
@@ -200,16 +216,10 @@
                 }
               },
               {
-                title: '供应商',
+                title: '成交通知书编号',
                 align: 'center',
                 width: 150,
-                key: 'supplierName'
-              },
-              {
-                title: '采购编号',
-                align: 'center',
-                width: 130,
-                key: 'inquiryCode'
+                key: 'dealNoticeCode'
               },
               {
                 title: '采购金额',
@@ -218,9 +228,31 @@
                 key: 'purchaseAmount'
               },
               {
-                title: '采购类别',
+                title: '缴费通知发送状态',
                 align: 'center',
-                key: 'purchaseCategoryName'
+                width: 150,
+                key: 'paymentNoticeSendStatusName'
+              },
+              {
+                title: '供应商',
+                align: 'center',
+                width: 150,
+                key: 'supplierName'
+              },
+              {
+                title: '制单日期',
+                align: 'center',
+                width: 130,
+                key: 'billCreateTime',
+                render: (h, {row, column}) => {
+                  return this.moment(row.billCreateTime).format("YYYY-MM-DD");
+                }
+              },
+              {
+                title: '制单人',
+                align: 'center',
+                width: 130,
+                key: 'billCreateUserName'
               }
             ]
           }
