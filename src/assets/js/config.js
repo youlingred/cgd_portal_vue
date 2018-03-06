@@ -1,17 +1,13 @@
 const config = {
-  prov: 3,
-  portalBaseurl () {
-    switch (this.prov) {
-      default:
-        return 'http://39.107.71.15:8080/'
-      // return 'http://192.168.2.156:9081/'
-    }
-  },
+  prov: 4,
   apiBaseurl () {
     switch (this.prov) {
-      default:
+      case 3:
+        return 'http://39.107.71.15:8080/'
+      case 4:
         return 'http://127.0.0.1:9081/'
-            // return 'http://192.168.2.156:9081/'
+      default:
+        return 'http://39.107.71.15:8080/'
     }
   },
   api (service, type) {
@@ -19,9 +15,9 @@ const config = {
       case 'menu':
         return this.apiBaseurl() + 'pages/user/menus';
       case 'upload':
-        return this.apiBaseurl() +'/rest/upload/uploadfiletooss'
+        return this.apiBaseurl() +'rest/upload/uploadfiletooss'
       case 'down':
-        return this.apiBaseurl() +'/rest/download'+ service
+        return this.apiBaseurl() +'rest/download'+ service
       default:
         return this.apiBaseurl() + 'rest/service/routing/' + service
     }
