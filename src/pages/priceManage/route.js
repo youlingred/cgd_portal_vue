@@ -1,6 +1,6 @@
 const priceBindIndex =()=>import( './bid/pBidIndex')
 const priceOfferIndex =()=>import( './offer/pOfferIndex')
-const priceOfferEdit =()=>import( './offer/pOfferEdit')
+const priceOfferDetail =()=>import( './offer/pOfferDetail')
 
 export default [
   //FIXME 报价管理
@@ -15,8 +15,8 @@ export default [
     component: priceOfferIndex
   },
   {
-    path: 'priceOfferEdit/:id',
-    name: 'priceOfferEdit',
-    component: priceOfferEdit
+    path: 'priceOfferDetail/:type/:id',
+    name: 'priceOfferDetail',
+    component: priceOfferDetail
   },
 ];

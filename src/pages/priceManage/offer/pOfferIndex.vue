@@ -48,12 +48,14 @@
         options: [],
         //搜索条件表单数据
         form: {
-          planName: '',
-          publishUser: '',
-          project: '',
-          status: '',
-          publishDate1: '',
-          publishDate2: ''
+          inquiryName:'',
+          inquiryCode:'',
+          professionalOrgId:'',
+          purchaseCategory:'',
+          quoteEndDateStart:'',
+          quoteEndDateEnd:'',
+          publishTimeStart:'',
+          publishTimeEnd:''
         },
       }
     },
@@ -69,7 +71,13 @@
               children: [
                 {
                   type: 'input',
-                  label: '销售编号',
+                  label: '询价单名称',
+                  placeholder: '请输入询价单名称',
+                  prop: 'inquiryName',
+                },
+                {
+                  type: 'input',
+                  label: '采购编号',
                   placeholder: '请输入销售编号',
                   prop: 'inquiryCode',
                 },
@@ -77,7 +85,7 @@
                   type: 'select',
                   label: '采购机构',
                   placeholder: '请选择',
-                  prop: 'status',
+                  prop: 'professionalOrgId',
                   extendParam: {
                     remote: true,
                     filterable: true,
@@ -90,20 +98,14 @@
                   type: 'select',
                   label: '采购类别',
                   placeholder: '请选择',
-                  prop: 'status',
+                  prop: 'purchaseCategory',
                   extendParam: {
                     options: [
-                      {name: 1, value: '物资类'},
-                      {name: 2, value: '施工类'},
-                      {name: 3, value: '服务类'}
+                      {label: '物资类', value:1 },
+                      {label: '施工类', value:2 },
+                      {label: '服务类', value:3 }
                     ]
                   }
-                },
-                {
-                  type: 'input',
-                  label: '澄清内容',
-                  placeholder: '模糊查询,可用个逗号隔开',
-                  prop: 'publishUser',
                 },
                 {
                   type: 'dateTimePicker',
@@ -187,7 +189,7 @@
               }
             },
             {
-              title: '销售编号',
+              title: '采购编号',
               key: 'inquiryCode',
               align: 'center',
             },
@@ -201,7 +203,7 @@
               }
             },
             {
-              title: '报价截止',
+              title: '报价截止日期',
               key: 'quoteEndDate',
               align: 'center',
               width: 180,
@@ -216,14 +218,13 @@
             },
             {
               title: '采购类别',
-              key: 'purchaseCategoryName',
+              key: 'purchaseCategoryName'
+            },
+            {
+              title: '状态',
+              key: 'status',
               render: (h, {row, column}) => {
-                switch (row.status) {
-                  case 1:
-                    return '已完成';
-                  default:
-                    return ''
-                }
+                return this.activeName==='offering'?'待报价':'已报价'
               }
             },
           ]
@@ -282,7 +283,7 @@
       cellClickHandler(row) {
         console.log(row);
         console.log(this.activeName);
-        this.$router.push({name: 'priceOfferEdit',param:{id:4}});
+        this.$router.push({name: 'priceOfferEdit',param:{type:row.purchaseCategory,id:row.quotationId}});
       }
     },
   }

@@ -32,11 +32,11 @@
           clarifyContent: '哈哈哈哈哈',
           status: '',
           prop4: '艳照门',
-          fileList:[{name:'文件测试',path:'test'},{name:'文件测试',path:'test'}],
+          fileList: [{name: '文件测试', path: 'test'}, {name: '文件测试', path: 'test'}],
         },
         options: [],
-        table:{
-          header:'明细信息'
+        table: {
+          header: '明细信息'
         }
       };
     },
@@ -45,7 +45,7 @@
         return {
           contents: [
             {
-              header:'基本信息',
+              header: '基本信息',
               data: this.form,
               labelWidth: '200px',
               inputWidth: '400px',
@@ -142,27 +142,27 @@
                   type: 'label',
                   label: '付款方式',
                   prop: 'planName',
-                  formatter:(value,data) => {
-                  let result="";
-                  if(data.prePay!=0){
-                    result+='预付款:'+data.prePay+'% ';
-                  }
-                  if(data.matPay!=0){
-                    result+='投料款:'+data.matPay+'% ';
-                  }
-                  if(data.proPay!=0){
-                    result+='进度款:'+data.proPay+'% ';
-                  }
-                  if(data.verPay!=0){
-                    result+='到货验收款:'+data.verPay+'% ';
-                  }
-                  if(data.pilPay!=0){
-                    result+='试运验收款:'+data.pilPay+'% ';
-                  }
-                  if(data.quaPay!=0){
-                    result+='质保金:'+data.quaPay+'% ';
-                  }
-                  return result;
+                  formatter: (value, data) => {
+                    let result = "";
+                    if (data.prePay != 0) {
+                      result += '预付款:' + data.prePay + '% ';
+                    }
+                    if (data.matPay != 0) {
+                      result += '投料款:' + data.matPay + '% ';
+                    }
+                    if (data.proPay != 0) {
+                      result += '进度款:' + data.proPay + '% ';
+                    }
+                    if (data.verPay != 0) {
+                      result += '到货验收款:' + data.verPay + '% ';
+                    }
+                    if (data.pilPay != 0) {
+                      result += '试运验收款:' + data.pilPay + '% ';
+                    }
+                    if (data.quaPay != 0) {
+                      result += '质保金:' + data.quaPay + '% ';
+                    }
+                    return result;
                   }
                 },
                 {
@@ -174,8 +174,8 @@
                   type: 'label',
                   label: '报价总金额',
                   prop: 'amount',
-                  formatter(value){
-                    return this.accounting.formatMoney(value,'',2);
+                  formatter(value) {
+                    return this.accounting.formatMoney(value, '', 2);
                   }
                 },
                 {
@@ -232,7 +232,7 @@
               }
             },
             {
-              header:'附件信息（上传文件格式为 txt,doc,xls,docx,xlsx,ppt,pptx,pdf,zip,rar,wps,dps,et,jpg,jpeg，大小不超过60MB)',
+              header: '附件信息（上传文件格式为 txt,doc,xls,docx,xlsx,ppt,pptx,pdf,zip,rar,wps,dps,et,jpg,jpeg，大小不超过60MB)',
               data: this.form,
               labelWidth: '200px',
               inputWidth: '400px',
@@ -307,7 +307,7 @@
           });
       },
       //发起澄清
-      fire(){
+      fire() {
 
       },
       back() {

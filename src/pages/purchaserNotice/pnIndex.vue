@@ -29,9 +29,9 @@
     },
     data() {
       return {
-        flag:false,
+        flag: false,
         options: [],
-		cgjg_options:[],
+        cgjg_options: [],
         //搜索条件表单数据
         form: {
           inquiryName: '',
@@ -40,10 +40,10 @@
           purchaseCategory: '',
           quoteEndDateStart: '',
           quoteEndDateEnd: '',
-		  publishTimeStart:'',
-		  publishTimeEnd:''
+          publishTimeStart: '',
+          publishTimeEnd: ''
         },
-        table:{
+        table: {
           url: this.appConfig.api('inquiry/quote/qryIqrPurchaseNoticeList'),
           pageNo: 1,
           // height: 400,
@@ -67,7 +67,7 @@
             },
             {
               title: '采购单名称',
-              key:'inquiryName',
+              key: 'inquiryName',
               width: 150,
             },
             {
@@ -79,7 +79,7 @@
               title: '要求到货日期',
               key: 'reqArrivalDate',
               width: 180,
-              render: (h, { row, column }) => {
+              render: (h, {row, column}) => {
                 return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
               }
             },
@@ -87,7 +87,7 @@
               title: '发布日期',
               key: 'publishTime',
               width: 180,
-              render: (h, { row, column }) => {
+              render: (h, {row, column}) => {
                 return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
               }
             },
@@ -95,7 +95,7 @@
               title: '报价截止日期',
               key: 'quoteEndDate',
               width: 180,
-              render: (h, { row, column }) => {
+              render: (h, {row, column}) => {
                 return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
               }
             },
@@ -155,10 +155,10 @@
                   prop: 'purchaseCategory',
                   extendParam: {
                     options: [
-					{name:1,value:'物资类'},
-					{name:2,value:'施工类'},
-					{name:3,value:'服务类'}
-					]
+                      {label: '物资类', value: 1},
+                      {label: '施工类', value: 2},
+                      {label: '服务类', value: 3}
+                    ]
                   }
                 },
                 {
@@ -209,9 +209,9 @@
         }
       },
     },
-    watch:{
+    watch: {
       //监听tabs切换
-      activeName:function(){
+      activeName: function () {
         this.search();
       }
     },
@@ -249,20 +249,23 @@
 
       },
       //导出
-      exports(){
+      exports() {
 
       },
       cellClickHandler(row) {
         console.log(row);
-        this.$router.push({name: 'purchaserNoticeDetail',params:{type:row.purchaseCategory,id:row.inquiryId,seq:row.iqrSeq}});
+        this.$router.push({
+          name: 'purchaserNoticeDetail',
+          params: {type: row.purchaseCategory, id: row.inquiryId, seq: row.iqrSeq}
+        });
       }
     },
-	 mounted() {
-       this.axios.post(this.appConfig.api('testQuerySelect'), {})
-	   .then((response) => {
-	   this.util.dataAdapter(response,['attachmentName','attachmentUrl'],['name','value'],false)
-			this.cgjg_options=response;
-          })
+    mounted() {
+      this.axios.post(this.appConfig.api('testQuerySelect'), {})
+        .then((response) => {
+          this.util.dataAdapter(response, ['attachmentName', 'attachmentUrl'], ['name', 'value'], false)
+          this.cgjg_options = response;
+        })
     }
   }
 </script>

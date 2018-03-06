@@ -25,4 +25,33 @@ util.dataAdapter = function (data, arr1, arr2, flag) {
   }
   return last;
 };
+/**
+ * 获取本地字典表
+ * @param name 字典名
+ * @param name 字典值
+ */
+util.getLocalDic=function(name,code){
+  return this.localDic[name][code];
+};
+util.getLocalDicOfList=function(name){
+  var list=[];
+  $.each(this.localDic[name],function(i,v){
+    list.push({
+      value:i,
+      label:v
+    })
+  })
+  return list;
+};
+/**
+ *本地字典表添加
+ */
+util.localDic = {
+  //FIXME 采购类别字典
+  purchaseCategory:[
+    {'1': '物资类'},
+    {'2': '施工类'},
+    {'3': '服务类'}
+  ]
+}
 export default util;

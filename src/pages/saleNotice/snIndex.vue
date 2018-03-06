@@ -29,7 +29,7 @@
     },
     data() {
       return {
-        flag:false,
+        flag: false,
         options: [],
         //搜索条件表单数据
         form: {
@@ -39,10 +39,10 @@
           purchaseCategory: '',
           quoteEndDateStart: '',
           quoteEndDateEnd: '',
-		  publishTimeStart:'',
-		  publishTimeEnd:''
+          publishTimeStart: '',
+          publishTimeEnd: ''
         },
-        table:{
+        table: {
           url: this.appConfig.api('inquiry/quote/qryIqrSaleNoticeList'),
           pageNo: 1,
           height: 400,
@@ -57,7 +57,7 @@
           columns: [
             {
               type: 'selection',
-              width:60,
+              width: 60,
             },
             {
               title: '序号',
@@ -78,7 +78,7 @@
               title: '要求到货日期',
               key: 'reqArrivalDate',
               width: 180,
-               render: (h, { row, column }) => {
+              render: (h, {row, column}) => {
                 return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
               }
             },
@@ -86,7 +86,7 @@
               title: '发布日期',
               key: 'publishTime',
               width: 180,
-               render: (h, { row, column }) => {
+              render: (h, {row, column}) => {
                 return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
               }
             },
@@ -94,7 +94,7 @@
               title: '报价截止日期',
               key: 'quoteEndDate',
               width: 180,
-               render: (h, { row, column }) => {
+              render: (h, {row, column}) => {
                 return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
               }
             },
@@ -106,15 +106,7 @@
             {
               title: '采购类别',
               key: 'purchaseCategoryName',
-              width: 180,
-               render: (h, { row, column }) => {
-                switch(row.publishUser){
-                  case 1:
-                    return '';
-                  default:
-                    return ''
-                }
-              },
+              width: 180
             },
             {
               title: '采购员',
@@ -166,10 +158,10 @@
                   prop: 'purchaseCategory',
                   extendParam: {
                     options: [
-					{name:1,value:'物资类'},
-					{name:2,value:'施工类'},
-					{name:3,value:'服务类'}
-					]
+                      {label: '物资类', value: 1},
+                      {label: '施工类', value: 2},
+                      {label: '服务类', value: 3}
+                    ]
                   }
                 },
                 {
@@ -220,9 +212,9 @@
         }
       },
     },
-    watch:{
+    watch: {
       //监听tabs切换
-      activeName:function(){
+      activeName: function () {
         this.search();
       }
     },
@@ -260,12 +252,12 @@
 
       },
       //导出
-      exports(){
+      exports() {
 
       },
       cellClickHandler(row) {
         console.log(row);
-        this.$router.push({name: 'saleNoticeDetail',params:{id:row.inquiryId,seq:row.iqrSeq}});
+        this.$router.push({name: 'saleNoticeDetail', params: {id: row.inquiryId, seq: row.iqrSeq}});
       }
     },
   }
