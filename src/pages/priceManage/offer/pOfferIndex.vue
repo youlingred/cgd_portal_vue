@@ -51,13 +51,21 @@
           publishDate1: '',
           publishDate2: ''
         },
-        table:{
-          url: this.appConfig.api('testDylyListPage'),
+      }
+    },
+    computed: {
+      status(){
+          return this.activeName=="offering"?0:1
+      },
+      table(){
+        return {
+          url: this.appConfig.api('inquiry/quote/qryIqrQuoteList'),
           pageNo: 1,
           height: 400,
           queryParam: function (param) {
             console.log('queryParam:', param)
-            return _.assign({test: 1}, param);
+             console.log('this.activeName:', this.activeName)
+            return _.assign({status:this.status}, param);
           },
           responseHandler: function (val) {
             console.log('responseHandler:', val)
@@ -76,7 +84,7 @@
             },
             {
               title: '询价单名称',
-              key: 'planName',
+              key: 'inquiryName',
               align:'center',
               width: 100,
               render: (h, { row, column }) => {
@@ -85,12 +93,12 @@
             },
             {
               title: '销售编号',
-              key: 'publishUser',
+              key: 'inquiryCode',
               align:'center',
             },
             {
               title: '发布日期',
-              key: 'publishDate',
+              key: 'publishTime',
               align:'center',
               width: 180,
               render: (h, { row, column }) => {
@@ -99,7 +107,7 @@
             },
             {
               title: '报价截止',
-              key: 'publishDate',
+              key: 'quoteEndDate',
               align:'center',
               width: 180,
               render: (h, { row, column }) => {
@@ -108,12 +116,12 @@
             },
             {
               title: '采购机构',
-              key: 'publishUser',
+              key: 'professionalOrgName',
               align:'center',
             },
             {
               title: '采购类别',
-              key: 'status',
+              key: 'purchaseCategoryName',
               render: (h, { row, column }) => {
                 switch(row.status){
                   case 1:
@@ -124,10 +132,8 @@
               }
             },
           ]
+        }
         },
-      }
-    },
-    computed: {
       formInit() {
         return {
           contents: [
@@ -141,7 +147,7 @@
                   type: 'input',
                   label: '销售编号',
                   placeholder: '请输入销售编号',
-                  prop: 'planName',
+                  prop: 'inquiryCode',
                 },
                 {
                   type: 'select',
@@ -162,7 +168,11 @@
                   placeholder: '请选择',
                   prop: 'status',
                   extendParam: {
-                    options: this.options
+					          options: [
+				  	          {name:1,value:'物资类'},
+					            {name:2,value:'施工类'},
+					            {name:3,value:'服务类'}
+					        ]
                   }
                 },
                 {
@@ -175,7 +185,7 @@
                   type: 'dateTimePicker',
                   label: '报价开始日期',
                   placeholder: '请输入开始时间',
-                  prop: 'publishDate1',
+                  prop: 'quoteEndDateStart',
                   extendParam: {
                     editable: false,
                     format: 'yyyy-mm-dd hh:mm:ss'
@@ -185,7 +195,7 @@
                   type: 'dateTimePicker',
                   label: '报价结束日期',
                   placeholder: '请输入结束时间',
-                  prop: 'publishDate2',
+                  prop: 'quoteEndDateEnd',
                   extendParam: {
                     editable: false,
                     format: 'yyyy-mm-dd hh:mm:ss'
@@ -195,7 +205,7 @@
                   type: 'dateTimePicker',
                   label: '发布开始日期',
                   placeholder: '请输入开始时间',
-                  prop: 'publishDate1',
+                  prop: 'publishTimeStart',
                   switchFlag: this.flag,
                   extendParam: {
                     editable: false,
@@ -206,7 +216,7 @@
                   type: 'dateTimePicker',
                   label: '发布结束日期',
                   placeholder: '请输入结束时间',
-                  prop: 'publishDate2',
+                  prop: 'publishTimeEnd',
                   switchFlag: this.flag,
                   extendParam: {
                     editable: false,

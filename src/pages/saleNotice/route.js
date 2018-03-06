@@ -4,7 +4,7 @@ const saleNoticeDetail =()=>import( './snDetail')
 export default [
   //FIXME 销售公告查询
   {
-    path: 'saleNoticeDetail/:id',
+    path: 'saleNoticeDetail/:id/:seq',
     name: 'saleNoticeDetail',
     component: saleNoticeDetail
   },

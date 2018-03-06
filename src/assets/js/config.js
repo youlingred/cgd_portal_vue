@@ -10,7 +10,7 @@ const config = {
   apiBaseurl () {
     switch (this.prov) {
       default:
-        return 'http://39.107.71.15:8080/'
+        return 'http://127.0.0.1:9081/'
             // return 'http://192.168.2.156:9081/'
     }
   },

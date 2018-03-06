@@ -33,15 +33,17 @@
         options: [],
         //搜索条件表单数据
         form: {
-          planName: '',
-          publishUser: '',
-          project: '',
-          status: '',
-          publishDate1: '',
-          publishDate2: ''
+          inquiryName: '',
+          inquiryCode: '',
+          professionalOrgId: '',
+          purchaseCategory: '',
+          quoteEndDateStart: '',
+          quoteEndDateEnd: '',
+		  publishTimeStart:'',
+		  publishTimeEnd:''
         },
         table:{
-          url: this.appConfig.api('testDylyListPage'),
+          url: this.appConfig.api('inquiry/quote/qryIqrSaleNoticeList'),
           pageNo: 1,
           height: 400,
           queryParam: function (param) {
@@ -64,17 +66,17 @@
             },
             {
               title: '询价单名称',
-              key: 'planName',
+              key: 'inquiryName',
               width: 150,
             },
             {
               title: '销售编号',
-              key: 'publishUser',
+              key: 'inquiryCode',
               width: 150,
             },
             {
               title: '要求到货日期',
-              key: 'publishDate',
+              key: 'reqArrivalDate',
               width: 180,
                render: (h, { row, column }) => {
                 return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
@@ -82,7 +84,7 @@
             },
             {
               title: '发布日期',
-              key: 'publishDate',
+              key: 'publishTime',
               width: 180,
                render: (h, { row, column }) => {
                 return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
@@ -90,7 +92,7 @@
             },
             {
               title: '报价截止日期',
-              key: 'publishDate',
+              key: 'quoteEndDate',
               width: 180,
                render: (h, { row, column }) => {
                 return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
@@ -98,12 +100,12 @@
             },
             {
               title: '采购机构',
-              key: 'publishUser',
+              key: 'professionalOrgName',
               width: 180,
             },
             {
               title: '采购类别',
-              key: 'publishUser',
+              key: 'purchaseCategoryName',
               width: 180,
                render: (h, { row, column }) => {
                 switch(row.publishUser){
@@ -116,7 +118,7 @@
             },
             {
               title: '采购员',
-              key: 'publishUser',
+              key: 'purchaserName',
               width: 180,
             }
           ]
@@ -137,19 +139,19 @@
                   type: 'input',
                   label: '询比单名称',
                   placeholder: '请输入采购单名称',
-                  prop: 'planName',
+                  prop: 'inquiryName',
                 },
                 {
                   type: 'input',
                   label: '销售单编号',
                   placeholder: '请输入采购单编号',
-                  prop: 'planName',
+                  prop: 'inquiryCode',
                 },
                 {
                   type: 'select',
                   label: '采购机构',
                   placeholder: '请选择',
-                  prop: 'status',
+                  prop: 'professionalOrgId',
                   extendParam: {
                     remote: true,
                     filterable: true,
@@ -161,16 +163,20 @@
                   type: 'select',
                   label: '采购类别',
                   placeholder: '请选择',
-                  prop: 'status',
+                  prop: 'purchaseCategory',
                   extendParam: {
-                    options: this.options
+                    options: [
+					{name:1,value:'物资类'},
+					{name:2,value:'施工类'},
+					{name:3,value:'服务类'}
+					]
                   }
                 },
                 {
                   type: 'dateTimePicker',
                   label: '报价开始日期',
                   placeholder: '请输入开始时间',
-                  prop: 'publishDate1',
+                  prop: 'quoteEndDateStart',
                   extendParam: {
                     editable: false,
                     format: 'yyyy-mm-dd hh:mm:ss'
@@ -180,7 +186,7 @@
                   type: 'dateTimePicker',
                   label: '报价结束日期',
                   placeholder: '请输入结束时间',
-                  prop: 'publishDate2',
+                  prop: 'quoteEndDateEnd',
                   extendParam: {
                     editable: false,
                     format: 'yyyy-mm-dd hh:mm:ss'
@@ -190,7 +196,7 @@
                   type: 'dateTimePicker',
                   label: '发布开始日期',
                   placeholder: '请输入开始时间',
-                  prop: 'publishDate1',
+                  prop: 'publishTimeStart',
                   switchFlag: this.flag,
                   extendParam: {
                     editable: false,
@@ -201,7 +207,7 @@
                   type: 'dateTimePicker',
                   label: '发布结束日期',
                   placeholder: '请输入结束时间',
-                  prop: 'publishDate2',
+                  prop: 'publishTimeEnd',
                   switchFlag: this.flag,
                   extendParam: {
                     editable: false,
@@ -259,7 +265,7 @@
       },
       cellClickHandler(row) {
         console.log(row);
-        this.$router.push({name: 'saleNoticeDetail',params:{id:11}});
+        this.$router.push({name: 'saleNoticeDetail',params:{id:27,seq:1}});
       }
     },
   }
