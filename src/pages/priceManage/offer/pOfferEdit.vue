@@ -53,49 +53,49 @@
                 {
                   type: 'label',
                   label: '采购编号',
-                  prop: 'planName',
+                  prop: 'inquiryCode',
                 },
                 {
                   type: 'label',
                   label: '询价单名称',
-                  prop: 'planName',
+                  prop: 'inquiryName',
                 },
                 {
                   type: 'label',
                   label: '供应商',
-                  prop: 'publishUser',
+                  prop: 'supplierName',
                 },
                 {
                   type: 'input',
                   label: '供应商联系人',
                   placeholder: '请输入',
-                  prop: 'planName',
+                  prop: 'supplierContactName',
                 },
                 {
                   type: 'input',
                   label: '供应商联系电话',
                   placeholder: '请输入',
-                  prop: 'planName',
+                  prop: 'supplierContactTele',
                 },
                 {
                   type: 'label',
                   label: '配送中心',
-                  prop: 'planName',
+                  prop: 'professionalOrgName',
                 },
                 {
                   type: 'label',
                   label: '配送中心-联系人',
-                  prop: 'planName',
+                  prop: 'purchaserName',
                 },
                 {
                   type: 'label',
                   label: '配送中心-联系方式',
-                  prop: 'planName',
+                  prop: 'purchaserTele',
                 },
                 {
                   type: 'label',
                   label: '交货日期',
-                  prop: 'publishDate2',
+                  prop: 'deliveryDate',
                   formatter: (value) => {
                     return this.moment(value).format('YYYY-MM-DD HH:mm:ss');
                   }
@@ -103,7 +103,7 @@
                 {
                   type: 'label',
                   label: '报价截止日期',
-                  prop: 'publishDate2',
+                  prop: 'quoteEndDate',
                   formatter: (value) => {
                     return this.moment(value).format('YYYY-MM-DD HH:mm:ss');
                   }
@@ -111,13 +111,13 @@
                 {
                   type: 'label',
                   label: '报价方式',
-                  prop: 'planName',
+                  prop: 'quoteMethod',
                 },
                 {
                   type: 'dateTimePicker',
                   label: '承诺交货日期',
                   placeholder: '请选择开始时间',
-                  prop: 'publishDate2',
+                  prop: 'deliveryDatePromise',
                   extendParam: {
                     editable: false,
                     format: 'yyyy-mm-dd hh:mm:ss'
@@ -126,32 +126,54 @@
                 {
                   type: 'label',
                   label: '质保期（月）',
-                  prop: 'planName',
+                  prop: 'guaranteePeriodName',
                 },
                 {
                   type: 'label',
                   label: '支付方式',
-                  prop: 'planName',
+                  prop: 'payTypeName',
                 },
                 {
                   type: 'label',
                   label: '币种',
-                  prop: 'planName',
+                  prop: 'currencyName',
                 },
                 {
                   type: 'label',
                   label: '付款方式',
                   prop: 'planName',
+                  formatter:(value,data) => {
+                  let result="";
+                  if(data.prePay!=0){
+                    result+='预付款:'+data.prePay+'% ';
+                  }
+                  if(data.matPay!=0){
+                    result+='投料款:'+data.matPay+'% ';
+                  }
+                  if(data.proPay!=0){
+                    result+='进度款:'+data.proPay+'% ';
+                  }
+                  if(data.verPay!=0){
+                    result+='到货验收款:'+data.verPay+'% ';
+                  }
+                  if(data.pilPay!=0){
+                    result+='试运验收款:'+data.pilPay+'% ';
+                  }
+                  if(data.quaPay!=0){
+                    result+='质保金:'+data.quaPay+'% ';
+                  }
+                  return result;
+                  }
                 },
                 {
                   type: 'label',
                   label: '税率（%）',
-                  prop: 'planName',
+                  prop: 'taxRate',
                 },
                 {
                   type: 'label',
                   label: '报价总金额',
-                  prop: 'objectionDate',
+                  prop: 'amount',
                   formatter(value){
                     return this.accounting.formatMoney(value,'',2);
                   }
@@ -159,27 +181,27 @@
                 {
                   type: 'label',
                   label: '成交服务费率',
-                  prop: 'planName',
+                  prop: 'serviceChargeRateName',
                 },
                 {
                   type: 'label',
                   label: '物流配送方式',
-                  prop: 'planName',
+                  prop: 'logisticsDistrWayName',
                 },
                 {
                   type: 'label',
                   label: '采购类型',
-                  prop: 'planName',
+                  prop: 'purchaseTypeName',
                 },
                 {
                   type: 'label',
                   label: '备注',
-                  prop: 'planName',
+                  prop: 'remarks',
                 },
                 {
                   type: 'textarea',
                   label: '报价说明',
-                  prop: 'planName',
+                  prop: 'quoteExplain',
                   extendParam: {
                     autosize: {minRows: 2, maxRows: 4}
                   }
@@ -187,17 +209,17 @@
                 {
                   type: 'file',
                   label: '技术文件',
-                  prop: 'fileList',
+                  prop: 'attchmentInfo3',
                 },
                 {
                   type: 'file',
                   label: '商务文件',
-                  prop: 'fileList',
+                  prop: 'attchmentInfo2',
                 },
                 {
                   type: 'file',
                   label: '其他附件',
-                  prop: 'fileList',
+                  prop: 'attchmentInfo4',
                 }
               ],
               rules: {

@@ -282,9 +282,7 @@
       cellClickHandler(row) {
         console.log(row);
         console.log(this.activeName);
-        if (this.activeName === 'offering') {
-          this.$router.push({name: 'priceOfferEdit'});
-        }
+        this.$router.push({name: 'priceOfferEdit',param:{id:4}});
       }
     },
   }

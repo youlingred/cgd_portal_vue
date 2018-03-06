@@ -265,7 +265,7 @@
       },
       cellClickHandler(row) {
         console.log(row);
-        this.$router.push({name: 'saleNoticeDetail',params:{id:27,seq:1}});
+        this.$router.push({name: 'saleNoticeDetail',params:{id:row.inquiryId,seq:row.iqrSeq}});
       }
     },
   }

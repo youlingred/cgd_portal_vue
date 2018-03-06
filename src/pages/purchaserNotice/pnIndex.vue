@@ -254,7 +254,7 @@
       },
       cellClickHandler(row) {
         console.log(row);
-        this.$router.push({name: 'purchaserNoticeDetail',params:{type:row.purchaseCategory,id:27,seq:1}});
+        this.$router.push({name: 'purchaserNoticeDetail',params:{type:row.purchaseCategory,id:row.inquiryId,seq:row.iqrSeq}});
       }
     },
 	 mounted() {
