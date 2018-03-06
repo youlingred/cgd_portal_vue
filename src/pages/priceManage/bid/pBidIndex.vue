@@ -9,16 +9,23 @@
         </el-tab-pane>
       </el-tabs>
       <detail ref="form" v-bind="formInit" noborder>
-          <buttons-operator type="top"
-                            algin="left"
-                            :buttons="[{label:'查询',type:'primary',click:search},
-                          {label:'重置',type:'info',click:reset},]"/>
-        </detail>
+        <buttons-operator type="top"
+                          algin="left"
+                          :switchFlag.sync="flag"
+                          :buttons="[{label:'查询',type:'primary',click:search},
+                          {label:'重置',type:'info',click:reset},{type:'switch'}]"/>
+      </detail>
+
+
     </el-card>
-    <buttons-operator type="top"
+    <buttons-operator v-if="activeName==='offering'" type="top"
                       algin="right"
-                      :buttons="[{label:'通过',type:'primary',click:pass},{label:'驳回',type:'primary',click:reject}]"/>
-    <IvTable ref="table" v-bind="table"/>
+                      :buttons="[{label:'发起澄清',type:'primary',click:createClarify},{label:'导出',type:'primary',click:exportDoc}]"/>
+    <buttons-operator v-if="activeName==='offeried'" type="top"
+                      algin="right"
+                      :buttons="[{label:'发起澄清',type:'primary',click:createClarify},{label:'撤回',type:'primary',click:reject},{label:'导出',type:'primary',click:exportDoc}]"/>
+
+    <IvTable ref="table" v-bind="table" @on-row-click="cellClickHandler"/>
   </div>
 </template>
 
@@ -35,8 +42,9 @@
     },
     data() {
       return {
+        flag: false,
         //当前激活的tab名称
-        activeName: 'offering',
+        activeName:'offering',
         options: [],
         //搜索条件表单数据
         form: {
@@ -47,180 +55,198 @@
           publishDate1: '',
           publishDate2: ''
         },
-        table:{
-          url: this.appConfig.api('testDylyListPage'),
+      }
+    },
+    computed: {
+      formInit() {
+        return {
+          contents: [
+            {
+              data: this.form,
+              labelWidth: '100px',
+              inputWidth: '200px',
+              inline: true,
+              children: [
+                {
+                  type: 'input',
+                  label: '销售编号',
+                  placeholder: '请输入销售编号',
+                  prop: 'inquiryCode',
+                },
+                {
+                  type: 'select',
+                  label: '采购机构',
+                  placeholder: '请选择',
+                  prop: 'status',
+                  extendParam: {
+                    remote: true,
+                    filterable: true,
+                    remote: true,
+                    remoteMethod: this.query,
+                    options: this.options
+                  }
+                },
+                {
+                  type: 'select',
+                  label: '采购类别',
+                  placeholder: '请选择',
+                  prop: 'status',
+                  extendParam: {
+                    options: [
+                      {name: 1, value: '物资类'},
+                      {name: 2, value: '施工类'},
+                      {name: 3, value: '服务类'}
+                    ]
+                  }
+                },
+                {
+                  type: 'input',
+                  label: '澄清内容',
+                  placeholder: '模糊查询,可用个逗号隔开',
+                  prop: 'publishUser',
+                },
+                {
+                  type: 'dateTimePicker',
+                  label: '报价开始日期',
+                  placeholder: '请输入开始时间',
+                  prop: 'quoteEndDateStart',
+                  extendParam: {
+                    editable: false,
+                    format: 'yyyy-mm-dd hh:mm:ss'
+                  }
+                },
+                {
+                  type: 'dateTimePicker',
+                  label: '报价结束日期',
+                  placeholder: '请输入结束时间',
+                  prop: 'quoteEndDateEnd',
+                  extendParam: {
+                    editable: false,
+                    format: 'yyyy-mm-dd hh:mm:ss'
+                  }
+                },
+                {
+                  type: 'dateTimePicker',
+                  label: '发布开始日期',
+                  placeholder: '请输入开始时间',
+                  prop: 'publishTimeStart',
+                  switchFlag: this.flag,
+                  extendParam: {
+                    editable: false,
+                    format: 'yyyy-mm-dd hh:mm:ss'
+                  }
+                },
+                {
+                  type: 'dateTimePicker',
+                  label: '发布结束日期',
+                  placeholder: '请输入结束时间',
+                  prop: 'publishTimeEnd',
+                  switchFlag: this.flag,
+                  extendParam: {
+                    editable: false,
+                    format: 'yyyy-mm-dd hh:mm:ss'
+                  }
+                },
+              ]
+            }
+          ]
+        }
+      },
+      table() {
+        return {
+          url: this.appConfig.api('inquiry/quote/qryIqrQuoteList'),
           pageNo: 1,
           height: 400,
-          queryParam: function (param) {
+          queryParam: (param)=>{
             console.log('queryParam:', param)
-            return _.assign({test: 1}, param);
+            console.log('this.activeName',this.activeName)
+            return _.assign({status: this.activeName === 'offering' ? 0 : 1}, param);
           },
-          responseHandler: function (val) {
+          responseHandler:(val)=>{
             console.log('responseHandler:', val)
             return val;
           },
           columns: [
             {
               type: 'selection',
+              width: 60
             },
             {
               title: '序号',
               type: 'index',
+              align: 'center',
               width: 80
             },
             {
               title: '询价单名称',
-              key: 'planName',
-              width: '100',
-              render: (h, { row, column }) => {
+              key: 'inquiryName',
+              align: 'center',
+              width: 100,
+              render: (h, {row, column}) => {
                 return row.planName;
               }
             },
             {
               title: '销售编号',
-              key: 'publishUser'
+              key: 'inquiryCode',
+              align: 'center',
             },
             {
               title: '发布日期',
-              key: 'publishDate',
+              key: 'publishTime',
+              align: 'center',
               width: 180,
-              render: (h, { row, column }) => {
+              render: (h, {row, column}) => {
                 return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
               }
             },
             {
               title: '报价截止',
-              key: 'publishDate',
+              key: 'quoteEndDate',
+              align: 'center',
               width: 180,
-              render: (h, { row, column }) => {
+              render: (h, {row, column}) => {
                 return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
               }
             },
             {
               title: '采购机构',
-              key: 'publishUser'
+              key: 'professionalOrgName',
+              align: 'center',
             },
             {
               title: '采购类别',
-              key: 'publishUser',
-              render: (h, { row, column }) => {
-                switch(row.publishUser){
+              key: 'purchaseCategoryName',
+              render: (h, {row, column}) => {
+                switch (row.status) {
                   case 1:
-                    return '';
+                    return '已完成';
                   default:
                     return ''
                 }
               }
             },
           ]
-        },
-      }
-    },
-    computed: {
-      formInit() {
-        return {
-            contents: [
-              {
-                data: this.form,
-                labelWidth: '100px',
-                inputWidth: '200px',
-                inline: true,
-                children: [
-                  {
-                    type: 'input',
-                    label: '销售编号',
-                    placeholder: '请输入销售编号',
-                    prop: 'planName',
-                  },
-                  {
-                    type: 'select',
-                    label: '采购机构',
-                    placeholder: '请选择',
-                    prop: 'status',
-                    extendParam: {
-                      remote: true,
-                      filterable: true,
-                      remote: true,
-                      remoteMethod: this.query,
-                      options: this.options
-                    }
-                  },
-                  {
-                    type: 'select',
-                    label: '采购类别',
-                    placeholder: '请选择',
-                    prop: 'status',
-                    extendParam: {
-                      options: this.options
-                    }
-                  },
-                  {
-                    type: 'input',
-                    label: '澄清内容',
-                    placeholder: '模糊查询,可用个逗号隔开',
-                    prop: 'publishUser',
-                  },
-                  {
-                    type: 'dateTimePicker',
-                    label: '报价开始日期',
-                    placeholder: '请输入开始时间',
-                    prop: 'publishDate1',
-                    extendParam: {
-                      editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss'
-                    }
-                  },
-                  {
-                    type: 'dateTimePicker',
-                    label: '报价结束日期',
-                    placeholder: '请输入结束时间',
-                    prop: 'publishDate2',
-                    extendParam: {
-                      editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss'
-                    }
-                  },
-                  {
-                    type: 'dateTimePicker',
-                    label: '发布开始日期',
-                    placeholder: '请输入开始时间',
-                    prop: 'publishDate1',
-                    extendParam: {
-                      editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss'
-                    }
-                  },
-                  {
-                    type: 'dateTimePicker',
-                    label: '发布结束日期',
-                    placeholder: '请输入结束时间',
-                    prop: 'publishDate2',
-                    extendParam: {
-                      editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss'
-                    }
-                  },
-                ]
-              }
-            ]
-          }
+        }
       },
     },
-    watch:{
+    watch: {
       //监听tabs切换
-      activeName:function(){
-        this.search();
+      activeName: function (newVal, oldVal) {
+        this.$refs.form.forms[0].resetFields();
+        this.$nextTick(this.search)
       }
     },
     methods: {
       //搜索
       search() {
-        this.$refs.table.query(this.form)
+        this.$refs.table.query();
       },
       //重置
       reset() {
         //因为detail组件可以包含多个表单,所以返回的的是表单数组forms
         this.$refs.form.forms[0].resetFields();
+        this.search();
       },
       //FIXME 远程请求select数据
       query(query) {
@@ -241,14 +267,25 @@
             console.log(error);
           });
       },
-      //通过
-      pass() {
-        this.$router.push({name: 'clarifyOfferEdit'})
+      //发起澄清
+      createClarify() {
+        //this.$router.push({name: 'clarifyOfferEdit'})
       },
-      //驳回
-      reject(){
+      //撤回
+      reject() {
 
       },
+      //导出
+      exportDoc() {
+        window.open('', '_blank')
+      },
+      cellClickHandler(row) {
+        console.log(row);
+        console.log(this.activeName);
+        if (this.activeName === 'offering') {
+          this.$router.push({name: 'priceOfferEdit'});
+        }
+      }
     },
   }
 </script>
