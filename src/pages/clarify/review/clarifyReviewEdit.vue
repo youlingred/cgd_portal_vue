@@ -26,7 +26,7 @@
           clarificationId: '',
           clarificationRecId: '',
           replyContent: '',
-          fileList: [],
+          attachmentList: [],
           attachments: {}
         },
         options: [],
@@ -103,7 +103,7 @@
                 {
                   type: 'upload',
                   label: '澄清附件',
-                  prop: 'fileList',
+                  prop: 'attachmentList',
                   extendParam: {
                     beforeRemove: this.beforeRemove,
                     onSuccess: this.onSuccess,
@@ -137,7 +137,7 @@
                 replyContent: [
                   {required: true, message: '请输入回复内容', trigger: 'blur'},
                 ],
-                fileList: [
+                attachmentList: [
                   {required: true, message: '请上传澄清附件', trigger: 'blur'},
                 ]
               }
@@ -167,11 +167,11 @@
       },
       onSuccess(file) {
         this.$message.success('文件上传成功');
-        this.form.fileList.push({name: file.filePath, path: file.newFileName});
+        this.form.attachmentList.push({name: file.filePath, path: file.newFileName});
       },
       onRemove(file, fileList) {
-        this.form.fileList = fileList;
-        this.form.fileList = _.filter(this.form.fileList, function (item) {
+        this.form.attachmentList = fileList;
+        this.form.attachmentList = _.filter(this.form.attachmentList, function (item) {
           return item.name != file.response.newFileName;
         });
       },
@@ -183,10 +183,11 @@
       },
       //FIXME 提交
       sumbit() {
-        this.util.dataAdapter(this.form, ['name', 'path'], ['attachmentName', 'attachmentUrl'], false);
+        this.util.dataAdapter(this.form.attachmentList, ['name', 'path'], ['attachmentName', 'attachmentUrl'], false);
         this.$refs['form_detail'].forms[0].validate((valid) => {
           if (valid) {
-            this.form.attachments = JSON.stringify(this.form.fileList);
+            this.form.attachments = JSON.stringify(this.form.attachmentList);
+            delete this.form.attachmentList;
             this.axios.post(this.appConfig.api('inquiry/others/clarification/replyMyReceiverClarificationInfo'), this.form)
               .then((response) => {
                 this.$router.push({name: 'clarifyReviewIndex'});
