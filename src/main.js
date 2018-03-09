@@ -29,6 +29,8 @@ Vue.prototype.accounting=accounting
 Vue.prototype.lockr=lockr;
 Vue.prototype.util=util;
 window._=lodash
+window.axios=axios;
+window.$alert=Vue.prototype.$alert;
 
 /* eslint-disable no-new */
 new Vue({

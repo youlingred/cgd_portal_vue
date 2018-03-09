@@ -12,7 +12,6 @@
 <script>
   import detail from '@/components/Detail.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
-  import CgTable from '@/components/CgTable.vue'
 
   export default {
     name: "clarify-review-detail-receive",
@@ -132,7 +131,7 @@
       },
       //返回上一页
       back() {
-        this.$router.push({name: 'saleClarifyReviewIndex'})
+        this.$router.back()
       }
     },
     created() {

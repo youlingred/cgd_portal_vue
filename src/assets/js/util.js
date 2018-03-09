@@ -25,6 +25,14 @@ util.dataAdapter = function (data, arr1, arr2, flag) {
   }
   return last;
 };
+//解析表单数据为get请求参数字符串
+util.parseToGet=function(data){
+  let result=''
+  _.keys(data).forEach(value=>{
+    result+=`${value}=${data[value]}&`
+  })
+  return result;
+};
 /**
  * 获取本地字典表
  * @param name 字典名
@@ -53,5 +61,9 @@ util.localDic = {
     {'2': '施工类'},
     {'3': '服务类'}
   ]
+}
+util.lang={
+ alertSelectionNeed:"请选择您要操作的数据!",
+  alertSelectionOnlyOne:"此操作只能选择1条数据!"
 }
 export default util;
