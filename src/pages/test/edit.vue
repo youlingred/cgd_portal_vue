@@ -154,7 +154,7 @@
           });
       },
       back() {
-        this.$router.push({name: 'list'})
+        this.$router.back()
       }
     },
     //FIXME 组件创建,初始化数据

@@ -15,7 +15,7 @@ export default [
     component: priceOfferIndex
   },
   {
-    path: 'priceOfferDetail/:type/:id',
+    path: 'priceOfferDetail/:status/:type/:id',
     name: 'priceOfferDetail',
     component: priceOfferDetail
   },

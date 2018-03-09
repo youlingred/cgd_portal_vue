@@ -194,7 +194,7 @@
           });
       },
       back() {
-        this.$router.push({name: 'saleClarifyOfferIndex'})
+        this.$router.back();
       }
     },
     //FIXME 组件创建,初始化数据

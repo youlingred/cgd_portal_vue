@@ -168,6 +168,7 @@
         }else{
           refreshData(this.data)
         }
+        this.$emit('pageChange', this.m_pageNo,this.m_pageSize);
         //let allData=[];
         //let block = this.pageSize * val;
         // this.m_data = _.slice(allData,block - this.pageSize, block - 1);

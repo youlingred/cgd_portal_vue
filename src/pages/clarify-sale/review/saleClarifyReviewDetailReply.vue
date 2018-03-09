@@ -122,7 +122,7 @@
           });
       },
       back() {
-        this.$router.push({name: 'saleClarifyReviewIndex'})
+        this.$router.back()
       }
     },
     created() {

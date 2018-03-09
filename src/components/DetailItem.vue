@@ -40,6 +40,7 @@
   <el-upload v-else-if="type === 'upload'"
              :fileList="data[prop]"
              :on-success="fileUploadSuccess"
+             :on-remove="fileRemove"
              v-bind="extendParam">
     <el-button size="small" type="primary">点击上传</el-button>
     <div v-show="extendParam.tip" slot="tip" class="el-upload__tip" style="line-height: 20px;
@@ -100,6 +101,15 @@
         _.forEach(fileList,(val)=>{
           this.data[this.prop].push(_.pick(val,['name','path']));
         })
+        this.$emit('file-upload-success',file,fileList)
+      },
+      //文件删除成功回调
+      fileRemove(file, fileList){
+        this.data[this.prop]=[];
+        _.forEach(fileList,(val)=>{
+          this.data[this.prop].push(_.pick(val,['name','path']));
+        })
+        this.$emit('file-remove',file,fileList)
       }
     }
   }

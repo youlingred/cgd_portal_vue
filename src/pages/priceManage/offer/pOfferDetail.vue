@@ -1,10 +1,13 @@
 <template>
   <div>
-    <detail v-bind="detailData"></detail>
-    <IvTable ref="table" v-bind="table"/>
-    <buttons-operator type="bottom"
+    <detail ref="baseInfo" v-bind="detailData"/>
+    <IvTable ref="table" auto-load="false" v-bind="table"/>
+    <buttons-operator v-if="status==0" type="bottom"
                       fix="true"
                       :buttons="[{label:'提交',type:'primary',click:sumbit},{label:'发起澄清',type:'primary',click:fire},{label:'返回',type:'info',click:back}]"/>
+    <buttons-operator v-if="status==1" type="bottom"
+                      fix="true"
+                      :buttons="[{label:'撤回',type:'danger',click:revoke},{label:'发起澄清',type:'primary',click:fire},{label:'返回',type:'info',click:back}]"/>
 
 
   </div>
@@ -24,23 +27,24 @@
     },
     data() {
       return {
+        //状态 0 待报价 1 已报价
+        status: this.$route.params.status,
+        //类型 1,物资 2,施工 3,服务
+        type: this.$route.params.type,
+        //报价单ID
+        quotationId: this.$route.params.id,
+        //FIXME 基本信息初始化定义,并初始化毕传校验参数
         form: {
-          planName: '团建',
-          publishUser: '老铁',
-          publishDate: 1514192693000,
-          objectionDate: 1514192693000,
-          clarifyContent: '哈哈哈哈哈',
-          status: '',
-          prop4: '艳照门',
-          fileList: [{name: '文件测试', path: 'test'}, {name: '文件测试', path: 'test'}],
+          supplierContactName: '',
+          supplierContactTele: '',
+          deliveryDatePromise: '',
+          attchmentInfo2: [],
+          attchmentInfo3: [],
         },
-        options: [],
-        table: {
-          header: '明细信息'
-        }
       };
     },
     computed: {
+      //FIXME 初始化基本信息显示数据
       detailData() {
         return {
           contents: [
@@ -66,13 +70,13 @@
                   prop: 'supplierName',
                 },
                 {
-                  type: 'input',
+                  type: this.status == 0 ? 'input' : 'label',
                   label: '供应商联系人',
                   placeholder: '请输入',
                   prop: 'supplierContactName',
                 },
                 {
-                  type: 'input',
+                  type: this.status == 0 ? 'input' : 'label',
                   label: '供应商联系电话',
                   placeholder: '请输入',
                   prop: 'supplierContactTele',
@@ -97,7 +101,7 @@
                   label: '交货日期',
                   prop: 'deliveryDate',
                   formatter: (value) => {
-                    return this.moment(value).format('YYYY-MM-DD HH:mm:ss');
+                    return this.moment(value).format('YYYY-MM-DD');
                   }
                 },
                 {
@@ -114,13 +118,17 @@
                   prop: 'quoteMethod',
                 },
                 {
-                  type: 'dateTimePicker',
+                  type: this.status == 0 ? 'datePicker' : 'label',
                   label: '承诺交货日期',
-                  placeholder: '请选择开始时间',
+                  placeholder: '请选择承诺交货日期',
                   prop: 'deliveryDatePromise',
+                  formatter: (value) => {
+                    return this.moment(value).format('YYYY-MM-DD');
+                  },
                   extendParam: {
                     editable: false,
-                    format: 'yyyy-mm-dd hh:mm:ss'
+                    valueFormat: 'timestamp',
+                    format: 'yyyy-MM-dd'
                   }
                 },
                 {
@@ -169,6 +177,9 @@
                   type: 'label',
                   label: '税率（%）',
                   prop: 'taxRate',
+                  formatter(value) {
+                    return value + '%'
+                  }
                 },
                 {
                   type: 'label',
@@ -182,6 +193,9 @@
                   type: 'label',
                   label: '成交服务费率',
                   prop: 'serviceChargeRateName',
+                  formatter(value) {
+                    return value + '%'
+                  }
                 },
                 {
                   type: 'label',
@@ -199,7 +213,7 @@
                   prop: 'remarks',
                 },
                 {
-                  type: 'textarea',
+                  type: this.status == 0 ? 'textarea' : 'label',
                   label: '报价说明',
                   prop: 'quoteExplain',
                   extendParam: {
@@ -207,98 +221,529 @@
                   }
                 },
                 {
-                  type: 'file',
+                  type: this.status == 0 ? 'upload' : 'file',
                   label: '技术文件',
                   prop: 'attchmentInfo3',
+                  extendParam: {
+                    beforeRemove: this.beforeRemove,
+                    action: this.appConfig.api('', 'upload'),
+                    tip: ''
+                  }
                 },
                 {
-                  type: 'file',
+                  type: this.status == 0 ? 'upload' : 'file',
                   label: '商务文件',
                   prop: 'attchmentInfo2',
+                  extendParam: {
+                    beforeRemove: this.beforeRemove,
+                    action: this.appConfig.api('', 'upload'),
+                    tip: ''
+                  }
                 },
                 {
-                  type: 'file',
+                  type: this.status == 0 ? 'upload' : 'file',
                   label: '其他附件',
                   prop: 'attchmentInfo4',
-                }
-              ],
-              rules: {
-                planName: [
-                  {required: true, message: '请选择询价单名称', trigger: 'blur'},
-                ],
-                clarifyContent: [
-                  {required: true, message: '请输入澄清内容', trigger: 'blur'},
-                ]
-              }
-            },
-            {
-              header: '附件信息（上传文件格式为 txt,doc,xls,docx,xlsx,ppt,pptx,pdf,zip,rar,wps,dps,et,jpg,jpeg，大小不超过60MB)',
-              data: this.form,
-              labelWidth: '200px',
-              inputWidth: '400px',
-              children: [
-                {
-                  type: 'upload',
-                  label: '商务文件',
-                  prop: 'fileList',
                   extendParam: {
-                    action: 'https://jsonplaceholder.typicode.com/posts/',
-                  }
-                },
-                {
-                  type: 'upload',
-                  label: '技术文件',
-                  prop: 'fileList',
-                  extendParam: {
-                    action: 'https://jsonplaceholder.typicode.com/posts/',
-                  }
-                },
-                {
-                  type: 'upload',
-                  label: '其他文件',
-                  prop: 'fileList',
-                  extendParam: {
-                    action: 'https://jsonplaceholder.typicode.com/posts/',
+                    beforeRemove: this.beforeRemove,
+                    action: this.appConfig.api('', 'upload'),
+                    tip: ''
                   }
                 }
               ],
-              rules: {
-                planName: [
-                  {required: true, message: '请选择询价单名称', trigger: 'blur'},
+              rules: this.status == 0 ? {
+                supplierContactName: [
+                  {required: true, message: '请输入供应商联系人', trigger: 'blur'},
                 ],
-                clarifyContent: [
-                  {required: true, message: '请输入澄清内容', trigger: 'blur'},
+                supplierContactTele: [
+                  {required: true, message: '请输入供应商联系电话', trigger: 'blur'},
+                ],
+                deliveryDatePromise: [
+                  {required: true, message: '请选择承诺交货日期', trigger: 'blur'},
+                ],
+                attchmentInfo2: [
+                  {required: false, message: '请上传商务文件', trigger: 'blur'},
+                ],
+                attchmentInfo3: [
+                  {required: false, message: '请上传技术文件', trigger: 'blur'},
                 ]
-              }
-            },
+              } : {}
+            }
           ]
+        }
+      },
+      table() {
+        //根据type采购类别
+        switch (Number.parseInt(this.type)) {
+          case 1://物资类
+            return {
+              header: '明细信息',
+              height: 400,
+              url: this.appConfig.api('inquiry/quote/qryIqrQuoteMateriaItemList'),
+              // url: this.appConfig.api('Materials'),
+              columns: [
+                {
+                  title: '序号',
+                  type: 'index',
+                  align: 'center',
+                  width: 80
+                },
+                {
+                  title: '项目单位',
+                  key: 'purchaseAccountName',
+                  align: 'center',
+                  width: 120,
+                },
+                {
+                  title: '物资分类',
+                  key: 'materialClassName',
+                  align: 'center',
+                  width: 120,
+                },
+                {
+                  title: '物料编码',
+                  key: 'materialId',
+                  align: 'center',
+                  width: 100,
+                },
+                {
+                  title: '物料名称',
+                  key: 'materialName',
+                  align: 'center',
+                  width: 100,
+                },
+                {
+                  title: '型号',
+                  key: 'model',
+                  align: 'center',
+                  width: 100,
+                },
+                {
+                  title: '规格',
+                  key: 'spec',
+                  align: 'center',
+                  width: 100,
+                },
+                {
+                  title: '图号',
+                  key: 'figureNo',
+                  align: 'center',
+                  width: 100,
+                },
+                {
+                  title: '材质',
+                  key: 'materialsQuality',
+                  align: 'center',
+                  width: 100,
+                },
+                {
+                  title: '安装位置',
+                  key: 'installPosition',
+                  align: 'center',
+                  width: 100,
+                },
+                {
+                  title: '原生产厂家',
+                  key: 'originalManufacturer',
+                  align: 'center',
+                  width: 150,
+                },
+                {
+                  title: '品牌',
+                  key: 'brand',
+                  align: 'center',
+                  width: 150,
+                  render: (h, {row, column, index}) => {
+                    //根据sataus判断是否显示输入框
+                    if (Number.parseInt(this.status) === 0) {
+                      return h('Input', {
+                          props: {
+                            placeholder: '请输入品牌',
+                            value: row.brand,
+                          },
+                          nativeOn: {
+                            change: event => {
+                              //监听输入框值变化改变table数据,
+                              // 因为row为数据拷贝副本改变row的值不会改变table数据的值
+                              this.$refs.table.all[index].brand = event.target.value
+                            }
+                          }
+                        }
+                      )
+                    } else {
+                      return row.brand
+                    }
+                  }
+                },
+                {
+                  title: '生产厂家',
+                  key: 'manufacturer',
+                  align: 'center',
+                  width: 150,
+                  render: (h, {row, column, index}) => {
+                    if (Number.parseInt(this.status) === 0) {
+                      return h('Input', {
+                          props: {
+                            placeholder: '请输入生产厂家',
+                            value: row.manufacturer,
+                          },
+                          nativeOn: {
+                            change: event => {
+                              //同上
+                              this.$refs.table.all[index].manufacturer = event.target.value
+                            }
+                          }
+                        }
+                      )
+                    } else {
+                      return row.manufacturer
+                    }
+                  }
+                },
+                {
+                  title: '采购数量',
+                  key: 'purchaseNum',
+                  align: 'center',
+                  width: 100,
+                },
+                {
+                  title: '计量单位',
+                  key: 'unitName',
+                  align: 'center',
+                  width: 100,
+                },
+                {
+                  title: '报价单价(元)',
+                  key: 'quotePrice',
+                  align: 'center',
+                  width: 100,
+                  render: (h, {row, column}) => {
+                    return this.accounting.formatMoney(row.quotePrice, '', 2);
+                  }
+                },
+                {
+                  title: '报价总价(元)',
+                  key: 'quoteAmount',
+                  align: 'center',
+                  width: 100,
+                  render: (h, {row, column}) => {
+                    return this.accounting.formatMoney(row.quoteAmount, '', 2);
+                  }
+                },
+                {
+                  title: '承诺交货日期',
+                  key: 'deliveryDatePromise',
+                  align: 'center',
+                  width: 180,
+                  render: (h, {row, column}) => {
+                    if (Number.parseInt(this.status) === 0) {
+                      return h('el-date-picker', {
+                          props: {
+                            placeholder: '请选择日期',
+                            value: row.deliveryDatePromise,
+                            editable: false,
+                            valueFormat: 'timestamp',
+                            format: 'yyyy-MM-dd'
+                          }
+                        }
+                      )
+                    } else {
+                      return this.moment(row.deliveryDatePromise).format('YYYY-MM-DD');
+                    }
+                  }
+                }
+              ]
+            }
+          case 2://施工类
+            return {
+              header: '明细信息',
+              height: 400,
+              url: this.appConfig.api('inquiry/quote/qryIqrQuoteConstructionItemList'),
+              // url: this.appConfig.api('Materials'),
+              columns: [
+                {
+                  title: '序号',
+                  type: 'index',
+                  align: 'center',
+                  width: 80
+                },
+                {
+                  title: '项目单位',
+                  key: 'purchaseAccountName',
+                  align: 'center',
+                  width: 120,
+                },
+                {
+                  title: '项目名称',
+                  key: 'projectName',
+                  align: 'center',
+                  width: 120,
+                },
+                {
+                  title: '内容描述',
+                  key: 'docDesc',
+                  align: 'center',
+                  width: 150,
+                },
+                {
+                  title: '计量单位',
+                  key: 'unitName',
+                  align: 'center',
+                  width: 100,
+                },
+                {
+                  title: '数量',
+                  key: 'purchaseNum',
+                  align: 'center',
+                  width: 100,
+                },
+                {
+                  title: '报价单价(元)',
+                  key: 'quotePrice',
+                  align: 'center',
+                  width: 100,
+                  render: (h, {row, column}) => {
+                    return this.accounting.formatMoney(row.quotePrice, '', 2);
+                  }
+                },
+                {
+                  title: '报价总价(元)',
+                  key: 'quoteAmount',
+                  align: 'center',
+                  width: 100,
+                  render: (h, {row, column}) => {
+                    return this.accounting.formatMoney(row.quoteAmount, '', 2);
+                  }
+                },
+                {
+                  title: '承诺交货日期',
+                  key: 'deliveryDatePromise',
+                  align: 'center',
+                  width: 180,
+                  render: (h, {row, column}) => {
+                    if (Number.parseInt(this.status) === 0) {
+                      return h('el-date-picker', {
+                          props: {
+                            placeholder: '请选择日期',
+                            size: 'small',
+                            value: row.deliveryDatePromise,
+                            editable: false,
+                            valueFormat: 'timestamp',
+                            format: 'yyyy-MM-dd'
+                          }
+                        }
+                      )
+                    } else {
+                      return this.moment(row.deliveryDatePromise).format('YYYY-MM-DD');
+                    }
+                  }
+                }
+              ]
+            }
+          case 3://服务类
+            return {
+              header: '明细信息',
+              height: 400,
+              url: this.appConfig.api('inquiry/quote/qryIqrQuoteServItemList'),
+              // url: this.appConfig.api('Materials'),
+              columns: [
+                {
+                  title: '序号',
+                  type: 'index',
+                  align: 'center',
+                  width: 80
+                },
+                {
+                  title: '项目单位',
+                  key: 'purchaseAccountName',
+                  align: 'center',
+                  width: 120,
+                },
+                {
+                  title: '项目名称',
+                  key: 'projectName',
+                  align: 'center',
+                  width: 120,
+                },
+                {
+                  title: '内容描述',
+                  key: 'docDesc',
+                  align: 'center',
+                  width: 150,
+                },
+                {
+                  title: '计量单位',
+                  key: 'unitName',
+                  align: 'center',
+                  width: 100,
+                },
+                {
+                  title: '数量',
+                  key: 'purchaseNum',
+                  align: 'center',
+                  width: 100,
+                },
+                {
+                  title: '报价单价(元)',
+                  key: 'quotePrice',
+                  align: 'center',
+                  width: 100,
+                  render: (h, {row, column}) => {
+                    return this.accounting.formatMoney(row.quotePrice, '', 2);
+                  }
+                },
+                {
+                  title: '报价总价(元)',
+                  key: 'quoteAmount',
+                  align: 'center',
+                  width: 100,
+                  render: (h, {row, column}) => {
+                    return this.accounting.formatMoney(row.quoteAmount, '', 2);
+                  }
+                },
+                {
+                  title: '承诺交货日期',
+                  key: 'deliveryDatePromise',
+                  align: 'center',
+                  width: 180,
+                  render: (h, {row, column}) => {
+                    if (Number.parseInt(this.status) === 0) {
+                      return h('el-date-picker', {
+                          props: {
+                            placeholder: '请选择日期',
+                            value: row.deliveryDatePromise,
+                            editable: false,
+                            valueFormat: 'timestamp',
+                            format: 'yyyy-MM-dd'
+                          }
+                        }
+                      )
+                    } else {
+                      return this.moment(row.deliveryDatePromise).format('YYYY-MM-DD');
+                    }
+                  }
+                }
+              ]
+            }
+          default:
+            return [];
+        }
+      }
+    },
+    watch: {
+      //监听基本信息中承诺交货日期的变化改变明细信息中所有此字段数据
+      'form.deliveryDatePromise': function (val) {
+        {
+          _.forEach(this.$refs.table.all, value => value.deliveryDatePromise = val);
         }
       }
     },
     methods: {
-      //FIXME 远程请求select数据
-      query(query) {
-        if (!query) {
-          query = ''
-        }
-        this.axios.post(this.appConfig.api('testQuerySelect'), this.form)
-          .then((response) => {
-            console.log(response);
-            let list = response;
-
-            this.options = list.filter(item => {
-              return item.label.toLowerCase()
-                .indexOf(query.toLowerCase()) > -1;
-            });
-          })
-          .catch(function (error) {
-            console.log(error);
+      //FIXME 查询基本信息
+      queryDetail() {
+        console.log(this);
+        this.axios.post(this.appConfig.api('inquiry/quote/qryIqrQuoteDetail'), {quotationId: this.quotationId})
+        // this.axios.post(this.appConfig.api('testcommen'), {quotationId: this.quotationId})
+          .then(data => {
+            this.form = data;
+            this.queryList();
+          }).catch(() => {
+        });
+      },
+      //FIXME 查询明细信息
+      queryList() {
+        this.$refs.table.query({url: this.table.url, quotationId: this.quotationId})
+      },
+      //FIXME 撤回
+      revoke() {
+        this.$confirm('此操作将撤回报价单, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.axios.post(this.appConfig.api('inquiry/quote/iqrQuoteWithdraw'), {quotationId: this.form.quotationId})
+            .then(response => {
+              this.$message({
+                type: 'success',
+                message: '成功撤回报价单!'
+              });
+              this.back();
+            }).catch(() => {
           });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消撤回'
+          });
+        });
+
       },
       //FIXME 提交
       sumbit() {
-        console.log(this.form)
-        this.axios.post(this.appConfig.api('testDylyList'), this.form)
+        this.validateBaseInfo();
+      },
+      //FIXME 校验基本信息
+      validateBaseInfo() {
+        console.log('validateBaseInfo')
+        this.$refs.baseInfo.forms[0].validate((valid) => {
+          if (valid) {
+            this.validateList();
+          } else {
+            this.$alert('基本信息不完整,请填写完整!', '提示');
+          }
+        });
+      },
+      //FIXME 校验明细信息
+      validateList() {
+        const list = this.$refs.table.all;
+        let validate = true;
+        _.every(list, value => {
+          if (value && value.brand && value.manufacturer && value.quotePrice && value.deliveryDatePromise) {
+            return true
+          } else {
+            validate = false;
+            return validate = false;
+          }
+        })
+        if (validate) {
+          this.validateSucess();
+        } else {
+          this.$alert('明细信息不完整,请填写完整!', '提示');
+        }
+      },
+      //FIXME 校验全部通过
+      validateSucess() {
+        //处理化基本信息数据
+        this.util.dataAdapter(this.form, ['name', 'url'], ['attachmentName', 'attachmentUrl'])
+        //待提交数据整合
+        let sumbitData = {};
+        _.assign(sumbitData, this.form, {quotationItemJSON: this.$refs.table.all});
+        //获取需要传递的参数
+        sumbitData = _.pick(sumbitData, [
+          'quotationId',
+          'supplierContactName',
+          'supplierContactTele',
+          'deliveryDatePromise',
+          'quoteExplain',
+          'quotationItemJSON',
+          'attchmentInfo1',
+          'attchmentInfo2',
+          'attchmentInfo3',
+          'attchmentInfo4']);
+
+        sumbitData.deliveryDatePromise && (sumbitData.deliveryDatePromise = this.moment(sumbitData.deliveryDatePromise).format('YYYY-MM-DD'))
+        _.forEach(sumbitData.quotationItemJSON,value=>{
+          value.deliveryDatePromise && (value.deliveryDatePromise=this.moment(value.deliveryDatePromise).format('YYYY-MM-DD'))
+        })
+
+        //JSON字符化数组数据
+        _.forEach(sumbitData, (value, key) => {
+          if (_.isArray(value)) {
+            sumbitData[key] = JSON.stringify(value);
+          }
+        });
+        console.log(sumbitData);
+        this.axios.post(this.appConfig.api('inquiry/quote/submitIqrQuote'), sumbitData)
           .then((response) => {
             console.log(response);
           })
@@ -306,20 +751,23 @@
             console.log(error);
           });
       },
-      //发起澄清
+      //FIXME 发起澄清
       fire() {
 
       },
       back() {
-        this.$router.push({name: 'clarifyOfferIndex'})
-      }
+        this.$router.back();
+      },
+      //FIXME 附件操作
+      beforeRemove(file) {
+        return this.$confirm(`确定移除 ${ file.name }？`);
+      },
     },
     //FIXME 组件创建,初始化数据
-    created() {
-      this.query();
+    mounted() {
+      this.queryDetail();
     }
   }
 </script>
 <style scoped>
-
 </style>
