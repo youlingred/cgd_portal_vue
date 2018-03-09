@@ -145,21 +145,6 @@ Mock.mock(config.api('', 'menu'), 'get', function () {
               "parentId": 100,
               "deep": 4,
               "orderId": 2,
-              "menuName": "竞价管理",
-              "menuCode": "priceBindIndex",
-              "menuIcon": "",
-              "menuCss": "",
-              "menuUrl": "priceBindIndex",
-              "updateUid": null,
-              "updateTm": 1511159457000,
-              "disFlag": null,
-              "subMenus": []
-            },
-            {
-              "autoId": 10001,
-              "parentId": 100,
-              "deep": 4,
-              "orderId": 2,
               "menuName": "报价管理",
               "menuCode": "priceOfferIndex",
               "menuIcon": "",
@@ -170,6 +155,37 @@ Mock.mock(config.api('', 'menu'), 'get', function () {
               "disFlag": null,
               "subMenus": []
             }
+          ]
+        },
+        {
+          "autoId": 100,
+          "parentId": 8,
+          "deep": 3,
+          "orderId": 1,
+          "menuName": "竞价管理",
+          "menuCode": "entinfmgr",
+          "menuIcon": "",
+          "menuCss": "",
+          "menuUrl": "",
+          "updateUid": null,
+          "updateTm": 1511159457000,
+          "disFlag": null,
+          "subMenus": [
+            {
+              "autoId": 10001,
+              "parentId": 100,
+              "deep": 4,
+              "orderId": 2,
+              "menuName": "竞价管理",
+              "menuCode": "priceBindIndex",
+              "menuIcon": "",
+              "menuCss": "",
+              "menuUrl": "priceBindIndex",
+              "updateUid": null,
+              "updateTm": 1511159457000,
+              "disFlag": null,
+              "subMenus": []
+            },
           ]
         },
         {

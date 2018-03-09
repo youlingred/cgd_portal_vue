@@ -753,7 +753,7 @@
       },
       //FIXME 发起澄清
       fire() {
-
+        this.$router.push({name: 'clarifyOfferEdit',query:{inquiryId:this.form.inquiryId,inquiryName:this.form.inquiryName,iqrSeq:this.form.iqrSeq,purchaseCategory:this.form.purchaseCategory}});
       },
       back() {
         this.$router.back();

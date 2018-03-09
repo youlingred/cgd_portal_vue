@@ -49,7 +49,7 @@
         activeName: 'send',
         //展开收起标志
         flag: false,
-        //发出澄清搜索条件表单数据
+        //FIXME 发出澄清搜索条件表单数据
         form: {
           send: {
             inquiryName:"",
@@ -64,7 +64,7 @@
             clarificationDateEnd:""
           }
         },
-        //table初始化数据
+        //FIXME table初始化数据
         table: {
           send: {
             height:400,
@@ -226,7 +226,7 @@
     computed: {
       formInit() {
         return {
-          //发出澄清表单初始化数据
+          //FIXME 发出澄清表单初始化数据
           send: {
             contents: [
               {
@@ -273,7 +273,7 @@
               }
             ]
           },
-          //收到澄清表单初始化数据
+          //FIXME 收到澄清表单初始化数据
           receive: {
             contents: [
               {
@@ -324,29 +324,32 @@
       }
     },
     watch: {
+      //FIXME 监听标签变化
       activeName(val,oldVal) {
         this.form[oldVal]={}
       }
     },
     methods: {
-      //搜索
+      //FIXME 搜索
       search() {
         let searchData=this.form[this.activeName];
         searchData.pageNo=1;
         this.$refs['table_' + this.activeName].query(searchData)
       },
-      //重置
+      //FIXME 重置
       reset() {
         //因为detail组件可以包含多个表单,所以返回的的是表单数组forms
         this.$refs['form_' + this.activeName].forms[0].resetFields();
       },
-      //新增
+      //FIXME 新增
       add() {
         this.$router.push({name: 'clarifyOfferEdit'})
       },
+      //FIXME 导出
       exportHandle(){
         let selection=this.$refs['table_' + this.activeName].selection;
       },
+      //FIXME 跳转详情
       gotoDetail(id) {
         if (this.activeName === 'send') {
           this.$router.push({name: 'clarifyOfferDetailSend', params: {id: id}});

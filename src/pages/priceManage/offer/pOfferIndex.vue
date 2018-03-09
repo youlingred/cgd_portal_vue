@@ -258,7 +258,7 @@
         this.pageNo=pageNo;
         this.pageSize=pageSize;
       },
-      //FIXME搜索
+      //FIXME 搜索
       search() {
         this.$refs.table.query(this.form);
       },
@@ -289,7 +289,15 @@
       },
       //FIXME 发起澄清
       createClarify() {
-        //this.$router.push({name: 'clarifyOfferEdit'})
+        if(this.selections.length===0){
+          this.$alert(this.util.lang.alertSelectionNeed,'提示');
+          return;
+        };
+        if(this.selections.length>1){
+          this.$alert(this.util.lang.alertSelectionOnlyOne,'提示');
+          return;
+        };
+        this.$router.push({name: 'clarifyOfferEdit',query:{inquiryId:this.selections[0].inquiryId,inquiryName:this.selections[0].inquiryName,iqrSeq:this.selections[0].iqrSeq,purchaseCategory:this.selections[0].purchaseCategory}});
       },
       //FIXME 撤回
       revoke() {

@@ -23,9 +23,9 @@
                       :buttons="[{label:'发起澄清',type:'primary',click:createClarify},{label:'导出',type:'primary',click:exportDoc}]"/>
     <buttons-operator v-if="activeName==='offeried'" type="top"
                       algin="right"
-                      :buttons="[{label:'发起澄清',type:'primary',click:createClarify},{label:'撤回',type:'primary',click:reject},{label:'导出',type:'primary',click:exportDoc}]"/>
+                      :buttons="[{label:'发起澄清',type:'primary',click:createClarify},{label:'撤回',type:'primary',click:revoke},{label:'导出',type:'primary',click:exportDoc}]"/>
 
-    <IvTable ref="table" v-bind="table" @on-row-click="cellClickHandler"/>
+    <IvTable ref="table" v-bind="table" @on-row-click="cellClickHandler" @selectionChange="selectionChange" @pageChange="pageChange"/>
   </div>
 </template>
 
@@ -43,21 +43,33 @@
     data() {
       return {
         flag: false,
+        //table选中项集合
+        selections:[],
         //当前激活的tab名称
         activeName:'offering',
         options: [],
         //搜索条件表单数据
         form: {
-          planName: '',
-          publishUser: '',
-          project: '',
-          status: '',
-          publishDate1: '',
-          publishDate2: ''
+          inquiryName:'',
+          inquiryCode:'',
+          professionalOrgId:'',
+          quoteEndDateStart:'',
+          quoteEndDateEnd:'',
+          publishTimeStart:'',
+          publishTimeEnd:''
         },
       }
     },
     computed: {
+      status(){
+        return this.activeName === 'offering' ? 0 : 1
+      },
+      pageSize(){
+        return this.$refs.table.m_pageSize;
+      },
+      pageNo(){
+        return this.$refs.table.m_pageNo;
+      },
       formInit() {
         return {
           contents: [
@@ -69,7 +81,13 @@
               children: [
                 {
                   type: 'input',
-                  label: '销售编号',
+                  label: '询价单名称',
+                  placeholder: '请输入询价单名称',
+                  prop: 'inquiryName',
+                },
+                {
+                  type: 'input',
+                  label: '采购编号',
                   placeholder: '请输入销售编号',
                   prop: 'inquiryCode',
                 },
@@ -77,33 +95,14 @@
                   type: 'select',
                   label: '采购机构',
                   placeholder: '请选择',
-                  prop: 'status',
+                  prop: 'professionalOrgId',
                   extendParam: {
                     remote: true,
                     filterable: true,
                     remote: true,
-                    remoteMethod: this.query,
+                    remoteMethod: this.queryProfessionalOrg,
                     options: this.options
                   }
-                },
-                {
-                  type: 'select',
-                  label: '采购类别',
-                  placeholder: '请选择',
-                  prop: 'status',
-                  extendParam: {
-                    options: [
-                      {name: 1, value: '物资类'},
-                      {name: 2, value: '施工类'},
-                      {name: 3, value: '服务类'}
-                    ]
-                  }
-                },
-                {
-                  type: 'input',
-                  label: '澄清内容',
-                  placeholder: '模糊查询,可用个逗号隔开',
-                  prop: 'publishUser',
                 },
                 {
                   type: 'dateTimePicker',
@@ -154,13 +153,13 @@
       },
       table() {
         return {
-          url: this.appConfig.api('inquiry/quote/qryIqrQuoteList'),
+          url: this.appConfig.api('inquiry/quote/qryIqrBiddingList'),
           pageNo: 1,
           height: 400,
           queryParam: (param)=>{
             console.log('queryParam:', param)
             console.log('this.activeName',this.activeName)
-            return _.assign({status: this.activeName === 'offering' ? 0 : 1}, param);
+            return _.assign({status:this.status}, param);
           },
           responseHandler:(val)=>{
             console.log('responseHandler:', val)
@@ -187,7 +186,7 @@
               }
             },
             {
-              title: '销售编号',
+              title: '采购编号',
               key: 'inquiryCode',
               align: 'center',
             },
@@ -201,7 +200,7 @@
               }
             },
             {
-              title: '报价截止',
+              title: '报价截止日期',
               key: 'quoteEndDate',
               align: 'center',
               width: 180,
@@ -216,14 +215,13 @@
             },
             {
               title: '采购类别',
-              key: 'purchaseCategoryName',
+              key: 'purchaseCategoryName'
+            },
+            {
+              title: '状态',
+              key: 'status',
               render: (h, {row, column}) => {
-                switch (row.status) {
-                  case 1:
-                    return '已完成';
-                  default:
-                    return ''
-                }
+                return this.activeName==='offering'?'待报价':'已报价'
               }
             },
           ]
@@ -238,20 +236,30 @@
       }
     },
     methods: {
-      //搜索
+      selectionChange(val){
+        this.selections=val;
+      },
+      pageChange(pageNo,pageSize){
+        this.pageNo=pageNo;
+        this.pageSize=pageSize;
+      },
+      //FIXME 搜索
       search() {
+        this.$refs.table.query(this.form);
+      },
+      refresh(){
         this.$refs.table.query();
       },
-      //重置
+      //FIXME 重置
       reset() {
         //因为detail组件可以包含多个表单,所以返回的的是表单数组forms
         this.$refs.form.forms[0].resetFields();
         this.search();
       },
-      //FIXME 远程请求select数据
-      query(query) {
-        if (!query) {
-          query = ''
+      //FIXME 远程请求采购机构select数据
+      queryProfessionalOrg(param) {
+        if (!param) {
+          param = ''
         }
         this.axios.post(this.appConfig.api('testQuerySelect'), this.form)
           .then((response) => {
@@ -260,31 +268,48 @@
 
             this.options = list.filter(item => {
               return item.label.toLowerCase()
-                .indexOf(query.toLowerCase()) > -1;
+                .indexOf(param.toLowerCase()) > -1;
             });
           })
-          .catch(function (error) {
-            console.log(error);
-          });
       },
-      //发起澄清
+      //FIXME 发起澄清
       createClarify() {
-        //this.$router.push({name: 'clarifyOfferEdit'})
+        if(this.selections.length===0){
+          this.$alert(this.util.lang.alertSelectionNeed,'提示');
+          return;
+        };
+        if(this.selections.length>1){
+          this.$alert(this.util.lang.alertSelectionOnlyOne,'提示');
+          return;
+        };
+        this.$router.push({name: 'clarifyOfferEdit',query:{inquiryId:this.selections[0].inquiryId,inquiryName:this.selections[0].inquiryName,iqrSeq:this.selections[0].iqrSeq,purchaseCategory:this.selections[0].purchaseCategory}});
       },
-      //撤回
-      reject() {
-
+      //FIXME 撤回
+      revoke() {
+        if(this.selections.length===0){
+          this.$alert(this.util.lang.alertSelectionNeed,'提示');
+          return;
+        };
+        if(this.selections.length>1){
+          this.$alert(this.util.lang.alertSelectionOnlyOne,'提示');
+          return;
+        };
+        this.axios.post(this.appConfig.api('inquiry/quote/iqrQuoteWithdraw'),{quotationId:this.selections[0].quotationId})
+          .then((response) => {
+            this.refresh();
+          })
       },
-      //导出
+      //FIXME 导出
       exportDoc() {
-        window.open('', '_blank')
+        //合并入参
+        let assign=_.assign({pageNo:this.pageNo,pageSize:this.pageSize,status:this.status},this.form)
+        //转换参数对象为&连接字符串
+        let params=this.util.parseToGet(assign);
+        window.open(this.appConfig.api(`inquiry/quote/qryIqrQuoteListExport?${params}`), '_blank')
       },
+      //FIXME 详情跳转
       cellClickHandler(row) {
-        console.log(row);
-        console.log(this.activeName);
-        if (this.activeName === 'offering') {
-          this.$router.push({name: 'priceOfferEdit'});
-        }
+        this.$router.push({name: 'priceOfferDetail',params:{status:this.status,type:row.purchaseCategory,id:row.quotationId}});
       }
     },
   }
