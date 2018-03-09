@@ -1,7 +1,7 @@
 <template>
   <div>
     <detail v-bind="confirmData"></detail>
-    <detail v-bind="detailData"></detail>
+    <detail ref="form_detail" v-bind="detailData"></detail>
     <buttons-operator type="bottom"
                       fix="true"
                       :buttons="[{label:'确定',type:'primary',click:sumbit},{label:'取消',type:'info',click:back}]"/>
@@ -21,15 +21,13 @@
     },
     data() {
       return {
-        fileList: [],
         confirmForm: {},
         form: {
-          attachments: {},
           clarificationId: '',
           clarificationRecId: '',
-          receiverOrgName: '',
-          replyTime: '',
-          replier: ''
+          replyContent: '',
+          attachmentList: [],
+          attachments: {}
         },
         options: [],
       };
@@ -105,7 +103,7 @@
                 {
                   type: 'upload',
                   label: '澄清附件',
-                  prop: '',
+                  prop: 'attachmentList',
                   extendParam: {
                     beforeRemove: this.beforeRemove,
                     onSuccess: this.onSuccess,
@@ -138,6 +136,9 @@
               rules: {
                 replyContent: [
                   {required: true, message: '请输入回复内容', trigger: 'blur'},
+                ],
+                attachmentList: [
+                  {required: true, message: '请上传澄清附件', trigger: 'blur'},
                 ]
               }
             },
@@ -166,13 +167,13 @@
       },
       onSuccess(file) {
         this.$message.success('文件上传成功');
-        this.fileList.push({attachmentName: file.filePath, attachmentUrl: file.newFileName});
+        this.form.attachmentList.push({name: file.filePath, path: file.newFileName});
       },
-      onRemove(file) {
-        this.fileList = _.filter(this.fileList, function (item) {
-          return item.attachmentUrl != file.response.newFileName
+      onRemove(file, fileList) {
+        this.form.attachmentList = fileList;
+        this.form.attachmentList = _.filter(this.form.attachmentList, function (item) {
+          return item.name != file.response.newFileName;
         });
-        ;
       },
       onError() {
         this.$message.error('文件上传失败');
@@ -182,14 +183,22 @@
       },
       //FIXME 提交
       sumbit() {
-        this.form.attachments = JSON.stringify(this.fileList);
-        this.axios.post(this.appConfig.api('inquiry/others/clarification/replyMyReceiverClarificationInfo'), this.form)
-          .then((response) => {
-            this.$router.push({name: 'clarifyReviewIndex'});
-          })
-          .catch(function (error) {
-            console.log("--------------error---------" + error);
-          });
+        this.util.dataAdapter(this.form.attachmentList, ['name', 'path'], ['attachmentName', 'attachmentUrl'], false);
+        this.$refs['form_detail'].forms[0].validate((valid) => {
+          if (valid) {
+            this.form.attachments = JSON.stringify(this.form.attachmentList);
+            delete this.form.attachmentList;
+            this.axios.post(this.appConfig.api('inquiry/others/clarification/replyMyReceiverClarificationInfo'), this.form)
+              .then((response) => {
+                this.$router.push({name: 'clarifyReviewIndex'});
+              })
+              .catch(function (error) {
+                console.log("--------------error---------" + error);
+              });
+          } else {
+            return false;
+          }
+        });
       },
       back() {
         this.$router.back()
