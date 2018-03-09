@@ -1,6 +1,6 @@
 <template>
   <div>
-    <detail v-bind="detailData"/>
+    <detail ref="form_detail" v-bind="detailData"/>
     <buttons-operator type="bottom"
                       fix="true"
                       :buttons="[{label:'提交',type:'primary',click:sumbit},{label:'返回',type:'info',click:back}]"/>
@@ -184,16 +184,22 @@
       },
       //FIXME 提交
       sumbit() {
-        console.log(this.form);
-        this.util.dataAdapter(this.fileList,['name','url'],['attachmentName','attachmentUrl'])
-        this.form.attachments=JSON.stringify(this.fileList);
-        this.axios.post(this.appConfig.api('inquiry/others/clarification/addMyQuestionInfo'), this.form)
-          .then((response) => {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        this.$refs['form_detail'].forms[0].validate((valid) => {
+          if (valid) {
+            console.log(this.form);
+            this.util.dataAdapter(this.fileList,['name','url'],['attachmentName','attachmentUrl'])
+            this.form.attachments=JSON.stringify(this.fileList);
+            this.axios.post(this.appConfig.api('inquiry/others/clarification/addMyQuestionInfo'), this.form)
+              .then((response) => {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          } else {
+            return false;
+          }
+        });
       },
       back() {
         this.$router.back();
