@@ -147,7 +147,7 @@
       }
     },
     methods: {
-      //FIXME 远程请求select数据
+      //FIXME 获取询价单列表数据
       query(query) {
         if (!query) {
           query = ''

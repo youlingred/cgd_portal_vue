@@ -7,6 +7,7 @@ axios.defaults.timeout = 1000 * 15
 //添加一个请求拦截器
 axios.interceptors.request.use(
   function (config) {
+    // console.log(config.url)
     //在请求发出之前进行一些操作
     loading=Loading.service({
       // lock:true,

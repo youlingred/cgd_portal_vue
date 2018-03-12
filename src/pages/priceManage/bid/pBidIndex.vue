@@ -219,10 +219,7 @@
             },
             {
               title: '状态',
-              key: 'status',
-              render: (h, {row, column}) => {
-                return this.activeName==='offering'?'待报价':'已报价'
-              }
+              key: 'statusName',
             },
           ]
         }
