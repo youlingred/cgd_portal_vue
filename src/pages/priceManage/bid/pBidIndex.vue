@@ -180,10 +180,7 @@
               title: '询价单名称',
               key: 'inquiryName',
               align: 'center',
-              width: 100,
-              render: (h, {row, column}) => {
-                return row.planName;
-              }
+              width: 100
             },
             {
               title: '采购编号',
