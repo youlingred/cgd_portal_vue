@@ -12,7 +12,7 @@
                       algin="right"
                       :buttons="[{label:'我要参与',type:'primary',click:join},
                       {label:'导出',type:'primary',click:exports}]"/>
-    <IvTable ref="table" v-bind="table" @on-row-click="cellClickHandler"/>
+    <IvTable ref="table" v-bind="table" @selectionChange="selectionChange" @on-row-click="cellClickHandler"/>
   </div>
 </template>
 
@@ -219,6 +219,9 @@
       }
     },
     methods: {
+      selectionChange(val){
+        this.selections=val;
+      },
       //搜索
       search() {
         this.$refs.table.query(this.form)
@@ -249,7 +252,26 @@
       },
       //参与
       join() {
-
+        if(this.selections.length===0){
+          this.$alert(this.util.lang.alertSelectionNeed,'提示');
+          return;
+        };
+        if(this.selections.length>1){
+          this.$alert(this.util.lang.alertSelectionOnlyOne,'提示');
+          return;
+        };
+        this.axios.post(this.appConfig.api('inquiry/quote/addQuotationBill'), 
+        { 
+          inquiryId:this.selections[0].inquiryId,
+          iqrSeq:this.selections[0].iqrSeq,
+          purchaseCategory:this.selections[0].purchaseCategory
+        }).then((response) => {
+              console.log(response);
+                this.$router.push({name: 'priceOfferDetail',params:{status:0,type:this.selections[0].purchaseCategory,id:response.quotationId}});
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
       },
       //导出
       exports() {
