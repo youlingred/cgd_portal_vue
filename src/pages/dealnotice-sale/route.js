@@ -4,13 +4,13 @@ const dealnoticeprocurement =()=>import( './dealnoticeprocurement')
 export default [
     //FIXME 成交通知书管理
     {
-      path: 'dealnoticeprocurement-sale',
-      name: 'dealnoticeprocurement2',
+      path: 'saleDealnoticeprocurement',
+      name: 'saleDealnoticeprocurement',
       component: dealnoticeprocurement
     },
     {
-      path: 'details/:id',
-      name: 'details2',
+      path: 'saleDealnoticeDetails/:id',
+      name: 'saleDealnoticeDetails',
       component: details
     },
 ];

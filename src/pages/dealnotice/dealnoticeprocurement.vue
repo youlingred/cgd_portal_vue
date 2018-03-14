@@ -592,7 +592,7 @@
         window.location.href = this.appConfig.api('inquiry/exportdealnoticelistforsupplier') + "?tabId=1&isSale=0";
       },
       gotoDetail(id, type) {
-        this.$router.push({name: 'details1', params: {id: id, type: type}});
+        this.$router.push({name: 'dealnoticeDetails', params: {id: id, type: type}});
       },
       checkSelectionChange(val) {
         this.selectDatas = val;

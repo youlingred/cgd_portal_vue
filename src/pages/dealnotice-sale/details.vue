@@ -264,7 +264,7 @@
     },
     methods: {
       backFunc() {
-        this.$router.push({name: 'dealnoticeprocurement2'});
+        this.$router.push({name: 'saleDealnoticeprocurement'});
       },
       initForm() {
         //基本信息

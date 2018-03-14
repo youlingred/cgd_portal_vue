@@ -590,7 +590,7 @@
         }
       },
       gotoDetail(id) {
-        this.$router.push({name: 'details2', params: {id: id}});
+        this.$router.push({name: 'saleDealnoticeDetails', params: {id: id}});
       },
       checkSelectionChange(val) {
         this.selectDatas = val;

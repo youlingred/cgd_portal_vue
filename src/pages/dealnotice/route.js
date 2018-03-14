@@ -5,12 +5,12 @@ export default [
     //FIXME 成交通知书管理
     {
       path: 'dealnoticeprocurement',
-      name: 'dealnoticeprocurement1',
+      name: 'dealnoticeprocurement',
       component: dealnoticeprocurement
     },
     {
-      path: 'details/:type/:id',
-      name: 'details1',
+      path: 'dealnoticeDetails/:type/:id',
+      name: 'dealnoticeDetails',
       component: details
     },
 ];

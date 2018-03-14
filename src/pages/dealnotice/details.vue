@@ -529,7 +529,7 @@
     },
     methods: {
       backFunc() {
-        this.$router.push({name: 'dealnoticeprocurement1'});
+        this.$router.push({name: 'dealnoticeprocurement'});
       },
       initForm() {
         //基本信息

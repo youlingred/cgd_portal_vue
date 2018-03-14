@@ -4,7 +4,7 @@
     <div class="inner fix">
       <a v-bind:href="baseUrl+'html/portal/index.html'" class="logo-shopping"></a>
       <ul class="fl fix">
-        <li v-for="nav in menus" :class="{active:nav.id==activeItem}"><a :href="baseUrl+nav.url" v-on:click.prevent="menuClick(nav.id)">{{nav.name}}</a>
+        <li v-for="nav in menus" :class="{active:nav.id==activeItem}"><a :href="baseUrl+nav.url" v-on:click.prevent="menuClick(nav)">{{nav.name}}</a>
         </li>
       </ul>
     </div>
@@ -53,10 +53,10 @@
       }
     },
     methods: {
-      menuClick(active) {
-        console.log(active,this.activeItem)
-        if(this.activeItem!=active){
-          this.activeItem=active;
+      menuClick(nav) {
+        if(this.activeItem!=nav.id){
+          this.activeItem=nav.id;
+          this.$emit('menu-click',nav);
         }
       },
     }
