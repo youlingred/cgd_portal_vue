@@ -205,9 +205,10 @@
       initForm() {
         //基本信息
         this.axios.post(this.appConfig.api('inquiry/quote/iqrPurchaseNoticeDetail'), {
-			inquiryId:10,
-			iqrSeq:1,
-			purchaseCategory:1})
+		      inquiryId: this.$route.params.id,
+          iqrSeq: this.$route.params.seq,
+          purchaseCategory: this.$route.params.type
+        })
           .then((response) => {
 			this.util.dataAdapter(response,['attachmentName','attachmentUrl'],['name','path'],false)
             this.form = response;
