@@ -128,7 +128,7 @@
                   extendParam: {
                     editable: false,
                     valueFormat: 'timestamp',
-                    format: 'yyyy-MM-dd'
+                    format: 'yyyy-MM-dd',
                   }
                 },
                 {
@@ -272,10 +272,12 @@
           ]
         }
       },
+      //FIXME 初始化明细信息显示数据
       table() {
         //根据type采购类别
         switch (Number.parseInt(this.type)) {
-          case 1://物资类
+          //FIXME 物资类
+          case 1:
             return {
               header: '明细信息',
               height: 400,
@@ -435,15 +437,20 @@
                   key: 'deliveryDatePromise',
                   align: 'center',
                   width: 180,
-                  render: (h, {row, column}) => {
+                  render: (h, {row, column,index}) => {
                     if (Number.parseInt(this.status) === 0) {
-                      return h('el-date-picker', {
+                      return h('DatePicker', {
                           props: {
                             placeholder: '请选择日期',
+                            clearable:false,
                             value: row.deliveryDatePromise,
                             editable: false,
-                            valueFormat: 'timestamp',
                             format: 'yyyy-MM-dd'
+                          },
+                          on:{
+                            "on-change":value=>{
+                              this.$refs.table.all[index].deliveryDatePromise=value;
+                            }
                           }
                         }
                       )
@@ -454,7 +461,8 @@
                 }
               ]
             }
-          case 2://施工类
+          //FIXME 施工类
+          case 2:
             return {
               header: '明细信息',
               height: 400,
@@ -522,14 +530,18 @@
                   width: 180,
                   render: (h, {row, column}) => {
                     if (Number.parseInt(this.status) === 0) {
-                      return h('el-date-picker', {
+                      return h('DatePicker', {
                           props: {
                             placeholder: '请选择日期',
-                            size: 'small',
+                            clearable:false,
                             value: row.deliveryDatePromise,
                             editable: false,
-                            valueFormat: 'timestamp',
                             format: 'yyyy-MM-dd'
+                          },
+                          on:{
+                            "on-change":value=>{
+                              this.$refs.table.all[index].deliveryDatePromise=value;
+                            }
                           }
                         }
                       )
@@ -540,7 +552,8 @@
                 }
               ]
             }
-          case 3://服务类
+          //FIXME 服务类
+          case 3:
             return {
               header: '明细信息',
               height: 400,
@@ -608,13 +621,18 @@
                   width: 180,
                   render: (h, {row, column}) => {
                     if (Number.parseInt(this.status) === 0) {
-                      return h('el-date-picker', {
+                      return h('DatePicker', {
                           props: {
                             placeholder: '请选择日期',
+                            clearable:false,
                             value: row.deliveryDatePromise,
                             editable: false,
-                            valueFormat: 'timestamp',
                             format: 'yyyy-MM-dd'
+                          },
+                          on:{
+                            "on-change":value=>{
+                              this.$refs.table.all[index].deliveryDatePromise=value;
+                            }
                           }
                         }
                       )
@@ -769,5 +787,3 @@
     }
   }
 </script>
-<style scoped>
-</style>
