@@ -101,7 +101,7 @@
                   label: '交货日期',
                   prop: 'deliveryDate',
                   formatter: (value) => {
-                    return this.moment(value).format('YYYY-MM-DD');
+                    return this.moment(value).format('YYYY-MM-DD')||'';
                   }
                 },
                 {
@@ -109,7 +109,7 @@
                   label: '报价截止日期',
                   prop: 'quoteEndDate',
                   formatter: (value) => {
-                    return this.moment(value).format('YYYY-MM-DD HH:mm:ss');
+                    return this.moment(value).format('YYYY-MM-DD HH:mm:ss')||'';
                   }
                 },
                 {
@@ -123,7 +123,7 @@
                   placeholder: '请选择承诺交货日期',
                   prop: 'deliveryDatePromise',
                   formatter: (value) => {
-                    return this.moment(value).format('YYYY-MM-DD');
+                    return this.moment(value).format('YYYY-MM-DD')||'';
                   },
                   extendParam: {
                     editable: false,
@@ -455,7 +455,7 @@
                         }
                       )
                     } else {
-                      return this.moment(row.deliveryDatePromise).format('YYYY-MM-DD');
+                      return this.moment(row.deliveryDatePromise).format('YYYY-MM-DD')||'';
                     }
                   }
                 }
@@ -546,7 +546,7 @@
                         }
                       )
                     } else {
-                      return this.moment(row.deliveryDatePromise).format('YYYY-MM-DD');
+                      return this.moment(row.deliveryDatePromise).format('YYYY-MM-DD')||'';
                     }
                   }
                 }
@@ -637,7 +637,7 @@
                         }
                       )
                     } else {
-                      return this.moment(row.deliveryDatePromise).format('YYYY-MM-DD');
+                      return this.moment(row.deliveryDatePromise).format('YYYY-MM-DD')||'';
                     }
                   }
                 }
