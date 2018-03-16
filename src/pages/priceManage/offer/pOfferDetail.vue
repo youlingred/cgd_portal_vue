@@ -459,10 +459,7 @@
                       return h('DatePicker', {
                           props: {
                           placeholder: '请选择日期',
-                          clearable:false,
-                          value: row.deliveryDatePromise,
-                          editable: false,
-                          format: 'yyyy-MM-dd'
+                          value: row.deliveryDatePromise
                         }
                         // on:{
                         //   "on-change":value=>{
