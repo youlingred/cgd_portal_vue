@@ -458,17 +458,14 @@
                     if (Number.parseInt(this.status) === 0) {
                       return h('DatePicker', {
                           props: {
-                            placeholder: '请选择日期',
-                            clearable:false,
-                            value: row.deliveryDatePromise,
-                            editable: false,
-                            format: 'yyyy-MM-dd'
-                          },
-                          on:{
-                            "on-change":value=>{
-                              this.$refs.table.all[index].deliveryDatePromise=value;
-                            }
-                          }
+                          placeholder: '请选择日期',
+                          value: row.deliveryDatePromise
+                        }
+                        // on:{
+                        //   "on-change":value=>{
+                        //     this.$refs.table.all[index].deliveryDatePromise=value;
+                        //   }
+                        // }
                         }
                       )
                     } else {
@@ -568,7 +565,7 @@
                           props: {
                             placeholder: '请选择日期',
                             clearable:false,
-                            value: row.deliveryDatePromise,
+                            value: JSON.stringify(row.deliveryDatePromise),
                             editable: false,
                             format: 'yyyy-MM-dd'
                           },
