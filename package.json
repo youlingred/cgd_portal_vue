@@ -1,8 +1,8 @@
 {
-  "name": "cgd_vue",
-  "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "codd <30897863@qq.com>",
+  "name": "{{projectName}}",
+  "description": "{{projectDescription}}",
+  "version": "{{projectVersion}}",
+  "author": "{{projectAuthor}}",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
