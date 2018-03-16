@@ -101,7 +101,7 @@
                   label: '交货日期',
                   prop: 'deliveryDate',
                   formatter: (value) => {
-                    return this.moment(value).format('YYYY-MM-DD')||'';
+                    return this.moment(value).format('YYYY-MM-DD') || '';
                   }
                 },
                 {
@@ -109,7 +109,7 @@
                   label: '报价截止日期',
                   prop: 'quoteEndDate',
                   formatter: (value) => {
-                    return this.moment(value).format('YYYY-MM-DD HH:mm:ss')||'';
+                    return this.moment(value).format('YYYY-MM-DD HH:mm:ss') || '';
                   }
                 },
                 {
@@ -123,7 +123,7 @@
                   placeholder: '请选择承诺交货日期',
                   prop: 'deliveryDatePromise',
                   formatter: (value) => {
-                    return this.moment(value).format('YYYY-MM-DD')||'';
+                    return this.moment(value).format('YYYY-MM-DD') || '';
                   },
                   extendParam: {
                     editable: false,
@@ -430,7 +430,7 @@
                             change: event => {
                               //同上
                               this.$refs.table.all[index].quotePrice = event.target.value
-                              this.$refs.table.all[index].quoteAmount = event.target.value*row.purchaseNum
+                              this.$refs.table.all[index].quoteAmount = event.target.value * row.purchaseNum
                             }
                           }
                         }
@@ -454,24 +454,25 @@
                   key: 'deliveryDatePromise',
                   align: 'center',
                   width: 180,
-                  render: (h, {row, column,index}) => {
+                  render: (h, {row, column, index}) => {
                     if (Number.parseInt(this.status) === 0) {
                       return h('DatePicker', {
-                        props: {
-                          placeholder: '请选择日期',
-                          clearable:false,
-                          value: JSON.stringify(row.deliveryDatePromise),
-                          editable: false,
-                          format: 'yyyy-MM-dd'
-                        },
-                        on:{
-                          "on-change":value=>{
-                            this.$refs.table.all[index].deliveryDatePromise=value;
+                          props: {
+                            placeholder: '请选择日期',
+                            clearable: false,
+                            value: JSON.stringify(row.deliveryDatePromise),
+                            editable: false,
+                            format: 'yyyy-MM-dd'
+                          },
+                          on: {
+                            "on-change": value => {
+                              this.$refs.table.all[index].deliveryDatePromise = value;
+                            }
                           }
                         }
                       )
                     } else {
-                      return this.moment(row.deliveryDatePromise).format('YYYY-MM-DD')||'';
+                      return this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '';
                     }
                   }
                 }
@@ -537,7 +538,7 @@
                             change: event => {
                               //同上
                               this.$refs.table.all[index].quotePrice = event.target.value
-                              this.$refs.table.all[index].quoteAmount = event.target.value*row.purchaseNum
+                              this.$refs.table.all[index].quoteAmount = event.target.value * row.purchaseNum
                             }
                           }
                         }
@@ -566,20 +567,20 @@
                       return h('DatePicker', {
                           props: {
                             placeholder: '请选择日期',
-                            clearable:false,
+                            clearable: false,
                             value: JSON.stringify(row.deliveryDatePromise),
                             editable: false,
                             format: 'yyyy-MM-dd'
                           },
-                          on:{
-                            "on-change":value=>{
-                              this.$refs.table.all[index].deliveryDatePromise=value;
+                          on: {
+                            "on-change": value => {
+                              this.$refs.table.all[index].deliveryDatePromise = value;
                             }
                           }
                         }
                       )
                     } else {
-                      return this.moment(row.deliveryDatePromise).format('YYYY-MM-DD')||'';
+                      return this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '';
                     }
                   }
                 }
@@ -645,7 +646,7 @@
                             change: event => {
                               //同上
                               this.$refs.table.all[index].quotePrice = event.target.value
-                              this.$refs.table.all[index].quoteAmount = event.target.value*row.purchaseNum
+                              this.$refs.table.all[index].quoteAmount = event.target.value * row.purchaseNum
                             }
                           }
                         }
@@ -674,20 +675,20 @@
                       return h('DatePicker', {
                           props: {
                             placeholder: '请选择日期',
-                            clearable:false,
+                            clearable: false,
                             value: JSON.stringify(row.deliveryDatePromise),
                             editable: false,
                             format: 'yyyy-MM-dd'
                           },
-                          on:{
-                            "on-change":value=>{
-                              this.$refs.table.all[index].deliveryDatePromise=value;
+                          on: {
+                            "on-change": value => {
+                              this.$refs.table.all[index].deliveryDatePromise = value;
                             }
                           }
                         }
                       )
                     } else {
-                      return this.moment(row.deliveryDatePromise).format('YYYY-MM-DD')||'';
+                      return this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '';
                     }
                   }
                 }
@@ -800,8 +801,8 @@
           'attchmentInfo4']);
 
         sumbitData.deliveryDatePromise && (sumbitData.deliveryDatePromise = this.moment(sumbitData.deliveryDatePromise).format('YYYY-MM-DD'))
-        _.forEach(sumbitData.quotationItemJSON,value=>{
-          value.deliveryDatePromise && (value.deliveryDatePromise=this.moment(value.deliveryDatePromise).format('YYYY-MM-DD'))
+        _.forEach(sumbitData.quotationItemJSON, value => {
+          value.deliveryDatePromise && (value.deliveryDatePromise = this.moment(value.deliveryDatePromise).format('YYYY-MM-DD'))
         })
 
         //JSON字符化数组数据
@@ -821,7 +822,15 @@
       },
       //FIXME 发起澄清
       fire() {
-        this.$router.push({name: 'clarifyOfferEdit',query:{inquiryId:this.form.inquiryId,inquiryName:this.form.inquiryName,iqrSeq:this.form.iqrSeq,purchaseCategory:this.form.purchaseCategory}});
+        this.$router.push({
+          name: 'clarifyOfferEdit',
+          query: {
+            inquiryId: this.form.inquiryId,
+            inquiryName: this.form.inquiryName,
+            iqrSeq: this.form.iqrSeq,
+            purchaseCategory: this.form.purchaseCategory
+          }
+        });
       },
       back() {
         this.$router.back();
