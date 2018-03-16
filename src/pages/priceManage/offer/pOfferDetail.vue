@@ -676,7 +676,7 @@
                           props: {
                             placeholder: '请选择日期',
                             clearable:false,
-                            value: row.deliveryDatePromise,
+                            value: JSON.stringify(row.deliveryDatePromise),
                             editable: false,
                             format: 'yyyy-MM-dd'
                           },
