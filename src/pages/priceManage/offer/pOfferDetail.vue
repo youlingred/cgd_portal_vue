@@ -460,13 +460,12 @@
                           props: {
                             placeholder: '请选择日期',
                             clearable: false,
-                            value: row.deliveryDatePromise,
-                            editable: false,
-                            format: 'yyyy-MM-dd'
+                            value: this.moment(row.deliveryDatePromise).format('YYYY-MM-DD'),
+                            editable: false
                           },
                           on: {
                             "on-change": value => {
-                              this.$refs.table.all[index].deliveryDatePromise = Number.parseInt(value);
+                              this.$refs.table.all[index].deliveryDatePromise = this.moment(value).format('YYYY-MM-DD');
                             }
                           }
                         }
@@ -568,13 +567,13 @@
                           props: {
                             placeholder: '请选择日期',
                             clearable: false,
-                            value: row.deliveryDatePromise,
+                            value: this.moment(row.deliveryDatePromise).format('YYYY-MM-DD'),
                             editable: false,
                             format: 'yyyy-MM-dd'
                           },
                           on: {
                             "on-change": value => {
-                              this.$refs.table.all[index].deliveryDatePromise = Number.parseInt(value);
+                              this.$refs.table.all[index].deliveryDatePromise = this.moment(value).format('YYYY-MM-DD');
                             }
                           }
                         }
@@ -676,13 +675,13 @@
                           props: {
                             placeholder: '请选择日期',
                             clearable: false,
-                            value: row.deliveryDatePromise,
+                            value: this.moment(row.deliveryDatePromise).format('YYYY-MM-DD'),
                             editable: false,
                             format: 'yyyy-MM-dd'
                           },
                           on: {
                             "on-change": value => {
-                              this.$refs.table.all[index].deliveryDatePromise = Number.parseInt(value);
+                              this.$refs.table.all[index].deliveryDatePromise = this.moment(value).format('YYYY-MM-DD');
                             }
                           }
                         }
@@ -843,6 +842,9 @@
     //FIXME 组件创建,初始化数据
     mounted() {
       this.queryDetail();
+    },
+    created() {
+      console.log(this.moment(1514822400000).format('YYYY-MM-DD'));
     }
   }
 </script>
