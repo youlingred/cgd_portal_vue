@@ -457,15 +457,17 @@
                   render: (h, {row, column,index}) => {
                     if (Number.parseInt(this.status) === 0) {
                       return h('DatePicker', {
-                          props: {
+                        props: {
                           placeholder: '请选择日期',
-                          value: row.deliveryDatePromise
-                        }
-                        // on:{
-                        //   "on-change":value=>{
-                        //     this.$refs.table.all[index].deliveryDatePromise=value;
-                        //   }
-                        // }
+                          clearable:false,
+                          value: JSON.stringify(row.deliveryDatePromise),
+                          editable: false,
+                          format: 'yyyy-MM-dd'
+                        },
+                        on:{
+                          "on-change":value=>{
+                            this.$refs.table.all[index].deliveryDatePromise=value;
+                          }
                         }
                       )
                     } else {
