@@ -697,7 +697,7 @@
       }
     },
     watch: {
-      //监听基本信息中承诺交货日期的变化改变明细信息中所有此字段数据
+      //监听基本信息中承诺交货日期的变化改变明细信息中 所有此字段数据
       'form.deliveryDatePromise': function (val) {
         {
           _.forEach(this.$refs.table.all, value => value.deliveryDatePromise = val);
