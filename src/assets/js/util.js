@@ -61,9 +61,9 @@ util.localDic = {
     {'2': '施工类'},
     {'3': '服务类'}
   ]
-}
+};
 util.lang={
  alertSelectionNeed:"请选择您要操作的数据!",
   alertSelectionOnlyOne:"此操作只能选择1条数据!"
-}
+};
 export default util;

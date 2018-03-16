@@ -262,10 +262,10 @@
                   {required: true, message: '请选择承诺交货日期', trigger: 'blur'},
                 ],
                 attchmentInfo2: [
-                  {required: false, message: '请上传商务文件', trigger: 'blur'},
+                  {required: true, message: '请上传商务文件', trigger: 'blur'},
                 ],
                 attchmentInfo3: [
-                  {required: false, message: '请上传技术文件', trigger: 'blur'},
+                  {required: true, message: '请上传技术文件', trigger: 'blur'},
                 ]
               } : {}
             }
@@ -419,8 +419,25 @@
                   key: 'quotePrice',
                   align: 'center',
                   width: 100,
-                  render: (h, {row, column}) => {
-                    return this.accounting.formatMoney(row.quotePrice, '', 2);
+                  render: (h, {row, column, index}) => {
+                    if (Number.parseInt(this.status) === 0) {
+                      return h('Input', {
+                          props: {
+                            placeholder: '报价单价',
+                            value: row.quotePrice,
+                          },
+                          nativeOn: {
+                            change: event => {
+                              //同上
+                              this.$refs.table.all[index].quotePrice = event.target.value
+                              this.$refs.table.all[index].quoteAmount = event.target.value*row.purchaseNum
+                            }
+                          }
+                        }
+                      )
+                    } else {
+                      return this.accounting.formatMoney(row.quotePrice, '', 2);
+                    }
                   }
                 },
                 {
@@ -510,8 +527,25 @@
                   key: 'quotePrice',
                   align: 'center',
                   width: 100,
-                  render: (h, {row, column}) => {
-                    return this.accounting.formatMoney(row.quotePrice, '', 2);
+                  render: (h, {row, column, index}) => {
+                    if (Number.parseInt(this.status) === 0) {
+                      return h('Input', {
+                          props: {
+                            placeholder: '报价单价',
+                            value: row.quotePrice,
+                          },
+                          nativeOn: {
+                            change: event => {
+                              //同上
+                              this.$refs.table.all[index].quotePrice = event.target.value
+                              this.$refs.table.all[index].quoteAmount = event.target.value*row.purchaseNum
+                            }
+                          }
+                        }
+                      )
+                    } else {
+                      return this.accounting.formatMoney(row.quotePrice, '', 2);
+                    }
                   }
                 },
                 {
@@ -601,8 +635,25 @@
                   key: 'quotePrice',
                   align: 'center',
                   width: 100,
-                  render: (h, {row, column}) => {
-                    return this.accounting.formatMoney(row.quotePrice, '', 2);
+                  render: (h, {row, column, index}) => {
+                    if (Number.parseInt(this.status) === 0) {
+                      return h('Input', {
+                          props: {
+                            placeholder: '报价单价',
+                            value: row.quotePrice,
+                          },
+                          nativeOn: {
+                            change: event => {
+                              //同上
+                              this.$refs.table.all[index].quotePrice = event.target.value
+                              this.$refs.table.all[index].quoteAmount = event.target.value*row.purchaseNum
+                            }
+                          }
+                        }
+                      )
+                    } else {
+                      return this.accounting.formatMoney(row.quotePrice, '', 2);
+                    }
                   }
                 },
                 {
