@@ -460,13 +460,13 @@
                           props: {
                             placeholder: '请选择日期',
                             clearable: false,
-                            value: JSON.stringify(row.deliveryDatePromise),
+                            value: row.deliveryDatePromise,
                             editable: false,
                             format: 'yyyy-MM-dd'
                           },
                           on: {
                             "on-change": value => {
-                              this.$refs.table.all[index].deliveryDatePromise = value;
+                              this.$refs.table.all[index].deliveryDatePromise = Number.parseInt(value);
                             }
                           }
                         }
@@ -568,13 +568,13 @@
                           props: {
                             placeholder: '请选择日期',
                             clearable: false,
-                            value: JSON.stringify(row.deliveryDatePromise),
+                            value: row.deliveryDatePromise,
                             editable: false,
                             format: 'yyyy-MM-dd'
                           },
                           on: {
                             "on-change": value => {
-                              this.$refs.table.all[index].deliveryDatePromise = value;
+                              this.$refs.table.all[index].deliveryDatePromise = Number.parseInt(value);
                             }
                           }
                         }
@@ -676,13 +676,13 @@
                           props: {
                             placeholder: '请选择日期',
                             clearable: false,
-                            value: JSON.stringify(row.deliveryDatePromise),
+                            value: row.deliveryDatePromise,
                             editable: false,
                             format: 'yyyy-MM-dd'
                           },
                           on: {
                             "on-change": value => {
-                              this.$refs.table.all[index].deliveryDatePromise = value;
+                              this.$refs.table.all[index].deliveryDatePromise = Number.parseInt(value);
                             }
                           }
                         }
