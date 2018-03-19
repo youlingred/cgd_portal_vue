@@ -123,7 +123,7 @@
                   prop: 'payTypeName'
                 },
                 {
-                  switchFlag: this.flag, 
+                  switchFlag: this.flag,
                   type: 'label',
                   label: '付款方式',
                   prop: '12',
@@ -273,7 +273,7 @@
             key: 'budgetAmount',
             width: 150,
             render: (h, { row, column }) => {
-             return this.accounting.formatMoney(row['12'],'￥',2);
+             return h('div',this.accounting.formatMoney(row['12'],'￥',2));
             }
           },
           {
@@ -281,7 +281,7 @@
             key: 'reqArrivalDate',
             width: 180,
             render: (h, { row, column }) => {
-              return this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss");
+              return h('div',this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
             }
           },
           {
