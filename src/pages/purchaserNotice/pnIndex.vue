@@ -258,8 +258,8 @@
           this.$alert(this.util.lang.alertSelectionOnlyOne,'提示');
           return;
         };
-        this.axios.post(this.appConfig.api('inquiry/quote/addQuotationBill'), 
-        { 
+        this.axios.post(this.appConfig.api('inquiry/quote/addQuotationBill'),
+        {
           inquiryId:this.selections[0].inquiryId,
           iqrSeq:this.selections[0].iqrSeq,
           purchaseCategory:this.selections[0].purchaseCategory
