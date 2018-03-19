@@ -96,172 +96,146 @@ Mock.mock(config.api('', 'menu'), 'get', function () {
         "subMenus": []
       },
       {
-
         "autoId": 5,
-        "parentId": 1,
-        "deep": 2,
-        "orderId": 1,
-        "menuName": "采购管理",
-        "menuCode": "startPage|vue",
-        "menuIcon": "",
-        "menuCss": "",
-        "menuUrl": "/spubliclist",
-        "updateUid": null,
-        "updateTm": 1511159457000,
-        "disFlag": null,
+        "menuName": "询比价管理",
+        "menuCode": "xubijia|vue",
+        "menuUrl": "/dist#/spubliclist",
         "subMenus": [
           {
             "autoId": 100,
-            "parentId": 8,
-            "deep": 3,
-            "orderId": 1,
-            "menuName": "单一来源公示",
-            "menuCode": "entinfmgr",
-            "menuIcon": "",
-            "menuCss": "",
-            "menuUrl": "",
-            "updateUid": null,
-            "updateTm": 1511159457000,
-            "disFlag": null,
+            "menuName": "单一来源公示异议",
+            "menuCode": "",
             "subMenus": [
               {
                 "autoId": 10001,
                 "parentId": 100,
-                "deep": 4,
-                "orderId": 2,
-                "menuName": "公示首页",
+                "menuName": "查询首页",
                 "menuCode": "spubliclist",
-                "menuIcon": "",
-                "menuCss": "",
-                "menuUrl": "spubliclist",
-                "updateUid": null,
-                "updateTm": 1511159457000,
-                "disFlag": null,
-                "subMenus": []
+                "menuUrl": "spubliclist"
               }
             ]
           },
           {
             "autoId": 100,
-            "parentId": 8,
-            "deep": 3,
-            "orderId": 1,
-            "menuName": "成交通知书管理",
-            "menuCode": "entinfmgr",
-            "menuIcon": "",
-            "menuCss": "",
-            "menuUrl": "",
-            "updateUid": null,
-            "updateTm": 1511159457000,
-            "disFlag": null,
+            "menuName": "采购公告",
+            "menuCode": "",
             "subMenus": [
               {
                 "autoId": 10001,
-                "parentId": 100,
-                "deep": 4,
                 "orderId": 2,
-                "menuName": "采购",
-                "menuCode": "dealnoticeprocurement",
-                "menuIcon": "",
-                "menuCss": "",
-                "menuUrl": "dealnoticeprocurement",
-                "updateUid": null,
-                "updateTm": 1511159457000,
-                "disFlag": null,
-                "subMenus": []
+                "menuName": "查询首页",
+                "menuCode": "purchaserNoticeIndex",
+                "menuUrl": "purchaserNoticeIndex",
               }
             ]
           },
           {
             "autoId": 100,
-            "parentId": 8,
-            "deep": 3,
-            "orderId": 1,
             "menuName": "报价管理",
-            "menuCode": "entinfmgr",
-            "menuIcon": "",
-            "menuCss": "",
+            "menuCode": "",
             "menuUrl": "",
-            "updateUid": null,
-            "updateTm": 1511159457000,
-            "disFlag": null,
             "subMenus": [
               {
                 "autoId": 10001,
-                "parentId": 100,
-                "deep": 4,
-                "orderId": 2,
-                "menuName": "报价管理",
+                "menuName": "查询首页",
                 "menuCode": "priceOfferIndex",
-                "menuIcon": "",
-                "menuCss": "",
                 "menuUrl": "priceOfferIndex",
-                "updateUid": null,
-                "updateTm": 1511159457000,
-                "disFlag": null,
-                "subMenus": []
               }
             ]
           },
           {
             "autoId": 100,
-            "parentId": 8,
-            "deep": 3,
-            "orderId": 1,
+            "menuName": "我的销售澄清",
+            "menuCode": "entinfmgr",
+            "menuUrl": "",
+            "subMenus": [
+              {
+                "autoId": 10001,
+                "menuName": "回收报价前澄清管理",
+                "menuCode": "saleClarifyOfferIndex",
+                "menuUrl": "saleClarifyOfferIndex",
+              },
+              {
+                "autoId": 10001,
+                "menuName": "评审中澄清管理",
+                "menuCode": "saleClarifyReviewIndex",
+                "menuUrl": "saleClarifyReviewIndex",
+              }
+            ]
+          },
+          {
+            "autoId": 100,
+            "menuName": "采购成交管理",
+            "menuCode": "",
+            "menuUrl": "",
+            "subMenus": [
+              {
+                "autoId": 10001,
+                "menuName": "成交通知书",
+                "menuCode": "dealnoticeprocurement",
+                "menuUrl": "dealnoticeprocurement",
+              }
+            ]
+          },
+          {
+            "autoId": 100,
+            "menuName": "销售公告",
+            "menuCode": "",
+            "menuUrl": "",
+            "subMenus": [
+              {
+                "autoId": 10001,
+                "menuName": "查询首页",
+                "menuCode": "saleNoticeIndex",
+                "menuUrl": "saleNoticeIndex",
+              }
+            ]
+          },
+          {
+            "autoId": 100,
             "menuName": "竞价管理",
             "menuCode": "entinfmgr",
-            "menuIcon": "",
-            "menuCss": "",
             "menuUrl": "",
-            "updateUid": null,
-            "updateTm": 1511159457000,
-            "disFlag": null,
             "subMenus": [
               {
                 "autoId": 10001,
-                "parentId": 100,
-                "deep": 4,
-                "orderId": 2,
-                "menuName": "竞价管理",
+                "menuName": "查询首页",
                 "menuCode": "priceBindIndex",
-                "menuIcon": "",
-                "menuCss": "",
                 "menuUrl": "priceBindIndex",
-                "updateUid": null,
-                "updateTm": 1511159457000,
-                "disFlag": null,
-                "subMenus": []
               },
             ]
           },
           {
             "autoId": 100,
-            "parentId": 8,
-            "deep": 3,
-            "orderId": 1,
-            "menuName": "采购公告",
-            "menuCode": "entinfmgr",
-            "menuIcon": "",
-            "menuCss": "",
+            "menuName": "我的采购澄清",
+            "menuCode": "",
             "menuUrl": "",
-            "updateUid": null,
-            "updateTm": 1511159457000,
-            "disFlag": null,
             "subMenus": [
               {
                 "autoId": 10001,
-                "parentId": 100,
-                "deep": 4,
-                "orderId": 2,
-                "menuName": "公告首页",
-                "menuCode": "purchaserNoticeIndex",
-                "menuIcon": "",
-                "menuCss": "",
-                "menuUrl": "purchaserNoticeIndex",
-                "updateUid": null,
-                "updateTm": 1511159457000,
-                "disFlag": null,
-                "subMenus": []
+                "menuName": "回收报价前澄清管理",
+                "menuCode": "clarifyOfferIndex",
+                "menuUrl": "clarifyOfferIndex",
+              },
+              {
+                "autoId": 10001,
+                "menuName": "评审中澄清管理",
+                "menuCode": "clarifyReviewIndex",
+                "menuUrl": "clarifyReviewIndex",
+              }
+            ]
+          },
+          {
+            "autoId": 100,
+            "menuName": "销售成交管理",
+            "menuCode": "entinfmgr",
+            "menuUrl": "",
+            "subMenus": [
+              {
+                "autoId": 10001,
+                "menuName": "成交通知书",
+                "menuCode": "saleDealnoticeprocurement",
+                "menuUrl": "saleDealnoticeprocurement",
               }
             ]
           },
@@ -296,239 +270,7 @@ Mock.mock(config.api('', 'menu'), 'get', function () {
               }
             ]
           },
-          {
-            "autoId": 100,
-            "parentId": 8,
-            "deep": 3,
-            "orderId": 1,
-            "menuName": "澄清管理",
-            "menuCode": "entinfmgr",
-            "menuIcon": "",
-            "menuCss": "",
-            "menuUrl": "",
-            "updateUid": null,
-            "updateTm": 1511159457000,
-            "disFlag": null,
-            "subMenus": [
-              {
-                "autoId": 10001,
-                "parentId": 100,
-                "deep": 4,
-                "orderId": 2,
-                "menuName": "报价",
-                "menuCode": "clarifyOfferIndex",
-                "menuIcon": "",
-                "menuCss": "",
-                "menuUrl": "clarifyOfferIndex",
-                "updateUid": null,
-                "updateTm": 1511159457000,
-                "disFlag": null,
-                "subMenus": []
-              },
-              {
-                "autoId": 10001,
-                "parentId": 100,
-                "deep": 4,
-                "orderId": 2,
-                "menuName": "评审",
-                "menuCode": "clarifyReviewIndex",
-                "menuIcon": "",
-                "menuCss": "",
-                "menuUrl": "clarifyReviewIndex",
-                "updateUid": null,
-                "updateTm": 1511159457000,
-                "disFlag": null,
-                "subMenus": []
-              }
-            ]
-          },
-        ]
-      },
-      {
 
-        "autoId": 6,
-        "parentId": 1,
-        "deep": 2,
-        "orderId": 1,
-        "menuName": "销售管理",
-        "menuCode": "startPage|vue",
-        "menuIcon": "",
-        "menuCss": "",
-        "menuUrl": "/saleDealnoticeprocurement",
-        "updateUid": null,
-        "updateTm": 1511159457000,
-        "disFlag": null,
-        "subMenus": [
-          {
-            "autoId": 100,
-            "parentId": 8,
-            "deep": 3,
-            "orderId": 1,
-            "menuName": "成交通知书管理",
-            "menuCode": "entinfmgr",
-            "menuIcon": "",
-            "menuCss": "",
-            "menuUrl": "",
-            "updateUid": null,
-            "updateTm": 1511159457000,
-            "disFlag": null,
-            "subMenus": [
-              {
-                "autoId": 10001,
-                "parentId": 100,
-                "deep": 4,
-                "orderId": 2,
-                "menuName": "销售",
-                "menuCode": "saleDealnoticeprocurement",
-                "menuIcon": "",
-                "menuCss": "",
-                "menuUrl": "saleDealnoticeprocurement",
-                "updateUid": null,
-                "updateTm": 1511159457000,
-                "disFlag": null,
-                "subMenus": []
-              }
-            ]
-          },
-          {
-            "autoId": 100,
-            "parentId": 8,
-            "deep": 3,
-            "orderId": 1,
-            "menuName": "报价管理",
-            "menuCode": "entinfmgr",
-            "menuIcon": "",
-            "menuCss": "",
-            "menuUrl": "",
-            "updateUid": null,
-            "updateTm": 1511159457000,
-            "disFlag": null,
-            "subMenus": [
-              {
-                "autoId": 10001,
-                "parentId": 100,
-                "deep": 4,
-                "orderId": 2,
-                "menuName": "报价管理",
-                "menuCode": "priceOfferIndex",
-                "menuIcon": "",
-                "menuCss": "",
-                "menuUrl": "priceOfferIndex",
-                "updateUid": null,
-                "updateTm": 1511159457000,
-                "disFlag": null,
-                "subMenus": []
-              }
-            ]
-          },
-          {
-            "autoId": 100,
-            "parentId": 8,
-            "deep": 3,
-            "orderId": 1,
-            "menuName": "竞价管理",
-            "menuCode": "entinfmgr",
-            "menuIcon": "",
-            "menuCss": "",
-            "menuUrl": "",
-            "updateUid": null,
-            "updateTm": 1511159457000,
-            "disFlag": null,
-            "subMenus": [
-              {
-                "autoId": 10001,
-                "parentId": 100,
-                "deep": 4,
-                "orderId": 2,
-                "menuName": "竞价管理",
-                "menuCode": "priceBindIndex",
-                "menuIcon": "",
-                "menuCss": "",
-                "menuUrl": "priceBindIndex",
-                "updateUid": null,
-                "updateTm": 1511159457000,
-                "disFlag": null,
-                "subMenus": []
-              },
-            ]
-          },
-          {
-            "autoId": 100,
-            "parentId": 8,
-            "deep": 3,
-            "orderId": 1,
-            "menuName": "销售公告查询",
-            "menuCode": "entinfmgr",
-            "menuIcon": "",
-            "menuCss": "",
-            "menuUrl": "",
-            "updateUid": null,
-            "updateTm": 1511159457000,
-            "disFlag": null,
-            "subMenus": [
-              {
-                "autoId": 10001,
-                "parentId": 100,
-                "deep": 4,
-                "orderId": 2,
-                "menuName": "查询首页",
-                "menuCode": "saleNoticeIndex",
-                "menuIcon": "",
-                "menuCss": "",
-                "menuUrl": "saleNoticeIndex",
-                "updateUid": null,
-                "updateTm": 1511159457000,
-                "disFlag": null,
-                "subMenus": []
-              }
-            ]
-          },
-          {
-            "autoId": 100,
-            "parentId": 8,
-            "deep": 3,
-            "orderId": 1,
-            "menuName": "澄清管理(销售)",
-            "menuCode": "entinfmgr",
-            "menuIcon": "",
-            "menuCss": "",
-            "menuUrl": "",
-            "updateUid": null,
-            "updateTm": 1511159457000,
-            "disFlag": null,
-            "subMenus": [
-              {
-                "autoId": 10001,
-                "parentId": 100,
-                "deep": 4,
-                "orderId": 2,
-                "menuName": "报价",
-                "menuCode": "saleClarifyOfferIndex",
-                "menuIcon": "",
-                "menuCss": "",
-                "menuUrl": "saleClarifyOfferIndex",
-                "updateUid": null,
-                "updateTm": 1511159457000,
-                "disFlag": null,
-                "subMenus": []
-              },
-              {
-                "autoId": 10001,
-                "parentId": 100,
-                "deep": 4,
-                "orderId": 2,
-                "menuName": "评审",
-                "menuCode": "saleClarifyReviewIndex",
-                "menuIcon": "",
-                "menuCss": "",
-                "menuUrl": "saleClarifyReviewIndex",
-                "updateUid": null,
-                "updateTm": 1511159457000,
-                "disFlag": null,
-                "subMenus": []
-              }
-            ]
-          }
         ]
       },
     ],

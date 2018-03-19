@@ -44,7 +44,6 @@
     },
     methods: {
       navClick(nav){
-        this.$router.push(nav.url)
         const nextNav=_.find(this.navData.menus, {'id':nav.id});
         if(nextNav.isVue){
           this.$router.push(nav.url)
