@@ -96,16 +96,16 @@ Mock.mock(config.api('', 'menu'), 'get', function () {
         "subMenus": []
       },
       {
-        "isVue":1,
+
         "autoId": 5,
         "parentId": 1,
         "deep": 2,
         "orderId": 1,
         "menuName": "采购管理",
-        "menuCode": "startPage",
+        "menuCode": "startPage|vue",
         "menuIcon": "",
         "menuCss": "",
-        "menuUrl": "/spubliclist",
+        "menuUrl": "spubliclist",
         "updateUid": null,
         "updateTm": 1511159457000,
         "disFlag": null,
@@ -345,16 +345,16 @@ Mock.mock(config.api('', 'menu'), 'get', function () {
         ]
       },
       {
-        "isVue":1,
+
         "autoId": 6,
         "parentId": 1,
         "deep": 2,
         "orderId": 1,
         "menuName": "销售管理",
-        "menuCode": "startPage",
+        "menuCode": "startPage|vue",
         "menuIcon": "",
         "menuCss": "",
-        "menuUrl": "/saleDealnoticeprocurement",
+        "menuUrl": "saleDealnoticeprocurement",
         "updateUid": null,
         "updateTm": 1511159457000,
         "disFlag": null,

@@ -121,7 +121,7 @@
                 align: 'center',
                 width: 200,
                 render: (h, {row, column}) => {
-                  return this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss");
+                  return h('div', this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss"));
                 }
               },
               {
@@ -168,7 +168,7 @@
                 align: 'center',
                 width: 120,
                 render: (h, {row, column}) => {
-                  return row.inquiryName;
+                  return h('div', row.inquiryName);
                 }
               },
               {
@@ -194,7 +194,7 @@
                 align: 'center',
                 width: 160,
                 render: (h, {row, column}) => {
-                  return this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss");
+                  return h('div', this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss"));
                 }
               },
               {
@@ -215,7 +215,7 @@
                 align: 'center',
                 width: 160,
                 render: (h, {row, column}) => {
-                  return this.moment(row.replyTime).format("YYYY-MM-DD HH:mm:ss");
+                  return h('div', this.moment(row.replyTime).format("YYYY-MM-DD HH:mm:ss"));
                 }
               },
               {

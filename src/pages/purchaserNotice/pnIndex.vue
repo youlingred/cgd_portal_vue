@@ -81,7 +81,7 @@
               key: 'reqArrivalDate',
               width: 180,
               render: (h, {row, column}) => {
-                return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
+                return h('div',this.moment(row.reqArrivalDate).format("YYYY-MM-DD HH:mm:ss"));
               }
             },
             {
@@ -89,7 +89,7 @@
               key: 'publishTime',
               width: 180,
               render: (h, {row, column}) => {
-                return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
+                return h('div',this.moment(row.publishTime).format("YYYY-MM-DD HH:mm:ss"));
               }
             },
             {
@@ -97,7 +97,7 @@
               key: 'quoteEndDate',
               width: 180,
               render: (h, {row, column}) => {
-                return this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss");
+                return h('div',this.moment(row.quoteEndDate).format("YYYY-MM-DD HH:mm:ss"));
               }
             },
             {
@@ -258,8 +258,8 @@
           this.$alert(this.util.lang.alertSelectionOnlyOne,'提示');
           return;
         };
-        this.axios.post(this.appConfig.api('inquiry/quote/addQuotationBill'), 
-        { 
+        this.axios.post(this.appConfig.api('inquiry/quote/addQuotationBill'),
+        {
           inquiryId:this.selections[0].inquiryId,
           iqrSeq:this.selections[0].iqrSeq,
           purchaseCategory:this.selections[0].purchaseCategory

@@ -126,7 +126,7 @@
             activeMenu = item.autoId;
             subMenus = item.subMenus;
           }
-          navMenus.push({id: item.autoId, name: item.menuName, url: item.menuUrl,subMenus:item.subMenus,isVue:item.isVue})
+          navMenus.push({id: item.autoId, name: item.menuName, url: item.menuUrl,subMenus:item.subMenus,isVue:(item.menuCode.split('|')[1]&&item.menuCode.split('|')[1]==='vue')})
         })
         this.navData = {
           activeMenu: activeMenu,

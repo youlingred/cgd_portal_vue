@@ -163,7 +163,7 @@
                 width: 130,
                 key: 'billCreateTime',
                 render: (h, {row, column}) => {
-                  return this.moment(row.billCreateTime).format("YYYY-MM-DD");
+                  return h('div',this.moment(row.billCreateTime).format("YYYY-MM-DD"));
                 }
               },
               {
@@ -256,7 +256,7 @@
                 width: 130,
                 key: 'billCreateTime',
                 render: (h, {row, column}) => {
-                  return this.moment(row.billCreateTime).format("YYYY-MM-DD");
+                  return h('div',this.moment(row.billCreateTime).format("YYYY-MM-DD"));
                 }
               },
               {

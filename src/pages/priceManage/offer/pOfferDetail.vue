@@ -446,7 +446,7 @@
                   align: 'center',
                   width: 100,
                   render: (h, {row, column}) => {
-                    return this.accounting.formatMoney(row.quoteAmount, '', 2);
+                    return h('div',this.accounting.formatMoney(row.quoteAmount, '', 2));
                   }
                 },
                 {
@@ -553,7 +553,7 @@
                   align: 'center',
                   width: 100,
                   render: (h, {row, column}) => {
-                    return this.accounting.formatMoney(row.quoteAmount, '', 2);
+                    return h('div',this.accounting.formatMoney(row.quoteAmount, '', 2));
                   }
                 },
                 {
@@ -661,7 +661,7 @@
                   align: 'center',
                   width: 100,
                   render: (h, {row, column}) => {
-                    return this.accounting.formatMoney(row.quoteAmount, '', 2);
+                    return h('div',this.accounting.formatMoney(row.quoteAmount, '', 2));
                   }
                 },
                 {
