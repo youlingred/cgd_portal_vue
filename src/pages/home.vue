@@ -44,7 +44,6 @@
     },
     methods: {
       navClick(nav){
-        this.$router.push(nav.url)
         const nextNav=_.find(this.navData.menus, {'id':nav.id});
         if(nextNav.isVue){
           this.$router.push(nav.url)
@@ -126,7 +125,7 @@
             activeMenu = item.autoId;
             subMenus = item.subMenus;
           }
-          navMenus.push({id: item.autoId, name: item.menuName, url: item.menuUrl,subMenus:item.subMenus,isVue:(item.menuCode.split('|')[1]&&item.menuCode.split('|')[1]==='vue')})
+          navMenus.push({id: item.autoId, name: item.menuName, url: item.menuUrl,subMenus:item.subMenus,isVue:item.menuCode.split('|')[1]})
         })
         this.navData = {
           activeMenu: activeMenu,

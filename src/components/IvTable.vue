@@ -140,7 +140,7 @@
             console.log('query url:', this.m_url);
             console.log('query param:', param);
             this.axios.post(this.m_url, param)
-              .then((response) => {
+              .then(response => {
                 console.log(response);
                 if (this.responseHandler) {
                   response = this.responseHandler(response);
@@ -150,8 +150,8 @@
                 this.m_total = response.recordsTotal;
                 resolve(response.rows)
               })
-              .catch(function (error) {
-                refect(error)
+              .catch(error=> {
+                console.log('------',error)
               });
           }else{
             alert('查询列表数据url不能为空!')
