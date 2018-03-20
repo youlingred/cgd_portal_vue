@@ -4,7 +4,7 @@
       <ul class="shortcut-left fix">
         <li class="user">
           <a :href="userStateUrl" class="header-login btn-login">{{ userStateName }}</a>
-          <a :href="loginOrOutUrl" class="login btn-login">{{ loginOrOutName }}</a>
+          <a :href="loginOrOutUrl" :target="NODE_ENV==='production'?'_self':'_blank'" class="login btn-login">{{ loginOrOutName }}</a>
         </li>
         <li class="msg" v-if="isLogin"><a v-bind:href="msgUrl" target="_blank">
           <!--<svg>-->
@@ -49,26 +49,6 @@
         type: Boolean,
         default: false,
       },
-      //登录URL地址
-      loginUrl: {
-        default: 'regUrl'
-      },
-      //登出URL地址
-      logoutUrl: {
-        default: 'regUrl'
-      },
-      //注册URL地址
-      regUrl: {
-        default: 'regUrl'
-      },
-      //用户信息URL地址
-      memberInfoUrl: {
-        default: 'regUrl'
-      },
-      //消息URL地址
-      msgUrl: {
-        default: 'regUrl'
-      },
       msgNum: {
         type: [String, Number],
         default: 0
@@ -85,40 +65,66 @@
       userName:{
         type: [String],
         default: ''
-      },
-      //菜单
-      menus: {
-        type: Array,
-        default: function () {
-          return [
-            {
-              name: '商城首页',
-              url: '',
-              requireLogin: false,
-            },
-            {
-              name: '我的E购',
-              url: '',
-              requireLogin: false,
-            },
-            {
-              name: '我的购物车',
-              url: '',
-              requireLogin: false,
-            },
-            {
-              name: '帮助中心',
-              url: '',
-              requireLogin: false,
-            }
-          ]
-        }
       }
     },
     data() {
       return {}
     },
     computed: {
+      NODE_ENV(){
+        return process.env.NODE_ENV;
+      },
+      baseUrl(){
+        if (process.env.NODE_ENV === 'production') {
+          return window.location.origin+'/';
+        }
+        return this.appConfig.apiBaseurl();
+      },
+      //菜单
+      menus(){
+          return [
+            {
+              name: '商城首页',
+              url: this.baseUrl,
+              requireLogin: false,
+            },
+            {
+              name: '我的E购',
+              url: `${this.baseUrl}html/supplier/memberCenter.html?pageTag=我的首页&root_menu_code=startPage`,
+              requireLogin: true,
+            },
+            {
+              name: '我的购物车',
+              url: `${this.baseUrl}html/portal/cart.html?type=2`,
+              requireLogin: false,
+            },
+            {
+              name: '帮助中心',
+              url: `${this.baseUrl}html/portal/helpCenter.html`,
+              requireLogin: false,
+            }
+          ]
+      },
+      //登录URL地址
+      loginUrl(){
+        return `${this.baseUrl}rest/skip?callBackUrl=${window.location.origin}`
+      },
+      //登出URL地址
+      logoutUrl(){
+        return `${this.baseUrl}j_spring_cas_security_logout`
+      },
+      //注册URL地址
+      regUrl(){
+        return `${this.baseUrl}html/portal/register.html`
+      },
+      //用户信息URL地址
+      memberInfoUrl(){
+        return `${this.baseUrl}html/portal/information.html`
+      },
+      //消息URL地址
+      msgUrl(){
+        return `${this.baseUrl}html/portal/information.html`
+      },
       userStateUrl: function () {
         if (this.isLogin) {
           return this.memberInfoUrl

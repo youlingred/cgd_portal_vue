@@ -1,5 +1,5 @@
 const config = {
-  prov: 5,
+  prov: 3,
   apiBaseurl () {
     switch (this.prov) {
       case 3:
@@ -7,7 +7,7 @@ const config = {
       case 4:
         return 'http://127.0.0.1:9081/';
       case 5:
-        return 'http://47.94.134.239:8080';
+        return 'http://47.94.134.239:8080/';
       default:
         return 'http://39.107.71.15:8080/';
     }

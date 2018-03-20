@@ -33,8 +33,8 @@
         headerData: {
           isLogin: '',
           userName: '',
-          msgNum: 1,
-          goodsNum: 2
+          msgNum: 0,
+          goodsNum: 0
         },
       }
     },
@@ -56,46 +56,41 @@
         //获取用户信息
         this.axios.post(this.appConfig.api('nouser/SelectUserInfoBusiService'))
           .then((response) => {
-            console.log('获取用户信息',response);
+            console.log('获取用户信息', response);
             var data = response;
             this.$store.dispatch('setUserInfo', data);
-            this.headerData.userName=data.userName;
-            this.headerData.isLogin=data.login;
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        //获取购物车商品数量
-        this.axios.post(this.appConfig.api('nouser/SelectTypeByUserIdBusiService'))
-          .then((response) => {
-            console.log('获取购物车商品数量:', response);
-            var data = response;
-            this.headerData.goodsNum = data.count;
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        //获取站内消息数量
-        this.axios.post(this.appConfig.api('nouser/SelectUnReadCountBusiService'))
-          .then((response) => {
-            console.log('获取站内消息数量:', response);
-            var data = response;
-            this.headerData.msgNum = data.count;
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        //获取菜单数据
-        console.log(this.appConfig.api('', 'menu'))
-        this.axios.get(this.appConfig.api('', 'menu'))
-          .then((response) => {
-            console.log('获取菜单数据:', response);
-            let data = response;
-            this.generateNav(data)
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+            this.headerData.userName = data.userName;
+            this.headerData.isLogin = data.login;
+          }).then(() => {
+          if (this.headerData.isLogin) {
+            //获取菜单数据
+            this.axios.get(this.appConfig.api('', 'menu'))
+              .then((response) => {
+                console.log('获取菜单数据:', response);
+                let data = response;
+                this.generateNav(data)
+              })
+            //获取购物车商品数量
+            this.axios.post(this.appConfig.api('nouser/SelectTypeByUserIdBusiService'))
+              .then((response) => {
+                console.log('获取购物车商品数量:', response);
+                var data = response;
+                this.headerData.goodsNum = data.count;
+              })
+            //获取站内消息数量
+            this.axios.post(this.appConfig.api('nouser/SelectUnReadCountBusiService'))
+              .then((response) => {
+                console.log('获取站内消息数量:', response);
+                var data = response;
+                this.headerData.msgNum = data.count;
+              })
+          } else {
+            if (process.env.NODE_ENV === 'production') {
+              window.location.href = window.location.origin;
+            }
+          }
+        })
+
       },
       generateNav(data) {
         let activeMenu;
