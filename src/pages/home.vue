@@ -27,31 +27,28 @@
     data() {
       return {
         navData: {},
-        leftMenuData:{
-          menus:[]
-        }
-      }
-    },
-    computed:{
-      headerData(){
-        return{
-          isLogin: this.$store.state.userInfo.login,
-          userName: this.$store.state.userInfo.userName,
+        leftMenuData: {
+          menus: []
+        },
+        headerData: {
+          isLogin: '',
+          userName: '',
           msgNum: 1,
           goodsNum: 2
-        }
-      },
+        },
+      }
     },
+    computed: {},
     methods: {
-      navClick(nav){
-        const nextNav=_.find(this.navData.menus, {'id':nav.id});
-        if(nextNav.isVue){
+      navClick(nav) {
+        const nextNav = _.find(this.navData.menus, {'id': nav.id});
+        if (nextNav.isVue) {
           this.$router.push(nav.url)
           // console.log('%c env:','background:#aaa;color:#bada55',nextNav)
           this.generateLeftMenu(nextNav.subMenus)
-        }else{
+        } else {
           // console.log('%c env:','background:#aaa;color:#bada55',location.origin+nextNav.url)
-          window.location.href=location.origin+nextNav.url;
+          window.location.href = location.origin + nextNav.url;
         }
 
       },
@@ -59,9 +56,11 @@
         //获取用户信息
         this.axios.post(this.appConfig.api('nouser/SelectUserInfoBusiService'))
           .then((response) => {
-            console.log(response);
+            console.log('获取用户信息',response);
             var data = response;
-            this.$store.dispatch('setUserInfo',data)
+            this.$store.dispatch('setUserInfo', data);
+            this.headerData.userName=data.userName;
+            this.headerData.isLogin=data.login;
           })
           .catch(function (error) {
             console.log(error);
@@ -69,7 +68,7 @@
         //获取购物车商品数量
         this.axios.post(this.appConfig.api('nouser/SelectTypeByUserIdBusiService'))
           .then((response) => {
-            console.log(response);
+            console.log('获取购物车商品数量:', response);
             var data = response;
             this.headerData.goodsNum = data.count;
           })
@@ -79,18 +78,18 @@
         //获取站内消息数量
         this.axios.post(this.appConfig.api('nouser/SelectUnReadCountBusiService'))
           .then((response) => {
-            console.log(response);
+            console.log('获取站内消息数量:', response);
             var data = response;
-            this.headerData.msgNum = data;
+            this.headerData.msgNum = data.count;
           })
           .catch(function (error) {
             console.log(error);
           });
-        //获取菜单消息数量
+        //获取菜单数据
         console.log(this.appConfig.api('', 'menu'))
         this.axios.get(this.appConfig.api('', 'menu'))
           .then((response) => {
-            console.log(response);
+            console.log('获取菜单数据:', response);
             let data = response;
             this.generateNav(data)
           })
@@ -98,25 +97,25 @@
             console.log(error);
           });
       },
-      generateNav(data){
+      generateNav(data) {
         let activeMenu;
         let navMenus = [];
         let subMenus = [];
         // console.log('%c this.$route:','background:#aaa;color:#bada55',this.$route)
-        data.forEach(item=>{
-          item.subMenus.forEach(child=>{
-            child.subMenus.forEach(sec=>{
-              if(sec.menuCode===this.$route.name){
-                activeMenu=item.autoId;
-                subMenus=item.subMenus;
+        data.forEach(item => {
+          item.subMenus.forEach(child => {
+            child.subMenus.forEach(sec => {
+              if (sec.menuCode === this.$route.name) {
+                activeMenu = item.autoId;
+                subMenus = item.subMenus;
                 return false;
               }
             })
-            if(activeMenu){
+            if (activeMenu) {
               return false;
             }
           });
-          if(activeMenu){
+          if (activeMenu) {
             return false;
           }
         });
@@ -125,7 +124,13 @@
             activeMenu = item.autoId;
             subMenus = item.subMenus;
           }
-          navMenus.push({id: item.autoId, name: item.menuName, url: item.menuUrl,subMenus:item.subMenus,isVue:item.menuCode.split('|')[1]})
+          navMenus.push({
+            id: item.autoId,
+            name: item.menuName,
+            url: item.menuUrl,
+            subMenus: item.subMenus,
+            isVue: item.menuCode.split('|')[1]
+          })
         })
         this.navData = {
           activeMenu: activeMenu,
@@ -133,14 +138,14 @@
         }
         this.generateLeftMenu(subMenus)
       },
-      generateLeftMenu(subMenus){
+      generateLeftMenu(subMenus) {
         let leftMenus = [];
         subMenus.forEach(item => {
           let menu = {
             isShow: true,
             code: item.menuCode,
             name: item.menuName,
-            url:item.menuUrl,
+            url: item.menuUrl,
             subMenus: []
           };
           if (item.subMenus) {
@@ -148,21 +153,21 @@
               let subMenu = {
                 code: child.menuCode,
                 name: child.menuName,
-                url:child.menuUrl
+                url: child.menuUrl
               };
-              if(this.$route.name===subMenu.url)(
-                this.$store.dispatch('setActiveLeftMenu',subMenu)
+              if (this.$route.name === subMenu.url) (
+                this.$store.dispatch('setActiveLeftMenu', subMenu)
               )
               menu.subMenus.push(subMenu)
             })
           }
           leftMenus.push(menu)
         });
-        this.leftMenuData.menus=leftMenus
+        this.leftMenuData.menus = leftMenus
         // console.log('leftMenuData',this.leftMenuData)
       }
     },
-    created(){
+    created() {
       this.getHeaderData();
     }
   }
