@@ -1,7 +1,7 @@
 import Mock from 'mockjs'
 import config from './../assets/js/config.js';
 
-Mock.mock(config.api('nouser/SelectUserInfoBusiService1'), 'post', function () {
+Mock.mock(config.api('nouser/SelectUserInfoBusiService---close'), 'post', function () {
   return {
     "respDesc": null,
     "data": {
@@ -25,13 +25,13 @@ Mock.mock(config.api('nouser/SelectUserInfoBusiService1'), 'post', function () {
     "respCode": "0000"
   }
 })
-Mock.mock(config.api('nouser/SelectTypeByUserIdBusiService'), 'post', function () {
+Mock.mock(config.api('nouser/SelectTypeByUserIdBusiService---close'), 'post', function () {
   return {"respDesc": "查询购物车商品种类成功", "data": {"count": 4, "login": true}, "respCode": "0000"}
 })
-Mock.mock(config.api('nouser/SelectUnReadCountBusiService'), 'post', function () {
+Mock.mock(config.api('nouser/SelectUnReadCountBusiService---close'), 'post', function () {
   return {"respDesc": "查询站内信总未读数量成功", "data": 0, "respCode": "0000"}
 })
-Mock.mock(config.api('', 'menu111'), 'get', function () {
+Mock.mock(config.api('', 'menu'), 'get', function () {
   return {
     "respDesc": "success",
     "data": [
