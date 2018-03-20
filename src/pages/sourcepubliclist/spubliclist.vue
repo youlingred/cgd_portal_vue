@@ -85,7 +85,7 @@
       //table初始化数据
       table() {
         return {
-          url: this.appConfig.api('/service/routing/plan/qryVendorSingleSourcePublicObjectionList'),
+          url: this.appConfig.api('plan/qryVendorSingleSourcePublicObjectionList'),
           pageNo: 1,
           height: 400,
           queryParam: function (param) {
