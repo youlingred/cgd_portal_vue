@@ -766,7 +766,8 @@
         const list = this.$refs.table.all;
         let validate = true;
         _.every(list, value => {
-          if (value && value.brand && value.manufacturer && value.quotePrice && value.deliveryDatePromise) {
+          if ((this.status==1&&value && value.brand && value.manufacturer && value.quotePrice && value.deliveryDatePromise)
+              ||(this.status>2&&value && value.quotePrice && value.deliveryDatePromise)) {
             return true
           } else {
             validate = false;
