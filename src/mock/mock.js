@@ -593,36 +593,36 @@ Mock.mock(config.api('testDylyListPage'), 'post', function () {
     data:{
       "rows": [
         {
-          planName: '团建',
-          publishUser: '老铁',
+          planName: '老团长',
+          publishUser: '哥哥',
           publishDate: 1514192693000,
           objectionDate: 1514192693000,
           status: 1
         },
         {
-          planName: '团建',
-          publishUser: '老铁',
+          planName: '老子',
+          publishUser: '弟弟',
           publishDate: 1514192693000,
           objectionDate: 1514192693000,
           status: 1
         },
         {
-          planName: '团建',
-          publishUser: '老铁',
+          planName: '孟子',
+          publishUser: '姐姐',
           publishDate: 1514192693000,
           objectionDate: 1514192693000,
           status: 1
         },
         {
-          planName: '团建',
-          publishUser: '老铁',
+          planName: '孙子',
+          publishUser: '妹妹',
           publishDate: 1514192693000,
           objectionDate: 1514192693000,
           status: 1
         },
         {
-          planName: '团建',
-          publishUser: '老铁',
+          planName: '孟子',
+          publishUser: '侄子',
           publishDate: 1514192693000,
           objectionDate: 1514192693000,
           status: 1

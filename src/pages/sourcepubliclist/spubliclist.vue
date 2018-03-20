@@ -3,8 +3,10 @@
     <detail ref="send" v-bind="formInitDataSend">
       <buttons-operator type="top"
                         algin="left"
-                        :buttons="[{label:'搜索',type:'primary',click:search},
-                          {label:'重置',type:'info',click:resetForm}]"/>
+                        :buttons="[
+                          {label:'搜索',type:'primary',click:search},
+                          {label:'重置',type:'info',click:resetForm}
+                          ]"/>
     </detail>
     <buttons-operator type="top"
                       algin="right"
@@ -29,7 +31,6 @@
       }
     },
     created(){
-
     },
     computed: {
       //发出澄清表单初始化数据
@@ -84,7 +85,7 @@
       //table初始化数据
       table() {
         return {
-          url: this.appConfig.api('testDylyListPage'),
+          url: this.appConfig.api('/service/routing/plan/qryVendorSingleSourcePublicObjectionList'),
           pageNo: 1,
           height: 400,
           queryParam: function (param) {
@@ -130,7 +131,22 @@
             {
               title: '受理状态',
               key: 'status',
-              formatter: function (row, column, value) {
+              render: (h,{row,column})=>{
+                let str='';
+                switch (row.status) {
+                  case 1:
+                    str='受理中';
+                    break;
+                  case 2:
+                    str='已受理';
+                    break;
+                  case 3:
+                    str='驳回';
+                    break;
+                }
+                return h('div',str)
+              }
+              /*formatter: function (row, column, value) {
                 switch (value) {
                   case 1:
                     return '处理中';
@@ -142,7 +158,7 @@
                     return '驳回';
                     break;
                 }
-              }
+              }*/
             }
           ],
         }

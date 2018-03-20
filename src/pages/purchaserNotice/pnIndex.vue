@@ -142,7 +142,6 @@
                   placeholder: '请选择',
                   prop: 'professionalOrgId',
                   extendParam: {
-                    remote: true,
                     filterable: true,
                     remote: true,
                     remoteMethod: this.query,
