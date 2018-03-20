@@ -4,7 +4,7 @@
     <IvTable ref="table" auto-load="false" v-bind="table"/>
     <buttons-operator v-if="status==0" type="bottom"
                       fix="true"
-                      :buttons="[{label:'提交',type:'primary',click:sumbit},{label:'发起澄清',type:'primary',click:fire},{label:'返回',type:'info',click:back}]"/>
+                      :buttons="[{label:'保存',type:'primary',click:save},{label:'提交',type:'primary',click:sumbit},{label:'发起澄清',type:'primary',click:fire},{label:'返回',type:'info',click:back}]"/>
     <buttons-operator v-if="status==1" type="bottom"
                       fix="true"
                       :buttons="[{label:'撤回',type:'danger',click:revoke},{label:'发起澄清',type:'primary',click:fire},{label:'返回',type:'info',click:back}]"/>
@@ -746,28 +746,31 @@
         });
 
       },
+      //FIXME 保存
+      save() {
+        this.validateBaseInfo('save');
+      },
       //FIXME 提交
       sumbit() {
-        this.validateBaseInfo();
+        this.validateBaseInfo('sumbit');
       },
       //FIXME 校验基本信息
-      validateBaseInfo() {
-        console.log('validateBaseInfo')
+      validateBaseInfo(type) {
+        console.log('validateBaseInfo');
         this.$refs.baseInfo.forms[0].validate((valid) => {
           if (valid) {
-            this.validateList();
+            this.validateList(type);
           } else {
             this.$alert('基本信息不完整,请填写完整!', '提示');
           }
         });
       },
       //FIXME 校验明细信息
-      validateList() {
+      validateList(type) {
         const list = this.$refs.table.all;
         let validate = true;
         _.every(list, value => {
-          if ((this.status==1&&value && value.brand && value.manufacturer && value.quotePrice && value.deliveryDatePromise)
-              ||(this.status>2&&value && value.quotePrice && value.deliveryDatePromise)) {
+          if (value && value.quotePrice && value.deliveryDatePromise) {
             return true
           } else {
             validate = false;
@@ -775,13 +778,13 @@
           }
         })
         if (validate) {
-          this.validateSucess();
+          this.validateSucess(type);
         } else {
           this.$alert('明细信息不完整,请填写完整!', '提示');
         }
       },
       //FIXME 校验全部通过
-      validateSucess() {
+      validateSucess(type) {
         //处理化基本信息数据
         this.util.dataAdapter(this.form, ['name', 'url'], ['attachmentName', 'attachmentUrl'])
         //待提交数据整合
@@ -812,9 +815,16 @@
           }
         });
         console.log(sumbitData);
+        let url;
+        if(type==='sumbit'){
+          url='inquiry/quote/submitIqrQuote'
+        }else if(type==='save'){
+          url='inquiry/quote/saveIqrQuote'
+        };
         this.axios.post(this.appConfig.api('inquiry/quote/submitIqrQuote'), sumbitData)
           .then((response) => {
             console.log(response);
+            this.back();
           })
           .catch(function (error) {
             console.log(error);
