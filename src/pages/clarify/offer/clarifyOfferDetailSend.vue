@@ -51,7 +51,7 @@
                 {
                   type: 'label',
                   label: '澄清内容',
-                  prop: 'relReplyContent',
+                  prop: 'questionContent',
                   extendParam: {
                     autosize: {minRows: 2, maxRows: 4}
                   }
@@ -77,7 +77,7 @@
                 {
                   type: 'label',
                   label: '澄清属性',
-                  prop: '',
+                  prop: 'questionStageName',
                 },
                 {
                   type: 'label',
