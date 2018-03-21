@@ -23,16 +23,6 @@
         type:Array,
         default(){
           return [
-            {
-              id:'',
-              url: 'test',
-              name: 'test'
-            },
-            {
-              id:'',
-              url: 'test1',
-              name: 'test1'
-            }
           ]
         }
       }
