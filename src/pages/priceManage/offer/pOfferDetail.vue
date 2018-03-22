@@ -821,7 +821,7 @@
         }else if(type==='save'){
           url='inquiry/quote/saveIqrQuote'
         };
-        this.axios.post(this.appConfig.api('inquiry/quote/submitIqrQuote'), sumbitData)
+        this.axios.post(this.appConfig.api(url), sumbitData)
           .then((response) => {
             console.log(response);
             this.back();
