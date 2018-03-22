@@ -19,10 +19,10 @@
       return {
         data1:{},
         data2:{
-          '1': '*****',
+         /* '1': '*****',
           '2': 'XXXXXXXX',
           files:[{name:'文件测试',url:'test'}]
-        }
+        */}
       };
     },
     computed:{
@@ -38,32 +38,32 @@
                 {
                   type:'label',
                   label:'计划名称',
-                  prop:'1'
+                  prop:'planName'
                 },
                 {
                   type:'label',
                   label:'项目单位',
-                  prop:'2'
+                  prop:'purchaseAccountName'
                 },
                 {
                   type:'label',
                   label:'拟采供应商',
-                  prop:'3'
+                  prop:'supplierName'
                 },
                 {
                   type:'label',
                   label:'采购内容及范围',
-                  prop:'4'
+                  prop:'content'
                 },
                 {
                   type:'label',
                   label:'单一来源采购理由',
-                  prop:'5'
+                  prop:'purchaseMethodReasonName'
                 },
                 {
                   type:'label',
                   label:'公示起止时间',
-                  prop:'6',
+                  prop:'publicityStartDate',
                   formatter(value){
                     return this.moment(value).format("YYYY-MM-DD HH:mm:ss")
                   }
@@ -71,32 +71,32 @@
                 {
                   type:'label',
                   label:'项目单位',
-                  prop:'7'
+                  prop:'purchaseAccountName'
                 },
                 {
                   type:'label',
                   label:'联系人',
-                  prop:'8'
+                  prop:'contactName'
                 },
                 {
                   type:'label',
                   label:'联系电话',
-                  prop:'9'
+                  prop:'contactMobile'
                 },
                 {
                   type:'label',
                   label:'采购管理机构',
-                  prop:'10'
+                  prop:'professionalOrgName'
                 },
                 {
                   type:'label',
                   label:'联系人',
-                  prop:'11'
+                  prop:'proContactName'
                 },
                 {
                   type:'label',
                   label:'联系电话',
-                  prop:'12'
+                  prop:'proContactMobile'
                 }
               ]
             },
@@ -109,32 +109,32 @@
                 {
                   type:'label',
                   label:'异议理由',
-                  prop:'1'
+                  prop:'objectionReason'
                 },
                 {
                   type:'label',
                   label:'异议提出时间',
-                  prop:'2'
+                  prop:'objectionDate'
                 },
                 {
                   type:'file',
                   label:'书面异议函',
-                  prop:'files'
+                  prop:'attachments'
                 },
                 {
                   type:'file',
                   label:'相关依据及证明材料',
-                  prop:'files'
+                  prop:'attachments'
                 },
                 {
                   type:'file',
                   label:'身份证',
-                  prop:'files'
+                  prop:'attachments'
                 },
                 {
                   type:'file',
                   label:'授权委托书',
-                  prop:'files'
+                  prop:'attachments'
                 }
               ]
             }
@@ -151,13 +151,28 @@
       },
       _initdata() {
         //获取公示信息
-        this.axios.post(this.appConfig.api('testcommenNotice'),{})
+        this.axios.post(this.appConfig.api('plan/qrySingleSourcePublicMsg'),{
+          publicityId:this.$route.params.publicityId
+        })
           .then((response) => {
+            console.log(response);
             this.data1=response;
           })
           .catch(function (error) {
             console.log(error);
           });
+        //获取异常信息
+        this.axios.post(this.appConfig.api('plan/qryVendorSingleSourcePublicObjectionDetailMsg'),{
+          publicityObjectionId:this.$route.params.publicityObjectionId
+        })
+          .then((response) => {
+            console.log(response);
+            this.data2=response;
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
       }
     },
     components:{

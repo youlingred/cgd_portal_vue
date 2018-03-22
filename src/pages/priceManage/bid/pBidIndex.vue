@@ -99,7 +99,6 @@
                   extendParam: {
                     remote: true,
                     filterable: true,
-                    remote: true,
                     remoteMethod: this.queryProfessionalOrg,
                     options: this.options
                   }

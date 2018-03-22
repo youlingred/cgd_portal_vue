@@ -12,18 +12,28 @@
         <buttons-operator type="top"
                           algin="left"
                           :switchFlag.sync="flag"
-                          :buttons="[{label:'查询',type:'primary',click:search},
-                          {label:'重置',type:'info',click:reset},{type:'switch'}]"/>
+                          :buttons="[
+                            {label:'查询',type:'primary',click:search},
+                            {label:'重置',type:'info',click:reset},
+                            {type:'switch'}
+                            ]"/>
       </detail>
 
 
     </el-card>
     <buttons-operator v-if="activeName==='offering'" type="top"
                       algin="right"
-                      :buttons="[{label:'发起澄清',type:'primary',click:createClarify},{label:'导出',type:'primary',click:exportDoc}]"/>
+                      :buttons="[
+                        {label:'发起澄清',type:'primary',click:createClarify},
+                        {label:'导出',type:'primary',click:exportDoc}
+                        ]"/>
     <buttons-operator v-if="activeName==='offeried'" type="top"
                       algin="right"
-                      :buttons="[{label:'发起澄清',type:'primary',click:createClarify},{label:'撤回',type:'primary',click:revoke},{label:'导出',type:'primary',click:exportDoc}]"/>
+                      :buttons="[
+                        {label:'发起澄清',type:'primary',click:createClarify},
+                        {label:'撤回',type:'primary',click:revoke},
+                        {label:'导出',type:'primary',click:exportDoc}
+                        ]"/>
 
     <IvTable ref="table" v-bind="table" @on-row-click="cellClickHandler" @selectionChange="selectionChange" @pageChange="pageChange"/>
   </div>
@@ -100,7 +110,6 @@
                   extendParam: {
                     remote: true,
                     filterable: true,
-                    remote: true,
                     remoteMethod: this.queryProfessionalOrg,
                     options: this.options
                   }
@@ -144,6 +153,7 @@
                   label: '发布开始日期',
                   placeholder: '请输入开始时间',
                   prop: 'publishTimeStart',
+                  /*控制展开与收起功能*/
                   switchFlag: this.flag,
                   extendParam: {
                     editable: false,

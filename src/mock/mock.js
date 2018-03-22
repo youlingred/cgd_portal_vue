@@ -31,7 +31,7 @@ Mock.mock(config.api('nouser/SelectTypeByUserIdBusiService---close'), 'post', fu
 Mock.mock(config.api('nouser/SelectUnReadCountBusiService---close'), 'post', function () {
   return {"respDesc": "查询站内信总未读数量成功", "data": 0, "respCode": "0000"}
 })
-Mock.mock(config.api('', 'menu111'), 'get', function () {
+Mock.mock(config.api('', 'menu'), 'get', function () {
   return {
     "respDesc": "success",
     "data": [

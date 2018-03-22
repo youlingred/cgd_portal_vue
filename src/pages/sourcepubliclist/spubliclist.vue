@@ -63,7 +63,7 @@
                   extendParam: {
                     options : [
                       {
-                        label: '受理中',
+                        label: '处理中',
                         value: 1
                       },
                       {
@@ -92,9 +92,10 @@
             console.log('queryParam:', param)
             return _.assign({test: 1}, param);
           },
-          responseHandler: function (val) {
-            console.log('responseHandler:', val)
-            return val;
+          responseHandler: (val)=>{
+            console.log('responseHandler:', val);
+            if(!this.formtable.name&&!this.formtable.project&&!this.formtable.status)return val;
+            return this.filterData(this.formtable, val);
           },
           columns: [
             {
@@ -112,7 +113,7 @@
             },
             {
               title: '发布人',
-              key: 'publishUser'
+              key: 'createUserName'
             },
             {
               title: '公告发布时间',
@@ -130,23 +131,8 @@
             },
             {
               title: '受理状态',
-              key: 'status',
-              render: (h,{row,column})=>{
-                let str='';
-                switch (row.status) {
-                  case 1:
-                    str='受理中';
-                    break;
-                  case 2:
-                    str='已受理';
-                    break;
-                  case 3:
-                    str='驳回';
-                    break;
-                }
-                return h('div',str)
-              }
-              /*formatter: function (row, column, value) {
+              key: 'dealStatusName',
+              formatter: function (row, column, value) {
                 switch (value) {
                   case 1:
                     return '处理中';
@@ -158,7 +144,7 @@
                     return '驳回';
                     break;
                 }
-              }*/
+              }
             }
           ],
         }
@@ -167,8 +153,10 @@
 
     methods: {
       cellClickHandler(row){
-        console.log(row)
-        this.$router.push({name:'spublicdetails'})
+        this.$router.push({name:'spublicdetails',params:{
+            publicityId:row.publicityId,
+            publicityObjectionId:row.publicityObjectionId
+          }})
       },
       search () {
         this.$refs.test.query(this.formtable);
@@ -178,6 +166,43 @@
       },
       exportFunc () {
         console.log(this.$refs.test.m_selection);
+      },
+      /*数据筛选：多判断条件式*/
+      filterData(param={},obj){
+        /*根据计划名称筛选*/
+        let {name,project,status}=param;
+        let {rows}=obj;
+        if(this.formtable.name&&this.formtable.name!=''){
+          obj={...obj,rows:rows.filter((item, index)=>{
+              //名称筛选
+              return item.planName.indexOf(this.formtable.name)>-1
+            })}
+        }
+        /*根据项目单位筛选*/
+        if(this.formtable.project&&this.formtable.project!=''){
+          obj={...obj,rows:rows.filter((item, index)=>{
+              return item.purchaseAccountName.indexOf(this.formtable.project)>-1
+            })}
+        }
+        /*根据受理状态筛选*/
+        if(this.formtable.status&&this.formtable.status!=''){
+          let str='';
+          switch (this.formtable.status) {
+            case 1:
+              str='处理中';
+              break;
+            case 2:
+              str='已受理';
+              break;
+            case 3:
+              str='驳回';
+              break;
+          }
+          obj={...obj,rows:rows.filter((item, index)=>{
+              return item.dealStatusName.indexOf(str)>-1
+            })}
+        }
+        return obj
       }
     },
     components: {

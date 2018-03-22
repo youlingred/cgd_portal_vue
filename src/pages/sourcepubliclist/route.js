@@ -4,7 +4,7 @@ const spubliclist =()=>import( './spubliclist')
 export default [
   //FIXME 单一来源公示采购公告
   {
-    path: 'spublicdetails',
+    path: 'spublicdetails/:publicityId/:publicityObjectionId',
     name: 'spublicdetails',
     component: spublicdetails
   },
