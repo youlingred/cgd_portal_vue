@@ -240,6 +240,12 @@
                 children: [
                   {
                     type: 'input',
+                    label: '询价单编号',
+                    placeholder: '请输入询价单编号',
+                    prop: 'inquiryCode',
+                  },
+                  {
+                    type: 'input',
                     label: '询价单名称',
                     placeholder: '模糊查询,可用个逗号隔开',
                     prop: 'inquiryName',
@@ -285,6 +291,12 @@
                 inputWidth: '200px',
                 inline: true,
                 children: [
+                  {
+                    type: 'input',
+                    label: '询价单编号',
+                    placeholder: '请输入询价单编号',
+                    prop: 'inquiryCode',
+                  },
                   {
                     type: 'input',
                     label: '询价单名称',
