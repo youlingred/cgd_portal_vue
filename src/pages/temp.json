@@ -1,0 +1,51 @@
+{
+  "respDesc": "成功",
+  "data": {
+    "createUserId": 26764,
+    "questionId": 1000019,
+    "inventoryClass": 1,
+    "iqrAttachmentBOS": [
+      {
+        "uploadUserId": 26764,
+        "attachmentUrl": "http://gd-dev.oss-cn-beijing.aliyuncs.com/home/upload/e01dcb07-7080-4f6b-b646-63904178efb6.xlsx",
+        "comments": "",
+        "attachmentFileType": 0,
+        "attachmentType": 4,
+        "uploadUserName": "clj_gys",
+        "attachmentName": "11111.xlsx",
+        "relationId": "1000019",
+        "attachmentId": 111111112752,
+        "uploadTime": 1521453680000,
+        "remarks": "",
+        "ossPath": ""
+      }
+    ],
+    "isRead": 0,
+    "questionReceiverId": null,
+    "relReplyAttachmentNum": 0,
+    "questionSubmitOrgId": 21302,
+    "inquiryName": "YDWZ1905询价单01",
+    "questionStatus": 1,
+    "receiverId": 21317,
+    "relReplyContent": "",
+    "relReplyTime": 0,
+    "inquiryId": 628,
+    "questionStage": 1,
+    "questionAttachmentNum": 1,
+    "questionContent": "供应商发起澄清-1905",
+    "questionReceiverName": "198611023085",
+    "respDesc": "成功",
+    "hisStatus": 0,
+    "questionSubmitOrgName": "浙江阿里巴巴机器人有限公司",
+    "relReplyId": 0,
+    "receiverName": "采购专责5",
+    "purchaseCategory": 1,
+    "inquiryCode": "WZJT-PSZX-JZTP-2018030093",
+    "questionTime": 1521453680000,
+    "iqrSeq": 1,
+    "createTime": 1521453680000,
+    "createUser": "clj_gys",
+    "respCode": "0000"
+  },
+  "respCode": "0000"
+}
