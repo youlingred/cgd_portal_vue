@@ -27,7 +27,7 @@
 
     <buttons-operator v-if="activeName==='receive'" type="top"
                       algin="right"
-                      :buttons="[{label:'导出',type:'primary',click:exportHandle}]"/>
+                      :buttons="[{label:'导出',type:'primary',click:exportHandleReceive}]"/>
     <IvTable v-if="activeName==='receive'" :key="2" ref="table_receive" v-bind="table.receive"/>
   </div>
 </template>
@@ -359,7 +359,10 @@
       },
       //FIXME 导出
       exportHandle(){
-        let selection=this.$refs['table_' + this.activeName].selection;
+        window.location.href = this.appConfig.api('inquiry/others/clarification/searchSupPublishPurQuestionListExport');
+      },
+      exportHandleReceive(){
+        window.location.href = this.appConfig.api('inquiry/others/clarification/searchSupReceiverPurClarificationBeforeQuoteListExport');
       },
       //FIXME 跳转详情
       gotoDetail(id) {
