@@ -96,6 +96,7 @@
             console.log('responseHandler:', val);
             if(!this.formtable.name&&!this.formtable.project&&!this.formtable.status)return val;
             return this.filterData(this.formtable, val);
+            /*return val;*/
           },
           columns: [
             {

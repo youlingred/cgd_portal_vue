@@ -3,8 +3,8 @@
   <label v-if="type === 'label'" style="display:inline-block;width:100%;line-height:20px;">{{value}}</label>
   <div v-else-if="type === 'file'">
     <div v-for="(fileItem,index) in value" :key="index">
-      <span style="display:inline-block;min-width:200px">{{fileItem.name||file.attachmentName}}</span>
-      <a :href="fileItem.url||fileItem.path||file.attachmentUrl"
+      <span style="display:inline-block;min-width:200px">{{fileItem.name||fileItem.attachmentName}}</span>
+      <a :href="fileItem.url||fileItem.path||fileItem.attachmentUrl"
          target="_blank" class="downloadMessage"><span class="">下载</span>
       </a>
     </div>
