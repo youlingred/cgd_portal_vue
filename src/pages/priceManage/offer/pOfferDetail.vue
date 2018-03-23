@@ -706,6 +706,10 @@
         // this.axios.post(this.appConfig.api('testcommen'), {quotationId: this.quotationId})
           .then(data => {
             this.form=this.util.dataAdapter(data, ['attachmentName', 'attachmentUrl'],['name', 'url'],)
+            this.$nextTick(()=>{
+              this.$refs.baseInfo.forms[0].clearValidate();
+              }
+            );
             this.queryList();
           }).catch(() => {
         });

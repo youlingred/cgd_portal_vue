@@ -43,7 +43,7 @@
           this.form.inquiryId=val.inquiryId;
           this.form.iqrSeq=val.iqrSeq;
           this.form.purchaseCategory=val.purchaseCategory;
-          this.$refs['form_detail'].forms[0].validate()
+          this.$refs['form_detail'].forms[0].validate(result=>{});
         }
       },
       '$store.getters.userName':{
@@ -162,6 +162,10 @@
               item.value=val;
             });
             this.options=list;
+            this.$nextTick(()=>{
+                this.$refs['form_detail'].forms[0].clearValidate();
+              }
+            );
           })
           .catch(function (error) {
             console.log(error);

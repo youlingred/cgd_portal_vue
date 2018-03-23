@@ -164,6 +164,10 @@
               item.value=val;
             });
             this.options=list;
+            this.$nextTick(()=>{
+                this.$refs['form_detail'].forms[0].clearValidate();
+              }
+            );
           })
           .catch(function (error) {
             console.log(error);
