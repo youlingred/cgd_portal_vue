@@ -97,18 +97,18 @@
     methods:{
       //文件上传成功回调
       fileUploadSuccess(response, file, fileList){
-        this.data[this.prop]=[];
-        _.forEach(fileList,(val)=>{
-          this.data[this.prop].push(_.pick(val,['name','path']));
-        })
+        let item={
+          name:response.filePath,
+          url:response.newFileName
+        };
+        this.data[this.prop].push(item);
         this.$emit('file-upload-success',file,fileList)
       },
       //文件删除成功回调
       fileRemove(file, fileList){
-        this.data[this.prop]=[];
-        _.forEach(fileList,(val)=>{
-          this.data[this.prop].push(_.pick(val,['name','path']));
-        })
+        this.data[this.prop]=_.filter(this.data[this.prop],item=>{
+          return item.name!==file.name || item.url!==file.url;
+        });
         this.$emit('file-remove',file,fileList)
       }
     }

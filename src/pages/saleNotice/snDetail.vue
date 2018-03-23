@@ -210,8 +210,7 @@
           purchaseCategory: this.$route.params.type
         })
           .then((response) => {
-			this.util.dataAdapter(response,['attachmentName','attachmentUrl'],['name','path'],false)
-            this.form = response;
+            this.form = this.util.dataAdapter(response,['attachmentName','attachmentUrl'],['name','url'])
           })
       },
       initTable() {

@@ -97,8 +97,7 @@
     created() {
       this.axios.post(this.appConfig.api('inquiry/others/clarification/searchMyReceiverBeforeQuoteClarificationInfo'),{clarificationId:this.$route.params.id})
         .then((data) => {
-          this.util.dataAdapter(data,['attachmentName','attachmentUrl'],['name','path'],false)
-          this.form=data;
+          this.form=this.util.dataAdapter(data,['attachmentName','attachmentUrl'],['name','url'])
         })
     }
   }

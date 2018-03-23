@@ -50,7 +50,11 @@
     },
     methods:{
       fileChange(){
-        _.forEach(this.forms,form=>form.validate());
+        try {
+          _.forEach(this.forms, form => form.validate());
+        }catch (error){
+          console.log(error);
+        }
       }
     }
   }

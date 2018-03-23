@@ -285,8 +285,7 @@
     mounted() {
       this.axios.post(this.appConfig.api('testQuerySelect'), {})
         .then((response) => {
-          this.util.dataAdapter(response, ['attachmentName', 'attachmentUrl'], ['name', 'value'], false)
-          this.cgjg_options = response;
+          this.cgjg_options=this.util.dataAdapter(response, ['attachmentName', 'attachmentUrl'], ['name', 'url'])
         })
     }
   }

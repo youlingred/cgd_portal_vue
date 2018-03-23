@@ -122,7 +122,7 @@
                   this.showButton = 'show';
                 }
               });
-            this.form = this.util.dataAdapter(data, ['attachmentName', 'attachmentUrl'], ['name', 'path'], false);
+            this.form = this.util.dataAdapter(data, ['attachmentName', 'attachmentUrl'], ['name', 'url']);
           });
       },
       //回复

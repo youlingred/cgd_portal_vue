@@ -186,7 +186,7 @@
         this.$refs['form_detail'].forms[0].validate((valid) => {
           if (valid) {
             console.log(this.form);
-            this.util.dataAdapter(this.fileList,['name','url'],['attachmentName','attachmentUrl'])
+            this.fileList=this.util.dataAdapter(this.fileList,['name','url'],['attachmentName','attachmentUrl'])
             this.form.attachments=JSON.stringify(this.fileList);
             this.axios.post(this.appConfig.api('inquiry/others/clarification/addMyQuestionInfo'), this.form)
               .then((response) => {

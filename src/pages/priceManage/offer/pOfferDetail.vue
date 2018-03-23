@@ -40,6 +40,7 @@
           deliveryDatePromise: '',
           attchmentInfo2: [],
           attchmentInfo3: [],
+          attchmentInfo4: [],
         },
       };
     },
@@ -713,7 +714,7 @@
         this.axios.post(this.appConfig.api('inquiry/quote/qryIqrQuoteDetail'), {quotationId: this.quotationId})
         // this.axios.post(this.appConfig.api('testcommen'), {quotationId: this.quotationId})
           .then(data => {
-            this.form = data;
+            this.form=this.util.dataAdapter(data, ['attachmentName', 'attachmentUrl'],['name', 'url'],)
             this.queryList();
           }).catch(() => {
         });
@@ -786,7 +787,7 @@
       //FIXME 校验全部通过
       validateSucess(type) {
         //处理化基本信息数据
-        this.util.dataAdapter(this.form, ['name', 'url'], ['attachmentName', 'attachmentUrl'])
+        this.form=this.util.dataAdapter(this.form, ['name', 'url'], ['attachmentName', 'attachmentUrl'])
         //待提交数据整合
         let sumbitData = {};
         _.assign(sumbitData, this.form, {quotationItemJSON: this.$refs.table.all});
@@ -855,7 +856,7 @@
       this.queryDetail();
     },
     created() {
-      console.log(this.moment(1514822400000).format('YYYY-MM-DD'));
+    this.save();
     }
   }
 </script>

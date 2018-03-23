@@ -161,8 +161,7 @@
             this.form.receiverOrgName = data.receiverOrgName;
             this.form.replyTime = data.replyTime;
             this.form.replier = data.replier;
-            var test = this.util.dataAdapter(data, ['attachmentName', 'attachmentUrl'], ['name', 'path'], false)
-            this.confirmForm = data;
+            this.confirmForm  = this.util.dataAdapter(data, ['attachmentName', 'attachmentUrl'], ['name', 'url'])
           });
       },
       onSuccess(file) {
@@ -183,7 +182,7 @@
       },
       //FIXME 提交
       sumbit() {
-        this.util.dataAdapter(this.form.attachmentList, ['name', 'path'], ['attachmentName', 'attachmentUrl'], false);
+        this.form.attachmentList=this.util.dataAdapter(this.form.attachmentList, ['name', 'url'], ['attachmentName', 'attachmentUrl']);
         this.$refs['form_detail'].forms[0].validate((valid) => {
           if (valid) {
             this.form.attachments = JSON.stringify(this.form.attachmentList);
