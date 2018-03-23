@@ -382,7 +382,7 @@
                     switchFlag: this.flag,
                     extendParam: {
                       editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss'
+                      format: 'yyyy-MM-dd hh:mm:ss'
                     }
                   },
                   {
@@ -393,7 +393,7 @@
                     switchFlag: this.flag,
                     extendParam: {
                       editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss',
+                      format: 'yyyy-MM-dd hh:mm:ss',
                     }
                   },
                 ]
@@ -520,7 +520,7 @@
                     switchFlag: this.flagtwo,
                     extendParam: {
                       editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss'
+                      format: 'yyyy-MM-dd hh:mm:ss'
                     }
                   },
                   {
@@ -531,7 +531,7 @@
                     switchFlag: this.flagtwo,
                     extendParam: {
                       editable: false,
-                      format: 'yyyy-mm-dd hh:mm:ss',
+                      format: 'yyyy-MM-dd hh:mm:ss',
                     }
                   },
                 ]
