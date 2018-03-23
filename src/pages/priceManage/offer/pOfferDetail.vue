@@ -116,7 +116,7 @@
                 {
                   type: 'label',
                   label: '报价方式',
-                  prop: 'quoteMethod',
+                  prop: 'quoteMethodName',
                 },
                 {
                   type: this.status == 0 ? 'datePicker' : 'label',
@@ -757,7 +757,6 @@
       },
       //FIXME 校验基本信息
       validateBaseInfo(type) {
-        console.log('validateBaseInfo');
         this.$refs.baseInfo.forms[0].validate((valid) => {
           if (valid) {
             this.validateList(type);
@@ -856,7 +855,6 @@
       this.queryDetail();
     },
     created() {
-    this.save();
     }
   }
 </script>

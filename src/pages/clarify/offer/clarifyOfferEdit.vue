@@ -20,7 +20,7 @@
     },
     data() {
       return {
-        fromPricePage:this.$route.query.fromPricePage,
+        inquiryExist:this.$route.query.inquiryExist,
         form: {
           companyName:this.$store.getters.companyName,
           receiveUser:'',
@@ -72,7 +72,7 @@
                   prop: 'companyName',
                 },
                 {
-                  type: (this.fromPricePage)?'label':'select',
+                  type: (this.inquiryExist)?'label':'select',
                   label: '询价单名称',
                   placeholder: '输入关键字查询',
                   prop: 'inquiry',
@@ -154,8 +154,8 @@
         if (!query) {
           query = ''
         }
-        // this.axios.post(this.appConfig.api('inquiry/others/clarification/selectWaitingInquiryList'))
-        this.axios.post(this.appConfig.api('testQuerySelect'))
+        this.axios.post(this.appConfig.api('inquiry/others/clarification/selectWaitingInquiryList'))
+        // this.axios.post(this.appConfig.api('testQuerySelect'))
           .then((response) => {
             console.log(response);
             let list = response;
