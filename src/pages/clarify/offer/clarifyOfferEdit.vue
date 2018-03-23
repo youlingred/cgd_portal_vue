@@ -20,6 +20,7 @@
     },
     data() {
       return {
+        fromPricePage:this.$route.query.fromPricePage,
         form: {
           companyName:this.$store.getters.companyName,
           receiveUser:'',
@@ -42,6 +43,7 @@
           this.form.inquiryId=val.inquiryId;
           this.form.iqrSeq=val.iqrSeq;
           this.form.purchaseCategory=val.purchaseCategory;
+          this.$refs['form_detail'].forms[0].validate()
         }
       },
       '$store.getters.userName':{
@@ -70,7 +72,7 @@
                   prop: 'companyName',
                 },
                 {
-                  type: (this.form.inquiry&& this.form.inquiry!=='')?'label':'select',
+                  type: (this.fromPricePage)?'label':'select',
                   label: '询价单名称',
                   placeholder: '输入关键字查询',
                   prop: 'inquiry',
@@ -152,8 +154,8 @@
         if (!query) {
           query = ''
         }
-        this.axios.post(this.appConfig.api('inquiry/others/clarification/selectWaitingInquiryList'))
-        // this.axios.post(this.appConfig.api('testQuerySelect'))
+        // this.axios.post(this.appConfig.api('inquiry/others/clarification/selectWaitingInquiryList'))
+        this.axios.post(this.appConfig.api('testQuerySelect'))
           .then((response) => {
             console.log(response);
             let list = response;

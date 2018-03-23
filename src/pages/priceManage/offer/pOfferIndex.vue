@@ -301,7 +301,7 @@
           this.$alert(this.util.lang.alertSelectionOnlyOne,'提示');
           return;
         };
-        this.$router.push({name: 'clarifyOfferEdit',query:{inquiryId:this.selections[0].inquiryId,inquiryName:this.selections[0].inquiryName,iqrSeq:this.selections[0].iqrSeq,purchaseCategory:this.selections[0].purchaseCategory}});
+        this.$router.push({name: 'clarifyOfferEdit',query:{fromPricePage:true,inquiryId:this.selections[0].inquiryId,inquiryName:this.selections[0].inquiryName,iqrSeq:this.selections[0].iqrSeq,purchaseCategory:this.selections[0].purchaseCategory}});
       },
       //FIXME 撤回
       revoke() {
