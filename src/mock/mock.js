@@ -387,13 +387,13 @@ Mock.mock(config.api('testQuerySelect'), 'post', function () {
         purchaseCategory:1,
       },
       {
-        inquiryName:'询价单0001',
+        inquiryName:'询价单0002',
         inquiryId:10002,
         iqrSeq:1,
         purchaseCategory:1,
       },
       {
-        inquiryName:'询价单0001',
+        inquiryName:'询价单0003',
         inquiryId:10003,
         iqrSeq:1,
         purchaseCategory:1,

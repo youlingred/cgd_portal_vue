@@ -1,5 +1,5 @@
 const config = {
-  prov: 5,
+  prov: 3,
   apiBaseurl () {
     switch (this.prov) {
       case 3:

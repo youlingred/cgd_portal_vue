@@ -43,7 +43,8 @@
           this.form.inquiryId=val.inquiryId;
           this.form.iqrSeq=val.iqrSeq;
           this.form.purchaseCategory=val.purchaseCategory;
-          this.$refs['form_detail'].forms[0].validate()
+          // this.$refs['form_detail'].forms[0].validate()
+          console.log(this.$refs['form_detail'].forms[0].validate(null))
         }
       },
       '$store.getters.userName':{
@@ -150,12 +151,9 @@
     },
     methods: {
       //FIXME 获取询价单列表数据
-      query(query) {
-        if (!query) {
-          query = ''
-        }
-        this.axios.post(this.appConfig.api('inquiry/others/clarification/selectWaitingInquiryList'))
-        // this.axios.post(this.appConfig.api('testQuerySelect'))
+      query() {
+        // this.axios.post(this.appConfig.api('inquiry/others/clarification/selectWaitingInquiryList'))
+        this.axios.post(this.appConfig.api('testQuerySelect'))
           .then((response) => {
             console.log(response);
             let list = response;
