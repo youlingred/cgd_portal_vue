@@ -102,7 +102,7 @@
                   label: '交货日期',
                   prop: 'deliveryDate',
                   formatter: (value) => {
-                    return this.moment(value).format('YYYY-MM-DD') || '';
+                    return value?this.moment(value).format('YYYY-MM-DD'):'';
                   }
                 },
                 {
@@ -110,7 +110,7 @@
                   label: '报价截止日期',
                   prop: 'quoteEndDate',
                   formatter: (value) => {
-                    return this.moment(value).format('YYYY-MM-DD HH:mm:ss') || '';
+                    return value?this.moment(value).format('YYYY-MM-DD HH:mm:ss'):'';
                   }
                 },
                 {
@@ -124,7 +124,7 @@
                   placeholder: '请选择承诺交货日期',
                   prop: 'deliveryDatePromise',
                   formatter: (value) => {
-                    return this.moment(value).format('YYYY-MM-DD') || '';
+                    return value?this.moment(value).format('YYYY-MM-DD') : '';
                   },
                   extendParam: {
                     editable: false,
@@ -195,7 +195,7 @@
                   label: '成交服务费率',
                   prop: 'serviceChargeRateName',
                   formatter(value) {
-                    return value + '%'
+                    return value
                   }
                 },
                 {
@@ -371,7 +371,7 @@
                         }
                       )
                     } else {
-                      return row.brand
+                      return h('span',row.brand)
                     }
                   }
                 },
@@ -396,7 +396,7 @@
                         }
                       )
                     } else {
-                      return row.manufacturer
+                      return h('span',row.manufacturer)
                     }
                   }
                 },
@@ -426,15 +426,13 @@
                           },
                           nativeOn: {
                             change: event => {
-                              //同上
-                              this.$refs.table.all[index].quotePrice = event.target.value
-                              this.$refs.table.all[index].quoteAmount = event.target.value * row.purchaseNum
+                              this.priceChange(index,row,event.target.value);
                             }
                           }
                         }
                       )
                     } else {
-                      return this.accounting.formatMoney(row.quotePrice, '', 2);
+                      return h('span',this.accounting.formatMoney(row.quotePrice, '', 2));
                     }
                   }
                 },
@@ -458,7 +456,7 @@
                           props: {
                             placeholder: '请选择日期',
                             clearable: false,
-                            value: this.moment(row.deliveryDatePromise).format('YYYY-MM-DD'),
+                            value: row.deliveryDatePromise?this.moment(row.deliveryDatePromise).format('YYYY-MM-DD'):'',
                             editable: false
                           },
                           on: {
@@ -469,7 +467,7 @@
                         }
                       )
                     } else {
-                      return this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '';
+                      return h('span',this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '');
                     }
                   }
                 }
@@ -533,15 +531,13 @@
                           },
                           nativeOn: {
                             change: event => {
-                              //同上
-                              this.$refs.table.all[index].quotePrice = event.target.value
-                              this.$refs.table.all[index].quoteAmount = event.target.value * row.purchaseNum
+                              this.priceChange(index,row,event.target.value);
                             }
                           }
                         }
                       )
                     } else {
-                      return this.accounting.formatMoney(row.quotePrice, '', 2);
+                      return h('span',this.accounting.formatMoney(row.quotePrice, '', 2));
                     }
                   }
                 },
@@ -565,7 +561,7 @@
                           props: {
                             placeholder: '请选择日期',
                             clearable: false,
-                            value: this.moment(row.deliveryDatePromise).format('YYYY-MM-DD'),
+                            value: row.deliveryDatePromise?this.moment(row.deliveryDatePromise).format('YYYY-MM-DD'):'',
                             editable: false,
                             format: 'yyyy-MM-dd'
                           },
@@ -577,7 +573,7 @@
                         }
                       )
                     } else {
-                      return this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '';
+                      return h('span',this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '');
                     }
                   }
                 }
@@ -641,15 +637,13 @@
                           },
                           nativeOn: {
                             change: event => {
-                              //同上
-                              this.$refs.table.all[index].quotePrice = event.target.value
-                              this.$refs.table.all[index].quoteAmount = event.target.value * row.purchaseNum
+                              this.priceChange(index,row,event.target.value);
                             }
                           }
                         }
                       )
                     } else {
-                      return this.accounting.formatMoney(row.quotePrice, '', 2);
+                      return h('span',this.accounting.formatMoney(row.quotePrice, '', 2));
                     }
                   }
                 },
@@ -673,7 +667,7 @@
                           props: {
                             placeholder: '请选择日期',
                             clearable: false,
-                            value: this.moment(row.deliveryDatePromise).format('YYYY-MM-DD'),
+                            value: row.deliveryDatePromise?this.moment(row.deliveryDatePromise).format('YYYY-MM-DD'):'',
                             editable: false,
                             format: 'yyyy-MM-dd'
                           },
@@ -685,7 +679,7 @@
                         }
                       )
                     } else {
-                      return this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '';
+                      return h('span',this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '');
                     }
                   }
                 }
@@ -719,6 +713,15 @@
       //FIXME 查询明细信息
       queryList() {
         this.$refs.table.query({url: this.table.url, quotationId: this.quotationId})
+      },
+      //报价单价改变
+      priceChange(index,row,targetValue){
+        this.$refs.table.all[index].quotePrice = targetValue;
+        this.$refs.table.all[index].quoteAmount = targetValue * row.purchaseNum;
+        this.form.amount=0;
+        this.$refs.table.all.forEach(item=>{
+          this.form.amount+=item.quoteAmount;
+        })
       },
       //FIXME 撤回
       revoke() {
