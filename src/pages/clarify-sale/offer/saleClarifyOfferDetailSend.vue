@@ -82,7 +82,7 @@
                 {
                   type: 'label',
                   label: '制单人',
-                  prop: 'createUser',
+                  prop: 'userName',
                 }
               ]
             },
@@ -99,7 +99,8 @@
       this.axios.post(this.appConfig.api('inquiry/others/clarification/searchMyPublishQuestionInfo'),{questionId:this.$route.params.id})
         .then((data) => {
           this.form=this.util.dataAdapter(data,['attachmentName','attachmentUrl'],['name','url']);
-      })
+          this.form.userName=this.$store.getters.userName;
+        })
     }
   }
 </script>
