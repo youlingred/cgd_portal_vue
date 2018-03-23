@@ -119,22 +119,22 @@
                 {
                   type:'file',
                   label:'书面异议函',
-                  prop:'attachments'
+                  prop:'attachment5'
                 },
                 {
                   type:'file',
                   label:'相关依据及证明材料',
-                  prop:'attachments'
+                  prop:'attachment6'
                 },
                 {
                   type:'file',
                   label:'身份证',
-                  prop:'attachments'
+                  prop:'attachment7'
                 },
                 {
                   type:'file',
                   label:'授权委托书',
-                  prop:'attachments'
+                  prop:'attachment8'
                 }
               ]
             }
@@ -166,7 +166,13 @@
           publicityObjectionId:this.$route.params.publicityObjectionId
         })
           .then((response) => {
-            console.log(response);
+            response={
+              ...response,
+              attachment5:response.attachments.filter(item=>item.attachmentBusiType==5),
+              attachment6:response.attachments.filter(item=>item.attachmentBusiType==6),
+              attachment7:response.attachments.filter(item=>item.attachmentBusiType==7),
+              attachment8:response.attachments.filter(item=>item.attachmentBusiType==8)
+            }
             this.data2=response;
           })
           .catch(function (error) {
