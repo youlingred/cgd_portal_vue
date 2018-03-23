@@ -99,7 +99,7 @@
                 {
                   type: 'input',
                   label: '采购编号',
-                  placeholder: '请输入销售编号',
+                  placeholder: '请输入采购编号',
                   prop: 'inquiryCode',
                 },
                 {
@@ -135,7 +135,7 @@
                   prop: 'quoteEndDateStart',
                   extendParam: {
                     editable: false,
-                    format: 'yyyy-mm-dd hh:mm:ss'
+                    format: 'yyyy-MM-dd hh:mm:ss'
                   }
                 },
                 {
@@ -145,7 +145,7 @@
                   prop: 'quoteEndDateEnd',
                   extendParam: {
                     editable: false,
-                    format: 'yyyy-mm-dd hh:mm:ss'
+                    format: 'yyyy-MM-dd hh:mm:ss'
                   }
                 },
                 {
@@ -157,7 +157,7 @@
                   switchFlag: this.flag,
                   extendParam: {
                     editable: false,
-                    format: 'yyyy-mm-dd hh:mm:ss'
+                    format: 'yyyy-MM-dd hh:mm:ss'
                   }
                 },
                 {
@@ -168,7 +168,7 @@
                   switchFlag: this.flag,
                   extendParam: {
                     editable: false,
-                    format: 'yyyy-mm-dd hh:mm:ss'
+                    format: 'yyyy-MM-dd hh:mm:ss'
                   }
                 },
               ]

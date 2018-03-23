@@ -265,9 +265,6 @@
                 attchmentInfo2: [
                   {required: true, message: '请上传商务文件', trigger: 'blur'},
                 ],
-                attchmentInfo3: [
-                  {required: true, message: '请上传技术文件', trigger: 'blur'},
-                ]
               } : {}
             }
           ]
@@ -759,9 +756,10 @@
       validateBaseInfo(type) {
         this.$refs.baseInfo.forms[0].validate((valid) => {
           if (valid) {
-            this.validateList(type);
+            this.validateSucess(type);
+            // this.validateList(type);
           } else {
-            this.$alert('基本信息不完整,请填写完整!', '提示');
+            this.$alert('您还有未报价的物料，请报价后提交。', '提示');
           }
         });
       },
@@ -780,7 +778,7 @@
         if (validate) {
           this.validateSucess(type);
         } else {
-          this.$alert('明细信息不完整,请填写完整!', '提示');
+          this.$alert('您还有未报价的物料，请报价后提交。', '提示');
         }
       },
       //FIXME 校验全部通过
@@ -822,7 +820,7 @@
           url='inquiry/quote/saveIqrQuote'
         };
         this.axios.post(this.appConfig.api(url), sumbitData)
-          .then((response) => {
+          .then( response => {
             console.log(response);
             this.back();
           })
@@ -843,6 +841,7 @@
         });
       },
       back() {
+        console.log("back");
         this.$router.back();
       },
       //FIXME 附件操作

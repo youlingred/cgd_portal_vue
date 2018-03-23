@@ -41,7 +41,7 @@ axios.interceptors.response.use(
       case 200:
         console.log("请求成功了,请耐心等待数据", res);
         if (res.data.respCode === '0000') {
-          result = res.data.data;
+          result = res.data.data||res.data;
         }else{
           $alert(res.data.respDesc,'错误');
         }
