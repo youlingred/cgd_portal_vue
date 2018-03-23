@@ -193,6 +193,7 @@
             this.axios.post(this.appConfig.api('inquiry/others/clarification/addMyQuestionInfo'), this.form)
               .then((response) => {
                 console.log(response);
+                this.$router.push({name: 'clarifyOfferIndex'});
               })
               .catch(function (error) {
                 console.log(error);
