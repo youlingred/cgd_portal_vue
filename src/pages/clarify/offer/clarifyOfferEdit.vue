@@ -151,7 +151,7 @@
     methods: {
       //FIXME 获取询价单列表数据
       query() {
-        this.axios.post(this.appConfig.api('inquiry/others/clarification/selectWaitingInquiryList'))
+        this.axios.post(this.appConfig.api('inquiry/others/clarification/selectWaitingInquiryList?inventoryClass=1'))
         // this.axios.post(this.appConfig.api('testQuerySelect'))
           .then((response) => {
             console.log(response);

@@ -153,7 +153,7 @@
         if (!query) {
           query = ''
         }
-        this.axios.post(this.appConfig.api('inquiry/others/clarification/selectWaitingInquiryList'))
+        this.axios.post(this.appConfig.api('inquiry/others/clarification/selectWaitingInquiryList?inventoryClass=2'))
         // this.axios.post(this.appConfig.api('testQuerySelect'))
           .then((response) => {
             console.log(response);
