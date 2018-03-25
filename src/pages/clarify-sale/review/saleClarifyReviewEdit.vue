@@ -166,7 +166,7 @@
       },
       onSuccess(file) {
         this.$message.success('文件上传成功');
-        this.form.attachmentList.push({name: file.filePath, path: file.newFileName});
+        this.form.attachmentList.push({name: file.filePath, url: file.newFileName});
       },
       onRemove(file, fileList) {
         this.form.attachmentList = fileList;
