@@ -95,6 +95,12 @@
                 width: 80
               },
               {
+                align: 'center',
+                title: '询价单编号',
+                key: 'inquiryCode',
+                width: 180,
+              },
+              {
                 title: '询价单名称',
                 key: 'inquiryName',
                 align: 'center',
@@ -161,6 +167,12 @@
                 title: '序号',
                 type: 'index',
                 width: 80
+              },
+              {
+                align: 'center',
+                title: '询价单编号',
+                key: 'inquiryCode',
+                width: 180,
               },
               {
                 title: '询价单名称',
@@ -243,6 +255,12 @@
                 children: [
                   {
                     type: 'input',
+                    label: '询价单编号',
+                    placeholder: '请输入询价单编号',
+                    prop: 'inquiryCode',
+                  },
+                  {
+                    type: 'input',
                     label: '询价单名称',
                     placeholder: '模糊查询,可用个逗号隔开',
                     prop: 'inquiryName',
@@ -275,12 +293,6 @@
                       valueFormat: "yyyy-MM-dd"
                     }
                   },
-                  {
-                    type: 'input',
-                    label: '询价单编号',
-                    placeholder: '请输入询价单编号',
-                    prop: 'inquiryCode',
-                  },
                 ]
               }
             ]
@@ -295,6 +307,12 @@
                 inputWidth: '200px',
                 inline: true,
                 children: [
+                  {
+                    type: 'input',
+                    label: '询价单编号',
+                    placeholder: '请输入询价单编号',
+                    prop: 'inquiryCode',
+                  },
                   {
                     type: 'input',
                     label: '询价单名称',
@@ -340,12 +358,6 @@
                       format: 'yyyy-MM-dd',
                       valueFormat: "yyyy-MM-dd"
                     }
-                  },
-                  {
-                    type: 'input',
-                    label: '询价单编号',
-                    placeholder: '请输入询价单编号',
-                    prop: 'inquiryCode',
                   },
                 ]
               }

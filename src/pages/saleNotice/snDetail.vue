@@ -27,11 +27,11 @@
     },
     data() {
       return {
-        flag:false,
+        flag: false,
         form: {},
         //列表数据
         table: {
-          autoLoad:false,
+          autoLoad: false,
           height: 400,
         }
       };
@@ -127,26 +127,26 @@
                   type: 'label',
                   label: '付款方式',
                   prop: '12',
-				  formatter:(value,data) => {
-					let result="";
-					if(data.prePay!=0){
-						result+='预付款:'+data.prePay+'% ';
-					}
-					if(data.matPay!=0){
-						result+='投料款:'+data.matPay+'% ';
-					}
-					if(data.proPay!=0){
-						result+='进度款:'+data.proPay+'% ';
-					}
-					if(data.verPay!=0){
-						result+='到货验收款:'+data.verPay+'% ';
-					}
-					if(data.pilPay!=0){
-						result+='试运验收款:'+data.pilPay+'% ';
-					}
-					if(data.quaPay!=0){
-						result+='质保金:'+data.quaPay+'% ';
-					}
+                  formatter: (value, data) => {
+                    let result = "";
+                    if (data.prePay != 0) {
+                      result += '预付款:' + data.prePay + '% ';
+                    }
+                    if (data.matPay != 0) {
+                      result += '投料款:' + data.matPay + '% ';
+                    }
+                    if (data.proPay != 0) {
+                      result += '进度款:' + data.proPay + '% ';
+                    }
+                    if (data.verPay != 0) {
+                      result += '到货验收款:' + data.verPay + '% ';
+                    }
+                    if (data.pilPay != 0) {
+                      result += '试运验收款:' + data.pilPay + '% ';
+                    }
+                    if (data.quaPay != 0) {
+                      result += '质保金:' + data.quaPay + '% ';
+                    }
                     return result;
                   }
                 },
@@ -174,19 +174,19 @@
                   label: '审查纪要',
                   prop: 'attchmentInfo1'
                 },
-				{
+                {
                   switchFlag: this.flag,
                   type: 'file',
                   label: '商务文件',
                   prop: 'attchmentInfo2'
                 },
-				{
+                {
                   switchFlag: this.flag,
                   type: 'file',
                   label: '技术文件',
                   prop: 'attchmentInfo3'
                 },
-				{
+                {
                   switchFlag: this.flag,
                   type: 'file',
                   label: '附件',
@@ -205,109 +205,126 @@
       initForm() {
         //基本信息
         this.axios.post(this.appConfig.api('inquiry/quote/iqrPurchaseNoticeDetail'), {
-		      inquiryId: this.$route.params.id,
+          inquiryId: this.$route.params.id,
           iqrSeq: this.$route.params.seq,
           purchaseCategory: this.$route.params.type
         })
           .then((response) => {
-            this.form = this.util.dataAdapter(response,['attachmentName','attachmentUrl'],['name','url'])
+            this.form = this.util.dataAdapter(response, ['attachmentName', 'attachmentUrl'], ['name', 'url'])
           })
       },
       initTable() {
         let id = this.$route.params.id;
-		let seq = this.$route.params.seq;
-		this.table.columns = [
+        let seq = this.$route.params.seq;
+        this.table.columns = [
           {
             fixed: 'left',
             title: '序号',
             type: 'index',
+            align:'center',
             width: 80
           },
           {
             title: '项目单位',
             key: 'purchaseAccountName',
+            align:'center',
             width: 180
           },
           {
             title: '物料名称',
             key: 'materialClassName',
+            align:'center',
+            width: 180
           },
           {
             title: '规格',
             key: 'spec',
-			 width: 200,
+            align:'center',
+            width: 200,
           },
           {
             title: '型号',
             key: 'model',
+            align:'center',
             width: 200,
           },
           {
             title: '计划名称',
-			 width: 200,
+            width: 200,
+            align:'center',
             key: '3',
           },
           {
             title: '计划编号',
-			 width: 200,
+            width: 200,
+            align:'center',
             key: '2'
           },
           {
             title: '计量单位',
             key: 'unitName',
+            align:'center',
             width: 120,
           },
           {
             title: '需求数量',
-			 width: 200,
+            width: 200,
             key: 'requireNumber',
+            align:'center',
           },
           {
             title: '预算单价（元）',
             key: 'budgetPrice',
+            align:'center',
             width: 150,
           },
           {
             title: '预算金额（元）',
             key: 'budgetAmount',
+            align:'center',
             width: 150,
-            render: (h, { row, column }) => {
-             return h('div',this.accounting.formatMoney(row['12'],'￥',2));
+            render: (h, {row, column}) => {
+              return h('div', this.accounting.formatMoney(row['12'], '￥', 2));
             }
           },
           {
             title: '提货日期',
             key: 'reqArrivalDate',
+            align:'center',
             width: 180,
-            render: (h, { row, column }) => {
-              return h('div',this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
+            render: (h, {row, column}) => {
+              return h('div', this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
             }
           },
           {
             title: '周期',
             key: 'reqArrivalTimeInt',
+            align:'center',
           },
           {
             title: '材质',
-			 width: 200,
+            width: 200,
             key: 'materialsQuality',
+            align:'center',
           },
           {
             title: '物资联系人',
             key: 'materialContactName',
+            align:'center',
             width: 150,
           },
           {
             title: '固定电话',
-			 width: 200,
+            width: 200,
             key: 'materialContactTele',
+            align:'center',
           },
         ];
         this.$refs.table.query({
-		url: this.appConfig.api('inquiry/quote/iqrPurchaseNoticeDetailMaterail'),
-		inquiryId:id,
-		iqrSeq:seq
-		});
+          url: this.appConfig.api('inquiry/quote/iqrPurchaseNoticeDetailMaterail'),
+          inquiryId: id,
+          iqrSeq: seq
+        });
       },
 
     },

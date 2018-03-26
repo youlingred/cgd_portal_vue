@@ -29,6 +29,7 @@
           questionContent:'',
           inquiry:this.$route.query.inquiryName||'',
           inquiryId:this.$route.query.inquiryId||'',
+          inquiryCode:'',
           iqrSeq:this.$route.query.iqrSeq||'',
           purchaseCategory:this.$route.query.purchaseCategory||'',
           attachments:[],
@@ -41,6 +42,7 @@
       'form.inquiry':{
         handler(val){
           this.form.inquiryId=val.inquiryId;
+          this.form.inquiryCode=val.inquiryCode;
           this.form.iqrSeq=val.iqrSeq;
           this.form.purchaseCategory=val.purchaseCategory;
           this.$refs['form_detail'].forms[0].validate(result=>{});
@@ -87,7 +89,7 @@
                 {
                   type: 'label',
                   label: '询价单编号',
-                  prop: 'inquiryId',
+                  prop: 'inquiryCode',
                 },
                 {
                   type: 'textarea',

@@ -29,6 +29,7 @@
           questionContent:'',
           inquiry:'',
           inquiryId:'',
+          inquiryCode:'',
           iqrSeq:'',
           purchaseCategory:'',
           attachments:[],
@@ -41,6 +42,7 @@
       'form.inquiry':{
         handler(val){
           this.form.inquiryId=val.inquiryId;
+          this.form.inquiryCode=val.inquiryCode;
           this.form.iqrSeq=val.iqrSeq;
           this.form.purchaseCategory=val.purchaseCategory;
         }
@@ -86,7 +88,7 @@
                 {
                   type: 'label',
                   label: '询价单编号',
-                  prop: 'inquiryId',
+                  prop: 'inquiryCode',
                 },
                 {
                   type: 'textarea',

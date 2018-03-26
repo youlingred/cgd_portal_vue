@@ -2,12 +2,9 @@
   <div>
     <detail ref="baseInfo" v-bind="detailData"/>
     <IvTable ref="table" auto-load="false" v-bind="table"/>
-    <buttons-operator v-if="status==0" type="bottom"
+    <buttons-operator type="bottom"
                       fix="true"
-                      :buttons="[{label:'保存',type:'primary',click:save},{label:'提交',type:'primary',click:sumbit},{label:'发起澄清',type:'primary',click:fire},{label:'返回',type:'info',click:back}]"/>
-    <buttons-operator v-if="status==1" type="bottom"
-                      fix="true"
-                      :buttons="[{label:'撤回',type:'danger',click:revoke},{label:'发起澄清',type:'primary',click:fire},{label:'返回',type:'info',click:back}]"/>
+                      :buttons="this.operateButtons"/>
 
 
   </div>
@@ -27,6 +24,7 @@
     },
     data() {
       return {
+        join:this.$route.query.join,
         //状态 0 待报价 1 已报价
         status: this.$route.params.status,
         //类型 1,物资 2,施工 3,服务
@@ -36,7 +34,7 @@
         //FIXME 基本信息初始化定义,并初始化毕传校验参数
         form: {
           supplierContactName: '',
-          supplierContactTele: '',
+          supplierContactTele: 0,
           deliveryDatePromise: '',
           attchmentInfo2: [],
           attchmentInfo3: [],
@@ -45,6 +43,21 @@
       };
     },
     computed: {
+        operateButtons(){
+        if(this.status===0){
+          if(this.join){
+            //销售公告页面点击"我要参与"跳转进来去掉澄清按钮
+            return [{label:'保存',type:'primary',click:this.save},{label:'提交',type:'primary',click:this.sumbit},{label:'返回',type:'info',click:this.back}]
+          }else{
+            //待报价详情包含所有功能按钮
+            return [{label:'保存',type:'primary',click:this.save},{label:'提交',type:'primary',click:this.sumbit},{label:'发起澄清',type:'primary',click:this.fire},{label:'返回',type:'info',click:this.back}]
+          }
+        }else if(this.status===1){
+          //已报价详情去掉保存和提交
+          return [{label:'撤回',type:'danger',click:this.revoke},{label:'发起澄清',type:'primary',click:this.fire},{label:'返回',type:'info',click:this.back}];
+        }
+        return [];
+      },
       //FIXME 初始化基本信息显示数据
       detailData() {
         return {
@@ -99,6 +112,12 @@
                 },
                 {
                   type: 'label',
+                  label: '配送方式',
+                  prop: 'logisticsDistrWayName',
+                },
+
+                {
+                  type: 'label',
                   label: '交货日期',
                   prop: 'deliveryDate',
                   formatter: (value) => {
@@ -112,6 +131,11 @@
                   formatter: (value) => {
                     return value?this.moment(value).format('YYYY-MM-DD HH:mm:ss'):'';
                   }
+                },
+                {
+                  type: 'label',
+                  label: '报价类别',
+                  prop: 'quoteTypeName',
                 },
                 {
                   type: 'label',
@@ -130,6 +154,11 @@
                     editable: false,
                     valueFormat: 'timestamp',
                     format: 'yyyy-MM-dd',
+                    pickerOptions:{
+                      disabledDate:time =>{
+                        return time.getTime() < Date.now()
+                      }
+                    }
                   }
                 },
                 {
@@ -192,6 +221,7 @@
                 },
                 {
                   type: 'label',
+                  // switchFlag:
                   label: '成交服务费率',
                   prop: 'serviceChargeRateName',
                   formatter(value) {
@@ -253,9 +283,10 @@
                 ],
                 supplierContactTele: [
                   {required: true, message: '请输入供应商联系电话', trigger: 'blur'},
+                  // {type: 'number',max:11,message: '电话号码必须为数字值且最多为11位', trigger: 'blur'},
                 ],
                 deliveryDatePromise: [
-                  {required: true, message: '请选择承诺交货日期', trigger: 'blur'},
+                  {required: true, message: '请选择 ', trigger: 'blur'},
                 ],
                 attchmentInfo2: [
                   {required: true, message: '请上传商务文件', trigger: 'blur'},
@@ -452,7 +483,13 @@
                             placeholder: '请选择日期',
                             clearable: false,
                             value: row.deliveryDatePromise?this.moment(row.deliveryDatePromise).format('YYYY-MM-DD'):'',
-                            editable: false
+                            editable: false,
+                            format: 'yyyy-MM-dd',
+                            options:{
+                              disabledDate:time =>{
+                                return time.getTime() < Date.now()
+                              }
+                            }
                           },
                           on: {
                             "on-change": value => {
@@ -552,7 +589,12 @@
                             clearable: false,
                             value: row.deliveryDatePromise?this.moment(row.deliveryDatePromise).format('YYYY-MM-DD'):'',
                             editable: false,
-                            format: 'yyyy-MM-dd'
+                            format: 'yyyy-MM-dd',
+                            options:{
+                              disabledDate:time =>{
+                                return time.getTime() < Date.now()
+                              }
+                            }
                           },
                           on: {
                             "on-change": value => {
@@ -652,7 +694,12 @@
                             clearable: false,
                             value: row.deliveryDatePromise?this.moment(row.deliveryDatePromise).format('YYYY-MM-DD'):'',
                             editable: false,
-                            format: 'yyyy-MM-dd'
+                            format: 'yyyy-MM-dd',
+                            options:{
+                              disabledDate:time =>{
+                                return time.getTime() < Date.now()
+                              }
+                            }
                           },
                           on: {
                             "on-change": value => {
@@ -699,7 +746,7 @@
       },
       //FIXME 查询明细信息
       queryList() {
-        this.$refs.table.query({url: this.table.url, quotationId: this.quotationId})
+        this.$refs.table.query({url: this.table.url, quotationId: this.quotationId,pageSize:1000})
       },
       //报价单价改变
       priceChange(index,row,targetValue){
@@ -746,8 +793,11 @@
       validateBaseInfo(type) {
         this.$refs.baseInfo.forms[0].validate((valid) => {
           if (valid) {
-            this.validateSucess(type);
-            // this.validateList(type);
+            if(this.form.quoteMethod==1){
+              this.validateList(type);
+            }else{
+              this.validateSucess(type);
+            }
           } else {
             this.$alert('您还有未报价的物料，请报价后提交。', '提示');
           }

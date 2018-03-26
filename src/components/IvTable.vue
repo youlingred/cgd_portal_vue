@@ -151,7 +151,7 @@
                 resolve(response.rows)
               })
               .catch(error=> {
-                console.log('------',error)
+                console.log(error)
               });
           }else{
             alert('查询列表数据url不能为空!')
