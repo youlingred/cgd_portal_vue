@@ -9,7 +9,7 @@
     <IvTable ref="table" v-bind="table"/>
     <buttons-operator type="bottom"
                       fix="true"
-                      :buttons="[{label:'返回',type:'info',click:backFunc}]"/>
+                      :buttons="[{label:'我要参与',type:'primary',click:join},{label:'返回',type:'info',click:backFunc}]"/>
 
   </div>
 </template>
@@ -199,6 +199,18 @@
       }
     },
     methods: {
+      join(){
+        this.axios.post(this.appConfig.api('inquiry/quote/addQuotationBill'),
+          {
+            inquiryId: this.$route.params.id,
+            iqrSeq: this.$route.params.seq,
+            purchaseCategory: this.$route.params.type
+          }).then((response) => {
+          this.$router.push({name: 'priceOfferDetail',params:{status:0,type:this.$route.params.type,id:this.$route.params.id}});
+        }).catch(function (error) {
+          console.log(error);
+        });
+      },
       backFunc() {
         this.$router.push({name: 'saleNoticeIndex'});
       },

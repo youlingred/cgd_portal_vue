@@ -12,7 +12,7 @@
                       algin="right"
                       :buttons="[{label:'我要参与',type:'primary',click:join},
                       {label:'导出',type:'primary',click:exports}]"/>
-    <IvTable ref="table" v-bind="table" @selectionChange="selectionChange" @on-row-click="cellClickHandler"/>
+    <IvTable ref="table" v-bind="table" @selectionChange="selectionChange"/>
   </div>
 </template>
 
@@ -129,6 +129,17 @@
                   label: '采购单名称',
                   placeholder: '请输入采购单名称',
                   prop: 'inquiryName',
+                  render: (h, {row, column}) => {
+                    return h('a',{
+                        on: {
+                          click: ()=>{
+                            this.gotoDetail(row)
+                          }
+                        }
+                      },
+                      row.inquiryName,
+                    );
+                  }
                 },
                 {
                   type: 'input',
@@ -274,7 +285,7 @@
         exports() {
 
         },
-        cellClickHandler(row) {
+        gotoDetail(row) {
           console.log(row);
           this.$router.push({
             name: 'purchaserNoticeDetail',

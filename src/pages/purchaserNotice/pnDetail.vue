@@ -174,7 +174,7 @@
             iqrSeq: this.$route.params.seq,
             purchaseCategory: this.$route.params.type
           }).then((response) => {
-          this.$router.push({name: 'priceOfferDetail',query:{join:true},params:{status:0,type:this.$route.params.type,id:this.$route.params.id}});
+          this.$router.push({name: 'priceOfferDetail',params:{status:0,type:this.$route.params.type,id:this.$route.params.id}});
         }).catch(function (error) {
             console.log(error);
           });

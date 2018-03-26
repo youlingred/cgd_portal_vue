@@ -24,7 +24,6 @@
     },
     data() {
       return {
-        join:this.$route.query.join,
         //状态 0 待报价 1 已报价
         status: this.$route.params.status,
         //类型 1,物资 2,施工 3,服务
@@ -45,13 +44,8 @@
     computed: {
         operateButtons(){
         if(this.status===0){
-          if(this.join){
-            //销售公告页面点击"我要参与"跳转进来去掉澄清按钮
-            return [{label:'保存',type:'primary',click:this.save},{label:'提交',type:'primary',click:this.sumbit},{label:'返回',type:'info',click:this.back}]
-          }else{
             //待报价详情包含所有功能按钮
-            return [{label:'保存',type:'primary',click:this.save},{label:'提交',type:'primary',click:this.sumbit},{label:'发起澄清',type:'primary',click:this.fire},{label:'返回',type:'info',click:this.back}]
-          }
+          return [{label:'保存',type:'primary',click:this.save},{label:'提交',type:'primary',click:this.sumbit},{label:'发起澄清',type:'primary',click:this.fire},{label:'返回',type:'info',click:this.back}]
         }else if(this.status===1){
           //已报价详情去掉保存和提交
           return [{label:'撤回',type:'danger',click:this.revoke},{label:'发起澄清',type:'primary',click:this.fire},{label:'返回',type:'info',click:this.back}];

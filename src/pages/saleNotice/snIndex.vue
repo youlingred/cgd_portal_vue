@@ -12,7 +12,7 @@
                       algin="right"
                       :buttons="[{label:'我要参与',type:'primary',click:join},
                       {label:'导出',type:'primary',click:exports}]"/>
-    <IvTable ref="table" v-bind="table" @selectionChange="selectionChange" @on-row-click="cellClickHandler"/>
+    <IvTable ref="table" v-bind="table" @selectionChange="selectionChange"/>
   </div>
 </template>
 
@@ -68,6 +68,17 @@
               title: '询价单名称',
               key: 'inquiryName',
               width: 150,
+              render: (h, {row, column}) => {
+                return h('a',{
+                    on: {
+                      click: ()=>{
+                        this.gotoDetail(row)
+                      }
+                    }
+                  },
+                  row.inquiryName,
+                );
+              }
             },
             {
               title: '销售编号',
@@ -267,7 +278,7 @@
           purchaseCategory:this.selections[0].purchaseCategory
         }).then((response) => {
               console.log(response);
-                this.$router.push({name: 'priceOfferDetail',query:{join:true},params:{status:0,type:this.selections[0].purchaseCategory,id:response.quotationId}});
+                this.$router.push({name: 'priceOfferDetail',params:{status:0,type:this.selections[0].purchaseCategory,id:response.quotationId}});
             })
             .catch(function (error) {
               console.log(error);
@@ -277,7 +288,7 @@
       exports() {
 
       },
-      cellClickHandler(row) {
+      gotoDetail(row) {
         console.log(row);
         this.$router.push({name: 'saleNoticeDetail', params: {type: row.purchaseCategory,id: row.inquiryId, seq: row.iqrSeq}});
       }

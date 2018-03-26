@@ -35,7 +35,7 @@
                         {label:'导出',type:'primary',click:exportDoc}
                         ]"/>
 
-    <IvTable ref="table" v-bind="table" @on-row-click="cellClickHandler" @selectionChange="selectionChange" @pageChange="pageChange"/>
+    <IvTable ref="table" v-bind="table" @selectionChange="selectionChange" @pageChange="pageChange"/>
   </div>
 </template>
 
@@ -205,7 +205,18 @@
               title: '询价单名称',
               key: 'inquiryName',
               align: 'center',
-              width: 100
+              width: 100,
+              render: (h, {row, column}) => {
+                return h('a',{
+                    on: {
+                      click: ()=>{
+                        this.gotoDetail(row)
+                      }
+                    }
+                  },
+                  row.inquiryName,
+                );
+              }
             },
             {
               title: '采购编号',
@@ -327,7 +338,7 @@
         window.open(this.appConfig.api(`inquiry/quote/qryIqrQuoteListExport?${params}`), '_blank')
       },
       //FIXME 详情跳转
-      cellClickHandler(row) {
+      gotoDetail(row) {
         this.$router.push({name: 'priceOfferDetail',params:{status:this.status,type:row.purchaseCategory,id:row.quotationId}});
       }
     },
