@@ -132,12 +132,12 @@
                 {
                   type: 'label',
                   label: '税率（%）',
-                  prop: '13',
+                  prop: 'taxRate',
                 },
                 {
                   type: 'label',
                   label: '成交服务费率',
-                  prop: 'taxRate',
+                  prop: 'serviceChargeRateName',
                 },
                 {
                   type: 'label',
@@ -204,7 +204,7 @@
             },
             {
               title: '物料名称',
-              key: 'materialClassName',
+              key: 'materialName',
               align: 'center',
               width: 120,
             },
@@ -216,7 +216,7 @@
             },
             {
               title: '物资类别',
-              key: 'materialClassId',
+              key: 'materialClassName',
               align: 'center',
               width: 120,
             },

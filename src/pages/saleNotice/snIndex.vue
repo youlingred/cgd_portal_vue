@@ -279,7 +279,7 @@
       },
       cellClickHandler(row) {
         console.log(row);
-        this.$router.push({name: 'saleNoticeDetail', params: {id: row.inquiryId, seq: row.iqrSeq}});
+        this.$router.push({name: 'saleNoticeDetail', params: {type: row.purchaseCategory,id: row.inquiryId, seq: row.iqrSeq}});
       }
     },
   }

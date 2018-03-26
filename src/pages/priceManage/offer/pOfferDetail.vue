@@ -200,11 +200,6 @@
                 },
                 {
                   type: 'label',
-                  label: '物流配送方式',
-                  prop: 'logisticsDistrWayName',
-                },
-                {
-                  type: 'label',
                   label: '采购类型',
                   prop: 'purchaseTypeName',
                 },
@@ -500,12 +495,6 @@
                   width: 120,
                 },
                 {
-                  title: '内容描述',
-                  key: 'docDesc',
-                  align: 'center',
-                  width: 150,
-                },
-                {
                   title: '计量单位',
                   key: 'unitName',
                   align: 'center',
@@ -596,12 +585,6 @@
                 {
                   title: '项目单位',
                   key: 'purchaseAccountName',
-                  align: 'center',
-                  width: 120,
-                },
-                {
-                  title: '项目名称',
-                  key: 'projectName',
                   align: 'center',
                   width: 120,
                 },
