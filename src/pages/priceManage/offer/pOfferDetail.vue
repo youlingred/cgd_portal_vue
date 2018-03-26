@@ -217,10 +217,16 @@
                   type: 'label',
                   // switchFlag:
                   label: '成交服务费率',
-                  prop: 'serviceChargeRateName',
+                  prop: 'serviceChargeAmount',
                   formatter(value) {
-                    return value
+                    return this.accounting.formatMoney(value, '', 2);
                   }
+                },
+                {
+                  type: 'label',
+                  // switchFlag:
+                  label: '成交服务费率',
+                  prop: 'serviceChargeRateName',
                 },
                 {
                   type: 'label',
@@ -282,9 +288,9 @@
                 deliveryDatePromise: [
                   {required: true, message: '请选择 ', trigger: 'blur'},
                 ],
-                attchmentInfo2: [
-                  {required: true, message: '请上传商务文件', trigger: 'blur'},
-                ],
+                // attchmentInfo2: [
+                //   {required: true, message: '请上传商务文件', trigger: 'blur'},
+                // ],
               } : {}
             }
           ]
@@ -571,7 +577,7 @@
                   }
                 },
                 {
-                  title: '承诺交货日期',
+                  title: '施工完成日期',
                   key: 'deliveryDatePromise',
                   align: 'center',
                   width: 180,
@@ -676,7 +682,7 @@
                   }
                 },
                 {
-                  title: '承诺交货日期',
+                  title: '服务完成日期',
                   key: 'deliveryDatePromise',
                   align: 'center',
                   width: 180,
@@ -777,7 +783,7 @@
       },
       //FIXME 保存
       save() {
-        this.validateBaseInfo('save');
+        this.validateSucess('save');
       },
       //FIXME 提交
       sumbit() {
