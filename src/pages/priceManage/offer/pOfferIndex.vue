@@ -135,7 +135,7 @@
                   prop: 'quoteEndDateStart',
                   extendParam: {
                     editable: false,
-                    format: 'yyyy-MM-dd hh:mm:ss'
+                    valueFormat: 'yyyy-MM-dd hh:mm'
                   }
                 },
                 {
@@ -145,11 +145,11 @@
                   prop: 'quoteEndDateEnd',
                   extendParam: {
                     editable: false,
-                    format: 'yyyy-MM-dd hh:mm:ss'
+                    valueFormat: 'yyyy-MM-dd hh:mm'
                   }
                 },
                 {
-                  type: 'dateTimePicker',
+                  type: 'datePicker',
                   label: '发布开始日期',
                   placeholder: '请输入开始时间',
                   prop: 'publishTimeStart',
@@ -157,18 +157,18 @@
                   switchFlag: this.flag,
                   extendParam: {
                     editable: false,
-                    format: 'yyyy-MM-dd hh:mm:ss'
+                    valueFormat: 'yyyy-MM-dd'
                   }
                 },
                 {
-                  type: 'dateTimePicker',
+                  type: 'datePicker',
                   label: '发布结束日期',
                   placeholder: '请输入结束时间',
                   prop: 'publishTimeEnd',
                   switchFlag: this.flag,
                   extendParam: {
                     editable: false,
-                    format: 'yyyy-MM-dd hh:mm:ss'
+                    valueFormat: 'yyyy-MM-dd'
                   }
                 },
               ]
