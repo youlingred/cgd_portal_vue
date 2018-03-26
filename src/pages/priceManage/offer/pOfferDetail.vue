@@ -815,17 +815,17 @@
       validateList(type) {
         const list = this.$refs.table.all;
         let validate = true;
-        console.log(list)
         _.every(list, value => {
-          console.log( value.deliveryDatePromise)
-          if (value && _.isNumber(value.quotePrice) && value.deliveryDatePromise) {
-            return true
+          if (value && value.quotePrice>0 && value.deliveryDatePromise) {
+            if(!_.isNaN(value.quotePrice)){
+              return true
+            }
+            return false
           } else {
             validate = false;
             return validate = false;
           }
         })
-        console.log(validate)
         if (validate) {
           this.validateSucess(type);
         } else {
