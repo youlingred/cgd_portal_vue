@@ -70,6 +70,17 @@
               title: '采购单名称',
               key: 'inquiryName',
               width: 150,
+              render: (h, {row, column}) => {
+                return h('a',{
+                    on: {
+                      click: ()=>{
+                        this.gotoDetail(row)
+                      }
+                    }
+                  },
+                  row.inquiryName,
+                );
+              }
             },
             {
               title: '采购单编号',

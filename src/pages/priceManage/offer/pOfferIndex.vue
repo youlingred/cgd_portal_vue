@@ -56,7 +56,7 @@
         //table选中项集合
         selections:[],
         //当前激活的tab名称
-        activeName:'offering',
+        activeName:this.$route.query.tab===2?'offeried':'offering',
         options: [],
         //搜索条件表单数据
         form: {
@@ -339,7 +339,7 @@
       },
       //FIXME 详情跳转
       gotoDetail(row) {
-        this.$router.push({name: 'priceOfferDetail',params:{status:this.status,type:row.purchaseCategory,id:row.quotationId}});
+        this.$router.push({name: 'priceOfferDetail',query:{priceType:'offer'},params:{status:this.status,type:row.purchaseCategory,id:row.quotationId}});
       }
     },
   }

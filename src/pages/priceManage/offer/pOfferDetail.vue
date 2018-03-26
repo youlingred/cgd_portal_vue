@@ -42,13 +42,21 @@
       };
     },
     computed: {
-        operateButtons(){
-        if(this.status===0){
-            //待报价详情包含所有功能按钮
-          return [{label:'保存',type:'primary',click:this.save},{label:'提交',type:'primary',click:this.sumbit},{label:'发起澄清',type:'primary',click:this.fire},{label:'返回',type:'info',click:this.back}]
-        }else if(this.status===1){
+      operateButtons() {
+        if (this.status == 0) {
+          //待报价详情包含所有功能按钮
+          return [{label: '保存', type: 'primary', click: this.save}, {
+            label: '提交',
+            type: 'primary',
+            click: this.sumbit
+          }, {label: '发起澄清', type: 'primary', click: this.fire}, {label: '返回', type: 'info', click: this.back}]
+        } else if (this.status == 1) {
           //已报价详情去掉保存和提交
-          return [{label:'撤回',type:'danger',click:this.revoke},{label:'发起澄清',type:'primary',click:this.fire},{label:'返回',type:'info',click:this.back}];
+          return [{label: '撤回', type: 'danger', click: this.revoke}, {
+            label: '发起澄清',
+            type: 'primary',
+            click: this.fire
+          }, {label: '返回', type: 'info', click: this.back}];
         }
         return [];
       },
@@ -115,7 +123,7 @@
                   label: '交货日期',
                   prop: 'deliveryDate',
                   formatter: (value) => {
-                    return value?this.moment(value).format('YYYY-MM-DD'):'';
+                    return value ? this.moment(value).format('YYYY-MM-DD') : '';
                   }
                 },
                 {
@@ -123,7 +131,7 @@
                   label: '报价截止日期',
                   prop: 'quoteEndDate',
                   formatter: (value) => {
-                    return value?this.moment(value).format('YYYY-MM-DD HH:mm:ss'):'';
+                    return value ? this.moment(value).format('YYYY-MM-DD HH:mm:ss') : '';
                   }
                 },
                 {
@@ -142,14 +150,14 @@
                   placeholder: '请选择承诺交货日期',
                   prop: 'deliveryDatePromise',
                   formatter: (value) => {
-                    return value?this.moment(value).format('YYYY-MM-DD') : '';
+                    return value ? this.moment(value).format('YYYY-MM-DD') : '';
                   },
                   extendParam: {
                     editable: false,
                     valueFormat: 'timestamp',
                     format: 'yyyy-MM-dd',
-                    pickerOptions:{
-                      disabledDate:time =>{
+                    pickerOptions: {
+                      disabledDate: time => {
                         return time.getTime() < Date.now()
                       }
                     }
@@ -397,7 +405,7 @@
                         }
                       )
                     } else {
-                      return h('span',row.brand)
+                      return h('span', row.brand)
                     }
                   }
                 },
@@ -422,7 +430,7 @@
                         }
                       )
                     } else {
-                      return h('span',row.manufacturer)
+                      return h('span', row.manufacturer)
                     }
                   }
                 },
@@ -452,13 +460,13 @@
                           },
                           nativeOn: {
                             change: event => {
-                              this.priceChange(index,row,event.target.value);
+                              this.priceChange(index, row, event.target.value);
                             }
                           }
                         }
                       )
                     } else {
-                      return h('span',this.accounting.formatMoney(row.quotePrice, '', 2));
+                      return h('span', this.accounting.formatMoney(row.quotePrice, '', 2));
                     }
                   }
                 },
@@ -468,7 +476,7 @@
                   align: 'center',
                   width: 100,
                   render: (h, {row, column}) => {
-                    return h('div',this.accounting.formatMoney(row.quoteAmount, '', 2));
+                    return h('div', this.accounting.formatMoney(row.quoteAmount, '', 2));
                   }
                 },
                 {
@@ -482,11 +490,11 @@
                           props: {
                             placeholder: '请选择日期',
                             clearable: false,
-                            value: row.deliveryDatePromise?this.moment(row.deliveryDatePromise).format('YYYY-MM-DD'):'',
+                            value: row.deliveryDatePromise ? this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') : '',
                             editable: false,
                             format: 'yyyy-MM-dd',
-                            options:{
-                              disabledDate:time =>{
+                            options: {
+                              disabledDate: time => {
                                 return time.getTime() < Date.now()
                               }
                             }
@@ -499,7 +507,7 @@
                         }
                       )
                     } else {
-                      return h('span',this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '');
+                      return h('span', this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '');
                     }
                   }
                 }
@@ -557,13 +565,13 @@
                           },
                           nativeOn: {
                             change: event => {
-                              this.priceChange(index,row,event.target.value);
+                              this.priceChange(index, row, event.target.value);
                             }
                           }
                         }
                       )
                     } else {
-                      return h('span',this.accounting.formatMoney(row.quotePrice, '', 2));
+                      return h('span', this.accounting.formatMoney(row.quotePrice, '', 2));
                     }
                   }
                 },
@@ -573,7 +581,7 @@
                   align: 'center',
                   width: 100,
                   render: (h, {row, column}) => {
-                    return h('div',this.accounting.formatMoney(row.quoteAmount, '', 2));
+                    return h('div', this.accounting.formatMoney(row.quoteAmount, '', 2));
                   }
                 },
                 {
@@ -587,11 +595,11 @@
                           props: {
                             placeholder: '请选择日期',
                             clearable: false,
-                            value: row.deliveryDatePromise?this.moment(row.deliveryDatePromise).format('YYYY-MM-DD'):'',
+                            value: row.deliveryDatePromise ? this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') : '',
                             editable: false,
                             format: 'yyyy-MM-dd',
-                            options:{
-                              disabledDate:time =>{
+                            options: {
+                              disabledDate: time => {
                                 return time.getTime() < Date.now()
                               }
                             }
@@ -604,7 +612,7 @@
                         }
                       )
                     } else {
-                      return h('span',this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '');
+                      return h('span', this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '');
                     }
                   }
                 }
@@ -662,13 +670,13 @@
                           },
                           nativeOn: {
                             change: event => {
-                              this.priceChange(index,row,event.target.value);
+                              this.priceChange(index, row, event.target.value);
                             }
                           }
                         }
                       )
                     } else {
-                      return h('span',this.accounting.formatMoney(row.quotePrice, '', 2));
+                      return h('span', this.accounting.formatMoney(row.quotePrice, '', 2));
                     }
                   }
                 },
@@ -678,7 +686,7 @@
                   align: 'center',
                   width: 100,
                   render: (h, {row, column}) => {
-                    return h('div',this.accounting.formatMoney(row.quoteAmount, '', 2));
+                    return h('div', this.accounting.formatMoney(row.quoteAmount, '', 2));
                   }
                 },
                 {
@@ -692,11 +700,11 @@
                           props: {
                             placeholder: '请选择日期',
                             clearable: false,
-                            value: row.deliveryDatePromise?this.moment(row.deliveryDatePromise).format('YYYY-MM-DD'):'',
+                            value: row.deliveryDatePromise ? this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') : '',
                             editable: false,
                             format: 'yyyy-MM-dd',
-                            options:{
-                              disabledDate:time =>{
+                            options: {
+                              disabledDate: time => {
                                 return time.getTime() < Date.now()
                               }
                             }
@@ -709,7 +717,7 @@
                         }
                       )
                     } else {
-                      return h('span',this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '');
+                      return h('span', this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '');
                     }
                   }
                 }
@@ -735,9 +743,9 @@
         this.axios.post(this.appConfig.api('inquiry/quote/qryIqrQuoteDetail'), {quotationId: this.quotationId})
         // this.axios.post(this.appConfig.api('testcommen'), {quotationId: this.quotationId})
           .then(data => {
-            this.form=this.util.dataAdapter(data, ['attachmentName', 'attachmentUrl'],['name', 'url'],)
-            this.$nextTick(()=>{
-              this.$refs.baseInfo.forms[0].clearValidate();
+            this.form = this.util.dataAdapter(data, ['attachmentName', 'attachmentUrl'], ['name', 'url'],)
+            this.$nextTick(() => {
+                this.$refs.baseInfo.forms[0].clearValidate();
               }
             );
             this.queryList();
@@ -746,15 +754,15 @@
       },
       //FIXME 查询明细信息
       queryList() {
-        this.$refs.table.query({url: this.table.url, quotationId: this.quotationId,pageSize:1000})
+        this.$refs.table.query({url: this.table.url, quotationId: this.quotationId, pageSize: 1000})
       },
       //报价单价改变
-      priceChange(index,row,targetValue){
+      priceChange(index, row, targetValue) {
         this.$refs.table.all[index].quotePrice = targetValue;
         this.$refs.table.all[index].quoteAmount = targetValue * row.purchaseNum;
-        this.form.amount=0;
-        this.$refs.table.all.forEach(item=>{
-          this.form.amount+=item.quoteAmount;
+        this.form.amount = 0;
+        this.$refs.table.all.forEach(item => {
+          this.form.amount += item.quoteAmount;
         })
       },
       //FIXME 撤回
@@ -793,9 +801,9 @@
       validateBaseInfo(type) {
         this.$refs.baseInfo.forms[0].validate((valid) => {
           if (valid) {
-            if(this.form.quoteMethod==1){
+            if (this.form.quoteMethod == 1) {
               this.validateList(type);
-            }else{
+            } else {
               this.validateSucess(type);
             }
           } else {
@@ -807,14 +815,17 @@
       validateList(type) {
         const list = this.$refs.table.all;
         let validate = true;
+        console.log(list)
         _.every(list, value => {
-          if (value && value.quotePrice && value.deliveryDatePromise) {
+          console.log( value.deliveryDatePromise)
+          if (value && _.isNumber(value.quotePrice) && value.deliveryDatePromise) {
             return true
           } else {
             validate = false;
             return validate = false;
           }
         })
+        console.log(validate)
         if (validate) {
           this.validateSucess(type);
         } else {
@@ -824,7 +835,7 @@
       //FIXME 校验全部通过
       validateSucess(type) {
         //处理化基本信息数据
-        this.form=this.util.dataAdapter(this.form, ['name', 'url'], ['attachmentName', 'attachmentUrl'])
+        this.form = this.util.dataAdapter(this.form, ['name', 'url'], ['attachmentName', 'attachmentUrl'])
         //待提交数据整合
         let sumbitData = {};
         _.assign(sumbitData, this.form, {quotationItemJSON: this.$refs.table.all});
@@ -854,15 +865,16 @@
         });
         console.log(sumbitData);
         let url;
-        if(type==='sumbit'){
-          url='inquiry/quote/submitIqrQuote'
-        }else if(type==='save'){
-          url='inquiry/quote/saveIqrQuote'
-        };
+        if (type === 'sumbit') {
+          url = 'inquiry/quote/submitIqrQuote'
+        } else if (type === 'save') {
+          url = 'inquiry/quote/saveIqrQuote'
+        }
+        ;
         this.axios.post(this.appConfig.api(url), sumbitData)
-          .then( response => {
+          .then(response => {
             console.log(response);
-            this.back();
+            this.back(type);
           })
           .catch(function (error) {
             console.log(error);
@@ -880,9 +892,21 @@
           }
         });
       },
-      back() {
-        console.log("back");
-        this.$router.back();
+      back(type) {
+        console.log(type)
+        if (this.$route.query.priceType === 'offer') {
+          if (type === 'save') {
+            this.$router.push({name: 'priceOfferIndex', query: {tab: 1}})
+          } else if (type === 'sumbit') {
+            this.$router.push({name: 'priceOfferIndex', query: {tab: 2}})
+          }
+        } else if (this.$route.query.priceType === 'bid') {
+          if (type === 'save') {
+            this.$router.push({name: 'priceBindIndex', query: {tab: 1}})
+          } else if (type === 'sumbit') {
+            this.$router.push({name: 'priceBindIndex', query: {tab: 2}})
+          }
+        }
       },
       //FIXME 附件操作
       beforeRemove(file) {

@@ -313,7 +313,7 @@
       },
       //FIXME 详情跳转
       gotoDetail(row) {
-        this.$router.push({name: 'priceOfferDetail',params:{status:this.status,type:row.purchaseCategory,id:row.quotationId}});
+        this.$router.push({name: 'priceOfferDetail',query:{priceType:'bid'},params:{status:this.status,type:row.purchaseCategory,id:row.quotationId}});
       }
     },
   }
