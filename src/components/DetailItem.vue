@@ -10,18 +10,14 @@
     </div>
   </div>
   <!--编辑组件-->
-  <el-input v-else-if="type === 'input' && valueType==='number'"
-            v-model.number="data[prop]"
-            :placeholder="placeholder"
-            v-bind="extendParam"></el-input>
-  <el-input v-else-if="type === 'input' && valueType!=='number'"
+  <el-input v-else-if="type === 'input'"
             v-model="data[prop]"
             :placeholder="placeholder"
             v-bind="extendParam"></el-input>
   <el-input v-else-if="type === 'textarea'"
             type="textarea"
             v-model="data[prop]"
-            :placeholder="1111"
+            :placeholder="placeholder"
             v-bind="extendParam"></el-input>
   <el-date-picker v-else-if="type === 'datePicker'"
                   type="date" v-model="data[prop]"

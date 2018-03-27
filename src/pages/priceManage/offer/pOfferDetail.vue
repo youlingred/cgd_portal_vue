@@ -302,7 +302,7 @@
                 ],
                 supplierContactTele: [
                   {required: true, message: '请输入供应商联系电话', trigger: 'blur'},
-                  {type: 'number',len:11,message: '电话号码必须为数字值且最多为11位'},
+                  // {type: 'number',len:11,message: '电话号码必须为数字值且最多为11位'},
                 ],
                 deliveryDatePromise: [
                   {required: true, message: '请选择 ', trigger: 'blur'},
