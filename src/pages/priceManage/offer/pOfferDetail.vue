@@ -82,7 +82,7 @@
               children: [
                 {
                   type: 'label',
-                  label: '采购编号',
+                  label: this.$route.query.isSale?'销售编号':'采购编号',
                   prop: 'inquiryCode',
                 },
                 {
@@ -131,7 +131,7 @@
 
                 {
                   type: 'label',
-                  label: '交货日期',
+                  label: '提货日期',
                   prop: 'deliveryDate',
                   formatter: (value) => {
                     return value ? this.moment(value).format('YYYY-MM-DD') : '';
@@ -157,8 +157,8 @@
                 },
                 {
                   type: this.status == 0 ? 'datePicker' : 'label',
-                  label: '承诺交货日期',
-                  placeholder: '请选择承诺交货日期',
+                  label: '承诺提货日期',
+                  placeholder: '请选择承诺提货日期',
                   prop: 'deliveryDatePromise',
                   formatter: (value) => {
                     return value ? this.moment(value).format('YYYY-MM-DD') : '';
