@@ -60,6 +60,16 @@
         }
         return [];
       },
+      showServiceChargeRate(){
+        return _.parseInt(this.form.isDispatch)===1;
+      },
+      showServiceChargeAmount(){
+        return (_.parseInt(this.form.serviceChargeRate)===1 && this.showServiceChargeRate);
+      },
+      requireFiels(){
+        let value=_.parseInt(this.form.reviewMethod);
+        return (value===1 || value===2 || value===5)
+      },
       //FIXME 初始化基本信息显示数据
       detailData() {
         return {
@@ -95,6 +105,7 @@
                   type: this.status == 0 ? 'input' : 'label',
                   label: '供应商联系电话',
                   placeholder: '请输入',
+                  valueType:'number',
                   prop: 'supplierContactTele',
                 },
                 {
@@ -112,11 +123,11 @@
                   label: '配送中心-联系方式',
                   prop: 'purchaserTele',
                 },
-                {
-                  type: 'label',
-                  label: '配送方式',
-                  prop: 'logisticsDistrWayName',
-                },
+                // {
+                //   type: 'label',
+                //   label: '配送方式',
+                //   prop: 'logisticsDistrWayName',
+                // },
 
                 {
                   type: 'label',
@@ -223,8 +234,8 @@
                 },
                 {
                   type: 'label',
-                  // switchFlag:
-                  label: '成交服务费率',
+                  switchFlag:this.showServiceChargeAmount,
+                  label: '成交服务费',
                   prop: 'serviceChargeAmount',
                   formatter(value) {
                     return this.accounting.formatMoney(value, '', 2);
@@ -232,7 +243,7 @@
                 },
                 {
                   type: 'label',
-                  // switchFlag:
+                  switchFlag:this.showServiceChargeRate,
                   label: '成交服务费率',
                   prop: 'serviceChargeRateName',
                 },
@@ -291,14 +302,17 @@
                 ],
                 supplierContactTele: [
                   {required: true, message: '请输入供应商联系电话', trigger: 'blur'},
-                  // {type: 'number',max:11,message: '电话号码必须为数字值且最多为11位', trigger: 'blur'},
+                  {type: 'number',len:11,message: '电话号码必须为数字值且最多为11位'},
                 ],
                 deliveryDatePromise: [
                   {required: true, message: '请选择 ', trigger: 'blur'},
                 ],
-                // attchmentInfo2: [
-                //   {required: true, message: '请上传商务文件', trigger: 'blur'},
-                // ],
+                attchmentInfo2:this.requireFiels?[
+                  {required: true, message: '请上传商务文件', trigger: 'blur'},
+                ]:[],
+                attchmentInfo3:this.requireFiels?[
+                  {required: true, message: '请上传商务文件', trigger: 'blur'},
+                ]:[],
               } : {}
             }
           ]

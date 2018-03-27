@@ -135,7 +135,7 @@
                   prop: 'quoteEndDateStart',
                   extendParam: {
                     editable: false,
-                    valueFormat: 'yyyy-MM-dd hh:mm'
+                    valueFormat: 'yyyy-MM-dd HH:mm'
                   }
                 },
                 {
@@ -145,7 +145,7 @@
                   prop: 'quoteEndDateEnd',
                   extendParam: {
                     editable: false,
-                    valueFormat: 'yyyy-MM-dd hh:mm'
+                    valueFormat: 'yyyy-MM-dd HH:mm'
                   }
                 },
                 {

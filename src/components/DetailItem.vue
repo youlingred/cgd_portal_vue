@@ -10,14 +10,18 @@
     </div>
   </div>
   <!--编辑组件-->
-  <el-input v-else-if="type === 'input'"
+  <el-input v-else-if="type === 'input' && valueType==='number'"
+            v-model.number="data[prop]"
+            :placeholder="placeholder"
+            v-bind="extendParam"></el-input>
+  <el-input v-else-if="type === 'input' && valueType!=='number'"
             v-model="data[prop]"
             :placeholder="placeholder"
             v-bind="extendParam"></el-input>
   <el-input v-else-if="type === 'textarea'"
             type="textarea"
             v-model="data[prop]"
-            :placeholder="placeholder"
+            :placeholder="1111"
             v-bind="extendParam"></el-input>
   <el-date-picker v-else-if="type === 'datePicker'"
                   type="date" v-model="data[prop]"
@@ -59,6 +63,10 @@
       //类型: 默认为label,可设置为 file,其他类型正在添加中
       type: {
         default: 'label'
+      },
+      //数据类型
+      valueType:{
+        default:null
       },
       //默认文本
       placeholder:{
