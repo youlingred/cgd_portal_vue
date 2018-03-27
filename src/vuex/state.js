@@ -1,8 +1,9 @@
 const state = {
-  activeLeftMenu:{
-    url:'',
-    code:'',
-    name:''
+  menu:{
+    navs:[],
+    activeNav:{},
+    leftMenus:[],
+    activeLeft:{}
   },
   userInfo:{
     auditPassed: false,

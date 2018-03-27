@@ -4,7 +4,7 @@
       <!--<h2 class="leftmemu-title" v-if="menutitle"><i class="abs glyphicon-menu-left"></i>{{menuName || ""}}</h2>-->
       <ul>
         <li v-for="value in menus" class="memu-item" v-bind:class="{tive:value.isShow}">
-          <a href="javascript:;" class="memu-item-title" v-on:click.prevent="menuClick(value)">{{value.name || ""}}
+          <a href="javascript:;" class="memu-item-title" v-on:click.prevent="menuClick(value)">{{value.name}}
             <i class="abs glyphicon-add-left"></i>
           </a>
           <ul class="list-group">
@@ -24,39 +24,23 @@
       menus:{
         default:function (){
           return [
-            {
-              isShow: true,
-              code:'',
-              name: 'test',
-              url:'',
-              subMenus: [{
-                name: 'test1-1',
-                code: 'test',
-                url:''
-              }]
-            },
-            {
-              isShow: true,
-              code:'',
-              name: 'test1',
-              url:''
-            }
+            // {
+            //   isShow: true,
+            //   code:'',
+            //   name: 'test',
+            //   url:'',
+            //   subMenus: [{
+            //     name: 'test1-1',
+            //     code: 'test',
+            //     url:''
+            //   }]
+            // },
           ]
         }
-      }
-    },
-    data() {
-      return {
-
-      }
-    },
-    computed:{
+      },
       active:{
-        get(){
-          return this.$store.state.activeLeftMenu;
-        },
-        set(val){
-          this.$store.dispatch('setActiveLeftMenu',val);
+        default(){
+          return {};
         }
       }
     },
@@ -65,11 +49,9 @@
         item.isShow=!item.isShow
       },
       subMenuClick(menu) {
-        console.log(menu.url)
         if(this.active.code!=menu.code){
-          this.active=menu;
-          this.$emit('change',menu);
-          this.$router.push({name:menu.url})
+          this.$emit('menu-click',menu);
+          // this.$router.push({name:menu.url})
         }
       },
     },

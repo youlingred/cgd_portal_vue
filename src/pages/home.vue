@@ -1,10 +1,11 @@
 <template>
   <div>
     <Header v-bind="headerData"></Header>
-    <Nav v-bind="navData" @menu-click="navClick"></Nav>
-    <LeftMenu v-bind="leftMenuData"></LeftMenu>
+    <Nav :menus="$store.state.menu.navs" :active="$store.state.menu.activeNav" @menu-click="navClick"></Nav>
+    <LeftMenu :menus="$store.state.menu.leftMenus" :active="$store.state.menu.activeLeft"
+              @menu-click="leftClick"></LeftMenu>
     <div class="content_right">
-      <crumbs/>
+      <crumbs :name="$store.state.menu.activeLeft.name"/>
       <div class="table-list-group">
         <router-view></router-view>
       </div>
@@ -44,13 +45,16 @@
         const nextNav = _.find(this.navData.menus, {'id': nav.id});
         if (nextNav.isVue) {
           this.$router.push(nav.url)
-          // console.log('%c env:','background:#aaa;color:#bada55',nextNav)
           this.generateLeftMenu(nextNav.subMenus)
         } else {
           // console.log('%c env:','background:#aaa;color:#bada55',location.origin+nextNav.url)
           window.location.href = location.origin + nextNav.url;
         }
 
+      },
+      leftClick(menu) {
+        this.$store.dispatch('setActiveLeft', menu)
+        this.$router.push({name: menu.url})
       },
       getHeaderData() {
         //获取用户信息
@@ -93,73 +97,93 @@
 
       },
       generateNav(data) {
-        let activeMenu;
         let navMenus = [];
-        let subMenus = [];
+        let activeNav;
+        let leftMenus = [];
         // console.log('%c this.$route:','background:#aaa;color:#bada55',this.$route)
         data.forEach(item => {
           item.subMenus.forEach(child => {
             child.subMenus.forEach(sec => {
               if (sec.menuCode === this.$route.name) {
-                activeMenu = item.autoId;
-                subMenus = item.subMenus;
+                activeNav = {
+                  code: item.menuCode,
+                  name: item.menuName,
+                  url: item.menuUrl,
+                };
+                leftMenus = item.subMenus;
                 return false;
               }
             })
-            if (activeMenu) {
+            if (activeNav) {
               return false;
             }
           });
-          if (activeMenu) {
+          if (activeNav) {
             return false;
           }
         });
+        if (!activeNav) {
+          activeNav = JSON.parse(sessionStorage.getItem('activeNav'));
+        }
+        if(leftMenus.length===0){
+          let sessionLeftMenus=JSON.parse(sessionStorage.getItem('leftMenus'))
+          leftMenus = sessionLeftMenus.length>0?sessionLeftMenus:null;
+        }
+        console.log('leftMenus',leftMenus)
         data.forEach(item => {
-          if (!activeMenu) {
-            activeMenu = item.autoId;
-            subMenus = item.subMenus;
+          if (!activeNav) {
+            activeNav = {
+              code: item.menuCode,
+              name: item.menuName,
+              url: item.menuUrl,
+            };
+            leftMenus = item.subMenus;
           }
           navMenus.push({
-            id: item.autoId,
+            code: item.menuCode,
             name: item.menuName,
             url: item.menuUrl,
             subMenus: item.subMenus,
             isVue: item.menuCode.split('|')[1]
           })
         })
-        this.navData = {
-          activeMenu: activeMenu,
-          menus: navMenus
-        }
-        this.generateLeftMenu(subMenus)
+        this.$store.dispatch('setNavMenus', navMenus)
+        this.$store.dispatch('setActiveNav', activeNav)
+        this.generateLeftMenu(leftMenus)
       },
-      generateLeftMenu(subMenus) {
+      generateLeftMenu(menus) {
         let leftMenus = [];
-        subMenus.forEach(item => {
+        let activeLeft;
+        menus.forEach(item => {
           let menu = {
             isShow: true,
-            code: item.menuCode,
-            name: item.menuName,
-            url: item.menuUrl,
+            code: item.menuCode||item.code,
+            name: item.menuName||item.name,
+            url: item.menuUrl||item.url,
             subMenus: []
           };
           if (item.subMenus) {
             item.subMenus.forEach((child) => {
               let subMenu = {
-                code: child.menuCode,
-                name: child.menuName,
-                url: child.menuUrl
+                code: child.menuCode||child.code,
+                name: child.menuName||child.name,
+                url: child.menuUrl||child.url,
               };
-              if (this.$route.name === subMenu.url) (
-                this.$store.dispatch('setActiveLeftMenu', subMenu)
-              )
+              if (!activeLeft && (this.$route.name === subMenu.url)) {
+                activeLeft = subMenu;
+              }
               menu.subMenus.push(subMenu)
             })
           }
           leftMenus.push(menu)
         });
+
+        if (!activeLeft) {
+          activeLeft = JSON.parse(sessionStorage.getItem('activeLeft'));
+        }
         this.leftMenuData.menus = leftMenus
-        // console.log('leftMenuData',this.leftMenuData)
+        this.$store.dispatch('setLeftMenus', leftMenus)
+        this.$store.dispatch('setActiveLeft', activeLeft)
       }
     },
     created() {

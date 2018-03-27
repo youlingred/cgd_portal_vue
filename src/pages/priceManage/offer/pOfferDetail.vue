@@ -42,6 +42,9 @@
       };
     },
     computed: {
+      fromSale(){
+        return this.$route.query.isSale
+      },
       operateButtons() {
         if (this.status == 0) {
           //待报价详情包含所有功能按钮
@@ -82,7 +85,7 @@
               children: [
                 {
                   type: 'label',
-                  label: this.$route.query.isSale?'销售编号':'采购编号',
+                  label: this.fromSale?'销售编号':'采购编号',
                   prop: 'inquiryCode',
                 },
                 {
@@ -932,6 +935,11 @@
       this.queryDetail();
     },
     created() {
+      if(this.fromSale){
+        this.$store.dispatch('setActiveLeft',{code:'priceBindIndex'})
+      }else{
+        this.$store.dispatch('setActiveLeft',{code:'priceOfferIndex'})
+      }
     }
   }
 </script>
