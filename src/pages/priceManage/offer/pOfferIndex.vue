@@ -225,11 +225,11 @@
             },
             {
               title: '发布日期',
-              key: 'publishTime',
+              key: 'inquiryPublishDate',
               align: 'center',
               width: 180,
               render: (h, {row, column}) => {
-                return h('div', this.moment(row.publishTime).format("YYYY-MM-DD HH:mm:ss"));
+                return h('div', this.moment(row.inquiryPublishDate).format("YYYY-MM-DD HH:mm:ss"));
               }
             },
             {
@@ -278,6 +278,7 @@
         this.$refs.table.query(this.form);
       },
       refresh(){
+        alert(1)
         this.$refs.table.query();
       },
       //FIXME 重置
