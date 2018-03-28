@@ -11,7 +11,7 @@
     <buttons-operator type="top"
                       algin="right"
                       :buttons="[{label:'导出',type:'primary',click:exportFunc}]"/>
-    <IvTable ref="test" v-bind="table" @on-row-click="cellClickHandler"></IvTable>
+    <IvTable ref="table" v-bind="table" @on-row-click="cellClickHandler"></IvTable>
   </div>
 </template>
 
@@ -23,7 +23,7 @@
   export default {
     data () {
       return {
-        formtable: {
+        form: {
           name: '',
           project: '',
           status: ''
@@ -38,7 +38,7 @@
         return {
           contents: [
             {
-              data: this.formtable,
+              data: this.form,
               labelWidth: '100px',
               inputWidth: '200px',
               inline: true,
@@ -88,16 +88,6 @@
           url: this.appConfig.api('plan/qryVendorSingleSourcePublicObjectionList'),
           pageNo: 1,
           height: 400,
-          queryParam: function (param) {
-            console.log('queryParam:', param)
-            return _.assign({test: 1}, param);
-          },
-          responseHandler: (val)=>{
-            console.log('responseHandler:', val);
-            if(!this.formtable.name&&!this.formtable.project&&!this.formtable.status)return val;
-            return this.filterData(this.formtable, val);
-            /*return val;*/
-          },
           columns: [
             {
               type: 'selection',
@@ -160,51 +150,14 @@
           }})
       },
       search () {
-        this.$refs.test.query(this.formtable);
+        this.$refs.table.query(this.form);
       },
       resetForm () {
         this.$refs['send'].forms[0].resetFields();
       },
       exportFunc () {
-        console.log(this.$refs.test.m_selection);
+        console.log(this.$refs.table.m_selection);
       },
-      /*数据筛选：多判断条件式*/
-      filterData(param={},obj){
-        /*根据计划名称筛选*/
-        let {name,project,status}=param;
-        let {rows}=obj;
-        if(this.formtable.name&&this.formtable.name!=''){
-          obj={...obj,rows:rows.filter((item, index)=>{
-              //名称筛选
-              return item.planName.indexOf(this.formtable.name)>-1
-            })}
-        }
-        /*根据项目单位筛选*/
-        if(this.formtable.project&&this.formtable.project!=''){
-          obj={...obj,rows:rows.filter((item, index)=>{
-              return item.purchaseAccountName.indexOf(this.formtable.project)>-1
-            })}
-        }
-        /*根据受理状态筛选*/
-        if(this.formtable.status&&this.formtable.status!=''){
-          let str='';
-          switch (this.formtable.status) {
-            case 1:
-              str='处理中';
-              break;
-            case 2:
-              str='已受理';
-              break;
-            case 3:
-              str='驳回';
-              break;
-          }
-          obj={...obj,rows:rows.filter((item, index)=>{
-              return item.dealStatusName.indexOf(str)>-1
-            })}
-        }
-        return obj
-      }
     },
     components: {
       IvTable,

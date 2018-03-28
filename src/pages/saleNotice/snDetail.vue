@@ -69,7 +69,7 @@
                 {
                   type: 'tag',
                   label: '项目单位',
-                  prop: 'purchaseAccountsNameJson',
+                  prop: 'purchaseAccountsName',
                 },
                 {
                   type: 'label',
@@ -79,7 +79,10 @@
                 {
                   type: 'label',
                   label: '供应商分类',
-                  prop: 'supplierClassNames'
+                  prop: 'supplierClassNames',
+                  formatter(value) {
+                    return value.replace(/,/g,'>')
+                  }
                 },
                 {
                   type: '',

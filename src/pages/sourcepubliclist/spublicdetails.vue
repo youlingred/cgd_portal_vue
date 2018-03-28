@@ -1,9 +1,6 @@
 <template>
   <div>
     <detail v-bind="detailData"/>
-<!--    <div class="footerdiv">
-      <el-button @click="backFunc" class="footerbutton">返回</el-button>
-    </div>-->
     <buttons-operator type="bottom"
                       fix="true"
                       :buttons="[{label:'返回',type:'info',click:backFunc}]"/>
