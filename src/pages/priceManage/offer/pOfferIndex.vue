@@ -340,7 +340,7 @@
       },
       //FIXME 详情跳转
       gotoDetail(row) {
-        this.$router.push({name: 'priceOfferDetail',query:{priceType:'offer'},params:{status:this.status,type:row.purchaseCategory,id:row.quotationId}});
+        this.$router.push({name: 'priceOfferDetail',query:{backPage:'priceOfferIndex',priceType:'offer'},params:{status:this.status,type:row.purchaseCategory,id:row.quotationId}});
       }
     },
   }

@@ -23,7 +23,7 @@
         </el-tab-pane>
       </el-tabs>
     </el-card>
-    <buttons-operator type="top"
+    <buttons-operator v-if="activeName==='doing'" type="top"
                       algin="right"
                       :buttons="[{label:'确认',type:'primary',click:confirm},
                       {label:'拒绝成交',type:'primary',click:refuse},

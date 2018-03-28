@@ -127,7 +127,7 @@
         }
         if(leftMenus.length===0){
           let sessionLeftMenus=JSON.parse(sessionStorage.getItem('leftMenus'))
-          leftMenus = sessionLeftMenus.length>0?sessionLeftMenus:null;
+          leftMenus = sessionLeftMenus && sessionLeftMenus.length>0?sessionLeftMenus:null;
         }
         console.log('leftMenus',leftMenus)
         data.forEach(item => {

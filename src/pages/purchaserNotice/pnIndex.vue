@@ -286,7 +286,7 @@
           purchaseCategory:this.selections[0].purchaseCategory
         }).then((response) => {
               console.log(response);
-                this.$router.push({name: 'priceOfferDetail',params:{status:0,type:this.selections[0].purchaseCategory,id:response.quotationId}});
+                this.$router.push({name: 'priceOfferDetail',query:{backPage:'purchaserNoticeIndex'},params:{status:0,type:this.selections[0].purchaseCategory,id:response.quotationId}});
             })
             .catch(function (error) {
               console.log(error);

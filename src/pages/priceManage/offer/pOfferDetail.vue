@@ -39,12 +39,15 @@
           attchmentInfo3: [],
           attchmentInfo4: [],
         },
+        //是否来自销售页面
+        fromSale:this.$route.query.isSale,
+        //来自报价还是竞价 'offer':报价,'bid':竞价
+        priceType:this.$route.query.priceType,
+        //跳转回的页面
+        backPage:this.$route.query.backPage,
       };
     },
     computed: {
-      fromSale(){
-        return this.$route.query.isSale
-      },
       operateButtons() {
         if (this.status == 0) {
           //待报价详情包含所有功能按钮
@@ -343,7 +346,7 @@
                   title: '项目单位',
                   key: 'purchaseAccountName',
                   align: 'center',
-                  width: 120,
+                  width: 200,
                 },
                 {
                   title: '物资分类',
@@ -548,7 +551,7 @@
                   title: '项目单位',
                   key: 'purchaseAccountName',
                   align: 'center',
-                  width: 120,
+                  width: 200,
                 },
                 // {
                 //   title: '项目名称',
@@ -605,7 +608,6 @@
                   title: '施工完成日期',
                   key: 'deliveryDatePromise',
                   align: 'center',
-                  width: 180,
                   render: (h, {row, column}) => {
                     if (Number.parseInt(this.status) === 0) {
                       return h('DatePicker', {
@@ -653,7 +655,7 @@
                   title: '项目单位',
                   key: 'purchaseAccountName',
                   align: 'center',
-                  width: 120,
+                  width: 200,
                 },
                 // {
                 //   title: '内容描述',
@@ -710,7 +712,6 @@
                   title: '服务完成日期',
                   key: 'deliveryDatePromise',
                   align: 'center',
-                  width: 180,
                   render: (h, {row, column}) => {
                     if (Number.parseInt(this.status) === 0) {
                       return h('DatePicker', {
@@ -910,19 +911,17 @@
         });
       },
       back(type) {
-        console.log(type)
-        if (this.$route.query.priceType === 'offer') {
+        //如果priceType存在,则确定来自报价或者竞价页面
+        if (this.$route.query.priceType) {
+          //如果是保存跳转到待报价,如果是提交或者撤回跳转到已报价
           if (type === 'save') {
-            this.$router.push({name: 'priceOfferIndex', query: {tab: 1}})
-          } else if (type === 'sumbit') {
-            this.$router.push({name: 'priceOfferIndex', query: {tab: 2}})
+            this.$router.push({name: this.backPage, query: {tab: 1}})
+          } else {
+            this.$router.push({name: this.backPage, query: {tab: 2}})
           }
-        } else if (this.$route.query.priceType === 'bid') {
-          if (type === 'save') {
-            this.$router.push({name: 'priceBindIndex', query: {tab: 1}})
-          } else if (type === 'sumbit') {
-            this.$router.push({name: 'priceBindIndex', query: {tab: 2}})
-          }
+        }else{
+          //如果如果priceType不存在则来自销售公告或者采购公告,无需设置tab标签跳转
+          this.$router.push({name: this.backPage});
         }
       },
       //FIXME 附件操作
@@ -934,12 +933,5 @@
     mounted() {
       this.queryDetail();
     },
-    created() {
-      if(this.fromSale){
-        this.$store.dispatch('setActiveLeft',{code:'priceBindIndex'})
-      }else{
-        this.$store.dispatch('setActiveLeft',{code:'priceOfferIndex'})
-      }
-    }
   }
 </script>
