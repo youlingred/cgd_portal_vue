@@ -71,7 +71,7 @@
                   label: '交货日期',
                   prop: 'reqArrivalDate',
                   formatter(value) {
-                    return value===(null||'')?'-':this.moment(value).format("YYYY-MM-DD HH:mm:ss")
+                    return value === (null || '') ? '-' : this.moment(value).format("YYYY-MM-DD HH:mm:ss")
                   }
                 },
                 {
@@ -79,7 +79,7 @@
                   label: '报价截止日期',
                   prop: 'quoteEndDate',
                   formatter(value) {
-                    return value===(null||'')?'-':this.moment(value).format("YYYY-MM-DD HH:mm:ss")
+                    return value === (null || '') ? '-' : this.moment(value).format("YYYY-MM-DD HH:mm:ss")
                   }
                 },
                 {
@@ -167,17 +167,29 @@
       }
     },
     methods: {
-      join(){
+      join() {
         this.axios.post(this.appConfig.api('inquiry/quote/addQuotationBill'),
           {
             inquiryId: this.$route.params.id,
             iqrSeq: this.$route.params.seq,
             purchaseCategory: this.$route.params.type
           }).then((response) => {
-          this.$router.push({name: 'priceOfferDetail',query:{backPage:'purchaserNoticeIndex'},params:{status:0,type:this.$route.params.type,id:response.quotationId}});
-        }).catch(function (error) {
-            console.log(error);
+          MessageBox.alert(`国电国际经贸有限公司:<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp我公司(<strong><font color="#F56C6C">${response.supplierName}</font></strong>)对贵公司询价单（编号：<strong><font color="#F56C6C">${response.inquiryCode}</font></strong>）中技术、商务要求的内容已经详细阅读并充分理解，保证所供货物、设备在质量，规格型号等方面满足询价单各项要求，并能够按照该报价执行合同。<br><p style="text-align: right">${this.moment().format("YYYY年MM月DD日")}`, '', {
+            showConfirmButton: false,
+            showClose: false,
+            dangerouslyUseHTMLString: true,
           });
+          setTimeout(() => {
+            MessageBox.close();
+            this.$router.push({
+              name: 'priceOfferDetail',
+              query: {backPage: 'purchaserNoticeIndex'},
+              params: {status: 0, type: this.$route.params.type, id: response.quotationId}
+            });
+          }, 2000)
+        }).catch(function (error) {
+          console.log(error);
+        });
       },
       backFunc() {
         this.$router.push({name: 'purchaserNoticeIndex'});
@@ -262,7 +274,7 @@
               align: 'center',
               width: 180,
               render: (h, {row, column}) => {
-                return h('div',this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
+                return h('div', this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
               }
             }
           ];
@@ -312,7 +324,7 @@
               align: 'center',
               width: 180,
               render: (h, {row, column}) => {
-                return h('div',this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
+                return h('div', this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
               }
             }
           ];
@@ -362,7 +374,7 @@
               align: 'center',
               width: 180,
               render: (h, {row, column}) => {
-                return h('div',this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
+                return h('div', this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
               }
             }
           ];

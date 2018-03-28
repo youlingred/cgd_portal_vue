@@ -27,7 +27,7 @@
     },
     data() {
       return {
-        flag:false,
+        flag: false,
         form: {},
         //列表数据
         table: {
@@ -38,8 +38,8 @@
     },
     computed: {
       //成交服务费是否展示
-      showServiceChargeAmount(){
-        return (_.parseInt(this.form.serviceChargeRate)===1);
+      showServiceChargeAmount() {
+        return (_.parseInt(this.form.serviceChargeRate) === 1);
       },
       detailData() {
         return {
@@ -90,7 +90,7 @@
                   label: '报价截止时间',
                   prop: 'quoteEndDate',
                   formatter(value) {
-                    return value===(null||'')?'-':this.moment(value).format("YYYY-MM-DD HH:mm:ss")
+                    return value === (null || '') ? '-' : this.moment(value).format("YYYY-MM-DD HH:mm:ss")
                   }
                 },
                 {
@@ -99,7 +99,7 @@
                   label: '提货日期',
                   prop: 'reqArrivalDate',
                   formatter(value) {
-                    return value===(null||'')?'-':this.moment(value).format("YYYY-MM-DD HH:mm:ss")
+                    return value === (null || '') ? '-' : this.moment(value).format("YYYY-MM-DD HH:mm:ss")
                   }
                 },
                 // {
@@ -168,7 +168,7 @@
                 },
                 {
                   type: 'label',
-                  switchFlag:this.flag&&this.showServiceChargeAmount,
+                  switchFlag: this.flag && this.showServiceChargeAmount,
                   label: '成交服务费',
                   prop: 'serviceChargeAmount',
                   formatter(value) {
@@ -177,15 +177,15 @@
                 },
                 {
                   type: 'label',
-                  switchFlag:this.flag,
+                  switchFlag: this.flag,
                   label: '成交服务费率',
                   prop: 'serviceChargeRateName',
                 },
                 {
-                  type:'label',
-                  switchFlag:this.flag,
-                  label:'备注',
-                  prop:'remarks'
+                  type: 'label',
+                  switchFlag: this.flag,
+                  label: '备注',
+                  prop: 'remarks'
                 },
                 // {
                 //   switchFlag: this.flag,
@@ -218,14 +218,26 @@
       },
     },
     methods: {
-      join(){
+      join() {
         this.axios.post(this.appConfig.api('inquiry/quote/addQuotationBill'),
           {
             inquiryId: this.$route.params.id,
             iqrSeq: this.$route.params.seq,
             purchaseCategory: this.$route.params.type
           }).then((response) => {
-          this.$router.push({name: 'priceOfferDetail',query:{isSale:true,packPage:'saleNoticeIndex'},params:{status:0,type:this.$route.params.type,id:response.quotationId}});
+          MessageBox.alert(`国电国际经贸有限公司:<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp我公司(<strong><font color="#F56C6C">${response.supplierName}</font></strong>)对贵公司询价单（编号：<strong><font color="#F56C6C">${response.inquiryCode}</font></strong>）中技术、商务要求的内容已经详细阅读并充分理解，保证所供货物、设备在质量，规格型号等方面满足询价单各项要求，并能够按照该报价执行合同。<br><p style="text-align: right">${this.moment().format("YYYY年MM月DD日")}`, '', {
+            showConfirmButton: false,
+            showClose: false,
+            dangerouslyUseHTMLString: true,
+          });
+          setTimeout(() => {
+            MessageBox.close();
+            this.$router.push({
+              name: 'priceOfferDetail',
+              query: {isSale: true, packPage: 'saleNoticeIndex'},
+              params: {status: 0, type: this.$route.params.type, id: response.quotationId}
+            });
+          }, 2000)
         }).catch(function (error) {
           console.log(error);
         });
@@ -309,7 +321,7 @@
             align: 'center',
             width: 180,
             render: (h, {row, column}) => {
-              return h('div',this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
+              return h('div', this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
             }
           }
         ];

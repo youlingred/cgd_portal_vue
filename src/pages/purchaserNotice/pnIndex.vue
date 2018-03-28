@@ -31,7 +31,7 @@
       return {
         flag: false,
         options: [],
-        selections:[],
+        selections: [],
         cgjg_options: [],
         //搜索条件表单数据
         form: {
@@ -59,24 +59,24 @@
           columns: [
             {
               type: 'selection',
-              align:'center',
+              align: 'center',
               width: 60
             },
             {
               title: '序号',
               type: 'index',
-              align:'center',
+              align: 'center',
               width: 80
             },
             {
               title: '采购单名称',
               key: 'inquiryName',
-              align:'center',
+              align: 'center',
               width: 150,
               render: (h, {row, column}) => {
-                return h('a',{
+                return h('a', {
                     on: {
-                      click: ()=>{
+                      click: () => {
                         this.gotoDetail(row)
                       }
                     }
@@ -88,48 +88,48 @@
             {
               title: '采购单编号',
               key: 'inquiryCode',
-              align:'center',
+              align: 'center',
               width: 200,
             },
             {
               title: '要求到货日期/要求完工日期',
               key: 'reqArrivalDate',
-              align:'center',
+              align: 'center',
               width: 200,
               render: (h, {row, column}) => {
                 return h('div',
-                  row.reqArrivalDate===(null||'')?'-':this.moment(row.reqArrivalDate).format("YYYY-MM-DD HH:mm:ss")
+                  row.reqArrivalDate === (null || '') ? '-' : this.moment(row.reqArrivalDate).format("YYYY-MM-DD HH:mm:ss")
                 );
               }
             },
             {
               title: '发布日期',
               key: 'publishTime',
-              align:'center',
+              align: 'center',
               width: 180,
               render: (h, {row, column}) => {
-                return h('div',row.publishTime===(null||'')?'-':this.moment(row.publishTime).format("YYYY-MM-DD HH:mm:ss"));
+                return h('div', row.publishTime === (null || '') ? '-' : this.moment(row.publishTime).format("YYYY-MM-DD HH:mm:ss"));
               }
             },
             {
               title: '报价截止日期',
               key: 'quoteEndDate',
-              align:'center',
+              align: 'center',
               width: 180,
               render: (h, {row, column}) => {
-                return h('div',row.quoteEndDate===(null||'')?'-':this.moment(row.quoteEndDate).format("YYYY-MM-DD HH:mm:ss"));
+                return h('div', row.quoteEndDate === (null || '') ? '-' : this.moment(row.quoteEndDate).format("YYYY-MM-DD HH:mm:ss"));
               }
             },
             {
               title: '采购机构',
               key: 'professionalOrgName',
-              align:'center',
+              align: 'center',
               width: 180
             },
             {
               title: '采购类别',
               key: 'purchaseCategoryName',
-              align:'center',
+              align: 'center',
               width: 180
             },
           ]
@@ -152,9 +152,9 @@
                   placeholder: '请输入采购单名称',
                   prop: 'inquiryName',
                   render: (h, {row, column}) => {
-                    return h('a',{
+                    return h('a', {
                         on: {
-                          click: ()=>{
+                          click: () => {
                             this.gotoDetail(row)
                           }
                         }
@@ -249,8 +249,8 @@
       }
     },
     methods: {
-      selectionChange(val){
-        this.selections=val;
+      selectionChange(val) {
+        this.selections = val;
       },
       //搜索
       search() {
@@ -282,43 +282,56 @@
       },
       //参与
       join() {
-        if(this.selections.length===0){
-          this.$alert(this.util.lang.alertSelectionNeed,'提示');
+        if (this.selections.length === 0) {
+          this.$alert(this.util.lang.alertSelectionNeed, '提示');
           return;
-        };
-        if(this.selections.length>1){
-          this.$alert(this.util.lang.alertSelectionOnlyOne,'提示');
-          return;
-        };
-        this.axios.post(this.appConfig.api('inquiry/quote/addQuotationBill'),
-        {
-          inquiryId:this.selections[0].inquiryId,
-          iqrSeq:this.selections[0].iqrSeq,
-          purchaseCategory:this.selections[0].purchaseCategory
-        }).then((response) => {
-              console.log(response);
-                this.$router.push({name: 'priceOfferDetail',query:{backPage:'purchaserNoticeIndex'},params:{status:0,type:this.selections[0].purchaseCategory,id:response.quotationId}});
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-        },
-        //导出
-        exports() {
-
-        },
-        gotoDetail(row) {
-          console.log(row);
-          this.$router.push({
-            name: 'purchaserNoticeDetail',
-            params: {type: row.purchaseCategory, id: row.inquiryId, seq: row.iqrSeq}
-          });
         }
+        ;
+        if (this.selections.length > 1) {
+          this.$alert(this.util.lang.alertSelectionOnlyOne, '提示');
+          return;
+        }
+        ;
+        this.axios.post(this.appConfig.api('inquiry/quote/addQuotationBill'),
+          {
+            inquiryId: this.selections[0].inquiryId,
+            iqrSeq: this.selections[0].iqrSeq,
+            purchaseCategory: this.selections[0].purchaseCategory
+          }).then((response) => {
+          MessageBox.alert(`国电国际经贸有限公司:<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp我公司(<strong><font color="#F56C6C">${response.supplierName}</font></strong>)对贵公司询价单（编号：<strong><font color="#F56C6C">${response.inquiryCode}</font></strong>）中技术、商务要求的内容已经详细阅读并充分理解，保证所供货物、设备在质量，规格型号等方面满足询价单各项要求，并能够按照该报价执行合同。<br><p style="text-align: right">${this.moment().format("YYYY年MM月DD日")}`, '', {
+            showConfirmButton: false,
+            showClose: false,
+            dangerouslyUseHTMLString: true,
+          });
+          setTimeout(() => {
+            MessageBox.close();
+            this.$router.push({
+              name: 'priceOfferDetail',
+              query: {backPage: 'purchaserNoticeIndex'},
+              params: {status: 0, type: this.selections[0].purchaseCategory, id: response.quotationId}
+            });
+          }, 2000)
+        })
+          .catch(function (error) {
+            console.log(error);
+          });
+      },
+      //导出
+      exports() {
+
+      },
+      gotoDetail(row) {
+        console.log(row);
+        this.$router.push({
+          name: 'purchaserNoticeDetail',
+          params: {type: row.purchaseCategory, id: row.inquiryId, seq: row.iqrSeq}
+        });
+      }
     },
     mounted() {
       this.axios.post(this.appConfig.api('testQuerySelect'), {})
         .then((response) => {
-          this.cgjg_options=this.util.dataAdapter(response, ['attachmentName', 'attachmentUrl'], ['name', 'url'])
+          this.cgjg_options = this.util.dataAdapter(response, ['attachmentName', 'attachmentUrl'], ['name', 'url'])
         })
     }
   }
