@@ -95,13 +95,13 @@
                 align: 'center',
                 title: '询价单编号',
                 key: 'inquiryCode',
-                width: 180,
+                width: 200,
               },
               {
                 title: '询价单名称',
                 key: 'inquiryName',
                 align: 'center',
-                width: 120,
+                width: 200,
                 render: (h, {row, column}) => {
                   return h('a', {
                       on: {
@@ -135,20 +135,20 @@
                 title: '澄清时间',
                 key: 'questionTime',
                 render: (h, {row, column}) => {
-                  return h('div',this.moment(row.questionTime).format("YYYY-MM-DD HH:mm:ss"));
+                  return h('div',row.questionTime===(null||'')?'-':this.moment(row.questionTime).format("YYYY-MM-DD HH:mm:ss"));
                 }
               },
               {
                 title: '澄清附件数量',
                 align: 'center',
-                width: 120,
+                width: 150,
                 key: 'questionAttachmentNum'
               },
               {
                 title: '接受澄清单位',
                 align: 'center',
                 key: 'questionReceiverName',
-                width: 120,
+                width: 200,
               },
             ],
           },
@@ -179,15 +179,15 @@
                 align: 'center',
                 title: '发起澄清的采购企业',
                 key: 'clarificationOrgName',
-                width: 180,
+                width: 200,
               },
               {
                 align: 'center',
                 title: '澄清时间',
                 key: 'clarificationTime',
-                width: 180,
+                width: 200,
                 render: (h, {row, column}) => {
-                  return h('div',this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss"));
+                  return h('div',row.clarificationTime===(null||'')?'-':this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss"));
                 }
               },
               {
@@ -200,7 +200,7 @@
                 align: 'center',
                 title: '询价单名称',
                 key: 'inquiryName',
-                width: 180,
+                width: 200,
                 render: (h, {row, column}) => {
                   return h('a', {
                       on: {
@@ -232,6 +232,7 @@
                 align: 'center',
                 title: '澄清附件数量',
                 key: 'clarificationAttachNum',
+                width: 150,
               }
             ],
           }

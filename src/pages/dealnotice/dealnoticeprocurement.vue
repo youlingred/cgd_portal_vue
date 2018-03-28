@@ -114,7 +114,7 @@
               {
                 title: '成交通知书名称',
                 align: 'center',
-                width: 160,
+                width: 200,
                 key: 'dealNoticeName',
                 render: (h, {row, column}) => {
                   return h('a', {
@@ -130,7 +130,7 @@
               {
                 title: '成交通知书编号',
                 align: 'center',
-                width: 150,
+                width: 200,
                 key: 'dealNoticeCode'
               },
               {
@@ -143,7 +143,10 @@
                 title: '采购金额',
                 align: 'center',
                 width: 120,
-                key: 'purchaseAmount'
+                key: 'purchaseAmount',
+                render: (h, {row, column, index}) => {
+                  return h('span', this.accounting.formatMoney(row.purchaseAmount, '', 2));
+                }
               },
               {
                 title: '缴费通知发送状态',
@@ -154,7 +157,7 @@
               {
                 title: '供应商',
                 align: 'center',
-                width: 150,
+                width: 200,
                 key: 'supplierName'
               },
               {
@@ -163,7 +166,7 @@
                 width: 130,
                 key: 'billCreateTime',
                 render: (h, {row, column}) => {
-                  return h('div',this.moment(row.billCreateTime).format("YYYY-MM-DD"));
+                  return h('div',row.billCreateTime===(null||'')?'-':this.moment(row.billCreateTime).format("YYYY-MM-DD"));
                 }
               },
               {
@@ -256,7 +259,7 @@
                 width: 130,
                 key: 'billCreateTime',
                 render: (h, {row, column}) => {
-                  return h('div',this.moment(row.billCreateTime).format("YYYY-MM-DD"));
+                  return h('div',row.billCreateTime===(null||'')?'-':this.moment(row.billCreateTime).format("YYYY-MM-DD"));
                 }
               },
               {

@@ -70,7 +70,7 @@
                   label:'交货日期',
                   prop:'18',
                   formatter(value){
-                    return this.moment(value).format("YYYY-MM-DD HH:mm:ss")
+                    return value===(null||'')?'-':this.moment(value).format("YYYY-MM-DD HH:mm:ss")
                   }
                 },
                 {
@@ -78,7 +78,7 @@
                   label:'报价截止日期',
                   prop:'18',
                   formatter(value){
-                    return this.moment(value).format("YYYY-MM-DD HH:mm:ss")
+                    return value===(null||'')?'-':this.moment(value).format("YYYY-MM-DD HH:mm:ss")
                   }
                 },
                 {
@@ -223,7 +223,7 @@
               align:'center',
               width: 180,
               render: (h, { row, column }) => {
-                return h('div',this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
+                return h('div',row['5']===(null||'')?'-':this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
               }
             }
           ];

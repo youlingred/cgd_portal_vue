@@ -91,7 +91,7 @@
               key: 'reqArrivalDate',
               width: 180,
               render: (h, {row, column}) => {
-                return h('div',this.moment(row.reqArrivalDate).format("YYYY-MM-DD HH:mm:ss"));
+                return h('div',row.reqArrivalDate===(null||'')?'-':this.moment(row.reqArrivalDate).format("YYYY-MM-DD HH:mm:ss"));
               }
             },
             {
@@ -99,7 +99,7 @@
               key: 'publishTime',
               width: 180,
               render: (h, {row, column}) => {
-                return h('div',this.moment(row.publishTime).format("YYYY-MM-DD HH:mm:ss"));
+                return h('div',row.publishTime===(null||'')?'-':this.moment(row.publishTime).format("YYYY-MM-DD HH:mm:ss"));
               }
             },
             {
@@ -107,7 +107,7 @@
               key: 'quoteEndDate',
               width: 180,
               render: (h, {row, column}) => {
-                return h('div',this.moment(row.quoteEndDate).format("YYYY-MM-DD HH:mm:ss"));
+                return h('div',row.quoteEndDate===(null||'')?'-':this.moment(row.quoteEndDate).format("YYYY-MM-DD HH:mm:ss"));
               }
             },
             {

@@ -80,14 +80,14 @@
               label: '公告发布时间',
               prop: 'publishDate',
               formatter: (row, column, value) => {
-                return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+                return value===(null||'')?'-':this.moment(value).format("YYYY-MM-DD HH:mm:ss");
               }
             },
             {
               label: '异议提出时间',
               prop: 'objectionDate',
               formatter: (row, column, value) => {
-                return this.moment(value).format('YY-MM-DD HH:mm:ss');
+                return value===(null||'')?'-':this.moment(value).format('YY-MM-DD HH:mm:ss');
               }
             },
             {

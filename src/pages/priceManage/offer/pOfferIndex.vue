@@ -205,7 +205,7 @@
               title: '询价单名称',
               key: 'inquiryName',
               align: 'center',
-              width: 100,
+              width: 200,
               render: (h, {row, column}) => {
                 return h('a',{
                     on: {
@@ -221,6 +221,7 @@
             {
               title: '采购编号',
               key: 'inquiryCode',
+              width: 200,
               align: 'center',
             },
             {
@@ -229,7 +230,7 @@
               align: 'center',
               width: 180,
               render: (h, {row, column}) => {
-                return h('div', this.moment(row.inquiryPublishDate).format("YYYY-MM-DD HH:mm:ss"));
+                return h('div', row.inquiryPublishDate===(null||'')?'-':this.moment(row.inquiryPublishDate).format("YYYY-MM-DD HH:mm:ss"));
               }
             },
             {
@@ -238,21 +239,26 @@
               align: 'center',
               width: 180,
               render: (h, {row, column}) => {
-                return h('div', this.moment(row.quoteEndDate).format("YYYY-MM-DD HH:mm:ss"));
+                return h('div', row.quoteEndDate===(null||'')?'-':this.moment(row.quoteEndDate).format("YYYY-MM-DD HH:mm:ss"));
               }
             },
             {
               title: '采购机构',
               key: 'professionalOrgName',
+              width: 200,
               align: 'center',
             },
             {
               title: '采购类别',
-              key: 'purchaseCategoryName'
+              key: 'purchaseCategoryName',
+              align: 'center',
+              width: 100,
             },
             {
               title: '状态',
-              key: 'statusName'
+              key: 'statusName',
+              align: 'center',
+              width: 100,
             },
           ]
         }

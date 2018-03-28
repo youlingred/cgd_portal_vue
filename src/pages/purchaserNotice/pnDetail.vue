@@ -71,7 +71,7 @@
                   label: '交货日期',
                   prop: 'reqArrivalDate',
                   formatter(value) {
-                    return this.moment(value).format("YYYY-MM-DD HH:mm:ss")
+                    return value===(null||'')?'-':this.moment(value).format("YYYY-MM-DD HH:mm:ss")
                   }
                 },
                 {
@@ -79,7 +79,7 @@
                   label: '报价截止日期',
                   prop: 'quoteEndDate',
                   formatter(value) {
-                    return this.moment(value).format("YYYY-MM-DD HH:mm:ss")
+                    return value===(null||'')?'-':this.moment(value).format("YYYY-MM-DD HH:mm:ss")
                   }
                 },
                 {

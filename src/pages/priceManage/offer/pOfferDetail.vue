@@ -529,7 +529,7 @@
                         }
                       )
                     } else {
-                      return h('span', this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '');
+                      return h('span', row.deliveryDatePromise===(null||'')?'-':this.moment(row.deliveryDatePromise).format('YYYY-MM-DD'));
                     }
                   }
                 }
@@ -633,7 +633,7 @@
                         }
                       )
                     } else {
-                      return h('span', this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '');
+                      return h('span', row.deliveryDatePromise===(null||'')?'-':this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '');
                     }
                   }
                 }
@@ -737,7 +737,7 @@
                         }
                       )
                     } else {
-                      return h('span', this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '');
+                      return h('span', row.deliveryDatePromise===(null||'')?'-':this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '');
                     }
                   }
                 }

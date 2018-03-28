@@ -127,7 +127,7 @@
                 title: '澄清时间',
                 key: 'questionTime',
                 render: (h, {row, column}) => {
-                  return h('div',this.moment(row.questionTime).format("YYYY-MM-DD HH:mm:ss"));
+                  return h('div',row.questionTime===(null||'')?'-':this.moment(row.questionTime).format("YYYY-MM-DD HH:mm:ss"));
                 }
               },
               {
@@ -178,7 +178,7 @@
                 key: 'clarificationTime',
                 width: 180,
                 render: (h, {row, column}) => {
-                  return h('div',this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss"));
+                  return h('div',row.clarificationTime===(null||'')?'-':this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss"));
                 }
               },
               {

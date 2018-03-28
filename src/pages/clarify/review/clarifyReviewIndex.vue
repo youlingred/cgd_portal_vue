@@ -104,12 +104,13 @@
                 title: '询价单名称',
                 key: 'inquiryName',
                 align: 'center',
-                width: 120
+                width: 200
               },
               {
                 title: '澄清内容',
                 key: 'clarificationContent',
                 align: 'center',
+                width: 200,
                 render: (h, {row, column}) => {
                   return h('a', {
                       on: {
@@ -127,7 +128,7 @@
                 align: 'center',
                 width: 200,
                 render: (h, {row, column}) => {
-                  return h('div',this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss"));
+                  return h('div',row.clarificationTime===(null||'')?'-':this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss"));
                 }
               },
               {
@@ -140,7 +141,7 @@
                 title: '询价单节点状态',
                 key: 'nodeStatusName',
                 align: 'center',
-                width: 120
+                width: 200
               }
             ]
           },
@@ -172,13 +173,13 @@
                 align: 'center',
                 title: '询价单编号',
                 key: 'inquiryCode',
-                width: 180,
+                width: 200,
               },
               {
                 title: '询价单名称',
                 key: 'inquiryName',
                 align: 'center',
-                width: 120,
+                width: 200,
                 render: (h, {row, column}) => {
                   return h('div',row.inquiryName);
                 }
@@ -187,7 +188,7 @@
                 title: '澄清内容',
                 key: 'clarificationContent',
                 align: 'center',
-                width: 220,
+                width: 200,
                 render: (h, {row, column}) => {
                   return h('a', {
                       on: {
@@ -206,7 +207,7 @@
                 align: 'center',
                 width: 160,
                 render: (h, {row, column}) => {
-                  return h('div',this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss"));
+                  return h('div',row.clarificationTime===(null||'')?'-':this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss"));
                 }
               },
               {
@@ -227,14 +228,14 @@
                 align: 'center',
                 width: 160,
                 render: (h, {row, column}) => {
-                  return h('div',this.moment(row.replyTime).format("YYYY-MM-DD HH:mm:ss"));
+                  return h('div',row.replyTime===(null||'')?'-':this.moment(row.replyTime).format("YYYY-MM-DD HH:mm:ss"));
                 }
               },
               {
                 title: '回复人',
                 key: 'replier',
                 align: 'center',
-                width: 80,
+                width: 150,
               },
             ],
           }

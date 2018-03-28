@@ -98,7 +98,7 @@
               key: 'publishDate',
               width: 180,
               render: (h, { row, column }) => {
-                return h('div',this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss"));
+                return h('div',row.publishDate===(null||'')?'-':this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss"));
               }
             },
             {

@@ -64,8 +64,8 @@
                   type: 'label',
                   label: '澄清时间',
                   prop: 'clarificationTime',
-                  formatter: (clarificationTime) => {
-                    return this.moment(clarificationTime).format('YYYY-MM-DD HH:mm:ss');
+                  formatter: (value) => {
+                    return value===(null||'')?'-':this.moment(value).format('YYYY-MM-DD HH:mm:ss');
                   }
                 },
                 {

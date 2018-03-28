@@ -120,14 +120,14 @@
               title: '公告发布时间',
               key: 'publishDate',
               render: (h, { row, column }) => {
-                return h('div',this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss"));
+                return h('div',row.publishDate===(null||'')?'-':this.moment(row.publishDate).format("YYYY-MM-DD HH:mm:ss"));
               }
             },
             {
               title: '异议提出时间',
               key: 'objectionDate',
               render: (h, { row, column }) => {
-                return h('div',this.moment(row.objectionDate).format('YYYY-MM-DD HH:mm:ss'));
+                return h('div',row.objectionDate===(null||'')?'-':this.moment(row.objectionDate).format('YYYY-MM-DD HH:mm:ss'));
               }
             },
             {

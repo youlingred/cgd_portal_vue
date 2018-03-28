@@ -79,7 +79,7 @@
                   label:'创建时间',
                   prop:'18',
                   formatter(value){
-                    return this.moment(value).format("YYYY-MM-DD HH:mm:ss");
+                    return value===(null||'')?'-':this.moment(value).format("YYYY-MM-DD HH:mm:ss");
                   }
                 },
                 {

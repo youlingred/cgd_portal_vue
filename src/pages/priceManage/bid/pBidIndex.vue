@@ -203,7 +203,7 @@
               align: 'center',
               width: 180,
               render: (h, {row, column}) => {
-                return h('div',this.moment(row.inquiryPublishDate).format("YYYY-MM-DD HH:mm:ss"));
+                return h('div',row.inquiryPublishDate===(null||'')?'-':this.moment(row.inquiryPublishDate).format("YYYY-MM-DD HH:mm:ss"));
               }
             },
             {
@@ -212,7 +212,7 @@
               align: 'center',
               width: 180,
               render: (h, {row, column}) => {
-                return h('div',this.moment(row.quoteEndDate).format("YYYY-MM-DD HH:mm:ss"));
+                return h('div',row.quoteEndDate===(null||'')?'-':this.moment(row.quoteEndDate).format("YYYY-MM-DD HH:mm:ss"));
               }
             },
             {

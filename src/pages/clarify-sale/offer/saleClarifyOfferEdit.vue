@@ -122,7 +122,7 @@
                   type: 'label',
                   label: '澄清时间',
                   formatter: (value) => {
-                    return this.moment(value).format('YYYY-MM-DD HH:mm:ss');
+                    return value===(null||'')?'-':this.moment(value).format('YYYY-MM-DD HH:mm:ss');
                   }
                 },
                 {

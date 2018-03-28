@@ -127,7 +127,7 @@
                 align: 'center',
                 width: 200,
                 render: (h, {row, column}) => {
-                  return h('div', this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss"));
+                  return h('div', row.clarificationTime===(null||'')?'-':this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss"));
                 }
               },
               {
@@ -206,7 +206,7 @@
                 align: 'center',
                 width: 160,
                 render: (h, {row, column}) => {
-                  return h('div', this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss"));
+                  return h('div', row.clarificationTime===(null||'')?'-':this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss"));
                 }
               },
               {
@@ -227,7 +227,7 @@
                 align: 'center',
                 width: 160,
                 render: (h, {row, column}) => {
-                  return h('div', this.moment(row.replyTime).format("YYYY-MM-DD HH:mm:ss"));
+                  return h('div', row.replyTime===(null||'')?'-':this.moment(row.replyTime).format("YYYY-MM-DD HH:mm:ss"));
                 }
               },
               {

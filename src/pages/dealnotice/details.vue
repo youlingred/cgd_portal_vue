@@ -78,7 +78,7 @@
                 key: 'deliveryDatePromise',
                 width: 180,
                 render: (h, {row, column}) => {
-                  return h('div',this.moment(row.deliveryDatePromise).format("YYYY-MM-DD HH:mm:ss"));
+                  return h('div',row.deliveryDatePromise===(null||'')?'-':this.moment(row.deliveryDatePromise).format("YYYY-MM-DD HH:mm:ss"));
                 }
               },
               {
@@ -251,7 +251,7 @@
                 key: 'deliveryDatePromise',
                 width: 180,
                 render: (h, {row, column}) => {
-                  return h('div',this.moment(row.deliveryDatePromise).format("YYYY-MM-DD HH:mm:ss"));
+                  return h('div',row.deliveryDatePromise===(null||'')?'-':this.moment(row.deliveryDatePromise).format("YYYY-MM-DD HH:mm:ss"));
                 }
               },
               {
@@ -358,7 +358,7 @@
                 key: 'deliveryDatePromise',
                 width: 180,
                 render: (h, {row, column}) => {
-                  return h('div',this.moment(row.deliveryDatePromise).format("YYYY-MM-DD HH:mm:ss"));
+                  return h('div',row.deliveryDatePromise===(null||'')?'-':this.moment(row.deliveryDatePromise).format("YYYY-MM-DD HH:mm:ss"));
                 }
               },
               {
@@ -503,7 +503,7 @@
                   label: '制单时间',
                   prop: 'un',
                   formatter(value) {
-                    return this.moment(value).format("YYYY-MM-DD HH:mm:ss")
+                    return value===(null||'')?'-':this.moment(value).format("YYYY-MM-DD HH:mm:ss")
                   }
                 },
                 {

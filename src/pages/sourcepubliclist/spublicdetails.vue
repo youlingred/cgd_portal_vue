@@ -65,7 +65,7 @@
                   label:'公示起止时间',
                   prop:'publicityStartDate',
                   formatter(value){
-                    return this.moment(value).format("YYYY-MM-DD HH:mm:ss")
+                    return value===(null||'')?'-':this.moment(value).format("YYYY-MM-DD HH:mm:ss")
                   }
                 },
                 {
