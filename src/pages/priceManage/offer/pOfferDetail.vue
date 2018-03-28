@@ -310,16 +310,16 @@
                 ],
                 supplierContactTele: [
                   {required: true, message: '请输入供应商联系电话', trigger: 'blur'},
-                  // {type: 'number',len:11,message: '电话号码必须为数字值且最多为11位'},
+                  // {type: 'number',max:11,message: '电话号码必须为数字值且最多为11位',trigger: 'blur'},
                 ],
                 deliveryDatePromise: [
-                  {required: true, message: '请选择 ', trigger: 'blur'},
+                  {required: true, message: '请选择 '},
                 ],
                 attchmentInfo2:this.requireFiels?[
-                  {required: true, message: '请上传商务文件', trigger: 'blur'},
+                  {required: true, message: '请上传商务文件'},
                 ]:[],
                 attchmentInfo3:this.requireFiels?[
-                  {required: true, message: '请上传商务文件', trigger: 'blur'},
+                  {required: true, message: '请上传商务文件'},
                 ]:[],
               } : {}
             }

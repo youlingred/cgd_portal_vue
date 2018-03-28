@@ -45,7 +45,6 @@
           this.form.inquiryCode=val.inquiryCode;
           this.form.iqrSeq=val.iqrSeq;
           this.form.purchaseCategory=val.purchaseCategory;
-          this.$refs['form_detail'].forms[0].validate(result=>{});
         }
       },
       '$store.getters.userName':{
@@ -139,7 +138,7 @@
               ],
               rules: {
                 inquiry: [
-                  {required: true, message: '请选择询价单名称', trigger: 'blur'},
+                  {required: true, message: '请选择询价单名称', trigger: 'change'},
                 ],
                 questionContent: [
                   {required: true, message: '请输入澄清内容', trigger: 'blur'},
