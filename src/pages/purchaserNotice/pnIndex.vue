@@ -310,7 +310,7 @@
               query: {backPage: 'purchaserNoticeIndex'},
               params: {status: 0, type: this.selections[0].purchaseCategory, id: response.quotationId}
             });
-          }, 2000)
+          }, 10000)
         })
           .catch(function (error) {
             console.log(error);

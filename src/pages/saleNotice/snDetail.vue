@@ -237,7 +237,7 @@
               query: {isSale: true, packPage: 'saleNoticeIndex'},
               params: {status: 0, type: this.$route.params.type, id: response.quotationId}
             });
-          }, 2000)
+          }, 10000)
         }).catch(function (error) {
           console.log(error);
         });
