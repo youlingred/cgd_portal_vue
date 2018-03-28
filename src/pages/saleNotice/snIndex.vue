@@ -59,16 +59,19 @@
           columns: [
             {
               type: 'selection',
+              align:'center',
               width: 60,
             },
             {
               title: '序号',
               type: 'index',
-              width: 60
+              width: 80,
+              align:'center',
             },
             {
               title: '询价单名称',
               key: 'inquiryName',
+              align:'center',
               width: 150,
               render: (h, {row, column}) => {
                 return h('a', {
@@ -86,10 +89,12 @@
               title: '销售编号',
               key: 'inquiryCode',
               width: 150,
+              align:'center',
             },
             {
               title: '要求到货日期',
               key: 'reqArrivalDate',
+              align:'center',
               width: 180,
               render: (h, {row, column}) => {
                 return h('div', row.reqArrivalDate === (null || '') ? '-' : this.moment(row.reqArrivalDate).format("YYYY-MM-DD HH:mm:ss"));
@@ -98,6 +103,7 @@
             {
               title: '发布日期',
               key: 'publishTime',
+              align:'center',
               width: 180,
               render: (h, {row, column}) => {
                 return h('div', row.publishTime === (null || '') ? '-' : this.moment(row.publishTime).format("YYYY-MM-DD HH:mm:ss"));
@@ -106,6 +112,7 @@
             {
               title: '报价截止日期',
               key: 'quoteEndDate',
+              align:'center',
               width: 180,
               render: (h, {row, column}) => {
                 return h('div', row.quoteEndDate === (null || '') ? '-' : this.moment(row.quoteEndDate).format("YYYY-MM-DD HH:mm:ss"));
@@ -114,16 +121,19 @@
             {
               title: '采购机构',
               key: 'professionalOrgName',
+              align:'center',
               width: 180,
             },
             {
               title: '采购类别',
               key: 'purchaseCategoryName',
+              align:'center',
               width: 180
             },
             {
               title: '采购员',
               key: 'purchaserName',
+              align:'center',
               width: 180,
             }
           ]
@@ -269,12 +279,10 @@
           this.$alert(this.util.lang.alertSelectionNeed, '提示');
           return;
         }
-        ;
         if (this.selections.length > 1) {
           this.$alert(this.util.lang.alertSelectionOnlyOne, '提示');
           return;
         }
-        ;
         this.axios.post(this.appConfig.api('inquiry/quote/addQuotationBill'),
           {
             inquiryId: this.selections[0].inquiryId,
