@@ -1,6 +1,9 @@
 <template>
   <!--展示组件-->
   <label v-if="type === 'label'" style="display:inline-block;width:100%;line-height:20px;">{{value}}</label>
+  <div v-else-if="type === 'tag'">
+    <el-tag v-for="(item,index) in (value || [])" :key="index" v-bind="extendParam">{{item.name}}</el-tag>
+  </div>
   <div v-else-if="type === 'file'">
     <div v-for="(fileItem,index) in value" :key="index">
       <span style="display:inline-block;min-width:200px">{{fileItem.name||fileItem.attachmentName}}</span>

@@ -88,7 +88,7 @@
               width: 150,
             },
             {
-              title: '要求到货日期',
+              title: '要求到货日期/要求完工日期',
               key: 'reqArrivalDate',
               width: 180,
               render: (h, {row, column}) => {

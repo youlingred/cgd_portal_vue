@@ -27,7 +27,7 @@
     },
     data() {
       return {
-        flag: false,
+        flag:false,
         form: {},
         //列表数据
         table: {
@@ -37,6 +37,10 @@
       };
     },
     computed: {
+      //成交服务费是否展示
+      showServiceChargeAmount(){
+        return (_.parseInt(this.form.serviceChargeRate)===1);
+      },
       detailData() {
         return {
           contents: [
@@ -48,13 +52,13 @@
               children: [
                 {
                   type: 'label',
-                  label: '询价单编号',
-                  prop: 'inquiryCode'
+                  label: '询价单名称',
+                  prop: 'inquiryName'
                 },
                 {
                   type: 'label',
-                  label: '询价单名称',
-                  prop: 'inquiryName'
+                  label: '销售编号',
+                  prop: 'inquiryCode'
                 },
                 {
                   type: 'label',
@@ -62,9 +66,9 @@
                   prop: 'professionalOrgName',
                 },
                 {
-                  type: 'label',
+                  type: 'tag',
                   label: '项目单位',
-                  prop: 'purchaseAccountsNameJson'
+                  prop: 'purchaseAccountsNameJson',
                 },
                 {
                   type: 'label',
@@ -92,24 +96,18 @@
                 {
                   switchFlag: this.flag,
                   type: 'label',
-                  label: '提货期要求方式',
-                  prop: 'deliveryDateMethod'
-                },
-                {
-                  switchFlag: this.flag,
-                  type: 'label',
                   label: '提货日期',
                   prop: 'reqArrivalDate',
                   formatter(value) {
                     return this.moment(value).format("YYYY-MM-DD HH:mm:ss")
                   }
                 },
-                {
-                  switchFlag: this.flag,
-                  type: 'label',
-                  label: '周期',
-                  prop: 'reqArrivalPeriod'
-                },
+                // {
+                //   switchFlag: this.flag,
+                //   type: 'label',
+                //   label: '周期',
+                //   prop: 'reqArrivalPeriod'
+                // },
                 {
                   switchFlag: this.flag,
                   type: 'label',
@@ -125,7 +123,7 @@
                 {
                   switchFlag: this.flag,
                   type: 'label',
-                  label: '付款方式',
+                  label: '收款方式',
                   prop: '12',
                   formatter: (value, data) => {
                     let result = "";
@@ -169,34 +167,55 @@
                   prop: 'orderTypeName'
                 },
                 {
-                  switchFlag: this.flag,
-                  type: 'file',
-                  label: '审查纪要',
-                  prop: 'attchmentInfo1'
+                  type: 'label',
+                  switchFlag:this.flag&&this.showServiceChargeAmount,
+                  label: '成交服务费',
+                  prop: 'serviceChargeAmount',
+                  formatter(value) {
+                    return this.accounting.formatMoney(value, '', 2);
+                  }
                 },
                 {
-                  switchFlag: this.flag,
-                  type: 'file',
-                  label: '商务文件',
-                  prop: 'attchmentInfo2'
+                  type: 'label',
+                  switchFlag:this.flag,
+                  label: '成交服务费率',
+                  prop: 'serviceChargeRateName',
                 },
                 {
-                  switchFlag: this.flag,
-                  type: 'file',
-                  label: '技术文件',
-                  prop: 'attchmentInfo3'
+                  type:'label',
+                  switchFlag:this.flag,
+                  label:'备注',
+                  prop:'remarks'
                 },
-                {
-                  switchFlag: this.flag,
-                  type: 'file',
-                  label: '附件',
-                  prop: 'attchmentInfo4'
-                }
+                // {
+                //   switchFlag: this.flag,
+                //   type: 'file',
+                //   label: '审查纪要',
+                //   prop: 'attchmentInfo1'
+                // },
+                // {
+                //   switchFlag: this.flag,
+                //   type: 'file',
+                //   label: '商务文件',
+                //   prop: 'attchmentInfo2'
+                // },
+                // {
+                //   switchFlag: this.flag,
+                //   type: 'file',
+                //   label: '技术文件',
+                //   prop: 'attchmentInfo3'
+                // },
+                // {
+                //   switchFlag: this.flag,
+                //   type: 'file',
+                //   label: '附件',
+                //   prop: 'attchmentInfo4'
+                // }
               ]
             }
           ]
         }
-      }
+      },
     },
     methods: {
       join(){
@@ -206,7 +225,7 @@
             iqrSeq: this.$route.params.seq,
             purchaseCategory: this.$route.params.type
           }).then((response) => {
-          this.$router.push({name: 'priceOfferDetail',query:{isSale:true,packPage:'saleNoticeIndex'},params:{status:0,type:this.$route.params.type,id:this.$route.params.id}});
+          this.$router.push({name: 'priceOfferDetail',query:{isSale:true,packPage:'saleNoticeIndex'},params:{status:0,type:this.$route.params.type,id:response.quotationId}});
         }).catch(function (error) {
           console.log(error);
         });
@@ -233,104 +252,66 @@
             fixed: 'left',
             title: '序号',
             type: 'index',
-            align:'center',
-            width: 80
+            align: 'center',
+            width: 80,
           },
           {
             title: '项目单位',
             key: 'purchaseAccountName',
-            align:'center',
-            width: 180
+            align: 'center',
+            width: 180,
           },
           {
             title: '物料名称',
-            key: 'materialClassName',
-            align:'center',
-            width: 180
+            key: 'materialName',
+            align: 'center',
+            width: 120,
           },
           {
-            title: '规格',
-            key: 'spec',
-            align:'center',
-            width: 200,
+            title: '物资编码',
+            key: 'materialId',
+            align: 'center',
+            width: 120,
+          },
+          {
+            title: '物资类别',
+            key: 'materialClassName',
+            align: 'center',
+            width: 120,
           },
           {
             title: '型号',
             key: 'model',
-            align:'center',
-            width: 200,
+            align: 'center',
+            width: 180,
           },
           {
-            title: '计划名称',
-            width: 200,
-            align:'center',
-            key: '3',
+            title: '规格',
+            key: 'spec',
+            align: 'center',
+            width: 120,
           },
           {
-            title: '计划编号',
-            width: 200,
-            align:'center',
-            key: '2'
+            title: '采购数量',
+            key: 'requireNumber',
+            align: 'center',
+            width: 120,
           },
           {
             title: '计量单位',
             key: 'unitName',
-            align:'center',
+            align: 'center',
             width: 120,
           },
           {
-            title: '需求数量',
-            width: 200,
-            key: 'requireNumber',
-            align:'center',
-          },
-          {
-            title: '预算单价（元）',
-            key: 'budgetPrice',
-            align:'center',
-            width: 150,
-          },
-          {
-            title: '预算金额（元）',
-            key: 'budgetAmount',
-            align:'center',
-            width: 150,
-            render: (h, {row, column}) => {
-              return h('div', this.accounting.formatMoney(row['12'], '￥', 2));
-            }
-          },
-          {
-            title: '提货日期',
+            title: '要求到货日期',
             key: 'reqArrivalDate',
-            align:'center',
+            align: 'center',
             width: 180,
             render: (h, {row, column}) => {
-              return h('div', this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
+              return h('div',this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
             }
-          },
-          {
-            title: '周期',
-            key: 'reqArrivalTimeInt',
-            align:'center',
-          },
-          {
-            title: '材质',
-            width: 200,
-            key: 'materialsQuality',
-            align:'center',
-          },
-          {
-            title: '物资联系人',
-            key: 'materialContactName',
-            align:'center',
-            width: 150,
-          },
-          {
-            title: '固定电话',
-            width: 200,
-            key: 'materialContactTele',
-            align:'center',
-          },
+          }
         ];
         this.$refs.table.query({
           url: this.appConfig.api('inquiry/quote/iqrPurchaseNoticeDetailMaterail'),
