@@ -180,7 +180,7 @@
             ]
           },
           shigong: {
-            url: this.appConfig.api('inquiry/others/clarification/searchSupReceiverPurClarificationReplyList'),
+            url: this.appConfig.api('inquiry/others/clarification/querydealnoticeDetailListBydealnoticeId'),
             pageNo: 1,
             height: 400,
             queryParam: function (param) {
@@ -287,7 +287,7 @@
             ],
           },
           fuwu: {
-            url: this.appConfig.api('inquiry/others/clarification/searchSupReceiverPurClarificationReplyList'),
+            url: this.appConfig.api('inquiry/others/clarification/querydealnoticeDetailListBydealnoticeId'),
             pageNo: 1,
             height: 400,
             queryParam: function (param) {
