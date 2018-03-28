@@ -290,12 +290,6 @@
                       valueFormat: "yyyy-MM-dd"
                     }
                   },
-                  {
-                    type: 'input',
-                    label: '询价单编号',
-                    placeholder: '请输入询价单编号',
-                    prop: 'inquiryCode',
-                  },
                 ]
               }
             ]

@@ -104,12 +104,17 @@
     methods:{
       //文件上传成功回调
       fileUploadSuccess(response, file, fileList){
-        let item={
-          name:response.filePath,
-          url:response.newFileName
-        };
-        this.data[this.prop].push(item);
-        this.$emit('file-upload-success',file,fileList)
+        if(response.respCode==='0000'){
+          let item={
+            name:response.filePath,
+            url:response.newFileName
+          };
+          this.data[this.prop].push(item);
+          this.$emit('file-upload-success',file,fileList);
+          this.$message.success('文件上传成功');
+        }else{
+          this.$message.error('文件上传失败');
+        }
       },
       //文件删除成功回调
       fileRemove(file, fileList){
