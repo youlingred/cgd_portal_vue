@@ -49,7 +49,7 @@
                 title: '项目单位',
                 key: 'purchaseAccountName',
                 align: 'center',
-                width: 120
+                width: 200
               },
               {
                 title: '物资分类',
@@ -159,7 +159,7 @@
                 title: '项目单位联系地址',
                 key: 'purchaseAccountContactAddr',
                 align: 'center',
-                width: 120
+                width: 200
               },
               {
                 title: '业务流程状态',

@@ -317,38 +317,6 @@
                   },
                   {
                     type: 'select',
-                    label: '采购类别',
-                    placeholder: '请选择',
-                    prop: 'purchaseCategory',
-                    extendParam: {
-                      options: [
-                        {
-                          label: '全部',
-                          value: ''
-                        },
-                        {
-                          label: '物资类',
-                          value: 1
-                        },
-                        {
-                          label: '施工类',
-                          value: 2
-                        },
-                        {
-                          label: '服务类',
-                          value: 3
-                        }
-                      ]
-                    }
-                  },
-                  {
-                    type: 'input',
-                    label: '供应商',
-                    placeholder: '请输入',
-                    prop: 'supplierName',
-                  },
-                  {
-                    type: 'select',
                     label: '缴费通知发送状态',
                     placeholder: '请选择',
                     prop: 'paymentNoticeStatus',

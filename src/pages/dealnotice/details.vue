@@ -53,7 +53,7 @@
                 title: '项目单位',
                 key: 'purchaseAccountName',
                 align: 'center',
-                width: 120
+                width: 200
               },
               {
                 title: '物资分类',
@@ -163,7 +163,7 @@
                 title: '项目单位联系地址',
                 key: 'purchaseAccountContactAddr',
                 align: 'center',
-                width: 120
+                width: 200
               },
               {
                 title: '业务流程状态',
@@ -180,7 +180,7 @@
             ]
           },
           shigong: {
-            url: this.appConfig.api('inquiry/others/clarification/querydealnoticeDetailListBydealnoticeId'),
+            url: this.appConfig.api('inquiry/querydealnoticeDetailListBydealnoticeId'),
             pageNo: 1,
             height: 400,
             queryParam: function (param) {
@@ -202,7 +202,7 @@
                 title: '项目单位',
                 key: 'purchaseAccountName',
                 align: 'center',
-                width: 120
+                width: 200
               },
               {
                 title: '项目名称',
@@ -270,7 +270,7 @@
                 title: '项目单位联系地址',
                 key: 'purchaseAccountContactAddr',
                 align: 'center',
-                width: 120
+                width: 200
               },
               {
                 title: '业务流程状态',
@@ -287,7 +287,7 @@
             ],
           },
           fuwu: {
-            url: this.appConfig.api('inquiry/others/clarification/querydealnoticeDetailListBydealnoticeId'),
+            url: this.appConfig.api('inquiry/querydealnoticeDetailListBydealnoticeId'),
             pageNo: 1,
             height: 400,
             queryParam: function (param) {
@@ -309,7 +309,7 @@
                 title: '项目单位',
                 key: 'purchaseAccountName',
                 align: 'center',
-                width: 120
+                width: 200
               },
               {
                 title: '项目名称',
@@ -377,7 +377,7 @@
                 title: '项目单位联系地址',
                 key: 'purchaseAccountContactAddr',
                 align: 'center',
-                width: 120
+                width: 200
               },
               {
                 title: '业务流程状态',
