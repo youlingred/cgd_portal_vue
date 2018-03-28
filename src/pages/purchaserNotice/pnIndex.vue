@@ -20,6 +20,7 @@
   import IvTable from '@/components/IvTable.vue'
   import detail from '@/components/Detail.vue'
   import buttonsOperator from '@/components/ButtonsOperator.vue'
+  import {MessageBox} from 'element-ui'
 
   export default {
     components: {
