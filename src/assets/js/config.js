@@ -3,7 +3,7 @@ const config = {
   apiBaseurl () {
     switch (this.prov) {
       case 3:
-        return 'http://39.107.71.15:8080/';
+        return 'http://inquiry.necn.shop:8080/';
       case 4:
         return 'http://127.0.0.1:9081/';
       case 5:

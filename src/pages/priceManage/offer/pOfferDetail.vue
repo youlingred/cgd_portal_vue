@@ -914,7 +914,7 @@
       },
       back(type) {
         //如果priceType存在,则确定来自报价或者竞价页面
-        if (this.$route.query.priceType) {
+        if (this.priceType) {
           //如果是保存跳转到待报价,如果是提交或者撤回跳转到已报价
           if (type === 'save') {
             this.$router.push({name: this.backPage, query: {tab: 1}})
