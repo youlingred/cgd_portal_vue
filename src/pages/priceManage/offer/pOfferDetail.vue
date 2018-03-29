@@ -38,30 +38,34 @@
           attchmentInfo2: [],
           attchmentInfo3: [],
           attchmentInfo4: [],
+          quotAttchmentInfo1: [],
+          quotAttchmentInfo2: [],
+          quotAttchmentInfo3: [],
         },
         //是否来自销售页面
-        isSale:this.$route.query.isSale,
+        isSale: this.$route.query.isSale,
         //返回跳转的页面
-        backPage:this.$route.query.backPage,
+        backPage: this.$route.query.backPage,
         //提交相关跳转的页面
-        sumbitPage:this.$route.query.sumbitPage,
+        sumbitPage: this.$route.query.sumbitPage,
         //跳转回的页签
-        tab:this.$route.query.tab,
+        tab: this.$route.query.tab,
       };
     },
     computed: {
-      deliveryDatePromiseLabel(){
+      deliveryDatePromiseLabel() {
         return `承诺${this.deliveryDateLabel}`
       },
-      deliveryDateLabel(){
-        if(this.isSale){
+      deliveryDateLabel() {
+        if (this.isSale) {
           return '提货日期';
-        }else{
-          if(this.type==1){
+        } else {
+          if (this.type == 1) {
             return '交货日期';
-          }else{
+          } else {
 
-          } return '完工日期';
+          }
+          return '完工日期';
         }
       },
       operateButtons() {
@@ -83,20 +87,40 @@
         return [];
       },
       //成交服务费率是否展示
-      showServiceChargeRate(){
-        return _.parseInt(this.form.isDispatch)==0;
+      showServiceChargeRate() {
+        return _.parseInt(this.form.isDispatch) == 0;
       },
       //成交服务费是否展示
-      showServiceChargeAmount(){
-        return (_.parseInt(this.form.serviceChargeRate)==1 && this.showServiceChargeRate);
+      showServiceChargeAmount() {
+        return (_.parseInt(this.form.serviceChargeRate) == 1 && this.showServiceChargeRate);
       },
-      requireFiels(){
-        let value=_.parseInt(this.form.reviewMethod);
-        return (value===1 || value===2 || value===5)
+      requireFiels() {
+        let value = _.parseInt(this.form.reviewMethod);
+        return true//(value === 1 || value === 2 || value === 5)
+      },
+      rules() {
+        return this.status == 0 ? {
+          supplierContactName: [
+            {required: true, message: '请输入供应商联系人', trigger: 'blur'},
+          ],
+          supplierContactTele: [
+            {required: true, message: '请输入供应商联系电话', trigger: 'blur'},
+            // {type: 'number',max:11,message: '电话号码必须为数字值且最多为11位',trigger: 'blur'},
+          ],
+          deliveryDatePromise: [
+            {required: true, message: '请选择 '},
+          ],
+          quotAttchmentInfo1: this.requireFiels ? [
+            {required: true, message: '请上传商务文件'},
+          ] : [],
+          quotAttchmentInfo2: this.requireFiels ? [
+            {required: true, message: '请上传技术文件'},
+          ] : [],
+        } : {}
       },
       //FIXME 初始化基本信息显示数据
       detailData() {
-        return {
+       let detail= {
           contents: [
             {
               header: '基本信息',
@@ -106,7 +130,7 @@
               children: [
                 {
                   type: 'label',
-                  label: this.isSale?'销售编号':'采购编号',
+                  label: this.isSale ? '销售编号' : '采购编号',
                   prop: 'inquiryCode',
                 },
                 {
@@ -129,7 +153,7 @@
                   type: this.status == 0 ? 'input' : 'label',
                   label: '供应商联系电话',
                   placeholder: '请输入',
-                  valueType:'number',
+                  valueType: 'number',
                   prop: 'supplierContactTele',
                 },
                 {
@@ -258,7 +282,7 @@
                 },
                 {
                   type: 'label',
-                  switchFlag:this.showServiceChargeAmount,
+                  switchFlag: this.showServiceChargeAmount,
                   label: '成交服务费',
                   prop: 'serviceChargeAmount',
                   formatter(value) {
@@ -267,7 +291,7 @@
                 },
                 {
                   type: 'label',
-                  switchFlag:this.showServiceChargeRate,
+                  switchFlag: this.showServiceChargeRate,
                   label: '成交服务费率',
                   prop: 'serviceChargeRateName',
                 },
@@ -290,57 +314,67 @@
                   }
                 },
                 {
-                  type: this.status == 0 ? 'upload' : 'file',
+                  type: 'file',
                   label: '技术文件',
-                  prop: 'attchmentInfo3',
-                  extendParam: {
-                    beforeRemove: this.beforeRemove,
-                    action: this.appConfig.api('', 'upload'),
-                    tip: ''
-                  }
+                  prop: 'attchmentInfo3'
                 },
                 {
-                  type: this.status == 0 ? 'upload' : 'file',
+                  type: 'file',
                   label: '商务文件',
-                  prop: 'attchmentInfo2',
-                  extendParam: {
-                    beforeRemove: this.beforeRemove,
-                    action: this.appConfig.api('', 'upload'),
-                    tip: ''
-                  }
+                  prop: 'attchmentInfo2'
                 },
                 {
-                  type: this.status == 0 ? 'upload' : 'file',
+                  type: 'file',
                   label: '其他附件',
-                  prop: 'attchmentInfo4',
-                  extendParam: {
-                    beforeRemove: this.beforeRemove,
-                    action: this.appConfig.api('', 'upload'),
-                    tip: ''
-                  }
+                  prop: 'attchmentInfo4'
                 }
               ],
-              rules: this.status == 0 ? {
-                supplierContactName: [
-                  {required: true, message: '请输入供应商联系人', trigger: 'blur'},
-                ],
-                supplierContactTele: [
-                  {required: true, message: '请输入供应商联系电话', trigger: 'blur'},
-                  // {type: 'number',max:11,message: '电话号码必须为数字值且最多为11位',trigger: 'blur'},
-                ],
-                deliveryDatePromise: [
-                  {required: true, message: '请选择 '},
-                ],
-                attchmentInfo2:this.requireFiels?[
-                  {required: true, message: '请上传商务文件'},
-                ]:[],
-                attchmentInfo3:this.requireFiels?[
-                  {required: true, message: '请上传商务文件'},
-                ]:[],
-              } : {}
-            }
+              rules: this.rules
+            },
           ]
         }
+        if(this.status==0){
+         detail.contents.push({
+           header: '附件信息',
+           data: this.form,
+           labelWidth: '200px',
+           inputWidth: '400px',
+           children: [
+             {
+               type: 'upload',
+               label: '商务文件',
+               prop: 'quotAttchmentInfo1',
+               extendParam: {
+                 beforeRemove: this.beforeRemove,
+                 action: this.appConfig.api('', 'upload'),
+                 tip: ''
+               }
+             },
+             {
+               type: 'upload',
+               label: '技术文件',
+               prop: 'quotAttchmentInfo2',
+               extendParam: {
+                 beforeRemove: this.beforeRemove,
+                 action: this.appConfig.api('', 'upload'),
+                 tip: ''
+               }
+             },
+             {
+               type:'upload',
+               label: '其他附件',
+               prop: 'quotAttchmentInfo3',
+               extendParam: {
+                 beforeRemove: this.beforeRemove,
+                 action: this.appConfig.api('', 'upload'),
+                 tip: ''
+               }
+             }
+           ],
+           rules:this.rules,
+         })
+        }
+        return detail;
       },
       //FIXME 初始化明细信息显示数据
       table() {
@@ -545,7 +579,7 @@
                         }
                       )
                     } else {
-                      return h('span', row.deliveryDatePromise===(null||'')?'-':this.moment(row.deliveryDatePromise).format('YYYY-MM-DD'));
+                      return h('span', row.deliveryDatePromise === (null || '') ? '-' : this.moment(row.deliveryDatePromise).format('YYYY-MM-DD'));
                     }
                   }
                 }
@@ -649,7 +683,7 @@
                         }
                       )
                     } else {
-                      return h('span', row.deliveryDatePromise===(null||'')?'-':this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '');
+                      return h('span', row.deliveryDatePromise === (null || '') ? '-' : this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '');
                     }
                   }
                 }
@@ -753,7 +787,7 @@
                         }
                       )
                     } else {
-                      return h('span', row.deliveryDatePromise===(null||'')?'-':this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '');
+                      return h('span', row.deliveryDatePromise === (null || '') ? '-' : this.moment(row.deliveryDatePromise).format('YYYY-MM-DD') || '');
                     }
                   }
                 }
@@ -779,7 +813,7 @@
         this.axios.post(this.appConfig.api('inquiry/quote/qryIqrQuoteDetail'), {quotationId: this.quotationId})
         // this.axios.post(this.appConfig.api('testcommen'), {quotationId: this.quotationId})
           .then(data => {
-            this.form = this.util.dataAdapter(data, ['attachmentName', 'attachmentUrl'], ['name', 'url'],)
+            this.form = {...this.form,...this.util.dataAdapter(data, ['attachmentName', 'attachmentUrl'], ['name', 'url'],)};
             this.$nextTick(() => {
                 this.$refs.baseInfo.forms[0].clearValidate();
               }
@@ -852,8 +886,8 @@
         const list = this.$refs.table.all;
         let validate = true;
         _.every(list, value => {
-          if (value && value.quotePrice>0 && value.deliveryDatePromise) {
-            if(!_.isNaN(value.quotePrice)){
+          if (value && value.quotePrice > 0 && value.deliveryDatePromise) {
+            if (!_.isNaN(value.quotePrice)) {
               return true
             }
             return false
@@ -883,10 +917,9 @@
           'deliveryDatePromise',
           'quoteExplain',
           'quotationItemJSON',
-          'attchmentInfo1',
-          'attchmentInfo2',
-          'attchmentInfo3',
-          'attchmentInfo4']);
+          'quotAttchmentInfo1',
+          'quotAttchmentInfo2',
+          'quotAttchmentInfo3',]);
 
         sumbitData.deliveryDatePromise && (sumbitData.deliveryDatePromise = this.moment(sumbitData.deliveryDatePromise).format('YYYY-MM-DD'))
         _.forEach(sumbitData.quotationItemJSON, value => {
@@ -929,25 +962,25 @@
         });
       },
       back(type) {
-          //如果是保存跳转到待报价,如果是提交或者撤回跳转到已报价,如果返回跳转到源页面
-          let activeLeft;
-          switch(type){
-            case 'save':
-              activeLeft=this.sumbitPage;
-              this.$router.push({name: this.sumbitPage, query: {tab: 1}});
-              break;
-            case 'sumbit':
-              //撤销只有报价单和竞价单的已报价列表进入详情才会有
-            case 'revoke':
-              activeLeft=this.sumbitPage;
-              this.$router.push({name: this.sumbitPage, query: {tab: 2}});
-              break;
-            default:
-              activeLeft=this.backPage;
-              this.$router.push({name: this.backPage,query:{tab:this.tab}});
-              break;
-          }
-          this.$store.dispatch('setActiveLeft',{code:activeLeft});
+        //如果是保存跳转到待报价,如果是提交或者撤回跳转到已报价,如果返回跳转到源页面
+        let activeLeft;
+        switch (type) {
+          case 'save':
+            activeLeft = this.sumbitPage;
+            this.$router.push({name: this.sumbitPage, query: {tab: 1}});
+            break;
+          case 'sumbit':
+          //撤销只有报价单和竞价单的已报价列表进入详情才会有
+          case 'revoke':
+            activeLeft = this.sumbitPage;
+            this.$router.push({name: this.sumbitPage, query: {tab: 2}});
+            break;
+          default:
+            activeLeft = this.backPage;
+            this.$router.push({name: this.backPage, query: {tab: this.tab}});
+            break;
+        }
+        this.$store.dispatch('setActiveLeft', {code: activeLeft});
       },
       //FIXME 附件操作
       beforeRemove(file) {
