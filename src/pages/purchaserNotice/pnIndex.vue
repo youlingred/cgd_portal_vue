@@ -202,7 +202,8 @@
                   prop: 'quoteEndDateStart',
                   extendParam: {
                     editable: false,
-                    format: 'yyyy-MM-dd HH:mm:ss'
+                    valueFormat: 'yyyy-MM-dd HH:mm:ss',
+                    format: 'yyyy-MM-dd HH:mm:ss',
                   }
                 },
                 {
@@ -212,6 +213,7 @@
                   prop: 'quoteEndDateEnd',
                   extendParam: {
                     editable: false,
+                    valueFormat: 'yyyy-MM-dd HH:mm:ss',
                     format: 'yyyy-MM-dd HH:mm:ss'
                   }
                 },
@@ -223,6 +225,7 @@
                   switchFlag: this.flag,
                   extendParam: {
                     editable: false,
+                    valueFormat: 'yyyy-MM-dd HH:mm:ss',
                     format: 'yyyy-MM-dd HH:mm:ss'
                   }
                 },
@@ -234,6 +237,7 @@
                   switchFlag: this.flag,
                   extendParam: {
                     editable: false,
+                    valueFormat: 'yyyy-MM-dd HH:mm:ss',
                     format: 'yyyy-MM-dd HH:mm:ss'
                   }
                 },

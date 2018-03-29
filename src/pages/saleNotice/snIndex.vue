@@ -48,30 +48,22 @@
           url: this.appConfig.api('inquiry/quote/qryIqrSaleNoticeList'),
           pageNo: 1,
           height: 400,
-          queryParam: function (param) {
-            console.log('queryParam:', param)
-            return _.assign({test: 1}, param);
-          },
-          responseHandler: function (val) {
-            console.log('responseHandler:', val)
-            return val;
-          },
           columns: [
             {
               type: 'selection',
-              align:'center',
+              align: 'center',
               width: 60,
             },
             {
               title: '序号',
               type: 'index',
               width: 80,
-              align:'center',
+              align: 'center',
             },
             {
               title: '询价单名称',
               key: 'inquiryName',
-              align:'center',
+              align: 'center',
               width: 150,
               render: (h, {row, column}) => {
                 return h('a', {
@@ -89,12 +81,12 @@
               title: '销售编号',
               key: 'inquiryCode',
               width: 150,
-              align:'center',
+              align: 'center',
             },
             {
               title: '要求到货日期',
               key: 'reqArrivalDate',
-              align:'center',
+              align: 'center',
               width: 180,
               render: (h, {row, column}) => {
                 return h('div', row.reqArrivalDate === (null || '') ? '-' : this.moment(row.reqArrivalDate).format("YYYY-MM-DD HH:mm:ss"));
@@ -103,7 +95,7 @@
             {
               title: '发布日期',
               key: 'publishTime',
-              align:'center',
+              align: 'center',
               width: 180,
               render: (h, {row, column}) => {
                 return h('div', row.publishTime === (null || '') ? '-' : this.moment(row.publishTime).format("YYYY-MM-DD HH:mm:ss"));
@@ -112,7 +104,7 @@
             {
               title: '报价截止日期',
               key: 'quoteEndDate',
-              align:'center',
+              align: 'center',
               width: 180,
               render: (h, {row, column}) => {
                 return h('div', row.quoteEndDate === (null || '') ? '-' : this.moment(row.quoteEndDate).format("YYYY-MM-DD HH:mm:ss"));
@@ -121,19 +113,19 @@
             {
               title: '采购机构',
               key: 'professionalOrgName',
-              align:'center',
+              align: 'center',
               width: 180,
             },
             {
               title: '采购类别',
               key: 'purchaseCategoryName',
-              align:'center',
+              align: 'center',
               width: 180
             },
             {
               title: '采购员',
               key: 'purchaserName',
-              align:'center',
+              align: 'center',
               width: 180,
             }
           ]
@@ -165,7 +157,7 @@
                 {
                   type: 'select',
                   label: '采购机构',
-                  placeholder: '请选择',
+                  placeholder: '请输入关键词',
                   prop: 'professionalOrgId',
                   extendParam: {
                     remote: true,
@@ -194,6 +186,7 @@
                   prop: 'quoteEndDateStart',
                   extendParam: {
                     editable: false,
+                    valueFormat: 'yyyy-MM-dd HH:mm:ss',
                     format: 'yyyy-MM-dd HH:mm:ss'
                   }
                 },
@@ -204,6 +197,7 @@
                   prop: 'quoteEndDateEnd',
                   extendParam: {
                     editable: false,
+                    valueFormat: 'yyyy-MM-dd HH:mm:ss',
                     format: 'yyyy-MM-dd HH:mm:ss'
                   }
                 },
@@ -215,6 +209,7 @@
                   switchFlag: this.flag,
                   extendParam: {
                     editable: false,
+                    valueFormat: 'yyyy-MM-dd HH:mm:ss',
                     format: 'yyyy-MM-dd HH:mm:ss'
                   }
                 },
@@ -226,6 +221,7 @@
                   switchFlag: this.flag,
                   extendParam: {
                     editable: false,
+                    valueFormat: 'yyyy-MM-dd HH:mm:ss',
                     format: 'yyyy-MM-dd HH:mm:ss'
                   }
                 },
@@ -256,18 +252,19 @@
       },
       //FIXME 远程请求select数据
       query(query) {
-        if (!query) {
-          query = ''
-        }
-        this.axios.post(this.appConfig.api('testQuerySelect'), this.form)
+        this.axios.post(this.appConfig.api('QrySpecializedCompListBusiService'), {compName: query})
           .then((response) => {
             console.log(response);
-            let list = response;
-
-            this.options = list.filter(item => {
-              return item.label.toLowerCase()
-                .indexOf(query.toLowerCase()) > -1;
-            });
+            this.util.dataAdapter(response,['title','autoId'],['label','value'],false)
+            if(query){
+              let list = response;
+              this.options = list.filter(item => {
+                return item.label.toLowerCase()
+                  .indexOf(query.toLowerCase()) > -1;
+              });
+            }else{
+              this.options=response;
+            }
           })
           .catch(function (error) {
             console.log(error);
@@ -298,7 +295,7 @@
             MessageBox.close();
             this.$router.push({
               name: 'priceOfferDetail',
-              query: {isSale: true, backPage: 'saleNoticeIndex',sumbitPage:'priceBindIndex'},
+              query: {isSale: true, backPage: 'saleNoticeIndex', sumbitPage: 'priceBindIndex'},
               params: {status: 0, type: this.selections[0].purchaseCategory, id: response.quotationId}
             });
           }, 10000)
@@ -318,6 +315,9 @@
         });
       }
     },
+    created(){
+      this.query();
+    }
   }
 </script>
 

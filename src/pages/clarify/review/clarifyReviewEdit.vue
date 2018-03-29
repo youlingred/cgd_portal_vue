@@ -147,12 +147,8 @@
       }
     },
     methods: {
-      //FIXME 远程请求select数据
-      query(query) {
-        if (!query) {
-          query = ''
-        }
-
+      //FIXME 请求澄清详情
+      query() {
         //澄清详情
         this.axios.post(this.appConfig.api('inquiry/others/clarification/searchMyReceiverReviewClarificationInfo'), {clarificationId: this.$route.params.id})
           .then((data) => {
@@ -192,7 +188,7 @@
                 this.$router.push({name: 'clarifyReviewIndex'});
               })
               .catch(function (error) {
-                console.log("--------------error---------" + error);
+                console.log(error);
               });
           } else {
             return false;

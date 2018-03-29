@@ -142,11 +142,6 @@
                 },
                 {
                   type: 'label',
-                  label: '物流配送方式',
-                  prop: 'logisticsDistrWayName'
-                },
-                {
-                  type: 'label',
                   label: '采购类型',
                   prop: 'purchaseTypeName'
                 },
