@@ -1,8 +1,8 @@
 <template>
   <div>
     <Header v-bind="headerData"></Header>
-    <Nav :menus="$store.state.menu.navs" :active="$store.state.menu.activeNav" @menu-click="navClick"></Nav>
-    <LeftMenu :menus="$store.state.menu.leftMenus" :active="$store.state.menu.activeLeft"
+    <Nav :menus="navs" :active="$store.state.menu.activeNav" @menu-click="navClick"></Nav>
+    <LeftMenu :menus="leftMenus" :active="$store.state.menu.activeLeft"
               @menu-click="leftClick"></LeftMenu>
     <div class="content_right">
       <crumbs :name="$store.state.menu.activeLeft.name"/>
@@ -27,10 +27,6 @@
     },
     data() {
       return {
-        navData: {},
-        leftMenuData: {
-          menus: []
-        },
         headerData: {
           isLogin: '',
           userName: '',
@@ -39,10 +35,18 @@
         },
       }
     },
-    computed: {},
+    computed:{
+      navs(){
+        return this.$store.state.menu.navs;
+      },
+      leftMenus(){
+        return this.$store.state.menu.leftMenus
+      }
+    },
     methods: {
       navClick(nav) {
-        const nextNav = _.find(this.navData.menus, {'id': nav.id});
+        const nextNav = _.find(this.navs, {'code': nav.code});
+        console.log(nextNav)
         if (nextNav.isVue) {
           this.$router.push(nav.url)
           this.generateLeftMenu(nextNav.subMenus)
@@ -181,7 +185,6 @@
         if (!activeLeft) {
           activeLeft = JSON.parse(sessionStorage.getItem('activeLeft'));
         }
-        this.leftMenuData.menus = leftMenus
         this.$store.dispatch('setLeftMenus', leftMenus)
         this.$store.dispatch('setActiveLeft', activeLeft)
       }
