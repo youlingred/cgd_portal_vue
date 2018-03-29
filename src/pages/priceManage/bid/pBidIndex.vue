@@ -331,7 +331,7 @@
       gotoDetail(row) {
         this.$router.push({
           name: 'priceOfferDetail',
-          query: {backPage: 'priceBindIndex',sumbitPage:'priceBindIndex',tab:this.activeName==='offeried'?2:1},
+          query: {isSale:true,backPage: 'priceBindIndex',sumbitPage:'priceBindIndex',tab:this.activeName==='offeried'?2:1},
           params: {status: this.status, type: row.purchaseCategory, id: row.quotationId}
         });
       }

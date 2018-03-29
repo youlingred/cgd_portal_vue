@@ -33,7 +33,6 @@
         flag: false,
         options: [],
         selections: [],
-        cgjg_options: [],
         //搜索条件表单数据
         form: {
           inquiryName: '',
@@ -173,13 +172,13 @@
                 {
                   type: 'select',
                   label: '采购机构',
-                  placeholder: '请选择',
+                  placeholder: '请输入关键字',
                   prop: 'professionalOrgId',
                   extendParam: {
                     filterable: true,
                     remote: true,
                     remoteMethod: this.query,
-                    options: this.cgjg_options
+                    options: this.options
                   }
                 },
                 {
@@ -268,18 +267,19 @@
       },
       //FIXME 远程请求select数据
       query(query) {
-        if (!query) {
-          query = ''
-        }
-        this.axios.post(this.appConfig.api('testQuerySelect'), this.form)
+        this.axios.post(this.appConfig.api('QrySpecializedCompListBusiService'), {compName: query})
           .then((response) => {
             console.log(response);
-            let list = response;
-
-            this.options = list.filter(item => {
-              return item.label.toLowerCase()
-                .indexOf(query.toLowerCase()) > -1;
-            });
+            this.util.dataAdapter(response,['title','autoId'],['label','value'],false)
+            if(query){
+              let list = response;
+              this.options = list.filter(item => {
+                return item.label.toLowerCase()
+                  .indexOf(query.toLowerCase()) > -1;
+              });
+            }else{
+              this.options=response;
+            }
           })
           .catch(function (error) {
             console.log(error);
@@ -333,11 +333,8 @@
         });
       }
     },
-    mounted() {
-      this.axios.post(this.appConfig.api('testQuerySelect'), {})
-        .then((response) => {
-          this.cgjg_options = this.util.dataAdapter(response, ['attachmentName', 'attachmentUrl'], ['name', 'url'])
-        })
+    created(){
+      this.query();
     }
   }
 </script>

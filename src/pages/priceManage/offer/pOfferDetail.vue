@@ -40,7 +40,7 @@
           attchmentInfo4: [],
         },
         //是否来自销售页面
-        fromSale:this.$route.query.isSale,
+        isSale:this.$route.query.isSale,
         //返回跳转的页面
         backPage:this.$route.query.backPage,
         //提交相关跳转的页面
@@ -50,6 +50,20 @@
       };
     },
     computed: {
+      deliveryDatePromiseLabel(){
+        return `承诺${this.deliveryDateLabel}`
+      },
+      deliveryDateLabel(){
+        if(this.isSale){
+          return '提货日期';
+        }else{
+          if(this.type==1){
+            return '交货日期';
+          }else{
+
+          } return '完工日期';
+        }
+      },
       operateButtons() {
         if (this.status == 0) {
           //待报价详情包含所有功能按钮
@@ -92,7 +106,7 @@
               children: [
                 {
                   type: 'label',
-                  label: this.fromSale?'销售编号':'采购编号',
+                  label: this.isSale?'销售编号':'采购编号',
                   prop: 'inquiryCode',
                 },
                 {
@@ -141,7 +155,7 @@
 
                 {
                   type: 'label',
-                  label: '提货日期',
+                  label: this.deliveryDateLabel,
                   prop: 'deliveryDate',
                   formatter: (value) => {
                     return value ? this.moment(value).format('YYYY-MM-DD') : '';
@@ -167,8 +181,8 @@
                 },
                 {
                   type: this.status == 0 ? 'datePicker' : 'label',
-                  label: '承诺提货日期',
-                  placeholder: '请选择承诺提货日期',
+                  label: this.deliveryDatePromiseLabel,
+                  placeholder: `请选择${this.deliveryDatePromiseLabel}`,
                   prop: 'deliveryDatePromise',
                   formatter: (value) => {
                     return value ? this.moment(value).format('YYYY-MM-DD') : '';
