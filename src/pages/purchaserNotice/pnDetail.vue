@@ -184,7 +184,7 @@
             MessageBox.close();
             this.$router.push({
               name: 'priceOfferDetail',
-              query: {backPage: 'purchaserNoticeIndex'},
+              query: {backPage: 'purchaserNoticeIndex',sumbitPage:'priceOfferIndex'},
               params: {status: 0, type: this.$route.params.type, id: response.quotationId}
             });
           }, 10000)

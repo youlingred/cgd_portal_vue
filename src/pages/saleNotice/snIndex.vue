@@ -298,7 +298,7 @@
             MessageBox.close();
             this.$router.push({
               name: 'priceOfferDetail',
-              query: {isSale: true, backPage: 'saleNoticeIndex'},
+              query: {isSale: true, backPage: 'saleNoticeIndex',sumbitPage:'priceBindIndex'},
               params: {status: 0, type: this.selections[0].purchaseCategory, id: response.quotationId}
             });
           }, 10000)

@@ -44,30 +44,30 @@
       return {
         flag: false,
         //table选中项集合
-        selections:[],
+        selections: [],
         //当前激活的tab名称
-        activeName:'offering',
+        activeName: this.$route.query.tab == 2 ? 'offeried' : 'offering',
         options: [],
         //搜索条件表单数据
         form: {
-          inquiryName:'',
-          inquiryCode:'',
-          professionalOrgId:'',
-          quoteEndDateStart:'',
-          quoteEndDateEnd:'',
-          publishTimeStart:'',
-          publishTimeEnd:''
+          inquiryName: '',
+          inquiryCode: '',
+          professionalOrgId: '',
+          quoteEndDateStart: '',
+          quoteEndDateEnd: '',
+          publishTimeStart: '',
+          publishTimeEnd: ''
         },
       }
     },
     computed: {
-      status(){
+      status() {
         return this.activeName === 'offering' ? 0 : 1
       },
-      pageSize(){
+      pageSize() {
         return this.$refs.table.m_pageSize;
       },
-      pageNo(){
+      pageNo() {
         return this.$refs.table.m_pageNo;
       },
       formInit() {
@@ -155,12 +155,12 @@
           url: this.appConfig.api('inquiry/quote/qryIqrBiddingList'),
           pageNo: 1,
           height: 400,
-          queryParam: (param)=>{
+          queryParam: (param) => {
             console.log('queryParam:', param)
-            console.log('this.activeName',this.activeName)
-            return _.assign({status:this.status}, param);
+            console.log('this.activeName', this.activeName)
+            return _.assign({status: this.status}, param);
           },
-          responseHandler:(val)=>{
+          responseHandler: (val) => {
             console.log('responseHandler:', val)
             return val;
           },
@@ -181,9 +181,9 @@
               align: 'center',
               width: 100,
               render: (h, {row, column}) => {
-                return h('a',{
+                return h('a', {
                     on: {
-                      click: ()=>{
+                      click: () => {
                         this.gotoDetail(row)
                       }
                     }
@@ -203,7 +203,7 @@
               align: 'center',
               width: 180,
               render: (h, {row, column}) => {
-                return h('div',row.inquiryPublishDate===(null||'')?'-':this.moment(row.inquiryPublishDate).format("YYYY-MM-DD HH:mm:ss"));
+                return h('div', row.inquiryPublishDate === (null || '') ? '-' : this.moment(row.inquiryPublishDate).format("YYYY-MM-DD HH:mm:ss"));
               }
             },
             {
@@ -212,7 +212,7 @@
               align: 'center',
               width: 180,
               render: (h, {row, column}) => {
-                return h('div',row.quoteEndDate===(null||'')?'-':this.moment(row.quoteEndDate).format("YYYY-MM-DD HH:mm:ss"));
+                return h('div', row.quoteEndDate === (null || '') ? '-' : this.moment(row.quoteEndDate).format("YYYY-MM-DD HH:mm:ss"));
               }
             },
             {
@@ -240,18 +240,18 @@
       }
     },
     methods: {
-      selectionChange(val){
-        this.selections=val;
+      selectionChange(val) {
+        this.selections = val;
       },
-      pageChange(pageNo,pageSize){
-        this.pageNo=pageNo;
-        this.pageSize=pageSize;
+      pageChange(pageNo, pageSize) {
+        this.pageNo = pageNo;
+        this.pageSize = pageSize;
       },
       //FIXME 搜索
       search() {
         this.$refs.table.query(this.form);
       },
-      refresh(){
+      refresh() {
         this.$refs.table.query();
       },
       //FIXME 重置
@@ -278,27 +278,39 @@
       },
       //FIXME 发起澄清
       createClarify() {
-        if(this.selections.length===0){
-          this.$alert(this.util.lang.alertSelectionNeed,'提示');
+        if (this.selections.length === 0) {
+          this.$alert(this.util.lang.alertSelectionNeed, '提示');
           return;
-        };
-        if(this.selections.length>1){
-          this.$alert(this.util.lang.alertSelectionOnlyOne,'提示');
+        }
+        ;
+        if (this.selections.length > 1) {
+          this.$alert(this.util.lang.alertSelectionOnlyOne, '提示');
           return;
-        };
-        this.$router.push({name: 'clarifyOfferEdit',query:{inquiryId:this.selections[0].inquiryId,inquiryName:this.selections[0].inquiryName,iqrSeq:this.selections[0].iqrSeq,purchaseCategory:this.selections[0].purchaseCategory}});
+        }
+        ;
+        this.$router.push({
+          name: 'clarifyOfferEdit',
+          query: {
+            inquiryId: this.selections[0].inquiryId,
+            inquiryName: this.selections[0].inquiryName,
+            iqrSeq: this.selections[0].iqrSeq,
+            purchaseCategory: this.selections[0].purchaseCategory
+          }
+        });
       },
       //FIXME 撤回
       revoke() {
-        if(this.selections.length===0){
-          this.$alert(this.util.lang.alertSelectionNeed,'提示');
+        if (this.selections.length === 0) {
+          this.$alert(this.util.lang.alertSelectionNeed, '提示');
           return;
-        };
-        if(this.selections.length>1){
-          this.$alert(this.util.lang.alertSelectionOnlyOne,'提示');
+        }
+        ;
+        if (this.selections.length > 1) {
+          this.$alert(this.util.lang.alertSelectionOnlyOne, '提示');
           return;
-        };
-        this.axios.post(this.appConfig.api('inquiry/quote/iqrQuoteWithdraw'),{quotationId:this.selections[0].quotationId})
+        }
+        ;
+        this.axios.post(this.appConfig.api('inquiry/quote/iqrQuoteWithdraw'), {quotationId: this.selections[0].quotationId})
           .then((response) => {
             this.refresh();
           })
@@ -306,14 +318,18 @@
       //FIXME 导出
       exportDoc() {
         //合并入参
-        let assign=_.assign({pageNo:this.pageNo,pageSize:this.pageSize,status:this.status},this.form)
+        let assign = _.assign({pageNo: this.pageNo, pageSize: this.pageSize, status: this.status}, this.form)
         //转换参数对象为&连接字符串
-        let params=this.util.parseToGet(assign);
+        let params = this.util.parseToGet(assign);
         window.open(this.appConfig.api(`inquiry/quote/qryIqrQuoteListExport?${params}`), '_blank')
       },
       //FIXME 详情跳转
       gotoDetail(row) {
-        this.$router.push({name: 'priceOfferDetail',query:{backPage:'priceBindIndex',priceType:'bid'},params:{status:this.status,type:row.purchaseCategory,id:row.quotationId}});
+        this.$router.push({
+          name: 'priceOfferDetail',
+          query: {backPage: 'priceBindIndex',sumbitPage:'priceBindIndex',tab:this.activeName==='offeried'?2:1},
+          params: {status: this.status, type: row.purchaseCategory, id: row.quotationId}
+        });
       }
     },
   }

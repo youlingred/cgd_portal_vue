@@ -81,7 +81,7 @@
                   label: '供应商分类',
                   prop: 'supplierClassNames',
                   formatter(value) {
-                    return value.replace(/,/g,'>')
+                    return value&&value.replace(/,/g,'>')
                   }
                 },
                 {
@@ -238,7 +238,7 @@
             MessageBox.close();
             this.$router.push({
               name: 'priceOfferDetail',
-              query: {isSale: true, packPage: 'saleNoticeIndex'},
+              query: {isSale: true, backPage: 'saleNoticeIndex',sumbitPage:'priceBindIndex'},
               params: {status: 0, type: this.$route.params.type, id: response.quotationId}
             });
           }, 10000)

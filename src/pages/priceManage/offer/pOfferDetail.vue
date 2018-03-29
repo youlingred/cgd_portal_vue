@@ -41,10 +41,12 @@
         },
         //是否来自销售页面
         fromSale:this.$route.query.isSale,
-        //来自报价还是竞价 'offer':报价,'bid':竞价
-        priceType:this.$route.query.priceType,
-        //跳转回的页面
+        //返回跳转的页面
         backPage:this.$route.query.backPage,
+        //提交相关跳转的页面
+        sumbitPage:this.$route.query.sumbitPage,
+        //跳转回的页签
+        tab:this.$route.query.tab,
       };
     },
     computed: {
@@ -798,7 +800,7 @@
                 type: 'success',
                 message: '成功撤回报价单!'
               });
-              this.back();
+              this.back('revoke');
             }).catch(() => {
           });
         }).catch(() => {
@@ -913,18 +915,25 @@
         });
       },
       back(type) {
-        //如果priceType存在,则确定来自报价或者竞价页面
-        if (this.priceType) {
-          //如果是保存跳转到待报价,如果是提交或者撤回跳转到已报价
-          if (type === 'save') {
-            this.$router.push({name: this.backPage, query: {tab: 1}})
-          } else {
-            this.$router.push({name: this.backPage, query: {tab: 2}})
+          //如果是保存跳转到待报价,如果是提交或者撤回跳转到已报价,如果返回跳转到源页面
+          let activeLeft;
+          switch(type){
+            case 'save':
+              activeLeft=this.sumbitPage;
+              this.$router.push({name: this.sumbitPage, query: {tab: 1}});
+              break;
+            case 'sumbit':
+              //撤销只有报价单和竞价单的已报价列表进入详情才会有
+            case 'revoke':
+              activeLeft=this.sumbitPage;
+              this.$router.push({name: this.sumbitPage, query: {tab: 2}});
+              break;
+            default:
+              activeLeft=this.backPage;
+              this.$router.push({name: this.backPage,query:{tab:this.tab}});
+              break;
           }
-        }else{
-          //如果如果priceType不存在则来自销售公告或者采购公告,无需设置tab标签跳转
-          this.$router.push({name: this.backPage});
-        }
+          this.$store.dispatch('setActiveLeft',{code:activeLeft});
       },
       //FIXME 附件操作
       beforeRemove(file) {
