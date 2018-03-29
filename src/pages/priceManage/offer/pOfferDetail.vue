@@ -84,11 +84,11 @@
       },
       //成交服务费率是否展示
       showServiceChargeRate(){
-        return _.parseInt(this.form.isDispatch)===1;
+        return _.parseInt(this.form.isDispatch)==0;
       },
       //成交服务费是否展示
       showServiceChargeAmount(){
-        return (_.parseInt(this.form.serviceChargeRate)===1 && this.showServiceChargeRate);
+        return (_.parseInt(this.form.serviceChargeRate)==1 && this.showServiceChargeRate);
       },
       requireFiels(){
         let value=_.parseInt(this.form.reviewMethod);
