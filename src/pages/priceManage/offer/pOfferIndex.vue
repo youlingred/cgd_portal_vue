@@ -110,7 +110,7 @@
                   extendParam: {
                     remote: true,
                     filterable: true,
-                    remoteMethod: this.queryProfessionalOrg,
+                    remoteMethod: this.query,
                     options: this.options
                   }
                 },
@@ -294,20 +294,24 @@
         this.search();
       },
       //FIXME 远程请求采购机构select数据
-      queryProfessionalOrg(param) {
-        if (!param) {
-          param = ''
-        }
-        this.axios.post(this.appConfig.api('testQuerySelect'), this.form)
+      query(query) {
+        this.axios.post(this.appConfig.api('QrySpecializedCompListBusiService'), {compName: query})
           .then((response) => {
             console.log(response);
-            let list = response;
-
-            this.options = list.filter(item => {
-              return item.label.toLowerCase()
-                .indexOf(param.toLowerCase()) > -1;
-            });
+            this.util.dataAdapter(response,['title','autoId'],['label','value'],false)
+            if(query){
+              let list = response;
+              this.options = list.filter(item => {
+                return item.label.toLowerCase()
+                  .indexOf(query.toLowerCase()) > -1;
+              });
+            }else{
+              this.options=response;
+            }
           })
+          .catch(function (error) {
+            console.log(error);
+          });
       },
       //FIXME 发起澄清
       createClarify() {
@@ -366,6 +370,9 @@
         });
       }
     },
+    created(){
+      this.query();
+    }
   }
 </script>
 
