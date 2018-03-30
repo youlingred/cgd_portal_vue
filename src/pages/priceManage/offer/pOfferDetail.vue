@@ -813,7 +813,7 @@
           const isMobile = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
           const isPhone = /^((0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/;
           if (!(isMobile.test(value)||isPhone.test(value))){
-            callback(new Error('电话格式不正确'));
+            callback(new Error('电话格式不正确,如果是座机区号和分机号要用"-"隔开'));
           }else{
             callback();
           }
