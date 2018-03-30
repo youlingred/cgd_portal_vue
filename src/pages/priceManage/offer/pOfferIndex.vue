@@ -284,7 +284,6 @@
         this.$refs.table.query(this.form);
       },
       refresh() {
-        alert(1)
         this.$refs.table.query();
       },
       //FIXME 重置

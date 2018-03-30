@@ -105,7 +105,6 @@
       //文件上传成功回调
       fileUploadSuccess(response, file, fileList){
         if(response.respCode==='0000'){
-          alert(1)
           let item={
             name:response.filePath,
             url:response.newFileName

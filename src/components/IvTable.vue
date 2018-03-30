@@ -113,8 +113,7 @@
       refreshData(data){
         this.fullData=data;
         if(this.pagination){
-          if(this.sidePagination==='client'){
-            alert(1)
+          if(this.sidePagination==='client'){\
             this.m_total=this.fullData.length;
             let iStart,iEnd;
             iStart=(this.pageNo-1)*this.pageSize;
