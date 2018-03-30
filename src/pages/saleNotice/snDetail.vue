@@ -89,9 +89,9 @@
                   }
                 },
                 {
-                  type: '',
+                  type: 'label',
                   label: '供应商级别',
-                  prop: 'supplierLevel	'
+                  prop: 'supplierLevel'
                 },
                 {
                   type: 'label',
