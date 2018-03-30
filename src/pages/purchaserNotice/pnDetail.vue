@@ -146,7 +146,7 @@
                   prop: 'purchaseTypeName'
                 },
                 {
-                  type: 'label',
+                  type: 'tag',
                   label: '供应商分类',
                   prop: 'supplierNames',
                   extendParam:{
