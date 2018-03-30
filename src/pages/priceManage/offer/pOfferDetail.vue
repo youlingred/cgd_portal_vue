@@ -657,7 +657,7 @@
                   }
                 },
                 {
-                  title: '施工完成日期',
+                  title: '承诺完工日期',
                   key: 'deliveryDatePromise',
                   align: 'center',
                   render: (h, {row, column}) => {
@@ -761,7 +761,7 @@
                   }
                 },
                 {
-                  title: '服务完成日期',
+                  title: '承诺完工日期',
                   key: 'deliveryDatePromise',
                   align: 'center',
                   render: (h, {row, column}) => {
