@@ -25,10 +25,18 @@
     </el-card>
     <buttons-operator v-if="activeName==='doing'" type="top"
                       algin="right"
-                      :buttons="[{label:'确认',type:'primary',click:confirm},
+                      :buttons="[
+                      {label:'确认',type:'primary',click:confirm},
                       {label:'拒绝成交',type:'primary',click:refuse},
                       {label:'生产文档',type:'primary',click:buttonFunc},
-                      {label:'导出',type:'primary',click:exFile}]"/>
+                      {label:'导出',type:'primary',click:exFile}
+                      ]"/>
+    <buttons-operator v-if="activeName==='done'" type="top"
+                      algin="right"
+                      :buttons="[
+                      {label:'生产文档',type:'primary',click:buttonFunc},
+                      {label:'导出',type:'primary',click:exFile}
+                      ]"/>
     <IvTable v-if="activeName==='doing'" :key="1" ref="table_doing" v-bind="table.doing"
              @selectionChange="checkSelectionChange"/>
     <IvTable v-if="activeName==='done'" :key="2" ref="table_done" v-bind="table.done"
@@ -166,7 +174,7 @@
                 width: 130,
                 key: 'billCreateTime',
                 render: (h, {row, column}) => {
-                  return h('div',row.billCreateTime===(null||'')?'-':this.moment(row.billCreateTime).format("YYYY-MM-DD"));
+                  return h('div', row.billCreateTime === (null || '') ? '-' : this.moment(row.billCreateTime).format("YYYY-MM-DD"));
                 }
               },
               {
@@ -259,7 +267,7 @@
                 width: 130,
                 key: 'billCreateTime',
                 render: (h, {row, column}) => {
-                  return h('div',row.billCreateTime===(null||'')?'-':this.moment(row.billCreateTime).format("YYYY-MM-DD"));
+                  return h('div', row.billCreateTime === (null || '') ? '-' : this.moment(row.billCreateTime).format("YYYY-MM-DD"));
                 }
               },
               {
