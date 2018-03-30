@@ -104,8 +104,7 @@
             {required: true, message: '请输入供应商联系人', trigger: 'blur'},
           ],
           supplierContactTele: [
-            {required: true, message: '请输入供应商联系电话', trigger: 'blur'},
-            // {type: 'number',max:11,message: '电话号码必须为数字值且最多为11位',trigger: 'blur'},
+            {validator: this.validatePhone, trigger: 'blur'},
           ],
           deliveryDatePromise: [
             {required: true, message: '请选择 '},
@@ -807,6 +806,19 @@
       }
     },
     methods: {
+      validatePhone(rule, value, callback){
+        if(value===''){
+          callback(new Error('电话不能为空'));
+        }else{
+          const isMobile = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+          const isPhone = /^((0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/;
+          if (!(isMobile.test(value)||isPhone.test(value))){
+            callback(new Error('电话格式不正确'));
+          }else{
+            callback();
+          }
+        }
+      },
       //FIXME 查询基本信息
       queryDetail() {
         console.log(this);
