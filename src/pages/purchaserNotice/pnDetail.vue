@@ -148,7 +148,11 @@
                 {
                   type: 'label',
                   label: '供应商分类',
-                  prop: 'supplierClassNames'
+                  prop: 'supplierNames',
+                  formatter(value){
+                    value.map(item=>`${item.text}>${item.ptext}`);
+                    return value.join(',');
+                  }
                 },
 
                 {
