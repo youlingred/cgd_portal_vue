@@ -149,9 +149,12 @@
                   type: 'label',
                   label: '供应商分类',
                   prop: 'supplierNames',
+                  extendParam:{
+                    type:'info'
+                  },
                   formatter(value){
-                    value.map(item=>`${item.text}>${item.ptext}`);
-                    return value.join(',');
+                    value=value&&value.map(item=>{return {name:`${item.text}>${item.ptext}`}});
+                    return value;
                   }
                 },
 

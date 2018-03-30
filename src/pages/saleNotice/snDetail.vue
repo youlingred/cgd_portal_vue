@@ -77,12 +77,15 @@
                   prop: 'planCategoryName'
                 },
                 {
-                  type: 'label',
+                  type: 'tag',
                   label: '供应商分类',
                   prop: 'supplierNames',
+                  extendParam:{
+                    type:'info'
+                  },
                   formatter(value){
-                    value.map(item=>`${item.text}>${item.ptext}`);
-                    return value.join(',');
+                    value=value&&value.map(item=>{return {name:`${item.text}>${item.ptext}`}});
+                    return value;
                   }
                 },
                 {
@@ -96,7 +99,7 @@
                   prop: 'quoteEndDate',
                   formatter(value) {
                     return value === (null || '') ? '-' : this.moment(value).format("YYYY-MM-DD HH:mm:ss")
-                  }
+                  },
                 },
                 {
                   switchFlag: this.flag,
