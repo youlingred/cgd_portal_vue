@@ -104,6 +104,7 @@
             {required: true, message: '请输入供应商联系人', trigger: 'blur'},
           ],
           supplierContactTele: [
+            {required: true, message: '请输入供应商联系电话', trigger: 'blur'},
             {validator: this.validatePhone, trigger: 'blur'},
           ],
           deliveryDatePromise: [
@@ -119,7 +120,7 @@
       },
       //FIXME 初始化基本信息显示数据
       detailData() {
-       let detail= {
+        let detail = {
           contents: [
             {
               header: '基本信息',
@@ -332,46 +333,46 @@
             },
           ]
         }
-        if(this.status==0){
-         detail.contents.push({
-           header: '附件信息',
-           data: this.form,
-           labelWidth: '200px',
-           inputWidth: '400px',
-           children: [
-             {
-               type: 'upload',
-               label: '商务文件',
-               prop: 'quotAttchmentInfo1',
-               extendParam: {
-                 beforeRemove: this.beforeRemove,
-                 action: this.appConfig.api('', 'upload'),
-                 tip: ''
-               }
-             },
-             {
-               type: 'upload',
-               label: '技术文件',
-               prop: 'quotAttchmentInfo2',
-               extendParam: {
-                 beforeRemove: this.beforeRemove,
-                 action: this.appConfig.api('', 'upload'),
-                 tip: ''
-               }
-             },
-             {
-               type:'upload',
-               label: '其他附件',
-               prop: 'quotAttchmentInfo3',
-               extendParam: {
-                 beforeRemove: this.beforeRemove,
-                 action: this.appConfig.api('', 'upload'),
-                 tip: ''
-               }
-             }
-           ],
-           rules:this.rules,
-         })
+        if (this.status == 0) {
+          detail.contents.push({
+            header: '附件信息',
+            data: this.form,
+            labelWidth: '200px',
+            inputWidth: '400px',
+            children: [
+              {
+                type: 'upload',
+                label: '商务文件',
+                prop: 'quotAttchmentInfo1',
+                extendParam: {
+                  beforeRemove: this.beforeRemove,
+                  action: this.appConfig.api('', 'upload'),
+                  tip: ''
+                }
+              },
+              {
+                type: 'upload',
+                label: '技术文件',
+                prop: 'quotAttchmentInfo2',
+                extendParam: {
+                  beforeRemove: this.beforeRemove,
+                  action: this.appConfig.api('', 'upload'),
+                  tip: ''
+                }
+              },
+              {
+                type: 'upload',
+                label: '其他附件',
+                prop: 'quotAttchmentInfo3',
+                extendParam: {
+                  beforeRemove: this.beforeRemove,
+                  action: this.appConfig.api('', 'upload'),
+                  tip: ''
+                }
+              }
+            ],
+            rules: this.rules,
+          })
         }
         return detail;
       },
@@ -806,17 +807,13 @@
       }
     },
     methods: {
-      validatePhone(rule, value, callback){
-        if(value===''){
-          callback(new Error('电话不能为空'));
-        }else{
-          const isMobile = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
-          const isPhone = /^((0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/;
-          if (!(isMobile.test(value)||isPhone.test(value))){
-            callback(new Error('电话格式不正确,如果是座机区号和分机号要用"-"隔开'));
-          }else{
-            callback();
-          }
+      validatePhone(rule, value, callback) {
+        const isMobile = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+        const isPhone = /^((0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/;
+        if (!(isMobile.test(value) || isPhone.test(value))) {
+          callback(new Error('电话格式不正确,如果是座机区号和分机号要用"-"隔开'));
+        } else {
+          callback();
         }
       },
       //FIXME 查询基本信息
@@ -825,7 +822,7 @@
         this.axios.post(this.appConfig.api('inquiry/quote/qryIqrQuoteDetail'), {quotationId: this.quotationId})
         // this.axios.post(this.appConfig.api('testcommen'), {quotationId: this.quotationId})
           .then(data => {
-            this.form = {...this.form,...this.util.dataAdapter(data, ['attachmentName', 'attachmentUrl'], ['name', 'url'],)};
+            this.form = {...this.form, ...this.util.dataAdapter(data, ['attachmentName', 'attachmentUrl'], ['name', 'url'],)};
             this.$nextTick(() => {
                 this.$refs.baseInfo.forms[0].clearValidate();
               }

@@ -26,6 +26,7 @@
         form:{},
         //列表数据
         table: {
+          autoLoad:false,
           data: [],
           height: 400,
           columns: [],
