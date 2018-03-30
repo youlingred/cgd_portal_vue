@@ -329,6 +329,7 @@
         console.log(row);
         this.$router.push({
           name: 'purchaserNoticeDetail',
+          query:{backPage:'purchaserNoticeIndex'},
           params: {type: row.purchaseCategory, id: row.inquiryId, seq: row.iqrSeq}
         });
       }

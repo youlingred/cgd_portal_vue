@@ -47,7 +47,7 @@
         //复选框选中的值
         selectDatas: [],
         //当前激活的tab名称
-        activeName: 'receive',
+        activeName: this.$route.query.tab==2?'reply':'receive',
         //展开收起标志
         flag: false,
         //发出澄清搜索条件表单数据
@@ -104,7 +104,17 @@
                 title: '询价单名称',
                 key: 'inquiryName',
                 align: 'center',
-                width: 200
+                width: 200,
+                render: (h, {row, column}) => {
+                  return h('a', {
+                      on: {
+                        click: () => {
+                          this.gotoinquiryDetail(row.purchaseCategory,row.inquiryId,row.iqrSeq)
+                        }
+                      }
+                    },
+                    row.inquiryName);
+                }
               },
               {
                 title: '澄清内容',
@@ -181,7 +191,14 @@
                 align: 'center',
                 width: 200,
                 render: (h, {row, column}) => {
-                  return h('div',row.inquiryName);
+                  return h('a', {
+                      on: {
+                        click: () => {
+                          this.gotoinquiryDetail(row.purchaseCategory,row.inquiryId,row.iqrSeq)
+                        }
+                      }
+                    },
+                    row.inquiryName);
                 }
               },
               {
@@ -243,6 +260,9 @@
       }
     },
     computed: {
+      tab(){
+        return this.activeName === 'reply' ? 2 : 1
+      },
       formInit() {
         return {
           //发出澄清表单初始化数据
@@ -410,6 +430,14 @@
         } else {
           this.$router.push({name: 'clarifyReviewDetailReply', params: {id: id}});
         }
+      },
+      //FIXME 跳转询价单公告详情
+      gotoinquiryDetail(type, id, seq) {
+        this.$router.push({
+          name: 'purchaserNoticeDetail',
+          query: {backPage: 'clarifyOfferIndex', tab: this.tab},
+          params: {type: type, id: id, seq: seq}
+        });
       },
       checkSelectionChange(val) {
         this.selectDatas = val;

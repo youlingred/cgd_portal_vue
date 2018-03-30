@@ -48,22 +48,22 @@
                 {
                   type:'label',
                   label:'采购方',
-                  prop:'1'
+                  prop:'createCompanyName'
                 },
                 {
                   type:'label',
                   label:'采购方联系人',
-                  prop:'2'
+                  prop:'contactName'
                 },
                 {
                   type:'label',
                   label:'采购方联系电话',
-                  prop:'6',
+                  prop:'contactPhone',
                 },
                 {
                   type:'label',
                   label:'业务状态',
-                  prop:'7',
+                  prop:'docStatus',
                   formatter(value){
                     switch(value){
                       case 1:

@@ -46,30 +46,30 @@
     data() {
       return {
         //当前激活的tab名称
-        activeName: 'send',
+        activeName: this.$route.query.tab==2?'receive':'send',
         //展开收起标志
         flag: false,
         //FIXME 发出澄清搜索条件表单数据
         form: {
           send: {
-            inquiryCode:"",
-            inquiryName:"",
-            clarificationContent:"",
-            clarificationDateStart:"",
-            clarificationDateEnd:""
-          },
-          receive: {
-            inquiryCode:"",
+            inquiryCode: "",
             inquiryName: "",
             clarificationContent: "",
-            clarificationDateStart:"",
-            clarificationDateEnd:""
+            clarificationDateStart: "",
+            clarificationDateEnd: ""
+          },
+          receive: {
+            inquiryCode: "",
+            inquiryName: "",
+            clarificationContent: "",
+            clarificationDateStart: "",
+            clarificationDateEnd: ""
           }
         },
         //FIXME table初始化数据
         table: {
           send: {
-            height:400,
+            height: 400,
             url: this.appConfig.api('inquiry/others/clarification/searchSupPublishPurQuestionList'),
             pageNo: 1,
             queryParam: function (param) {
@@ -105,8 +105,8 @@
                 render: (h, {row, column}) => {
                   return h('a', {
                       on: {
-                        click: ()=>{
-                          this.gotoDetail(row.questionId)
+                        click: () => {
+                          this.gotoinquiryDetail(row.purchaseCategory,row.inquiryId,row.iqrSeq)
                         }
                       }
                     },
@@ -121,7 +121,7 @@
                 render: (h, {row, column}) => {
                   return h('a', {
                       on: {
-                        click: ()=>{
+                        click: () => {
                           this.gotoDetail(row.questionId)
                         }
                       }
@@ -135,7 +135,7 @@
                 title: '澄清时间',
                 key: 'questionTime',
                 render: (h, {row, column}) => {
-                  return h('div',row.questionTime===(null||'')?'-':this.moment(row.questionTime).format("YYYY-MM-DD HH:mm:ss"));
+                  return h('div', row.questionTime === (null || '') ? '-' : this.moment(row.questionTime).format("YYYY-MM-DD HH:mm:ss"));
                 }
               },
               {
@@ -187,7 +187,7 @@
                 key: 'clarificationTime',
                 width: 200,
                 render: (h, {row, column}) => {
-                  return h('div',row.clarificationTime===(null||'')?'-':this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss"));
+                  return h('div', row.clarificationTime === (null || '') ? '-' : this.moment(row.clarificationTime).format("YYYY-MM-DD HH:mm:ss"));
                 }
               },
               {
@@ -204,8 +204,8 @@
                 render: (h, {row, column}) => {
                   return h('a', {
                       on: {
-                        click: ()=>{
-                          this.gotoDetail(row.clarificationId)
+                        click: () => {
+                          this.gotoinquiryDetail(row.purchaseCategory,row.inquiryId,row.iqrSeq)
                         }
                       }
                     },
@@ -220,7 +220,7 @@
                 render: (h, {row, column}) => {
                   return h('a', {
                       on: {
-                        click: ()=>{
+                        click: () => {
                           this.gotoDetail(row.clarificationId)
                         }
                       }
@@ -240,6 +240,9 @@
       }
     },
     computed: {
+      tab(){
+        return this.activeName === 'receive' ? 2 : 1
+      },
       formInit() {
         return {
           //FIXME 发出澄清表单初始化数据
@@ -353,15 +356,15 @@
     },
     watch: {
       //FIXME 监听标签变化
-      activeName(val,oldVal) {
-        this.form[oldVal]={}
+      activeName(val, oldVal) {
+        this.form[oldVal] = {}
       }
     },
     methods: {
       //FIXME 搜索
       search() {
-        let searchData=this.form[this.activeName];
-        searchData.pageNo=1;
+        let searchData = this.form[this.activeName];
+        searchData.pageNo = 1;
         this.$refs['table_' + this.activeName].query(searchData)
       },
       //FIXME 重置
@@ -374,19 +377,35 @@
         this.$router.push({name: 'clarifyOfferEdit'})
       },
       //FIXME 导出
-      exportHandle(){
+      exportHandle() {
         window.location.href = this.appConfig.api('inquiry/others/clarification/searchSupPublishPurQuestionListExport');
       },
-      exportHandleReceive(){
+      exportHandleReceive() {
         window.location.href = this.appConfig.api('inquiry/others/clarification/searchSupReceiverPurClarificationBeforeQuoteListExport');
       },
       //FIXME 跳转详情
       gotoDetail(id) {
         if (this.activeName === 'send') {
-          this.$router.push({name: 'clarifyOfferDetailSend', params: {id: id}});
+          this.$router.push({
+            name: 'clarifyOfferDetailSend',
+            query: {backPage: 'clarifyOfferIndex', tab: this.tab},
+            params: {id: id}
+          });
         } else {
-          this.$router.push({name: 'clarifyOfferDetailReceive', params: {id: id}});
+          this.$router.push({
+            name: 'clarifyOfferDetailReceive',
+            query: {backPage: 'clarifyOfferIndex', tab: this.tab},
+            params: {id: id}
+          });
         }
+      },
+      //FIXME 跳转询价单公告详情
+      gotoinquiryDetail(type, id, seq) {
+        this.$router.push({
+          name: 'purchaserNoticeDetail',
+          query: {backPage: 'clarifyOfferIndex', tab: this.tab},
+          params: {type: type, id: id, seq: seq}
+        });
       }
     }
   }

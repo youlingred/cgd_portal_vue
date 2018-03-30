@@ -9,7 +9,7 @@
     <IvTable ref="table" v-bind="table"/>
     <buttons-operator type="bottom"
                       fix="true"
-                      :buttons="[{label:'我要参与',type:'primary',click:join},{label:'返回',type:'info',click:backFunc}]"/>
+                      :buttons="[{label:'我要参与',type:'primary',click:join},{label:'返回',type:'info',click:back}]"/>
 
   </div>
 </template>
@@ -250,8 +250,8 @@
           console.log(error);
         });
       },
-      backFunc() {
-        this.$router.push({name: 'saleNoticeIndex'});
+      back() {
+        this.$router.push({name: this.$route.query.backPage,query:{tab:this.$route.query.tab}});
       },
       initForm() {
         //基本信息

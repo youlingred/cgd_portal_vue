@@ -29,12 +29,10 @@
         options: [],
         //搜索条件表单数据
         form: {
-          planName: '',
-          publishUser: '',
-          project: '',
-          status: '',
-          publishDate1: '',
-          publishDate2: ''
+          createCompanyName: '',
+          subjectName: '',
+          createTimeStart: '',
+          createTimeEnd: ''
         },
         table:{
           url: this.appConfig.api('testDylyListPage'),
@@ -60,7 +58,7 @@
             },
             {
               title: '标的物名称',
-              key: 'planName',
+              key: 'subjectName',
               width: 150,
             },
             {
@@ -70,17 +68,17 @@
             },
             {
               title: '处置单位联系人',
-              key: 'publishUser',
+              key: 'contactName',
               width: 150,
             },
             {
               title: '处置单位联系电话',
-              key: 'publishUser',
+              key: 'contactPhone',
               width: 150,
             },
             {
               title: '提货地点',
-              key: 'publishUser',
+              key: 'deliverAddresss',
               width: 150,
             },
             {
@@ -124,21 +122,22 @@
                   type: 'input',
                   label: '采购方',
                   placeholder: '请输入采购单名称',
-                  prop: 'planName',
+                  prop: 'createCompanyName',
                 },
                 {
                   type: 'input',
                   label: '标的物名称',
-                  placeholder: '请输入采购单编号',
-                  prop: 'planName',
+                  placeholder: '请输入标的物名称',
+                  prop: 'subjectName',
                 },
                 {
                   type: 'dateTimePicker',
                   label: '下达意向开始日期',
                   placeholder: '请输入开始时间',
-                  prop: 'publishDate1',
+                  prop: 'createTimeStart',
                   extendParam: {
                     editable: false,
+                    valueFormat:'yyyy-MM-dd HH:mm:ss',
                     format: 'yyyy-MM-dd HH:mm:ss'
                   }
                 },
@@ -146,9 +145,10 @@
                   type: 'dateTimePicker',
                   label: '下达意向结束日期',
                   placeholder: '请输入结束时间',
-                  prop: 'publishDate2',
+                  prop: 'createTimeEnd',
                   extendParam: {
                     editable: false,
+                    valueFormat:'yyyy-MM-dd HH:mm:ss',
                     format: 'yyyy-MM-dd HH:mm:ss'
                   }
                 }

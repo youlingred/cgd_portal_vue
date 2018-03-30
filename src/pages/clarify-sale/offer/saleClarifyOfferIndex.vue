@@ -48,7 +48,7 @@
     data() {
       return {
         //当前激活的tab名称
-        activeName: 'send',
+        activeName: this.$route.query.tab==2?'receive':'send',
         //展开收起标志
         flag: false,
         //发出澄清搜索条件表单数据
@@ -106,8 +106,8 @@
                 render: (h, {row, column}) => {
                   return h('a', {
                       on: {
-                        click: ()=>{
-                          this.gotoDetail(row.questionId)
+                        click: () => {
+                          this.gotoinquiryDetail(row.purchaseCategory,row.inquiryId,row.iqrSeq)
                         }
                       }
                     },
@@ -205,8 +205,8 @@
                 render: (h, {row, column}) => {
                   return h('a', {
                       on: {
-                        click: ()=>{
-                          this.gotoDetail(row.clarificationId)
+                        click: () => {
+                          this.gotoinquiryDetail(row.purchaseCategory,row.inquiryId,row.iqrSeq)
                         }
                       }
                     },
@@ -241,6 +241,9 @@
       }
     },
     computed: {
+      tab(){
+        return this.activeName === 'receive' ? 2 : 1
+      },
       formInit() {
         return {
           //发出澄清表单初始化数据
@@ -421,6 +424,14 @@
         } else {
           this.$router.push({name: 'saleClarifyOfferDetailReceive', params: {id: id}});
         }
+      },
+      //FIXME 跳转询价单公告详情
+      gotoinquiryDetail(type, id, seq) {
+        this.$router.push({
+          name: 'purchaserNoticeDetail',
+          query: {backPage: 'clarifyOfferIndex', tab: this.tab},
+          params: {type: type, id: id, seq: seq}
+        });
       }
     }
   }
