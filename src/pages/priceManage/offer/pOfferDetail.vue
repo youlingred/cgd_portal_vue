@@ -385,6 +385,7 @@
             return {
               header: '明细信息',
               height: 400,
+              pagination:false,
               url: this.appConfig.api('inquiry/quote/qryIqrQuoteMateriaItemList'),
               // url: this.appConfig.api('Materials'),
               columns: [
@@ -590,6 +591,7 @@
             return {
               header: '明细信息',
               height: 400,
+              pagination:false,
               url: this.appConfig.api('inquiry/quote/qryIqrQuoteConstructionItemList'),
               // url: this.appConfig.api('Materials'),
               columns: [
@@ -694,6 +696,7 @@
             return {
               header: '明细信息',
               height: 400,
+              pagination:false,
               url: this.appConfig.api('inquiry/quote/qryIqrQuoteServItemList'),
               // url: this.appConfig.api('Materials'),
               columns: [

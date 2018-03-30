@@ -27,7 +27,7 @@
                       algin="right"
                       :buttons="[{label:'确认',type:'primary',click:confirm},
                       {label:'拒绝成交',type:'primary',click:refuse},
-                      {label:'生产文档',type:'primary',click:buttonFunc}]"/>
+                      {label:'生成文档',type:'primary',click:buttonFunc}]"/>
     <IvTable v-if="activeName==='doing'" key="1" ref="table_doing" v-bind="table.doing"
              @selectionChange="checkSelectionChange"/>
     <IvTable v-if="activeName==='done'" key="2" ref="table_done" v-bind="table.done"
