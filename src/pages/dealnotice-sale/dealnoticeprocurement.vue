@@ -87,8 +87,8 @@
             url: this.appConfig.api('inquiry/exe/dealnote/querydealnoticelistforsupplier'),
             pageNo: 1,
             queryParam: function (param) {
-              console.log('queryParam:', param)
-              return _.assign({tabId: 1, isSale: 1}, param);
+              console.log('queryParam-----------:',param )
+              return _.assign({tabId: 1}, param);
             },
             responseHandler: function (val) {
               console.log('responseHandler:', val)
@@ -177,8 +177,8 @@
             height: 400,
             pageNo: 1,
             queryParam: function (param) {
-              console.log('queryParam:', param)
-              return _.assign({tabId: 2, isSale: 1}, param);
+              console.log('queryParam------------:', param)
+              return _.assign({tabId: 2}, param);
             },
             responseHandler: function (val) {
               console.log('responseHandler:', val)

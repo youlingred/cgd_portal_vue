@@ -95,7 +95,7 @@
             pageNo: 1,
             queryParam: function (param) {
               console.log('queryParam:', param)
-              return _.assign({tabId: 1, isSale: 0}, param);
+              return _.assign({tabId: 1, isSale: 1}, param);
             },
             responseHandler: function (val) {
               console.log('responseHandler:', val)
@@ -191,7 +191,7 @@
             pageNo: 1,
             queryParam: function (param) {
               console.log('queryParam:', param)
-              return _.assign({tabId: 2, isSale: 0}, param);
+              return _.assign({tabId: 2, isSale: 1}, param);
             },
             responseHandler: function (val) {
               console.log('responseHandler:', val)
