@@ -16,17 +16,21 @@
   import buttonsOperator from '@/components/ButtonsOperator.vue'
 
   export default {
-    components:{
+    components: {
       detail,
       IvTable,
       buttonsOperator
     },
-    data () {
+    data() {
       return {
-        form:{},
+        type: this.$route.params.type,
+        id: this.$route.params.id,
+        formPurchase: {},
+        formDeal: {},
         //列表数据
         table: {
-          autoLoad:false,
+          autoLoad: false,
+          title: '明细信息',
           data: [],
           height: 400,
           columns: [],
@@ -35,206 +39,313 @@
         }
       };
     },
-    computed:{
-      detailData(){
-        return {
-          contents:[
-            {
-              data:this.form,
-              header:'采购意向信息',
-              labelWidth:'150px',
-              inputWidth:'400px',
-              children:[
+    computed: {
+      detailData() {
+        if (this.type == 1) {
+          //FIXME 采购详情
+            return {contents:[{
+              data: this.formPurchase,
+              header: '采购意向信息',
+              labelWidth: '150px',
+              inputWidth: '400px',
+              children: [
                 {
-                  type:'label',
-                  label:'采购方',
-                  prop:'createCompanyName'
+                  type: 'label',
+                  label: '采购方',
+                  prop: 'createCompanyName'
                 },
                 {
-                  type:'label',
-                  label:'采购方联系人',
-                  prop:'contactName'
+                  type: 'label',
+                  label: '采购方联系人',
+                  prop: 'contactName'
                 },
                 {
-                  type:'label',
-                  label:'采购方联系电话',
-                  prop:'contactPhone',
+                  type: 'label',
+                  label: '采购方联系电话',
+                  prop: 'contactPhone',
                 },
                 {
-                  type:'label',
-                  label:'业务状态',
-                  prop:'docStatus',
-                  formatter(value){
-                    switch(value){
-                      case 1:
-                        return '';
-                      case 2:
-                        return '';
-                      default:
-                        return ''
-                    }
+                  type: 'label',
+                  label: '业务状态',
+                  prop: 'docStatusName'
+                },
+                {
+                  type: 'label',
+                  label: '创建时间',
+                  prop: 'createTime',
+                  formatter(value) {
+                    return value === (null || '') ? '-' : this.moment(value).format("YYYY-MM-DD HH:mm:ss");
                   }
                 },
                 {
-                  type:'label',
-                  label:'创建时间',
-                  prop:'18',
-                  formatter(value){
-                    return value===(null||'')?'-':this.moment(value).format("YYYY-MM-DD HH:mm:ss");
-                  }
-                },
-                {
-                  type:'label',
-                  label:'创建人',
-                  prop:'21'
+                  type: 'label',
+                  label: '创建人',
+                  prop: 'createUserName'
                 },
               ]
-            },
-            {
-              data:this.form,
-              header:'闲置物资处置信息',
-              labelWidth:'150px',
-              inputWidth:'400px',
-              children:[
-                {
-                  type:'label',
-                  label:'项目单位',
-                  prop:'1'
-                },
-                {
-                  type:'label',
-                  label:'标的物名称',
-                  prop:'2'
-                },
-                {
-                  type:'label',
-                  label:'处置单位联系人',
-                  prop:'6',
-                },
-                {
-                  type:'label',
-                  label:'处置单位联系单位',
-                  prop:'7'
-                },
-                {
-                  type:'label',
-                  label:'提货地点',
-                  prop:'8'
-                },
-                {
-                  type:'file',
-                  label:'附件',
-                  prop:'fileList'
-                },
-                {
-                  type:'label',
-                  label:'备注',
-                  prop:'21'
-                },
-              ]
-            },
-          ]
+            }]};
+        } else if (this.type == 2) {
+          //FIXME 处置采购详情
+          return {contents:[
+              {
+                data: this.formDeal,
+                header: '闲置物资处置信息',
+                labelWidth: '150px',
+                inputWidth: '400px',
+                children: [
+                  {
+                    type: 'label',
+                    label: '项目单位',
+                    prop: 'purchaseAccountName'
+                  },
+                  {
+                    type: 'label',
+                    label: '标的物名称',
+                    prop: 'subjectName'
+                  },
+                  {
+                    type: 'label',
+                    label: '处置单位联系人',
+                    prop: 'dealOrgContactName',
+                  },
+                  {
+                    type: 'label',
+                    label: '处置单位联系电话',
+                    prop: 'dealOrgContactTele'
+                  },
+                  {
+                    type: 'label',
+                    label: '提货地点',
+                    prop: 'deliveryAddress'
+                  },
+                  {
+                    type: 'file',
+                    label: '附件',
+                    prop: 'inquiryAttachmentBOs'
+                  },
+                  {
+                    type: 'label',
+                    label: '备注',
+                    prop: 'remarks'
+                  },
+                ]
+              },
+            ]};
         }
       }
     },
-    methods:{
-      backFunc () {
-        this.$router.push({name:'idleMaterialsIndex'});
+    methods: {
+      backFunc() {
+        this.$router.push({name: 'idleMaterialsIndex'});
       },
+      //FIXME 查询主单
       initForm() {
-        //基本信息
-        this.axios.post(this.appConfig.api('testcommen'),{})
-          .then((response) => {
-            this.form=response;
-          })
-          .catch(function (error) {
-            console.log(error);
+        if (this.type == 1) {
+          this.axios.post(this.appConfig.api('inquiry/others/queryIdleGoodsIntentMasterSingleQuery'), {idleGoodsIntentId: this.id})
+            .then(response => {
+              this.formPurchase = response;
+            }).catch(err=>{
+            console.log(err)
           });
+        }else if(this.type==2){
+          this.axios.post(this.appConfig.api('inquiry/others/queryIqrIdleGoodsMasterSingle'), {idleGoodsId: this.id})
+            .then(response => {
+              this.formDeal = response;
+            }).catch(err=>{
+            console.log(err)
+          });
+        }
       },
+      //FIXME 查询明细
       initTable() {
-        let {type,id}=this.$route.params;
-        if(type==1){//采购意向详情
-          this.table.url = this.appConfig.api('Materials')//?type='+type+'&id='+id);
+        //FIXME 采购明细
+        if (this.type == 1) {
+          this.table.url = this.appConfig.api('inquiry/others/queryIqrGoodsIntentItemByIdleGoodsIntentId');
           this.table.columns = [
             {
               fixed: 'left',
               title: '序号',
               type: 'index',
+              align: 'center',
               width: 80
             },
             {
               title: '物料编码',
-              key: '1',
+              key: 'materialId',
+              align: 'center',
               width: 150,
             },
             {
               title: '物料名称',
-              key: '2',
+              key: 'materialName',
+              align: 'center',
               width: 150,
             },
             {
               title: '物资分类',
-              key: '3',
-              width: 100,
-            },
-            {
-              title: '规格',
-              key: '4',
+              key: 'materialClassName',
+              align: 'center',
               width: 100,
             },
             {
               title: '型号',
-              key: '5',
+              key: 'model',
+              align: 'center',
               width: 100,
             },
             {
               title: '图号',
-              key: '6',
+              key: 'figureNo',
+              align: 'center',
+              width: 100,
+            },
+            {
+              title: '规格',
+              key: 'spec',
+              align: 'center',
               width: 100,
             },
             {
               title: '材质',
-              key: '7',
+              key: 'materialsQuality',
+              align: 'center',
               width: 100,
             },
             {
               title: '品牌',
-              key: '8',
+              key: 'brand',
+              align: 'center',
               width: 100,
             },
             {
               title: '生产厂家',
-              key: '9',
+              align: 'center',
+              key: 'manufacturer',
               width: 150,
             },
             {
               title: '计量单位',
-              key: '10',
+              align: 'center',
+              key: 'measurementUnit',
               width: 100,
             },
             {
               title: '处置数量',
-              align:'right',
-              key: '14',
+              align: 'center',
+              key: 'disposeNum',
               width: 150,
             },
             {
               title: '销售单价（元）',
-              key: '1',
+              key: 'salesPrice',
               width: 180
             },
             {
               title: '采购意向数量',
-              key: '4',
+              key: 'purchaseNum',
               width: 150
             }
           ];
+          this.$refs.table.query({url: this.table.url,idleGoodsIntentId: this.id});
+        } else if (this.type == 2) {
+          //FIXME 处置明细
+          this.table.url = this.appConfig.api('inquiry/others/queryIdleGoodsDetailedInfo');
+          this.table.columns = [
+            {
+              fixed: 'left',
+              title: '序号',
+              type: 'index',
+              align: 'center',
+              width: 80
+            },
+            {
+              title: '物料编码',
+              key: 'materialId',
+              align: 'center',
+              width: 150,
+            },
+            {
+              title: '物料名称',
+              key: 'materialName',
+              align: 'center',
+              width: 150,
+            },
+            {
+              title: '物资分类',
+              key: 'materialClassName',
+              align: 'center',
+              width: 100,
+            },
+            {
+              title: '型号',
+              key: 'model',
+              align: 'center',
+              width: 100,
+            },
+            {
+              title: '图号',
+              key: 'figureNo',
+              align: 'center',
+              width: 100,
+            },
+            {
+              title: '规格',
+              key: 'spec',
+              align: 'center',
+              width: 100,
+            },
+            {
+              title: '材质',
+              key: 'materialsQuality',
+              align: 'center',
+              width: 100,
+            },
+            {
+              title: '品牌',
+              key: 'brand',
+              align: 'center',
+              width: 100,
+            },
+            {
+              title: '生产厂家',
+              align: 'center',
+              key: 'manufacturer',
+              width: 150,
+            },
+            {
+              title: '计量单位',
+              align: 'center',
+              key: 'measurementUnit',
+              width: 100,
+            },
+            {
+              title: '处置数量',
+              align: 'center',
+              key: 'disposeNum',
+              width: 150,
+            },
+            {
+              title: '销售单价（元）',
+              key: 'salesPrice',
+              width: 180
+            },
+            {
+              title: '剩余库存数量',
+              key: 'inventoryNum',
+              width: 150
+            },
+            {
+              title: '已售数量',
+              key: 'soldNum',
+              width: 150
+            }
+          ];
+          this.$refs.table.query({url: this.table.url,idleGoodsId: this.id});
         }
-        this.$refs.table.query({url:this.table.url});
       },
 
     },
-    mounted () {
+    mounted() {
       this.initForm();
       this.initTable();
     }
@@ -245,8 +356,8 @@
 <style scoped>
   .footerdiv {
     height: 45px;
-    line-height:42px;
-    margin:10px 0 30px 0;
+    line-height: 42px;
+    margin: 10px 0 30px 0;
     text-align: center;
     border-top: 3px solid #acacac;
     background-color: #e5e5e5;
