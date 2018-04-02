@@ -443,18 +443,18 @@
                   align: 'center',
                   width: 100,
                 },
-                {
-                  title: '安装位置',
-                  key: 'installPosition',
-                  align: 'center',
-                  width: 100,
-                },
-                {
-                  title: '原生产厂家',
-                  key: 'originalManufacturer',
-                  align: 'center',
-                  width: 150,
-                },
+                // {
+                //   title: '安装位置',
+                //   key: 'installPosition',
+                //   align: 'center',
+                //   width: 100,
+                // },
+                // {
+                //   title: '原生产厂家',
+                //   key: 'originalManufacturer',
+                //   align: 'center',
+                //   width: 150,
+                // },
                 {
                   title: '品牌',
                   key: 'brand',

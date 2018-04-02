@@ -160,6 +160,7 @@
                 align: 'center',
                 width: 130,
                 key: 'billCreateTime',
+                sortable:'true',
                 render: (h, {row, column}) => {
                   return h('div',row.billCreateTime===(null||'')?'-':this.moment(row.billCreateTime).format("YYYY-MM-DD"));
                 }
@@ -176,14 +177,7 @@
             url: this.appConfig.api('inquiry/exe/dealnote/querydealnoticelistforsupplier'),
             height: 400,
             pageNo: 1,
-            queryParam: function (param) {
-              console.log('queryParam------------:', param)
-              return _.assign({tabId: 2}, param);
-            },
-            responseHandler: function (val) {
-              console.log('responseHandler:', val)
-              return val;
-            },
+            // defaultSort:{prop: 'billCreateTime', order: 'descending'},
             columns: [
               {
                 type: 'selection',
@@ -247,6 +241,7 @@
                 align: 'center',
                 width: 130,
                 key: 'billCreateTime',
+                sortable:'true',
                 render: (h, {row, column}) => {
                   return h('div',row.billCreateTime===(null||'')?'-':this.moment(row.billCreateTime).format("YYYY-MM-DD"));
                 }

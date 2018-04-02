@@ -20,17 +20,17 @@
     },
     data() {
       return {
+        inquiryExist:this.$route.query.inquiryExist,
         form: {
           companyName:this.$store.getters.companyName,
           receiveUser:'',
           crateUser:this.$store.getters.userName,
           clarifyType:'报价前澄清',
-
           questionContent:'',
-          inquiry:'',
-          inquiryId:'',
+          inquiry:this.$route.query.inquiryName||'',
+          inquiryId:this.$route.query.inquiryId||'',
           inquiryCode:'',
-          iqrSeq:'',
+          iqrSeq:this.$route.query.iqrSeq||'',
           purchaseCategory:'',
           attachments:[],
         },
@@ -45,6 +45,7 @@
           this.form.inquiryCode=val.inquiryCode;
           this.form.iqrSeq=val.iqrSeq;
           this.form.purchaseCategory=val.purchaseCategory;
+          this.form.receiveUser=val.purchaseProfessionalOrgName;
         }
       },
       '$store.getters.userName':{
@@ -73,7 +74,7 @@
                   prop: 'companyName',
                 },
                 {
-                  type: 'select',
+                  type: (this.inquiryExist)?'label':'select',
                   label: '询价单名称',
                   placeholder: '输入关键字查询',
                   prop: 'inquiry',
@@ -164,6 +165,13 @@
               let val=_.assign({},item);
               item.label=val.inquiryName;
               item.value=val;
+              if(this.inquiryExist&&val.inquiryId==this.form.inquiryId){
+                this.form.inquiryId=val.inquiryId;
+                this.form.inquiryCode=val.inquiryCode;
+                this.form.iqrSeq=val.iqrSeq;
+                this.form.purchaseCategory=val.purchaseCategory;
+                this.form.receiveUser=val.purchaseProfessionalOrgName;
+              }
             });
             this.options=list;
             this.$nextTick(()=>{

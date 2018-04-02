@@ -45,6 +45,7 @@
           this.form.inquiryCode=val.inquiryCode;
           this.form.iqrSeq=val.iqrSeq;
           this.form.purchaseCategory=val.purchaseCategory;
+          this.form.receiveUser=val.purchaseProfessionalOrgName;
         }
       },
       '$store.getters.userName':{
@@ -161,6 +162,13 @@
               let val=_.assign({},item);
               item.label=val.inquiryName;
               item.value=val;
+              if(this.inquiryExist&&val.inquiryId==this.form.inquiryId){
+                this.form.inquiryId=val.inquiryId;
+                this.form.inquiryCode=val.inquiryCode;
+                this.form.iqrSeq=val.iqrSeq;
+                this.form.purchaseCategory=val.purchaseCategory;
+                this.form.receiveUser=val.purchaseProfessionalOrgName;
+              }
             });
             this.options=list;
             this.$nextTick(()=>{

@@ -297,8 +297,9 @@
         }
         ;
         this.$router.push({
-          name: 'clarifyOfferEdit',
+          name: 'saleClarifyOfferEdit',
           query: {
+            inquiryExist: true,
             inquiryId: this.selections[0].inquiryId,
             inquiryName: this.selections[0].inquiryName,
             iqrSeq: this.selections[0].iqrSeq,
