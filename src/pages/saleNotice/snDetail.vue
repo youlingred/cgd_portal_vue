@@ -28,13 +28,11 @@
     },
     data() {
       return {
+        inquiryId: this.$route.params.id,
+        iqrSeq: this.$route.params.seq,
+        purchaseCategory: this.$route.params.type,
         flag: false,
         form: {},
-        //列表数据
-        table: {
-          autoLoad: false,
-          height: 400,
-        }
       };
     },
     computed: {
@@ -80,11 +78,13 @@
                   type: 'tag',
                   label: '供应商分类',
                   prop: 'supplierNames',
-                  extendParam:{
-                    type:'info'
+                  extendParam: {
+                    type: 'info'
                   },
-                  formatter(value){
-                    value=value&&value.map(item=>{return {name:`${item.text}>${item.ptext}`}});
+                  formatter(value) {
+                    value = value && value.map(item => {
+                      return {name: `${item.text}>${item.ptext}`}
+                    });
                     return value;
                   }
                 },
@@ -135,22 +135,22 @@
                   prop: '12',
                   formatter: (value, data) => {
                     let result = "";
-                    if (data.prePay != 0) {
+                    if (data.prePay && data.prePay != 0) {
                       result += '预付款:' + data.prePay + '% ';
                     }
-                    if (data.matPay != 0) {
+                    if (data.matPay && data.matPay != 0) {
                       result += '投料款:' + data.matPay + '% ';
                     }
-                    if (data.proPay != 0) {
+                    if (data.proPay && data.proPay != 0) {
                       result += '进度款:' + data.proPay + '% ';
                     }
-                    if (data.verPay != 0) {
+                    if (data.verPay && data.verPay != 0) {
                       result += '到货验收款:' + data.verPay + '% ';
                     }
-                    if (data.pilPay != 0) {
+                    if (data.pilPay && data.pilPay != 0) {
                       result += '试运验收款:' + data.pilPay + '% ';
                     }
-                    if (data.quaPay != 0) {
+                    if (data.quaPay && data.quaPay != 0) {
                       result += '质保金:' + data.quaPay + '% ';
                     }
                     return result;
@@ -161,6 +161,9 @@
                   type: 'label',
                   label: '税率（%）',
                   prop: 'taxRate',
+                  formatter(value) {
+                    return value && `${value}%`
+                  }
                 },
                 {
                   switchFlag: this.flag,
@@ -224,6 +227,80 @@
           ]
         }
       },
+      //列表数据
+      table() {
+        return {
+          autoLoad: false,
+          height: 400,
+          url: this.appConfig.api('inquiry/quote/iqrPurchaseNoticeDetailMaterail'),
+          columns: [
+            {
+              fixed: 'left',
+              title: '序号',
+              type: 'index',
+              align: 'center',
+              width: 80,
+            },
+            {
+              title: '项目单位',
+              key: 'purchaseAccountName',
+              align: 'center',
+              width: 180,
+            },
+            {
+              title: '物料名称',
+              key: 'materialName',
+              align: 'center',
+              width: 120,
+            },
+            {
+              title: '物资编码',
+              key: 'materialId',
+              align: 'center',
+              width: 120,
+            },
+            {
+              title: '物资类别',
+              key: 'materialClassName',
+              align: 'center',
+              width: 120,
+            },
+            {
+              title: '型号',
+              key: 'model',
+              align: 'center',
+              width: 180,
+            },
+            {
+              title: '规格',
+              key: 'spec',
+              align: 'center',
+              width: 120,
+            },
+            {
+              title: '采购数量',
+              key: 'requireNumber',
+              align: 'center',
+              width: 120,
+            },
+            {
+              title: '计量单位',
+              key: 'unitName',
+              align: 'center',
+              width: 120,
+            },
+            {
+              title: '要求到货日期',
+              key: 'reqArrivalDate',
+              align: 'center',
+              width: 180,
+              render: (h, {row, column}) => {
+                return h('div', this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
+              }
+            }
+          ]
+        }
+      }
     },
     methods: {
       join() {
@@ -242,7 +319,7 @@
             MessageBox.close();
             this.$router.push({
               name: 'priceOfferDetail',
-              query: {isSale: true, backPage: 'saleNoticeIndex',sumbitPage:'priceBindIndex'},
+              query: {isSale: true, backPage: 'saleNoticeIndex', sumbitPage: 'priceBindIndex'},
               params: {status: 0, type: this.$route.params.type, id: response.quotationId}
             });
           }, 10000)
@@ -251,99 +328,30 @@
         });
       },
       back() {
-        this.$router.push({name: this.$route.query.backPage,query:{tab:this.$route.query.tab}});
+        this.$router.push({name: this.$route.query.backPage, query: {tab: this.$route.query.tab}});
       },
-      initForm() {
+      searchDetail() {
         //基本信息
         this.axios.post(this.appConfig.api('inquiry/quote/iqrPurchaseNoticeDetail'), {
-          inquiryId: this.$route.params.id,
-          iqrSeq: this.$route.params.seq,
-          purchaseCategory: this.$route.params.type
+          inquiryId: this.inquiryId,
+          iqrSeq: this.iqrSeq,
+          purchaseCategory: this.purchaseCategory
         })
           .then((response) => {
             this.form = this.util.dataAdapter(response, ['attachmentName', 'attachmentUrl'], ['name', 'url'])
           })
       },
-      initTable() {
-        let id = this.$route.params.id;
-        let seq = this.$route.params.seq;
-        this.table.columns = [
-          {
-            fixed: 'left',
-            title: '序号',
-            type: 'index',
-            align: 'center',
-            width: 80,
-          },
-          {
-            title: '项目单位',
-            key: 'purchaseAccountName',
-            align: 'center',
-            width: 180,
-          },
-          {
-            title: '物料名称',
-            key: 'materialName',
-            align: 'center',
-            width: 120,
-          },
-          {
-            title: '物资编码',
-            key: 'materialId',
-            align: 'center',
-            width: 120,
-          },
-          {
-            title: '物资类别',
-            key: 'materialClassName',
-            align: 'center',
-            width: 120,
-          },
-          {
-            title: '型号',
-            key: 'model',
-            align: 'center',
-            width: 180,
-          },
-          {
-            title: '规格',
-            key: 'spec',
-            align: 'center',
-            width: 120,
-          },
-          {
-            title: '采购数量',
-            key: 'requireNumber',
-            align: 'center',
-            width: 120,
-          },
-          {
-            title: '计量单位',
-            key: 'unitName',
-            align: 'center',
-            width: 120,
-          },
-          {
-            title: '要求到货日期',
-            key: 'reqArrivalDate',
-            align: 'center',
-            width: 180,
-            render: (h, {row, column}) => {
-              return h('div', this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
-            }
-          }
-        ];
+      searchTable() {
         this.$refs.table.query({
-          url: this.appConfig.api('inquiry/quote/iqrPurchaseNoticeDetailMaterail'),
-          inquiryId: id,
-          iqrSeq: seq
+          inquiryId: this.inquiryId,
+          iqrSeq: this.iqrSeq
         });
       },
 
     },
     mounted() {
-      this.initForm();
-      this.initTable();
+      this.searchDetail();
+      this.searchTable();
     }
 
   };

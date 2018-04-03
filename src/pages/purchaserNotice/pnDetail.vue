@@ -24,12 +24,10 @@
     },
     data() {
       return {
+        inquiryId: this.$route.params.id,
+        iqrSeq: this.$route.params.seq,
+        purchaseCategory: this.$route.params.type,
         form: {},
-        //列表数据
-        table: {
-          autoLoad: false,
-          height: 400,
-        }
       };
     },
     computed: {
@@ -167,6 +165,183 @@
             }
           ]
         }
+      },
+      table(){
+       let type =this.$route.params.type;
+        if (type == 1) {//物资类详情
+         return {
+           autoLoad: false,
+           height: 400,
+           url : this.appConfig.api('inquiry/quote/iqrPurchaseNoticeDetailMaterail'),
+           columns : [
+             {
+               fixed: 'left',
+               title: '序号',
+               type: 'index',
+               align: 'center',
+               width: 80,
+             },
+             {
+               title: '项目单位',
+               key: 'purchaseAccountName',
+               align: 'center',
+               width: 180,
+             },
+             {
+               title: '物料名称',
+               key: 'materialName',
+               align: 'center',
+               width: 120,
+             },
+             {
+               title: '物资编码',
+               key: 'materialId',
+               align: 'center',
+               width: 120,
+             },
+             {
+               title: '物资类别',
+               key: 'materialClassName',
+               align: 'center',
+               width: 120,
+             },
+             {
+               title: '型号',
+               key: 'model',
+               align: 'center',
+               width: 180,
+             },
+             {
+               title: '规格',
+               key: 'spec',
+               align: 'center',
+               width: 120,
+             },
+             {
+               title: '采购数量',
+               key: 'requireNumber',
+               align: 'center',
+               width: 120,
+             },
+             {
+               title: '计量单位',
+               key: 'unitName',
+               align: 'center',
+               width: 120,
+             },
+             {
+               title: '要求到货日期',
+               key: 'reqArrivalDate',
+               align: 'center',
+               width: 180,
+               render: (h, {row, column}) => {
+                 return h('div', this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
+               }
+             }
+           ],
+         }
+        } else if (type == 2) {//施工类详情
+          return {
+            autoLoad: false,
+            height: 400,
+            url: this.appConfig.api('inquiry/quote/iqrPurchaseNoticeDetailConstruction'),
+            columns: [
+              {
+                fixed: 'left',
+                title: '序号',
+                type: 'index',
+                align: 'center',
+                width: 80
+              },
+              {
+                title: '项目单位',
+                key: 'purchaseAccountName',
+                align: 'center',
+                width: 200
+              },
+              {
+                title: '项目名称',
+                key: 'projectName',
+                align: 'center',
+                width: 200
+              },
+              {
+                title: '内容描述',
+                key: 'docDesc',
+                align: 'center',
+                width: 200
+              },
+              {
+                title: '计量单位',
+                key: 'unitName',
+                align: 'center',
+                width: 80
+              },
+              {
+                title: '数量',
+                key: 'requireNumber',
+                align: 'center',
+                width: 80
+              },
+              {
+                title: '要求到货日期',
+                key: 'reqArrivalDate',
+                align: 'center',
+                width: 180,
+                render: (h, {row, column}) => {
+                  return h('div', this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
+                }
+              }
+            ]
+          }
+        } else if (type == 3) {//服务类详情
+          return {
+            autoLoad: false,
+            height: 400,
+            url: this.appConfig.api('inquiry/quote/iqrPurchaseNoticeDetailSev'),
+            columns: [
+              {
+                fixed: 'left',
+                title: '序号',
+                type: 'index',
+                align: 'center',
+                width: 80
+              },
+              {
+                title: '项目单位',
+                key: 'purchaseAccountName',
+                align: 'center',
+                width: 200,
+              },
+              {
+                title: '内容描述',
+                key: 'docDesc',
+                align: 'center',
+                width: 200,
+              },
+              {
+                title: '计量单位',
+                key: 'unitName',
+                align: 'center',
+                width: 80,
+              },
+              {
+                title: '数量',
+                key: 'requireNumber',
+                align: 'center',
+                width: 80,
+              },
+              {
+                title: '要求到货日期',
+                key: 'reqArrivalDate',
+                align: 'center',
+                render: (h, {row, column}) => {
+                  return h('div', this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
+                }
+              }
+            ]
+          }
+        }
       }
     },
     methods: {
@@ -197,12 +372,12 @@
       back() {
         this.$router.push({name: this.$route.query.backPage,query:{tab:this.$route.query.tab}})
       },
-      initForm() {
+      searchDetail() {
         //基本信息
         this.axios.post(this.appConfig.api('inquiry/quote/iqrPurchaseNoticeDetail'), {
-          inquiryId: this.$route.params.id,
-          iqrSeq: this.$route.params.seq,
-          purchaseCategory: this.$route.params.type
+          inquiryId: this.inquiryId,
+          iqrSeq: this.iqrSeq,
+          purchaseCategory: this.purchaseCategory
         })
           .then((response) => {
             this.form = response;
@@ -211,188 +386,17 @@
             console.log(error);
           });
       },
-      initTable() {
-        let {type, id, seq} = this.$route.params;
-        if (type == 1) {//物资类详情
-          this.table.url = this.appConfig.api('inquiry/quote/iqrPurchaseNoticeDetailMaterail')//?type='+type+'&id='+id);
-          this.table.columns = [
-            {
-              fixed: 'left',
-              title: '序号',
-              type: 'index',
-              align: 'center',
-              width: 80,
-            },
-            {
-              title: '项目单位',
-              key: 'purchaseAccountName',
-              align: 'center',
-              width: 180,
-            },
-            {
-              title: '物料名称',
-              key: 'materialName',
-              align: 'center',
-              width: 120,
-            },
-            {
-              title: '物资编码',
-              key: 'materialId',
-              align: 'center',
-              width: 120,
-            },
-            {
-              title: '物资类别',
-              key: 'materialClassName',
-              align: 'center',
-              width: 120,
-            },
-            {
-              title: '型号',
-              key: 'model',
-              align: 'center',
-              width: 180,
-            },
-            {
-              title: '规格',
-              key: 'spec',
-              align: 'center',
-              width: 120,
-            },
-            {
-              title: '采购数量',
-              key: 'requireNumber',
-              align: 'center',
-              width: 120,
-            },
-            {
-              title: '计量单位',
-              key: 'unitName',
-              align: 'center',
-              width: 120,
-            },
-            {
-              title: '要求到货日期',
-              key: 'reqArrivalDate',
-              align: 'center',
-              width: 180,
-              render: (h, {row, column}) => {
-                return h('div', this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
-              }
-            }
-          ];
-        } else if (type == 2) {//施工类详情
-          this.table.url = this.appConfig.api('inquiry/quote/iqrPurchaseNoticeDetailConstruction')//?type='+type+'&id='+id);
-          this.table.columns = [
-            {
-              fixed: 'left',
-              title: '序号',
-              type: 'index',
-              align: 'center',
-              width: 80
-            },
-            {
-              title: '项目单位',
-              key: 'purchaseAccountName',
-              align: 'center',
-              width: 120
-            },
-            {
-              title: '项目名称',
-              key: 'projectName',
-              align: 'center',
-              width: 120
-            },
-            {
-              title: '内容描述',
-              key: 'docDesc',
-              align: 'center',
-              width: 120
-            },
-            {
-              title: '计量单位',
-              key: 'unitName',
-              align: 'center',
-              width: 80
-            },
-            {
-              title: '数量',
-              key: 'requireNumber',
-              align: 'center',
-              width: 80
-            },
-            {
-              title: '要求到货日期',
-              key: 'reqArrivalDate',
-              align: 'center',
-              width: 180,
-              render: (h, {row, column}) => {
-                return h('div', this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
-              }
-            }
-          ];
-        } else if (type == 3) {//服务类详情
-          this.table.url = this.appConfig.api('inquiry/quote/iqrPurchaseNoticeDetailSev')//?type='+type+'&id='+id);
-          this.table.columns = [
-            {
-              fixed: 'left',
-              title: '序号',
-              type: 'index',
-              align: 'center',
-              width: 80
-            },
-            {
-              title: '项目单位',
-              key: 'purchaseAccountName',
-              align: 'center',
-              width: 120,
-            },
-            {
-              title: '项目名称',
-              key: 'projectName',
-              align: 'center',
-              width: 120,
-            },
-            {
-              title: '内容描述',
-              key: 'docDesc',
-              align: 'center',
-              width: 120,
-            },
-            {
-              title: '计量单位',
-              key: 'unitName',
-              align: 'center',
-              width: 80,
-            },
-            {
-              title: '数量',
-              key: 'requireNumber',
-              align: 'center',
-              width: 80,
-            },
-            {
-              title: '要求到货日期',
-              key: 'reqArrivalDate',
-              align: 'center',
-              width: 180,
-              render: (h, {row, column}) => {
-                return h('div', this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
-              }
-            }
-          ];
-        }
+      searchTable() {
         this.$refs.table.query({
-          url: this.table.url,
-          inquiryId: id,
-          iqrSeq: seq
+          inquiryId: this.inquiryId,
+          iqrSeq: this.iqrSeq
         });
       },
 
     },
     mounted() {
-      this.initForm();
-      this.initTable();
+      this.searchDetail();
+      this.searchTable();
     }
 
   };

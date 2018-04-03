@@ -160,7 +160,7 @@
                 align: 'center',
                 width: 130,
                 key: 'billCreateTime',
-                sortable:'true',
+                sortType:'desc',
                 render: (h, {row, column}) => {
                   return h('div',row.billCreateTime===(null||'')?'-':this.moment(row.billCreateTime).format("YYYY-MM-DD"));
                 }
@@ -241,7 +241,7 @@
                 align: 'center',
                 width: 130,
                 key: 'billCreateTime',
-                sortable:'true',
+                sortType:'desc',
                 render: (h, {row, column}) => {
                   return h('div',row.billCreateTime===(null||'')?'-':this.moment(row.billCreateTime).format("YYYY-MM-DD"));
                 }

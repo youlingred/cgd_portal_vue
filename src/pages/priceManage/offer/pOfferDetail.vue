@@ -92,11 +92,11 @@
       },
       //成交服务费是否展示
       showServiceChargeAmount() {
-        return (_.parseInt(this.form.serviceChargeRate) == 1 && this.showServiceChargeRate);
+        return (_.parseInt(this.form.serviceChargeRate) == 3 && this.showServiceChargeRate);
       },
       requireFiels() {
         let value = _.parseInt(this.form.reviewMethod);
-        return true//(value === 1 || value === 2 || value === 5)
+        return (value === 1 || value === 5)
       },
       rules() {
         return this.status == 0 ? {
@@ -298,7 +298,7 @@
                 {
                   type: 'label',
                   label: '采购类型',
-                  prop: 'purchaseTypeName',
+                  prop: 'purchaseCategoryName',
                 },
                 {
                   type: 'label',
