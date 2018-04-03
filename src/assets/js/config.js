@@ -1,7 +1,9 @@
 const config = {
-  prov: 3,
+  prov: 1,
   apiBaseurl () {
     switch (this.prov) {
+      case 1:
+        return 'http://inquiry.necn.shop:8080/';
       case 3:
         return 'http://39.107.101.54:8080/';
       case 4:
