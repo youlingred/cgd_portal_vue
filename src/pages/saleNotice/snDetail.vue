@@ -91,7 +91,19 @@
                 {
                   type: 'label',
                   label: '供应商级别',
-                  prop: 'supplierLevel'
+                  prop: 'supplierLevel',
+                  formatter(value) {
+                    switch (Number.parseInt(value)){
+                      case 1:
+                        return '优秀';
+                      case 2:
+                        return '良好';
+                      case 3:
+                        return '普通';
+                      default:
+                        return '';
+                    }
+                  }
                 },
                 {
                   type: 'label',
