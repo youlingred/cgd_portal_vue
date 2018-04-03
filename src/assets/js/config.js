@@ -1,6 +1,9 @@
 const config = {
   prov: 1,
   apiBaseurl () {
+    if(process.env.NODE_ENV=='production'){
+      return window.location.origin+'/';
+    }
     switch (this.prov) {
       case 1:
         return 'http://inquiry.necn.shop:8080/';
