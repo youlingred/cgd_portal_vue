@@ -28,7 +28,7 @@ Vue.prototype.moment=moment;
 Vue.prototype.accounting=accounting
 Vue.prototype.lockr=lockr;
 Vue.prototype.util=util;
-window._=lodash
+wdndow._=lodash
 window.axios=axios;
 window.$alert=Vue.prototype.$alert;
 
