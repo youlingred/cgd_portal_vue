@@ -5,8 +5,10 @@ const config = {
       return window.location.origin+'/';
     }
     switch (this.prov) {
+      //UAT
       case 1:
         return 'http://inquiry.necn.shop:8080/';
+      //测试,开发
       case 3:
         return 'http://39.107.101.54:8080/';
       case 4:
