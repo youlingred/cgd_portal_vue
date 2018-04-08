@@ -104,28 +104,8 @@
                 {
                   type: 'label',
                   label: '付款方式',
-                  prop: '12',
                   formatter: (value, data) => {
-                    let result = "";
-                    if (data.prePay != 0) {
-                      result += '预付款:' + data.prePay + '% ';
-                    }
-                    if (data.matPay != 0) {
-                      result += '投料款:' + data.matPay + '% ';
-                    }
-                    if (data.proPay != 0) {
-                      result += '进度款:' + data.proPay + '% ';
-                    }
-                    if (data.verPay != 0) {
-                      result += '到货验收款:' + data.verPay + '% ';
-                    }
-                    if (data.pilPay != 0) {
-                      result += '试运验收款:' + data.pilPay + '% ';
-                    }
-                    if (data.quaPay != 0) {
-                      result += '质保金:' + data.quaPay + '% ';
-                    }
-                    return result;
+                    return this.util.formatPayMix(data);
                   }
                 },
                 {
@@ -147,11 +127,13 @@
                   type: 'tag',
                   label: '供应商分类',
                   prop: 'supplierNames',
-                  extendParam:{
-                    type:'info'
+                  extendParam: {
+                    type: 'info'
                   },
-                  formatter(value){
-                    value=value&&value.map(item=>{return {name:`${item.text}>${item.ptext}`}});
+                  formatter(value) {
+                    value = value && value.map(item => {
+                      return {name: `${item.text}>${item.ptext}`}
+                    });
                     return value;
                   }
                 },
@@ -166,80 +148,80 @@
           ]
         }
       },
-      table(){
-       let type =this.$route.params.type;
+      table() {
+        let type = this.$route.params.type;
         if (type == 1) {//物资类详情
-         return {
-           autoLoad: false,
-           height: 400,
-           url : this.appConfig.api('inquiry/quote/iqrPurchaseNoticeDetailMaterail'),
-           columns : [
-             {
-               fixed: 'left',
-               title: '序号',
-               type: 'index',
-               align: 'center',
-               width: 80,
-             },
-             {
-               title: '项目单位',
-               key: 'purchaseAccountName',
-               align: 'center',
-               width: 180,
-             },
-             {
-               title: '物料名称',
-               key: 'materialName',
-               align: 'center',
-               width: 120,
-             },
-             {
-               title: '物资编码',
-               key: 'materialId',
-               align: 'center',
-               width: 120,
-             },
-             {
-               title: '物资类别',
-               key: 'materialClassName',
-               align: 'center',
-               width: 120,
-             },
-             {
-               title: '型号',
-               key: 'model',
-               align: 'center',
-               width: 180,
-             },
-             {
-               title: '规格',
-               key: 'spec',
-               align: 'center',
-               width: 120,
-             },
-             {
-               title: '采购数量',
-               key: 'requireNumber',
-               align: 'center',
-               width: 120,
-             },
-             {
-               title: '计量单位',
-               key: 'unitName',
-               align: 'center',
-               width: 120,
-             },
-             {
-               title: '要求到货日期',
-               key: 'reqArrivalDate',
-               align: 'center',
-               width: 180,
-               render: (h, {row, column}) => {
-                 return h('div', this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
-               }
-             }
-           ],
-         }
+          return {
+            autoLoad: false,
+            height: 400,
+            url: this.appConfig.api('inquiry/quote/iqrPurchaseNoticeDetailMaterail'),
+            columns: [
+              {
+                fixed: 'left',
+                title: '序号',
+                type: 'index',
+                align: 'center',
+                width: 80,
+              },
+              {
+                title: '项目单位',
+                key: 'purchaseAccountName',
+                align: 'center',
+                width: 180,
+              },
+              {
+                title: '物料名称',
+                key: 'materialName',
+                align: 'center',
+                width: 120,
+              },
+              {
+                title: '物资编码',
+                key: 'materialId',
+                align: 'center',
+                width: 120,
+              },
+              {
+                title: '物资类别',
+                key: 'materialClassName',
+                align: 'center',
+                width: 120,
+              },
+              {
+                title: '型号',
+                key: 'model',
+                align: 'center',
+                width: 180,
+              },
+              {
+                title: '规格',
+                key: 'spec',
+                align: 'center',
+                width: 120,
+              },
+              {
+                title: '采购数量',
+                key: 'requireNumber',
+                align: 'center',
+                width: 120,
+              },
+              {
+                title: '计量单位',
+                key: 'unitName',
+                align: 'center',
+                width: 120,
+              },
+              {
+                title: '要求到货日期',
+                key: 'reqArrivalDate',
+                align: 'center',
+                width: 180,
+                render: (h, {row, column}) => {
+                  return h('div', this.moment(row['5']).format("YYYY-MM-DD HH:mm:ss"));
+                }
+              }
+            ],
+          }
         } else if (type == 2) {//施工类详情
           return {
             autoLoad: false,
@@ -361,7 +343,7 @@
             MessageBox.close();
             this.$router.push({
               name: 'priceOfferDetail',
-              query: {backPage: 'purchaserNoticeIndex',sumbitPage:'priceOfferIndex'},
+              query: {backPage: 'purchaserNoticeIndex', sumbitPage: 'priceOfferIndex'},
               params: {status: 0, type: this.$route.params.type, id: response.quotationId}
             });
           }, 10000)
@@ -370,7 +352,7 @@
         });
       },
       back() {
-        this.$router.push({name: this.$route.query.backPage,query:{tab:this.$route.query.tab}})
+        this.$router.push({name: this.$route.query.backPage, query: {tab: this.$route.query.tab}})
       },
       searchDetail() {
         //基本信息

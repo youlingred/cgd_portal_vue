@@ -240,28 +240,8 @@
                 {
                   type: 'label',
                   label: '付款方式',
-                  prop: 'planName',
                   formatter: (value, data) => {
-                    let result = "";
-                    if (data.prePay != 0) {
-                      result += '预付款:' + data.prePay + '% ';
-                    }
-                    if (data.matPay != 0) {
-                      result += '投料款:' + data.matPay + '% ';
-                    }
-                    if (data.proPay != 0) {
-                      result += '进度款:' + data.proPay + '% ';
-                    }
-                    if (data.verPay != 0) {
-                      result += '到货验收款:' + data.verPay + '% ';
-                    }
-                    if (data.pilPay != 0) {
-                      result += '试运验收款:' + data.pilPay + '% ';
-                    }
-                    if (data.quaPay != 0) {
-                      result += '质保金:' + data.quaPay + '% ';
-                    }
-                    return result;
+                    return this.util.formatPayMix(data);
                   }
                 },
                 {

@@ -144,28 +144,8 @@
                   switchFlag: this.flag,
                   type: 'label',
                   label: '收款方式',
-                  prop: '12',
                   formatter: (value, data) => {
-                    let result = "";
-                    if (data.prePay && data.prePay != 0) {
-                      result += '预付款:' + data.prePay + '% ';
-                    }
-                    if (data.matPay && data.matPay != 0) {
-                      result += '投料款:' + data.matPay + '% ';
-                    }
-                    if (data.proPay && data.proPay != 0) {
-                      result += '进度款:' + data.proPay + '% ';
-                    }
-                    if (data.verPay && data.verPay != 0) {
-                      result += '到货验收款:' + data.verPay + '% ';
-                    }
-                    if (data.pilPay && data.pilPay != 0) {
-                      result += '试运验收款:' + data.pilPay + '% ';
-                    }
-                    if (data.quaPay && data.quaPay != 0) {
-                      result += '质保金:' + data.quaPay + '% ';
-                    }
-                    return result;
+                    return this.util.formatPayMix(data);
                   }
                 },
                 {

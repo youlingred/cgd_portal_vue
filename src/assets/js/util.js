@@ -26,10 +26,10 @@ util.dataAdapter = function (data, arr1, arr2, flag) {
   return last;
 };
 //解析表单数据为get请求参数字符串
-util.parseToGet=function(data){
-  let result=''
-  _.keys(data).forEach(value=>{
-    result+=`${value}=${data[value]}&`
+util.parseToGet = function (data) {
+  let result = ''
+  _.keys(data).forEach(value => {
+    result += `${value}=${data[value]}&`
   })
   return result;
 };
@@ -38,15 +38,15 @@ util.parseToGet=function(data){
  * @param name 字典名
  * @param name 字典值
  */
-util.getLocalDic=function(name,code){
+util.getLocalDic = function (name, code) {
   return this.localDic[name][code];
 };
-util.getLocalDicOfList=function(name){
-  var list=[];
-  $.each(this.localDic[name],function(i,v){
+util.getLocalDicOfList = function (name) {
+  var list = [];
+  $.each(this.localDic[name], function (i, v) {
     list.push({
-      value:i,
-      label:v
+      value: i,
+      label: v
     })
   })
   return list;
@@ -56,14 +56,50 @@ util.getLocalDicOfList=function(name){
  */
 util.localDic = {
   //FIXME 采购类别字典
-  purchaseCategory:[
+  purchaseCategory: [
     {'1': '物资类'},
     {'2': '施工类'},
     {'3': '服务类'}
   ]
 };
-util.lang={
- alertSelectionNeed:"请选择您要操作的数据!",
-  alertSelectionOnlyOne:"此操作只能选择1条数据!"
+util.lang = {
+  alertSelectionNeed: "请选择您要操作的数据!",
+  alertSelectionOnlyOne: "此操作只能选择1条数据!"
 };
+util.formatPayMix = function (data) {
+  let list=[
+    {
+      name: '预付款',
+      value: data.prePay
+    },
+    {
+      name: '投料款',
+      value: data.matPay
+    },
+    {
+      name: '进度款',
+      value: data.proPay
+    },
+    {
+      name: '到货验收款',
+      value: data.verPay
+    },
+    {
+      name: '试运验收款',
+      value: data.pilPay
+    },
+    {
+      name: '质保金',
+      value: data.quaPay
+    }
+  ]
+  let result = ''
+  list.forEach((item) => {
+    let val = Number.parseInt(item.value);
+    if (val) {
+      result+=`${item.name}:${item.value}% `
+    }
+  })
+  return result;
+}
 export default util;
