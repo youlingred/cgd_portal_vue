@@ -143,7 +143,7 @@
         if (this.type == 1) {
           this.axios.post(this.appConfig.api('inquiry/others/queryIdleGoodsIntentMasterSingleQuery'), {idleGoodsIntentId: this.id})
             .then(response => {
-              this.formPurchase = response;
+              this.formPurchase = response.idleGoodsIntentBo;
             }).catch(err=>{
             console.log(err)
           });

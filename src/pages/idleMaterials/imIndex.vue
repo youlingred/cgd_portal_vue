@@ -9,7 +9,7 @@
     <buttons-operator type="top"
                       algin="right"
                       :buttons="[{label:'导出',type:'primary',click:exports}]"/>
-    <IvTable ref="table" v-bind="table" @on-row-click="cellClickHandler"/>
+    <IvTable ref="table" v-bind="table"/>
   </div>
 </template>
 
@@ -39,14 +39,6 @@
           url: this.appConfig.api('inquiry/others/queryIqrIdleGoodsIntentForSupplyMember'),
           pageNo: 1,
           height: 400,
-          queryParam: function (param) {
-            console.log('queryParam:', param)
-            return _.assign({test: 1}, param);
-          },
-          responseHandler: function (val) {
-            console.log('responseHandler:', val)
-            return val;
-          },
           columns: [
             {
               type: 'selection',
@@ -69,7 +61,7 @@
                       }
                     }
                   },
-                  row.inquiryName,
+                  row.subjectName,
                 );
               }
             },
@@ -90,7 +82,7 @@
             },
             {
               title: '提货地点',
-              key: 'deliverAddresss',
+              key: 'deliveryAddress',
               width: 150,
             },
             {
@@ -118,7 +110,7 @@
                       }
                     }
                   },
-                  row.inquiryName,
+                  row.createTimeStr,
                 );
               }
             },
@@ -134,7 +126,7 @@
                       }
                     }
                   },
-                  row.inquiryName,
+                  row.noticeName,
                 );
               }
             }
@@ -199,7 +191,7 @@
       },
     },
     watch:{
-      //监听tabs切换
+      //FIXME 监听tabs切换
       activeName:function(){
         this.search();
       }
@@ -216,19 +208,14 @@
       },
       //FIXME 详情跳转
       gotoDetail(type,id) {
-        console.log(row);
         this.$router.push({
-          name: 'purchaserNoticeDetail',
+          name: 'idleMaterialsDetail',
           params: {type: type, id:id}
         });
       },
       //FIXME 导出
       exports(){
 
-      },
-      cellClickHandler(row) {
-        console.log(row);
-        this.$router.push({name: 'idleMaterialsDetail',params:{type:1,id:11}});
       }
     },
   }
